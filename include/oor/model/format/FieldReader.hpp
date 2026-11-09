@@ -4,6 +4,7 @@
 #include "oor/deck/raw/RawCard.hpp"
 #include "oor/model/core/CardProblem.hpp"
 #include "oor/model/format/SlotTrace.hpp"
+#include "oor/model/format/FieldValue.hpp"
 
 #include <cstdint>
 #include <optional>
@@ -25,6 +26,8 @@ class FieldReader
 public:
     FieldReader(const deck::RawCardBlock& block, const deck::RawCard& card, base::DiagnosticSink& sink,
                 std::string_view fileName) noexcept;
+    FieldReader(std::span<const FieldValue> fields, const deck::RawCard& card, base::DiagnosticSink& sink,
+                std::string_view fileName);
 
     [[nodiscard]] std::string_view cardName() const noexcept { return m_card.name.view(); }
 
@@ -32,16 +35,21 @@ public:
     [[nodiscard]] std::string fieldLabel(const char* name) const;
     [[nodiscard]] std::string fieldLabel(std::string_view name) const;
     // Number of field slots (a multiple of 4 or 8).
-    [[nodiscard]] int slotCount() const noexcept { return static_cast<int>(m_fields.size()); }
+    [[nodiscard]] int slotCount() const noexcept
+    {
+        return static_cast<int>(m_typed ? m_typedFields.size() : m_fields.size());
+    }
     // The field as text (trimmed); empty when blank or beyond the card.
-    [[nodiscard]] std::string_view text(int field) const noexcept
+    [[nodiscard]] std::string_view text(int field) const
     {
 #ifdef OOR_TRACE_SLOTS
         slot_trace::noteRead(cardName(), field, "text", {});
 #endif
-        return field >= 1 && field <= slotCount() ? m_fields[static_cast<std::size_t>(field - 1)] : std::string_view{};
+        if (field < 1 || field > slotCount())
+            return {};
+        return m_typed ? typedText(field) : m_fields[static_cast<std::size_t>(field - 1)];
     }
-    [[nodiscard]] bool isBlank(int field) const noexcept { return text(field).empty(); }
+    [[nodiscard]] bool isBlank(int field) const noexcept;
     // Number of the last field that is not blank (0 for an empty card).
     [[nodiscard]] int lastUsedField() const noexcept;
 
@@ -63,7 +71,7 @@ public:
     [[nodiscard]] std::string spanText(int first, int last) const;
 
     // Text: blank gives `fallback`.
-    [[nodiscard]] std::string_view word(int field, std::string_view fallback = {}) const noexcept
+    [[nodiscard]] std::string_view word(int field, std::string_view fallback = {}) const
     {
         const std::string_view value = text(field);
         return value.empty() ? fallback : value;
@@ -87,12 +95,17 @@ public:
     void recordNames(std::vector<std::pair<int, std::string>>& names) noexcept { m_names = &names; }
 
 private:
+    [[nodiscard]] std::string_view typedText(int field) const;
+    [[nodiscard]] const FieldValue* typedValue(int field) const noexcept;
     [[nodiscard]] base::SourceLocation location(const char* name) const;
     void noteDigits(int field, std::string_view value);
     void noteName(int field, const char* name, const char* accessor);
 
     const deck::RawCard& m_card;
     std::span<const std::string_view> m_fields;
+    bool m_typed = false;
+    std::span<const FieldValue> m_typedFields;
+    mutable std::vector<std::string> m_formatted;
     base::DiagnosticSink& m_sink;
     std::string_view m_file;
     bool m_failed = false;

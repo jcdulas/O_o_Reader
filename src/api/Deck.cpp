@@ -6,6 +6,8 @@
 #include "oor/model/core/CardRegistry.hpp"
 #include "oor/model/core/ModelFileReader.hpp"
 #include "oor/model/core/ModelFileWriter.hpp"
+#include "oor/results/archive/ArchiveResultFile.hpp"
+#include "oor/results/archive/ArchiveModel.hpp"
 
 #include <map>
 
@@ -37,7 +39,10 @@ std::shared_ptr<Deck> Deck::readModel(const std::string& path, const DeckReadSet
 {
     model::ModelReadOptions options;
     options.strict = settings.strict;
-    auto model = std::make_shared<model::Model>(model::ModelFileReader::read(base::pathFromUtf8(path), options));
+    const auto file = base::pathFromUtf8(path);
+    auto model = results::ArchiveResultFile::isArchive(file)
+                     ? results::archive::readModel(file, options)
+                     : std::make_shared<model::Model>(model::ModelFileReader::read(file, options));
     return std::shared_ptr<Deck>(new Deck(std::move(model)));
 }
 
@@ -64,6 +69,13 @@ std::vector<std::string> Deck::writeModel(const std::string& path, const DeckWri
 std::string Deck::toModelText(const DeckWriteSettings& settings) const
 {
     return model::ModelFileWriter::toString(*m_model, modelFileOptionsOf(settings));
+}
+
+results::ResultWriteReport Deck::writeArchive(const std::string& path, const results::ArchiveWriteOptions& options) const
+{
+    auto settings = options;
+    settings.model = m_model;
+    return results::writeArchive(base::pathFromUtf8(path), results::ResultTables{}, settings);
 }
 
 std::vector<std::pair<std::string, std::size_t>> Deck::cardCounts() const

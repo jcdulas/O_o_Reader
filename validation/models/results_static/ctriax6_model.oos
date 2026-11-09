@@ -1,5 +1,5 @@
-# Shared axisymmetric ring of results_static/static_axisymmetric_ctriax6.bdf,
-# static_ctriax6_sort2.bdf and results_dynamics/*_ctriax6.bdf (INCLUDEd).
+# Shared axisymmetric ring of results_static/static_axisymmetric_ctriax6.oos,
+# static_ctriax6_sort2.oos and results_dynamics/*_ctriax6.oos (INCLUDEd).
 # Units: mm, N, tonne, s. SPC set 1; load set 1 (axial pull and radial
 # load), load set 2 (the radial load alone).
 # An axisymmetric ring of four CTRIAX6 (PAXSYMH is not used: CTRIAX6 takes a

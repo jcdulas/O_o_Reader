@@ -13,15 +13,9 @@
 #     smallest edge 10 over 20, the thinnest shell 2 over 4) and BIAS 0: both
 #     plates are glued when Z0 counts (gap 0), neither when the laminate is
 #     taken centred on its grid plane (gap 2 and -2)
-# Settles (library item: current status):
-#   - the laminate's Z0 in the contact distance: the library's assumption
-#     that it counts, not validated against
-#     the solver; contactNodePairs(rule="solver") ties 7 grid points of the laminate
-#     to the plates at gap 0 (the search from the lower body ID first,
-#     ISEARCH 0), none when the laminate is taken centred
 # Run notes:
 #   - NLOPRM MPCPCH punches the glue equations (format reference BCTABLE remark 18): bring
-#     the .pch back with the listing and the OUTPUT2 file
+#     the .pch back with the listing and the result data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -38,8 +32,6 @@ MultiPointConstrForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;loads on the plates glued to the laminate
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Body 1: a 40 x 40 laminate of 4 x 4 CQUAD4 with its grid points at z = 0,

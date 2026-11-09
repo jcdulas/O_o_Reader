@@ -8,13 +8,6 @@
 #     own: CBAR and CBEAM with offsets, CBEAM3 with an off-centre mid node,
 #     CBEND GEOM 1 to 4, distorted solids with mid-side nodes, an oblique
 #     CPYRAM, CMASS1 and CMASS2 on scalar points and on component 5
-# Settles (library item: current status):
-#   - the mass (CBAR length between the offset ends, CBEAM3 arc length and
-#     centre, CBEND mass not computed, the solids with mid-side nodes, CMASS
-#     on scalar points or rotations: confirmed against independent
-#     computations only)
-#   - the geometry (CBEAM3 length, area, volume; CBEND length)
-#   - the model mass against the grid point weight (not investigated)
 # Run notes:
 #   - the elements are free: the modes include rigid-body modes; only the grid
 #     point weight and the element summary are wanted
@@ -31,8 +24,6 @@ DisplacementOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;grid point weight
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;WeightReferenceNode;0

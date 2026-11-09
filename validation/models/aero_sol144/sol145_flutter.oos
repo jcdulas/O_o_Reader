@@ -3,11 +3,8 @@
 # O_o_Reader validation deck: flutter (SOL 145, PK method)
 #
 # Validates:
-#   - the flutter summary (OVG) and the flutter eigenvectors in the OUTPUT2 file and in
+#   - the flutter summary (OVG) and the flutter eigenvectors in the result data and in
 #     the HDF5 file of one run
-# Settles (library item: current status):
-#   - flutter_summary (experimental: checked against a listing only)
-#   - the flutter datasets of the HDF5 file (never observed: raw tables)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -23,8 +20,6 @@ DisplacementOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;PK flutter at Mach 0.5
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate filter).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;ReferenceVelocity;1.

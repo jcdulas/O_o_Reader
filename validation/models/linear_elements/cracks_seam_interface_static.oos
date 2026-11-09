@@ -7,7 +7,7 @@
 #     ADUM8, ADUM9, CQUAD4, PSHELL)
 #   - solution: SOL 101 (linear static, one subcase)
 #   - outputs: displacements, SPC forces, MPC forces, element stresses and
-#     forces (OUTPUT2); the stress intensity factors of the crack tip elements
+#     forces; the stress intensity factors of the crack tip elements
 #     (listing)
 # Run notes:
 #   - CRAC2D and CRAC3D are dummy elements: the ADUM8 and ADUM9 entries the

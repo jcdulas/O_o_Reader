@@ -8,8 +8,8 @@
 #   - solution: SOL 108 (FRF based assembly, FRF(ASM))
 #   - outputs: displacements: complex magnitude/phase, SORT1
 # Run notes:
-#   - run dynamics/frf_gen_plate.bdf and dynamics/frf_gen_strut.bdf first, in
-#     the same folder: this run reads their OUTPUT2 files (ASSIGN INPUTT2,
+#   - run dynamics/frf_gen_plate.oos and dynamics/frf_gen_strut.oos first, in
+#     the same folder: this run reads their result data (ASSIGN INPUTT2,
 #     units 25 and 26); the FRFCOMP entries are written here, so the .asm
 #     files of the generation runs are not INCLUDEd
 #   - connections: plate 5 to strut 201 explicit (FRFCONN) and flexible along
@@ -20,8 +20,8 @@
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
-FileAssignment;INPUTT2='frf_gen_plate_frf.out2';FileUnit=25
-FileAssignment;INPUTT2='frf_gen_strut_frf.out2';FileUnit=26
+FileAssignment;INPUTT2='frf_gen_plate_frf.data';FileUnit=25
+FileAssignment;INPUTT2='frf_gen_strut_frf.data';FileUnit=26
 SolutionSequence;108
 [case]
 TitleText;O_o_Reader test model: FRF based assembly
@@ -36,7 +36,7 @@ LabelText;plate on two struts, assembled from FRFs
 [model]
 Parameter;PostprocessingFile;-1
 FreqLinearSteps1;41;10.;10.;29
-# The two FRF components, read from the OUTPUT2 files of the generation runs.
+# The two FRF components, read from the result data of the generation runs.
 FrfComponent;10;PLATE;BinaryResultsFile;25
 FrfComponent;20;STRUT;BinaryResultsFile;26
 # Connections and supports of the assembly.

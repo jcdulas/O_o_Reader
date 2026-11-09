@@ -9,12 +9,6 @@
 #     and CONV, the thermal loads and the SPC (heat) forces, SORT1
 #   - the HDF5 heat transfer datasets of the same run (GRAD_FLUX, the thermal
 #     NODAL tables)
-# Settles (library item: current status):
-#   - heat_flux.cbend and heat_flux.ctriax6 real SORT1,
-#     heat_flows.chbdyp real SORT1 (not_validated -> validated)
-#   - the HDF5 dataset ELEMENTAL/ELEMENT_FORCE/GRAD_FLUX (not_validated);
-#     the element type of a GRAD_FLUX row (not in the file)
-#   - the heat balance residual (not investigated)
 # Run notes:
 #   - SOL 153 needs NLPARM and TEMP(INIT) even for this linear model
 # Written for this project, to exercise the reader.
@@ -35,8 +29,6 @@ AppliedLoadOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;heat loads and convection
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate filter).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 NonlinearStaticParams;1

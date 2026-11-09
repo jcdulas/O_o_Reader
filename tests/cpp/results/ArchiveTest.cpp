@@ -12,6 +12,7 @@
 
 #include <cmath>
 #include <cstring>
+#include <deque>
 #include <limits>
 #include <span>
 #include <vector>
@@ -164,7 +165,7 @@ TEST_CASE("an archive gives back every table, label and value it was given", "[r
 
     const auto archive = ArchiveResultFile::open(path);
     CHECK(archive->format() == "archive");
-    CHECK(archive->formatVersion() == "3");
+    CHECK(archive->formatVersion() == "4");
     CHECK(archive->metadata().title == "SAMPLE");
     CHECK(archive->metadata().producer.rfind("oor_reader", 0) == 0);
     CHECK(archive->metadata().tableCount == 4);
@@ -326,5 +327,74 @@ TEST_CASE("an aborted archive leaves nothing behind", "[results][archive]")
     } // destroyed without finish
     CHECK_FALSE(std::filesystem::exists(path.string() + ".oor_tmp"));
     CHECK_FALSE(std::filesystem::exists(path));
-    CHECK_THROWS_AS(beginArchive(path, ArchiveWriteOptions{10, true, false, {}, {}, {}, {}}), base::UsageError);
+    CHECK_THROWS_AS(beginArchive(path, ArchiveWriteOptions{10, true, false, {}, {}, {}, {}, {}}), base::UsageError);
+}
+
+TEST_CASE("version 3 result archives remain readable and unknown versions are refused", "[results][archive]")
+{
+    const testing::TestFiles files;
+    for (const std::string version : {"3", "99"})
+    {
+        std::deque<std::string> storage;
+        io::Hdf5WriteRequest request;
+        io::Hdf5WriteGroup root;
+        root.path = "/";
+        std::string format(archive::FORMAT_NAME);
+        for (const auto& [name, value] : std::vector<std::pair<std::string, std::string>>{
+                 {"format", format}, {"format_version", version}})
+        {
+            io::Hdf5WriteAttribute attribute;
+            attribute.name = name;
+            const auto& kept = storage.emplace_back(value);
+            attribute.array.kind = io::Hdf5ValueKind::FixedString;
+            attribute.array.utf8 = true;
+            attribute.array.stringBytes = kept.size();
+            attribute.array.data = kept.data();
+            root.attributes.push_back(std::move(attribute));
+        }
+        request.groups.push_back(std::move(root));
+        const auto path = files.root() / (version + ".oorh5");
+        io::writeHdf5(path, request);
+        if (version == "3")
+        {
+            const auto opened = ArchiveResultFile::open(path);
+            CHECK(opened->formatVersion() == "3");
+            CHECK_FALSE(opened->hasModel());
+            CHECK_THROWS_AS(opened->readModel(), base::IoError);
+        }
+        else
+            CHECK_THROWS_AS(ArchiveResultFile::open(path), base::IoError);
+    }
+}
+
+TEST_CASE("result metadata opens without loading an unsupported model schema", "[results][archive]")
+{
+    const testing::TestFiles files;
+    std::deque<std::string> storage;
+    io::Hdf5WriteRequest request;
+    for (const std::string path : {"/", "/model"})
+    {
+        io::Hdf5WriteGroup group;
+        group.path = path;
+        for (const auto& [name, value] : std::vector<std::pair<std::string, std::string>>{
+                 {"format", path == "/" ? "oor-results-archive" : "oor-column-model"},
+                 {"format_version", path == "/" ? "4" : "99"}})
+        {
+            io::Hdf5WriteAttribute attribute;
+            attribute.name = name;
+            const auto& kept = storage.emplace_back(value);
+            attribute.array.kind = io::Hdf5ValueKind::FixedString;
+            attribute.array.utf8 = true;
+            attribute.array.stringBytes = kept.size();
+            attribute.array.data = kept.data();
+            group.attributes.push_back(std::move(attribute));
+        }
+        request.groups.push_back(std::move(group));
+    }
+    const auto path = files.root() / "future-model.oorh5";
+    io::writeHdf5(path, request);
+    const auto archive = ArchiveResultFile::open(path);
+    CHECK(archive->hasModel());
+    CHECK(archive->tables({}).all().empty());
+    CHECK_THROWS_AS(archive->readModel(), base::IoError);
 }

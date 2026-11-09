@@ -6,9 +6,6 @@
 #   - the static subcase the solver uses for the differential stiffness:
 #     STATSUB(BUCKLING) and STATSUB(PRELOAD) in one buckling subcase, a bare
 #     STATSUB in another
-# Settles (library item: current status):
-#   - subcases_table 'statsub' (test decks only)
-#   - the equilibrium of buckling subcases written as static
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -36,8 +33,6 @@ LabelText;buckling of the compression alone
 EigenMethodSelection;5
 StaticSubcaseSelection;1
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # A plate of 4 x 2 CQUAD4 clamped at x = 0 and loaded in compression at x =

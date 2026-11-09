@@ -3,18 +3,11 @@
 # O_o_Reader validation deck: beam library sections under the solver's default finite element formulation (SOL 101)
 #
 # Validates:
-#   - the PBAR and PBEAM the solver writes in the EPT table of the OUTPUT2 file for every
+#   - the PBAR and PBEAM the solver writes in the EPT table of the result data for every
 #     PBARL and PBEAML type (area, I1, I2, J, K1, K2, the stress points), the
 #     element forces and stresses of a known tip load
-# Settles (library item: current status):
-#   - the finite element K of the unsymmetric sections (L, Z, CHAN, ...) and
-#     the beam library rule of the types other than BOX, L and CHAN (not
-#     verified)
-#   - K2 and J of a thin PBARL BAR (the solver's mesh error, an inference)
-#   - PBARL BAR, BOX, H, HEXA, T2 J; I, T I1; PBEAML L I1/I2 (not checked
-#     against the solver)
 # Run notes:
-#   - PARAM,POST,-1 writes the EPT records of the OUTPUT2 file (the PBAR and PBEAM
+#   - PARAM,POST,-1 writes the EPT records of the result data (the PBAR and PBEAM
 #     the solver derives)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
@@ -31,8 +24,6 @@ StressOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip loads
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;WeightReferenceNode;0

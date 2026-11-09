@@ -71,5 +71,12 @@ the inter-module contract. Update an image's alternative text and surrounding ex
 - Keep headings unique within each page so fragment links remain stable.
 - Build with warnings treated as errors and run the local-resource checker before pushing.
 
+When changing archive storage, update [the format specification](archive-format.md), the
+[JavaScript archive workflow](wasm-api.md#a-model-and-results-in-one-archive), the
+[format selection guide](getting-started.md#choose-a-file-format) and the
+[compatibility summary](element-naming.md#compatibility). Keep the `ArchiveWriter.hpp`, `ArchiveResultFile.hpp` and
+`ArchiveModel.hpp` declarations included in the API reference. Review the model-input and archive diagrams when
+loading or ownership changes. Keep archive version, native model schema version and table-package contract distinct.
+
 The downloadable archive includes navigation, styles, images and the search index. Source-code links open the public
 repository at `main`.

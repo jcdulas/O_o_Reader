@@ -13,13 +13,9 @@
 #     it to 0.25 outside)
 #   - the automatic ERROR (no ERROR on the first two pairs: the smallest edge
 #     over 20 and the thinnest shell over 4) and the double-order search
-# Settles (library item: current status):
-#   - the glued contact (shell thickness, BIAS, automatic ERROR,
-#     ISEARCH 0, the points the solver leaves out): the library's reading of the format reference,
-#     not validated against the solver; contactNodePairs(rule="solver")
 # Run notes:
 #   - NLOPRM MPCPCH punches the glue equations (format reference BCTABLE remark 18): bring
-#     the .pch back with the listing and the OUTPUT2 file
+#     the .pch back with the listing and the result data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -36,8 +32,6 @@ MultiPointConstrForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;loads on the glued plates
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Body 1: a 40 x 40 plate of 4 x 4 CQUAD4 at z = 0, 2 mm thick (skins at -1

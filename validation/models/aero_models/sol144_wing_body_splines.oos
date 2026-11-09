@@ -7,7 +7,7 @@
 #   - solution: SOL 144 (restrained static aeroelastic trim of a doublet-lattice
 #     wing with a slender body and its interference tube)
 #   - outputs: displacements, CQUAD4 stresses, trim variables, stability
-#     derivatives, aerodynamic pressures and forces (OUTPUT2)
+#     derivatives, aerodynamic pressures and forces
 # Run notes:
 #   - half model (symmetric about the root plane), root clamped: every trim
 #     variable is fixed

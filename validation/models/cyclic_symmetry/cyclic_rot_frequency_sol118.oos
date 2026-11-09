@@ -8,7 +8,7 @@
 #   - solution: SOL 118 (cyclic symmetry direct frequency response)
 #   - outputs: complex displacements of the segments
 # Run notes:
-#   - the segment of cyclic_rot_static_sol114.bdf without the hub, its outer
+#   - the segment of cyclic_rot_static_sol114.oos without the hub, its outer
 #     edge clamped; a unit axial force on segment 1 at 100 to 400 Hz
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

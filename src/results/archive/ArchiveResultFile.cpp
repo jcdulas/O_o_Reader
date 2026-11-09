@@ -5,6 +5,7 @@
 #include "oor/io/hdf5/Hdf5File.hpp"
 #include "oor/io/hdf5/Hdf5Table.hpp"
 #include "oor/results/archive/ArchiveFormat.hpp"
+#include "oor/results/archive/ArchiveModel.hpp"
 
 #include <algorithm>
 #include <array>
@@ -386,10 +387,13 @@ std::shared_ptr<ArchiveResultFile> ArchiveResultFile::open(const std::filesystem
             throw base::IoError("not a results archive (no format attribute '" + std::string(archive::FORMAT_NAME) +
                                 "' at its root): " + path.string());
         archiveFile->m_formatVersion = readRootText(file, archive::ATTRIBUTE_FORMAT_VERSION);
-        if (archiveFile->m_formatVersion != archive::FORMAT_VERSION)
+        if (archiveFile->m_formatVersion != archive::FORMAT_VERSION &&
+            archiveFile->m_formatVersion != archive::LEGACY_FORMAT_VERSION)
             throw base::IoError("the archive " + path.string() + " has the format version " +
                                 archiveFile->m_formatVersion + "; this library reads version " +
+                                std::string(archive::LEGACY_FORMAT_VERSION) + " and " +
                                 std::string(archive::FORMAT_VERSION));
+        archiveFile->m_hasModel = file.hasChild(std::string(archive::MODEL_GROUP).substr(1));
         ResultFileMetadata& metadata = archiveFile->m_metadata;
         metadata.format = "archive";
         metadata.origin = "archive";
@@ -403,6 +407,11 @@ std::shared_ptr<ArchiveResultFile> ArchiveResultFile::open(const std::filesystem
     }
     archiveFile->readIndex();
     return archiveFile;
+}
+
+std::shared_ptr<model::Model> ArchiveResultFile::readModel(const model::ModelReadOptions& options) const
+{
+    return archive::readModel(m_metadata.path, options);
 }
 
 void ArchiveResultFile::readIndex()

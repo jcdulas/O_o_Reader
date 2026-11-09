@@ -10,7 +10,7 @@
 #     (type 82) and CTRIAR (type 70), and of the plies of the laminates, in
 #     both complex forms
 # Run notes:
-#   - the corner twin of results_dynamics/freq_modal_vonmises.bdf
+#   - the corner twin of results_dynamics/freq_modal_vonmises.oos
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================

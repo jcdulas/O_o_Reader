@@ -10,17 +10,17 @@
 #              unit load)
 # Run notes:
 #   - FRF(COMPID=10 ...) generates the FRFs of the plate for the assembly run
-#     dynamics/frf_assembly_fba.bdf, on the OUTPUT2 file frf_gen_plate_frf.out2
+#     dynamics/frf_assembly_fba.oos, on the result data frf_gen_plate_frf.data
 #     (unit 25); the run also writes the .asm punch file with its FRFCOMP
 #     entry
 #   - unit loads: FRFXIT at grid point 13 along z, plus the loads the program
 #     applies by itself at the connection points 5 and 15 (SET 100)
-#   - bring back frf_gen_plate_frf.out2 and the .asm file next to the deck: the
-#     assembly run reads the OUTPUT2 file
+#   - bring back frf_gen_plate_frf.data and the .asm file next to the deck: the
+#     assembly run reads the result data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
-FileAssignment;OUTPUT2='frf_gen_plate_frf.out2';FileUnit=25;FileForm=Unformatted
+FileAssignment;RESULTS='frf_gen_plate_frf.data';FileUnit=25;FileForm=Unformatted
 SolutionSequence;108
 [case]
 TitleText;O_o_Reader test model: FRF generation, plate component
@@ -28,7 +28,7 @@ BulkEcho;None
 SinglePointConstrSelection;1
 FreqSetSelection;41
 SetDefinition;100;5;15
-FrfGeneration;;COMPID = 10 COMPNAME = PLATE CONNPTS = 100 OP2 = 25
+FrfGeneration;;COMPID = 10 COMPNAME = PLATE CONNPTS = 100
 DisplacementOutput;All;PlotOnly;MagnitudePhase
 SubcaseStart;1
 LabelText;FRFs of the plate

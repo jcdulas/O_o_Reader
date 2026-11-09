@@ -6,7 +6,7 @@
 #   - cards: CLOAD
 #   - solution: SOL 106 (nonlinear static analysis of a cantilever whose outer
 #     half is an upstream superelement loaded through a load sequence)
-#   - outputs: displacements, SPC forces, CBAR forces (OUTPUT2)
+#   - outputs: displacements, SPC forces, CBAR forces
 # Run notes:
 #   - CLOAD is not an aeroelastic card: it sits with the aero package because
 #     the card list was split that way. The upstream subcase (SUPER = 1)

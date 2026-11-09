@@ -8,12 +8,6 @@
 #     nodal results, MPC forces and the element families of the shared model
 #   - the random strain energy (5-word entry)
 #   - the HDF5 domains with RANDOM not zero (no decoder today: their layout)
-# Settles (library item: current status):
-#   - the not_validated 'random' lines in SORT1 and SORT2
-#     (forces of 30 element types, stresses and strains of 20, mpc_forces
-#     random SORT1)
-#   - the RMS strain energy, the RMS and NO tables, the PSD stress of CQUADR
-#   - a random analysis stays raw in the HDF5 reader (never observed)
 # Run notes:
 #   - the listing (RPRINT) gives the printed PSD and RMS values the comparison
 #     needs
@@ -42,8 +36,6 @@ ElemStrainEnergyOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;base load set 1, white noise
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 LanczosEigenMethod;71;;;12

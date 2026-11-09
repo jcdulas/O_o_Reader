@@ -17,24 +17,8 @@
 #   - the grid point weight (PARAM,GRDPNT,0: OGPWG and NODAL/GRID_WEIGHT of
 #     the same run)
 #   - EPSILON and the external work of each subcase (printed in the listing)
-#   - the same results in the HDF5 file of the same run (OUTPUT2 twin: proves the
+#   - the same results in the HDF5 file of the same run (matching result data: proves the
 #     HDF5 datasets)
-# Settles (library item: current status):
-#   - the not_validated 32-bit lines of
-#     stress, strain, forces and strain_energy in real SORT2 for celas1-4,
-#     cbush, cbush1d, cfast, cweld, cpyram, cshear, cquadr, ctriar, cquad8,
-#     ctria6, the *_composite containers, cbar100, cbend, ctube, conrod
-#     (not_validated -> validated)
-#   - the HDF5 datasets of the same tables
-#     (ELAS1-3, SHEAR, QUAD8, TRIA6, QUADR, TRIAR, *_COMP, BARS, CONROD, TUBE,
-#     MPC_FORCE, APPLIED_LOAD; not_validated -> validated)
-#   - NODAL/GRID_WEIGHT (experimental ->
-#     validated against the OUTPUT2 file OGPWG)
-#   - the HDF5 datasets not proved yet (an OUTPUT2 file twin from the same run, not a
-#     mechanism, not only zeros)
-#   - the SORT2 element tables of plates, beams and
-#     laminates (checked only against the SORT1 form of the same file), the
-#     SORT2 strain energy (ONRGY2, raw today)
 # Run notes:
 #   - run it twice: once as is, once with the 64-bit (i8) executable (for
 #     example the run command of this deck with mode=i8, or the i8
@@ -70,8 +54,6 @@ SubcaseStart;3
 LabelText;load set 3 = 2 x set 1 + set 2
 StaticLoadSelection;3
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;WeightReferenceNode;0

@@ -9,7 +9,7 @@
 #     transfer run: OUGV1 and NODAL/VELOCITY), heat fluxes, heat flows, the
 #     heat flow at the constrained points and the thermal loads
 # Run notes:
-#   - the SORT1 twin of thermal_transient_sol159_sort2.bdf
+#   - the SORT1 twin of thermal_transient_sol159_sort2.oos
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================

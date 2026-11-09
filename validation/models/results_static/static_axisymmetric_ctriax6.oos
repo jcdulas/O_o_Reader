@@ -7,10 +7,6 @@
 #     53)
 #   - the mass of a ring element in the grid point weight (per radian or over
 #     360 degrees)
-# Settles (library item: current status):
-#   - strain.ctriax6 real SORT1 (not_validated ->
-#     validated); stress.ctriax6 confirmed
-#   - the CTRIAX6 mass (ring mass taken over 360 degrees: an assumption)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -30,8 +26,6 @@ NodeForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;axial pull and radial load
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Include;ctriax6_model.oos

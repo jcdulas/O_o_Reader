@@ -15,15 +15,15 @@ TEST_CASE("a model built from nothing writes file assignments before executive r
     model.control().executive.setSolution("101");
     model.control().fileManagement.addKeyword(
         "FileAssignment",
-        {StatementParameter::withQuotedValue("OUTPUT2", "x.bin"), StatementParameter::withValue("FileUnit", "12")});
+        {StatementParameter::withQuotedValue("RESULTS", "x.bin"), StatementParameter::withValue("FileUnit", "12")});
     REQUIRE(writeModelText(model) ==
-            "[executive]\nFileAssignment;OUTPUT2='x.bin';FileUnit=12\nSolutionSequence;101\nTimeLimit;10\n");
+            "[executive]\nFileAssignment;RESULTS='x.bin';FileUnit=12\nSolutionSequence;101\nTimeLimit;10\n");
 }
 
 TEST_CASE("copying a model copies its File Management", "[control][file-management]")
 {
     const Model model = readModelText(
-        "[executive]\nFileAssignment;OUTPUT2='x.bin';FileUnit=12\nSolutionSequence;101\n[model]\n"
+        "[executive]\nFileAssignment;RESULTS='x.bin';FileUnit=12\nSolutionSequence;101\n[model]\n"
         "Node;1;;0.;0.;0.\n");
     REQUIRE(model.control().fileManagement.findAll("FileAssignment").size() == 1);
     Model copy = model.copy();

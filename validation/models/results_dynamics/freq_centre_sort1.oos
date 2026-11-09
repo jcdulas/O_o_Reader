@@ -11,7 +11,7 @@
 #     subcase 2), and the complex ply tables of the laminates (PCOMP 2:
 #     QUAD4_COMP_CPLX, TRIA3_COMP_CPLX, ... in the HDF5 file)
 # Run notes:
-#   - the twin of results_dynamics/freq_direct_sort1.bdf, which asks for the
+#   - the twin of results_dynamics/freq_direct_sort1.oos, which asks for the
 #     corners; run it a second time with the i8 executable (subfolder i8)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

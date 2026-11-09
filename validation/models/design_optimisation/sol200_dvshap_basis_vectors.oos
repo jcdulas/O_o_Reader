@@ -9,7 +9,7 @@
 #   - outputs: displacements and CQUAD4 stresses of each design cycle, the
 #     design tables (DESTAB, HISADD)
 # Run notes:
-#   - needs the database of sol101_shape_basis.bdf (run with scr=no in the
+#   - needs the database of sol101_shape_basis.oos (run with scr=no in the
 #     same folder): the ASSIGN names its MASTER file, the DBLOCATE takes the
 #     displacement matrix and the geometry from it
 #   - PARAM,DESPCH,1 punches the moved grid points of the final design

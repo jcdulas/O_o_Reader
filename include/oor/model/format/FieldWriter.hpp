@@ -1,8 +1,10 @@
 #pragma once
 
 #include "oor/base/text/NumberFormatter.hpp"
+#include "oor/model/format/FieldValue.hpp"
 
 #include <cstdint>
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -62,24 +64,10 @@ public:
 
     // Internal slot texts with standard decimal reals and the optional significant-digit precision.
     [[nodiscard]] std::vector<std::string> fields() const;
+    [[nodiscard]] std::span<const FieldValue> typedFields() const noexcept { return m_slots; }
 
 private:
-    struct Slot
-    {
-        enum class Kind : std::uint8_t
-        {
-            Blank,
-            Integer,
-            Real,
-            Text,
-            SpanText, // text over several fields: `integer` is the number of fields
-            NamedReal // text holds the name, real the value
-        };
-        Kind kind = Kind::Blank;
-        std::int64_t integer = 0;
-        double real = 0.0;
-        std::string text;
-    };
+    using Slot = FieldValue;
 
     Slot& slot(int field);
 

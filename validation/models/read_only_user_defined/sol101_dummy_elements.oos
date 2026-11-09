@@ -13,7 +13,7 @@
 #   - read-only: the stiffness and stress routines of the dummy elements
 #     are user code linked into a user-modifiable solver; a standard
 #     executable has none. ADUM8 and ADUM9 are reserved by the solver for CRAC2D
-#     and CRAC3D (see solution_control/sol101_crack_tip_elements.bdf); here
+#     and CRAC3D (see solution_control/sol101_crack_tip_elements.oos); here
 #     they declare CDUM8 and CDUM9 as the other dummies do
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

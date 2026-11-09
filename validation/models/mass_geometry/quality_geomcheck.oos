@@ -6,10 +6,6 @@
 #   - the solver's taper and warping measures of CQUAD4, CQUADR, CQUAD8 and CSHEAR
 #     (GEOMCHECK with limits so low that every element is reported, as
 #     information)
-# Settles (library item: current status):
-#   - the taper and the warp of CQUAD4, CQUADR, CQUAD8 and CSHEAR (the
-#     library's definitions confirmed against an independent computation
-#     only)
 # Run notes:
 #   - the listing lists each element with its measured value: bring the listing back
 # Written for this project, to exercise the reader.
@@ -27,8 +23,6 @@ DisplacementOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;distorted quadrilaterals
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Distorted quadrilaterals (CQUAD4, CQUADR, CQUAD8, CSHEAR): a tapered one and

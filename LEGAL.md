@@ -5,15 +5,16 @@ The rules this project follows on file formats, names and third-party code. This
 ## File formats
 
 - The library reads and writes the **O_o model format** (`.oos`), with neutral names for cards, fields, commands and
-  parameter values. O_o_Converter is the separate project that imports and exports the Nastran bulk data input format.
-- Results are stored in an **HDF5 layout of the project's own** ([docs/archive-format.md](docs/archive-format.md)) and
-  written for people as **Excel workbooks** (Office Open XML, the open standard ISO/IEC 29500).
+  parameter values.
+- Models and results are stored in an **HDF5 layout of the project's own**
+  ([docs/archive-format.md](docs/archive-format.md)); results are also written for people as **Excel workbooks**
+  (Office Open XML, the open standard ISO/IEC 29500).
 - The project neither reads nor writes the binary result formats or the result databases of other software vendors.
 
 ## Names
 
-- "Nastran" is used only to describe the input format supported by the separate converter. The product, its namespace (`oor`), its
-  libraries (`oor_*`), its package (`oor-reader`) and its file formats (`oor-results-archive`, `oor-query-tables`) carry
+- The product, its namespace (`oor`), its libraries (`oor_*`), its package (`oor-reader`) and its file formats
+  (`oor-results-archive`, `oor-query-tables`) carry
   no vendor name.
 - The code, comments, messages and tests name no vendor and no vendor product.
 

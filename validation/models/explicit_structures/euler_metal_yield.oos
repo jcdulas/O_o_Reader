@@ -13,7 +13,7 @@
 # Run notes:
 #   - needs the explicit solver of SOL 700 in the installation (the solver
 #     spawns it; see the SOL 700 Executive Control statement)
-#   - SOL 700 has no OUTPUT2 output: the explicit solver writes its own archive
+#   - SOL 700 has no results output: the explicit solver writes its own archive
 #     and time-history files (ARC, THS) and its output file next to the listing;
 #     bring back the listing
 # Written for this project, to exercise the reader.

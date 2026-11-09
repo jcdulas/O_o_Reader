@@ -54,6 +54,7 @@ const ids = Array.from(info.independentIndices, i => info.variables[i].id);
 const update = oor.applyDesignPoint(deck, ids, acceptedX);
 console.log(update.changedFields, update.movedGrids);
 const text = deck.toModelText();
+deck.writeArchive("/work/accepted-model.oorh5"); // save the accepted model as native columns
 ```
 
 The IDs are explicit because Solver's vector contains independent variables only, whereas Reader lists all variables.
@@ -67,6 +68,10 @@ default. Optional `limits: "clip" | "ignore"` changes the field limit policy; va
 `setInitialValues` defaults to true: the design variable cards are saved at the accepted point. Shape initial values
 and grid coordinates remain consistent, so applying the same point again does not repeat a shape move.
 The report includes each field's before, requested and after values, clipping status and changed flag.
+
+To save the accepted model with its result tables, attach it to the result set and call `results.writeArchive`.
+An archive reopened through `results.model()` shares its deck with subsequent archive writes. See
+[model/results archives](wasm-api.md#a-model-and-results-in-one-archive) for ownership and loading behavior.
 
 Declarations added only to the solver from JavaScript do not automatically create Reader cards. Add their declarations
 to the model before using `applyDesignPoint`, or write the final fields through the existing card-editing interface.

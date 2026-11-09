@@ -1,29 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="810" viewBox="0 0 1120 810" role="img" aria-labelledby="title description">
-<title id="title">From records to query tables</title>
-<desc id="description">The lexer preserves sections, comments and includes. ModelFileReader uses the layout catalogue to build typed tables. Queries combine stored columns, computed model data and selected results.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1040" viewBox="0 0 1120 1040" role="img" aria-labelledby="title description">
+<title id="title">Two model inputs, shared query tables</title>
+<desc id="description">Text records pass through the lexer and layout catalogue. Native archive columns pass through ArchiveModel as typed fields. Both construct the same model tables used by analysis and model/result queries.</desc>
 <rect width="100%" height="100%" rx="18" fill="#f8fafc"/>
 <g font-family="sans-serif" fill="#1c2e48">
 <text x="36" y="40" font-size="13" font-weight="700" letter-spacing="1.5" fill="#52647e">ARCHITECTURE</text>
-<text x="36" y="77" font-size="28" font-weight="700">From records to query tables</text>
+<text x="36" y="77" font-size="28" font-weight="700">Two model inputs, shared query tables</text>
 <path d="M335 197 H415" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="415,197 403,192 403,202" fill="#50627b"/>
 <path d="M705 197 H785" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="785,197 773,192 773,202" fill="#50627b"/>
-<path d="M930 345 V260" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M930 330 V260" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="930,260 925,272 935,272" fill="#50627b"/>
-<path d="M785 260 V300 H560 V345" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
-<polygon points="560,345 565,333 555,333" fill="#50627b"/>
-<path d="M415 407 H335" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
-<polygon points="335,407 347,412 347,402" fill="#50627b"/>
-<path d="M190 555 V470" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
-<polygon points="190,470 185,482 195,482" fill="#50627b"/>
-<path d="M560 555 V530 H355 V435 H335" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
-<polygon points="335,435 347,440 347,430" fill="#50627b"/>
-<path d="M335 407 H370 V510 H930 V555" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
-<polygon points="930,555 935,543 925,543" fill="#50627b"/>
+<path d="M785 240 H745 V495 H635 V535" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="635,535 640,523 630,523" fill="#50627b"/>
+<path d="M335 392 H415" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="415,392 403,387 403,397" fill="#50627b"/>
+<path d="M560 455 V535" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="560,535 565,523 555,523" fill="#50627b"/>
+<path d="M415 597 H335" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="335,597 347,602 347,592" fill="#50627b"/>
+<path d="M190 660 V710 H455 V760" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="455,760 460,748 450,748" fill="#50627b"/>
+<path d="M560 660 V760" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="560,760 565,748 555,748" fill="#50627b"/>
+<path d="M930 660 V710 H665 V760" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="665,760 670,748 660,748" fill="#50627b"/>
+<path d="M705 822 H785" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
+<polygon points="785,822 773,817 773,827" fill="#50627b"/>
 <rect x="45" y="135" width="290" height="125" rx="12" fill="#f0f3f7" stroke="#64748b" stroke-width="1.5"/>
 <rect x="46" y="149" width="4" height="97" rx="2" fill="#64748b"/>
-<text x="65" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#64748b">INPUT</text>
+<text x="65" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#64748b">TEXT INPUT</text>
 <text x="65" y="188" font-size="21" font-weight="700">.oos model text</text>
 <text x="65" y="217" font-size="20" fill="#43546d">Sections, records,</text>
 <text x="65" y="241" font-size="20" fill="#43546d">includes</text>
@@ -38,38 +44,53 @@
 <text x="805" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4366b3">MODEL</text>
 <text x="805" y="188" font-size="21" font-weight="700">ModelFileReader</text>
 <text x="805" y="217" font-size="20" fill="#43546d">Read and validate fields</text>
-<rect x="785" y="345" width="290" height="125" rx="12" fill="#fff5df" stroke="#a56b18" stroke-width="1.5"/>
-<rect x="786" y="359" width="4" height="97" rx="2" fill="#a56b18"/>
-<text x="805" y="370" font-size="12" font-weight="700" letter-spacing="1.2" fill="#a56b18">EMBEDDED DATA</text>
-<text x="805" y="398" font-size="21" font-weight="700">Layout catalogue</text>
-<text x="805" y="427" font-size="20" fill="#43546d">Compact values to slots</text>
-<rect x="415" y="345" width="290" height="125" rx="12" fill="#e9f6f2" stroke="#237d69" stroke-width="1.5"/>
-<rect x="416" y="359" width="4" height="97" rx="2" fill="#237d69"/>
-<text x="435" y="370" font-size="12" font-weight="700" letter-spacing="1.2" fill="#237d69">MODEL</text>
-<text x="435" y="398" font-size="21" font-weight="700">Typed model tables</text>
-<text x="435" y="427" font-size="20" fill="#43546d">Columns, references, IDs</text>
-<rect x="45" y="345" width="290" height="125" rx="12" fill="#edf3ff" stroke="#4366b3" stroke-width="1.5"/>
-<rect x="46" y="359" width="4" height="97" rx="2" fill="#4366b3"/>
-<text x="65" y="370" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4366b3">QUERY</text>
-<text x="65" y="398" font-size="21" font-weight="700">Named query / plan</text>
-<text x="65" y="427" font-size="20" fill="#43546d">Stored + computed data</text>
-<rect x="45" y="555" width="290" height="125" rx="12" fill="#e9f6f2" stroke="#237d69" stroke-width="1.5"/>
-<rect x="46" y="569" width="4" height="97" rx="2" fill="#237d69"/>
-<text x="65" y="580" font-size="12" font-weight="700" letter-spacing="1.2" fill="#237d69">ANALYSIS</text>
-<text x="65" y="608" font-size="21" font-weight="700">Model analysis</text>
-<text x="65" y="637" font-size="20" fill="#43546d">Geometry, mass, frames</text>
-<rect x="415" y="555" width="290" height="125" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>
-<rect x="416" y="569" width="4" height="97" rx="2" fill="#7951a8"/>
-<text x="435" y="580" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">RESULTS</text>
-<text x="435" y="608" font-size="21" font-weight="700">Selected results</text>
-<text x="435" y="637" font-size="20" fill="#43546d">Table metadata and values</text>
-<rect x="785" y="555" width="290" height="125" rx="12" fill="#edf3ff" stroke="#4366b3" stroke-width="1.5"/>
-<rect x="786" y="569" width="4" height="97" rx="2" fill="#4366b3"/>
-<text x="805" y="580" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4366b3">OUTPUT</text>
-<text x="805" y="608" font-size="21" font-weight="700">QueryTable</text>
-<text x="805" y="637" font-size="20" fill="#43546d">Columns, CSV, HDF5,</text>
-<text x="805" y="661" font-size="20" fill="#43546d">package</text>
-<text x="45" y="742" font-size="16" fill="#43546d">Parsing creates typed model data. Model analysis derives quantities without running a finite element solve.</text>
-<text x="45" y="766" font-size="16" fill="#43546d">Query buffers can be shared inside the reader; a package is the transport boundary to another module.</text>
+<rect x="45" y="330" width="290" height="125" rx="12" fill="#f0f3f7" stroke="#64748b" stroke-width="1.5"/>
+<rect x="46" y="344" width="4" height="97" rx="2" fill="#64748b"/>
+<text x="65" y="355" font-size="12" font-weight="700" letter-spacing="1.2" fill="#64748b">ARCHIVE INPUT</text>
+<text x="65" y="383" font-size="21" font-weight="700">.oorh5 native model</text>
+<text x="65" y="412" font-size="20" fill="#43546d">Model columns and</text>
+<text x="65" y="436" font-size="20" fill="#43546d">metadata</text>
+<rect x="415" y="330" width="290" height="125" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>
+<rect x="416" y="344" width="4" height="97" rx="2" fill="#7951a8"/>
+<text x="435" y="355" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">RESULTS/ARCHIVE</text>
+<text x="435" y="383" font-size="21" font-weight="700">ArchiveModel</text>
+<text x="435" y="412" font-size="20" fill="#43546d">Typed fields, model</text>
+<text x="435" y="436" font-size="20" fill="#43546d">schema 1</text>
+<rect x="785" y="330" width="290" height="125" rx="12" fill="#fff5df" stroke="#a56b18" stroke-width="1.5"/>
+<rect x="786" y="344" width="4" height="97" rx="2" fill="#a56b18"/>
+<text x="805" y="355" font-size="12" font-weight="700" letter-spacing="1.2" fill="#a56b18">TEXT RECORD LAYOUT</text>
+<text x="805" y="383" font-size="21" font-weight="700">Layout catalogue</text>
+<text x="805" y="412" font-size="20" fill="#43546d">Compact values to slots</text>
+<rect x="415" y="535" width="290" height="125" rx="12" fill="#e9f6f2" stroke="#237d69" stroke-width="1.5"/>
+<rect x="416" y="549" width="4" height="97" rx="2" fill="#237d69"/>
+<text x="435" y="560" font-size="12" font-weight="700" letter-spacing="1.2" fill="#237d69">MODEL</text>
+<text x="435" y="588" font-size="21" font-weight="700">Typed model tables</text>
+<text x="435" y="617" font-size="20" fill="#43546d">Columns, IDs, controls,</text>
+<text x="435" y="641" font-size="20" fill="#43546d">parts</text>
+<rect x="45" y="535" width="290" height="125" rx="12" fill="#e9f6f2" stroke="#237d69" stroke-width="1.5"/>
+<rect x="46" y="549" width="4" height="97" rx="2" fill="#237d69"/>
+<text x="65" y="560" font-size="12" font-weight="700" letter-spacing="1.2" fill="#237d69">ANALYSIS</text>
+<text x="65" y="588" font-size="21" font-weight="700">Model analysis</text>
+<text x="65" y="617" font-size="20" fill="#43546d">Geometry, mass, frames</text>
+<rect x="785" y="535" width="290" height="125" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>
+<rect x="786" y="549" width="4" height="97" rx="2" fill="#7951a8"/>
+<text x="805" y="560" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">RESULTS</text>
+<text x="805" y="588" font-size="21" font-weight="700">Selected results</text>
+<text x="805" y="617" font-size="20" fill="#43546d">Metadata and selected</text>
+<text x="805" y="641" font-size="20" fill="#43546d">values</text>
+<rect x="415" y="760" width="290" height="125" rx="12" fill="#edf3ff" stroke="#4366b3" stroke-width="1.5"/>
+<rect x="416" y="774" width="4" height="97" rx="2" fill="#4366b3"/>
+<text x="435" y="785" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4366b3">QUERY</text>
+<text x="435" y="813" font-size="21" font-weight="700">Named query / plan</text>
+<text x="435" y="842" font-size="20" fill="#43546d">Stored + computed data</text>
+<rect x="785" y="760" width="290" height="125" rx="12" fill="#edf3ff" stroke="#4366b3" stroke-width="1.5"/>
+<rect x="786" y="774" width="4" height="97" rx="2" fill="#4366b3"/>
+<text x="805" y="785" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4366b3">OUTPUT</text>
+<text x="805" y="813" font-size="21" font-weight="700">QueryTable</text>
+<text x="805" y="842" font-size="20" fill="#43546d">Columns, CSV, HDF5,</text>
+<text x="805" y="866" font-size="20" fill="#43546d">package</text>
+<text x="45" y="950" font-size="16" fill="#43546d">Both inputs build the same model tables, including controls, parts and source metadata.</text>
+<text x="45" y="974" font-size="16" fill="#43546d">Model analysis derives geometry and mass without running a finite element solve.</text>
+<text x="45" y="998" font-size="16" fill="#43546d">Query buffers stay inside Reader; table packages cross the boundary to another module.</text>
 </g>
 </svg>

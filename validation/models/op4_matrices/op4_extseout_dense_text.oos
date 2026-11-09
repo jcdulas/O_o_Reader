@@ -7,11 +7,6 @@
 #     formatted): stiffness, mass, damping and load matrices of the boundary,
 #     their names and forms
 #   - the punch file of the external superelement (ASMBULK)
-# Settles (library item: current status):
-#   - the OP4 forms the solver writes (BIGMAT and the 8-byte word form of an i8
-#     run)
-#   - superelements: the assembly deck se_external_assemble_auto.bdf reads the
-#     sparse binary file (EXTOP4 with AUTO)
 # Run notes:
 #   - the OP4 file is op4_extseout_dense_text.op4; bring back the .pch as well
 #   - run the sparse binary deck a second time with the i8 executable for the

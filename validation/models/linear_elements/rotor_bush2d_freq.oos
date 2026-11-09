@@ -8,7 +8,7 @@
 #   - solution: SOL 108 (direct frequency response with the gyroscopic terms
 #     of a spinning rotor)
 #   - outputs: complex displacements, SPC forces and beam forces,
-#     real/imaginary (OUTPUT2)
+#     real/imaginary
 # Run notes:
 #   - RGYRO 41 (asynchronous, reference rotor 1 at 3000 RPM) is selected by
 #     the Case Control RGYRO

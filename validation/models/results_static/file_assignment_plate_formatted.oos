@@ -1,23 +1,16 @@
 [executive]
 # ============================================================================
-# O_o_Reader validation deck: OUTPUT2 file, unformatted
+# O_o_Reader validation model: formatted file-assignment metadata
 #
-# Validates:
-#   - the unformatted OUTPUT2 of a small plate (the other deck of the pair writes
-#     the same model in the other form)
-# Settles (library item: current status):
-#   - a formatted OUTPUT2 is not decoded: the pair gives the text form and its
-#     binary twin
-# Run notes:
-#   - the OUTPUT2 file is written to output2_plate_unformatted.out2 by the ASSIGN
-#     statement
-# Written for this project, to exercise the reader.
-# How to run it, what to bring back: validation/models/README.md.
+# Exercises native executive records with a file unit and form, case selections,
+# and a plate under a tip load. The named external file is retained as metadata.
+# Written for this project, to exercise native model reading and writing.
+# See validation/models/README.md for the validation workflow.
 # ============================================================================
-FileAssignment;OUTPUT2='output2_plate_unformatted.out2';FileUnit=12;FileForm=Unformatted
+FileAssignment;RESULTS='file_assignment_plate_formatted.data';FileUnit=12;FileForm=Formatted
 SolutionSequence;101
 [case]
-TitleText;formatted and unformatted OUTPUT2 of one model
+TitleText;formatted and unformatted file-assignment metadata
 BulkEcho;Sorted
 SinglePointConstrSelection;1
 StaticLoadSelection;1

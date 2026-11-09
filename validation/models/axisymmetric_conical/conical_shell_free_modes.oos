@@ -5,7 +5,7 @@
 # Covers:
 #   - cards: SUPAX (with AXIC, RINGAX, CCONEAX, PCONEAX, MAT1, EIGRL)
 #   - solution: SOL 103 (real eigenvalues, Lanczos)
-#   - outputs: eigenvalues, eigenvectors of the ring harmonics (OUTPUT2)
+#   - outputs: eigenvalues, eigenvectors of the ring harmonics
 # Run notes:
 #   - the cone is free: SUPAX puts in the r-set the axial and circumferential
 #     components of harmonic 0 (axial translation, torsion) and the radial and

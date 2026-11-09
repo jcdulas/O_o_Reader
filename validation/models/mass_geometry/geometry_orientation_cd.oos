@@ -6,11 +6,7 @@
 #   - the element frame of a CBAR and a CBEAM whose orientation vector is
 #     given in the cylindrical or spherical displacement system of end A: the
 #     plane 1 and plane 2 forces (FORCE) of a known tip load and the element
-#     geometry of the OUTPUT2 file
-# Settles (library item: current status):
-#   - the CBAR and CBEAM frames (the vector taken in the CD of GA at its
-#     position: confirmed against an independent computation only)
-#   - oneDimensionalForce (no file stores a bar force in two frames)
+#     geometry of the result data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -26,8 +22,6 @@ NodeForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip loads
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # CBAR and CBEAM whose end A is a grid point with a cylindrical (CORD2C 1) or

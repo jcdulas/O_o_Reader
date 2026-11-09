@@ -5,10 +5,6 @@
 # Validates:
 #   - the columns of the hyperelastic element tables (finite deformation) of
 #     CQUAD8 and CTRIA6: the listing headings name each column
-# Settles (library item: current status):
-#   - the derived stress and strain of the CQUAD8 and CTRIA6 (the last
-#     column, read with the layout of the shells: no formula fits the CTRIA6)
-#   - the hyperelastic element types are not decoded (their layout)
 # Run notes:
 #   - PRINT is asked as well so that the listing shows the column headings
 # Written for this project, to exercise the reader.
@@ -27,8 +23,6 @@ StrainOutput;All;PlotOnly;PrintListing
 SubcaseStart;1
 LabelText;stretch in ten increments
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;LargeDisplacements;1

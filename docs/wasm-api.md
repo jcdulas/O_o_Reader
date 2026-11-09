@@ -15,7 +15,7 @@ it refuses to compile the module).
 import { loadOorReader } from "oor-reader";
 
 const oor = await loadOorReader();
-console.log(oor.version()); // "0.1.0"
+console.log(oor.version()); // "0.2.0"
 ```
 
 In a browser, serve `oor_reader_core.wasm` next to `oor_reader_core.js`, or tell Emscripten where it is:
@@ -48,15 +48,18 @@ deck.cardCounts();        // { IsoMat: 1, Node: 6, ShellQuad4: 2, ShellProp: 1 }
 deck.diagnostics();       // [{ severity, code, message, location }]
 deck.toModelText();
 deck.writeModel("/work/out.oos", { splitIncludes: true });
+deck.writeArchive("/work/model.oorh5"); // native typed model, without result tables
+const nativeDeck = oor.readModel("/work/model.oorh5");
+nativeDeck.delete();
 deck.delete();            // free the C++ object when done
 ```
 
 Model records, diagnostics and JavaScript values use the same exact neutral names
 ([naming.md](naming.md)): `ShellQuad4`, `propId`, `All` and `Yes`.
 
-`readModel` reads model records regardless of the path's extension. `writeModel` writes model records and returns any
-content it could not carry, one description per item. `toModelText` gives one text with Include files flattened.
-A separate O_o_Converter package imports and exports other input formats.
+`readModel` detects a native `.oorh5` archive by its content and loads its typed model. Otherwise it reads model records,
+regardless of the path's extension. An archive without a model raises an error. `writeModel` writes model records and
+returns any content it could not carry, one description per item. `toModelText` gives one text with Include files flattened.
 
 ### Cards by ID
 
@@ -118,6 +121,60 @@ const data = results.read(tables[0].index, { stepIndices: [0], components: ["t3"
 results.writeArchive("/work/run.oorh5", { compressionLevel: 4, title: "PLATE" });
 results.writeXlsx("/work/run.xlsx", { title: "PLATE" });  // an Excel workbook, for people
 ```
+
+`openResults` loads the result indexes, leaving model columns and result values unread. `model()` caches its deck;
+subsequent calls share that deck and its edits. `attach(deck, false)` selects an existing deck instead. `writeArchive`
+includes the attached deck, and preserves an embedded model even when `model()` has not been called. To write the model
+alone, use `deck.writeArchive(path, options)`; it takes the same compression and title options. Archives containing only
+results remain supported. New archives use version 4; version 3 result archives remain readable.
+
+### A model and results in one archive
+
+```js
+results.attach(deck, false);
+results.writeArchive("/work/complete.oorh5", { compressionLevel: 4 });
+
+const archive = oor.openResults("/work/complete.oorh5");
+if (archive.hasModel()) {
+  const embedded = archive.model(); // load once; later calls share the same C++ deck
+  try {
+    const maximum = oor.runQuery("maxDisplacement", { deck: embedded, results: archive });
+    try {
+      console.log(maximum.toCsv());
+    } finally {
+      maximum.delete();
+    }
+    embedded.writeModel("/work/export.oos");
+    embedded.writeArchive("/work/model-only.oorh5");
+  } finally {
+    embedded.delete();
+  }
+}
+archive.delete();
+```
+
+| Operation | Behavior |
+| --- | --- |
+| `oor.openResults(path)` | Opens a model-only, result-only or combined archive and reads result indexes. |
+| `results.hasModel()` | Reports an attached or embedded model without reading its columns. |
+| `results.model()` | Returns the attached deck, or loads, caches and attaches the embedded deck; `null` when absent. |
+| `oor.readModel(path, { strict })` | Reads `.oos` text or the native model independently; an archive without a model raises an error. |
+| `results.attach(deck, strict)` | Selects a deck for model/result queries and subsequent archive writes. |
+| `results.writeArchive(path, options)` | Includes the attached model, or preserves the embedded one if it has not yet been loaded. |
+| `deck.writeArchive(path, options)` | Writes a model-only archive. |
+
+Edits to the deck returned by `model()` are included by a later `results.writeArchive`. Calling `oor.readModel` instead
+creates an independent deck: attach that deck explicitly if its edits should replace the model saved with the results.
+`hasModel()` checks presence; a malformed or unsupported model schema raises an error when its model is loaded.
+
+Both archive writers accept `ArchiveWriteOptions`: `compressionLevel` (0 to 9, default 4), `shuffle` (default true),
+`strict` (default false), `title`, `subtitle` and `label`. `strict` raises an error instead of reporting skipped result
+tables. Unsupported model control data always raises an error rather than being omitted. Cards from Include files
+and their source metadata are embedded; files merely referenced by other card or control values remain references.
+
+The [native model specification](archive-format.md#native-model) describes typed columns, sparse fields, constants,
+source precision and pending defaults. The [getting-started example](getting-started.md#save-and-reopen-a-model-with-results)
+is a complete runnable program. The archive, native model and table-package versions are separate contracts.
 
 ### Results made by a program
 

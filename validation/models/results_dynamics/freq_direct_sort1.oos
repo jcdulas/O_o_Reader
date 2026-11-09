@@ -9,13 +9,7 @@
 #     strain, force of springs, dampers, rods, bars, beams, bends, shells,
 #     laminates, solids, bushes, fasteners, welds)
 #   - complex grid point forces (the complex cuts of section_cut)
-#   - the HDF5 *_CPLX datasets of the same run (OUTPUT2 twin)
-# Settles (library item: current status):
-#   - the not_validated complex SORT1 lines
-#     (stress/strain/forces of cbush1d, celas*, cfast, cweld, cpyram, cquadr,
-#     ctriar, the laminates, cshear, ctriax6; nodal complex SORT2 lines)
-#   - HDF5: every *_CPLX dataset (not_validated -> validated)
-#   - complex cuts (not validated against the solver)
+#   - the HDF5 *_CPLX datasets of the same run (matching result data)
 # Run notes:
 #   - direct frequency response: structural damping from MAT1 GE and PARAM,G;
 #     dampers, CVISC and CBUSH B
@@ -54,8 +48,6 @@ StressOutput;All;PlotOnly;SortByPoint;MagnitudePhase;CornerResults
 StrainOutput;All;PlotOnly;SortByPoint;MagnitudePhase;FiberDistance;CornerResults
 ElemForceOutput;All;PlotOnly;SortByPoint;MagnitudePhase;CornerResults
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;UniformStructuralDamping;0.02

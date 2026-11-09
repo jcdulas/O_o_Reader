@@ -6,8 +6,8 @@
 #   - cards: ECHOON ECHOOFF METADATA H5OUT HDF5DA UDNAME (with BEGIN MODULE
 #     and MDBULK)
 #   - solution: SOL 101 (static bending of a plate of two modules)
-#   - outputs: displacements, SPC forces, CQUAD4 stresses and forces (OUTPUT2
-#     and HDF5); METADATA is written to the OUTPUT2 file
+#   - outputs: displacements, SPC forces, CQUAD4 stresses and forces (results
+#     and HDF5); METADATA is written to the result data
 # Run notes:
 #   - the unsorted echo of the listing shows the Bulk Data between ECHOON and
 #     ECHOOFF only (ECHO = UNSORT, as the ECHOON entry recommends)
@@ -44,7 +44,7 @@ UserFileName;101;module1-dedicated.h5
 # Module 1 continues the plate from x = 100 to 200; its boundary with module
 # 0 is searched by position.
 ModuleBulkOptions;1;;;Automatic
-# Free text that travels with the model to the OUTPUT2 file.
+# Free text that travels with the model to the result data.
 ResultMetadata;plate_metadata;O_o_Reader test model of the solution control cards;units mm N t s and an aluminium plate 2 mm thick
 # The mesh is not echoed: echo off before it, on again after it.
 EchoOffMarker

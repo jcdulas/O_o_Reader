@@ -8,11 +8,6 @@
 #     magnitude/phase
 #   - the complex ply tables of the laminates (OES1C/OSTR1C, complex)
 #   - modal damping (SDAMPING, TABDMP1)
-# Settles (library item: current status):
-#   - the 'modal contribution' lines of stress and strain (not_validated;
-#     the plates, laminates and solids are raw today)
-#   - the complex ply layout of the composite elements (decoded with no
-#     reference)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -36,8 +31,6 @@ LabelText;magnitude and phase, von Mises
 StressOutput;All;PlotOnly;MagnitudePhase;VonMisesStress
 StrainOutput;All;PlotOnly;MagnitudePhase;VonMisesStress;FiberDistance
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 LanczosEigenMethod;71;;;12

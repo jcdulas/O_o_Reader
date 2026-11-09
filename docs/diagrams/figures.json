@@ -231,7 +231,7 @@
           116
         ],
         "body": [
-          "Result catalogue, lazy tables and writers"
+          "Native model storage, lazy result tables"
         ],
         "color": "purple",
         "tag": "04 Library"
@@ -362,11 +362,11 @@
   },
   {
     "id": "reader-model-query",
-    "title": "From records to query tables",
-    "description": "The lexer preserves sections, comments and includes. ModelFileReader uses the layout catalogue to build typed tables. Queries combine stored columns, computed model data and selected results.",
+    "title": "Two model inputs, shared query tables",
+    "description": "Text records pass through the lexer and layout catalogue. Native archive columns pass through ArchiveModel as typed fields. Both construct the same model tables used by analysis and model/result queries.",
     "size": [
       1120,
-      810
+      1040
     ],
     "nodes": [
       {
@@ -381,7 +381,7 @@
           "Sections, records, includes"
         ],
         "color": "gray",
-        "tag": "Input"
+        "tag": "Text input"
       },
       {
         "title": "ModelFileLexer",
@@ -412,10 +412,38 @@
         "tag": "model"
       },
       {
+        "title": ".oorh5 native model",
+        "box": [
+          45,
+          330,
+          290,
+          125
+        ],
+        "body": [
+          "Model columns and metadata"
+        ],
+        "color": "gray",
+        "tag": "Archive input"
+      },
+      {
+        "title": "ArchiveModel",
+        "box": [
+          415,
+          330,
+          290,
+          125
+        ],
+        "body": [
+          "Typed fields, model schema 1"
+        ],
+        "color": "purple",
+        "tag": "results/archive"
+      },
+      {
         "title": "Layout catalogue",
         "box": [
           785,
-          345,
+          330,
           290,
           125
         ],
@@ -423,41 +451,27 @@
           "Compact values to slots"
         ],
         "color": "amber",
-        "tag": "Embedded data"
+        "tag": "Text record layout"
       },
       {
         "title": "Typed model tables",
         "box": [
           415,
-          345,
+          535,
           290,
           125
         ],
         "body": [
-          "Columns, references, IDs"
+          "Columns, IDs, controls, parts"
         ],
         "color": "teal",
         "tag": "Model"
       },
       {
-        "title": "Named query / plan",
-        "box": [
-          45,
-          345,
-          290,
-          125
-        ],
-        "body": [
-          "Stored + computed data"
-        ],
-        "color": "blue",
-        "tag": "query"
-      },
-      {
         "title": "Model analysis",
         "box": [
           45,
-          555,
+          535,
           290,
           125
         ],
@@ -470,22 +484,36 @@
       {
         "title": "Selected results",
         "box": [
-          415,
-          555,
+          785,
+          535,
           290,
           125
         ],
         "body": [
-          "Table metadata and values"
+          "Metadata and selected values"
         ],
         "color": "purple",
         "tag": "results"
       },
       {
+        "title": "Named query / plan",
+        "box": [
+          415,
+          760,
+          290,
+          125
+        ],
+        "body": [
+          "Stored + computed data"
+        ],
+        "color": "blue",
+        "tag": "query"
+      },
+      {
         "title": "QueryTable",
         "box": [
           785,
-          555,
+          760,
           290,
           125
         ],
@@ -510,37 +538,55 @@
         "dashed": false
       },
       {
-        "path": "M930 345 V260",
+        "path": "M930 330 V260",
         "label": null,
         "label_at": null,
         "dashed": false
       },
       {
-        "path": "M785 260 V300 H560 V345",
+        "path": "M785 240 H745 V495 H635 V535",
         "label": null,
         "label_at": null,
         "dashed": false
       },
       {
-        "path": "M415 407 H335",
+        "path": "M335 392 H415",
         "label": null,
         "label_at": null,
         "dashed": false
       },
       {
-        "path": "M190 555 V470",
+        "path": "M560 455 V535",
         "label": null,
         "label_at": null,
         "dashed": false
       },
       {
-        "path": "M560 555 V530 H355 V435 H335",
+        "path": "M415 597 H335",
         "label": null,
         "label_at": null,
         "dashed": false
       },
       {
-        "path": "M335 407 H370 V510 H930 V555",
+        "path": "M190 660 V710 H455 V760",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M560 660 V760",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M930 660 V710 H665 V760",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M705 822 H785",
         "label": null,
         "label_at": null,
         "dashed": false
@@ -551,11 +597,12 @@
       {
         "at": [
           45,
-          742
+          950
         ],
         "text": [
-          "Parsing creates typed model data. Model analysis derives quantities without running a finite element solve.",
-          "Query buffers can be shared inside the reader; a package is the transport boundary to another module."
+          "Both inputs build the same model tables, including controls, parts and source metadata.",
+          "Model analysis derives geometry and mass without running a finite element solve.",
+          "Query buffers stay inside Reader; table packages cross the boundary to another module."
         ]
       }
     ],
@@ -563,15 +610,15 @@
   },
   {
     "id": "reader-results",
-    "title": "Indexed files, lazy values, shared result interfaces",
-    "description": "An archive opens its index first. Filters select tables and steps before reading their values. Results made in memory use the same table interfaces and catalogue as file-backed results.",
+    "title": "Archive indexes and independent lazy loading",
+    "description": "A model/results archive opens its result indexes first. Result selection loads table values; model() separately loads and attaches the optional model. Memory results share the same result interfaces.",
     "size": [
       1120,
       815
     ],
     "nodes": [
       {
-        "title": "Results archive",
+        "title": ".oorh5 archive",
         "box": [
           45,
           135,
@@ -579,7 +626,7 @@
           125
         ],
         "body": [
-          "Index + table datasets"
+          "Result indexes + optional model"
         ],
         "color": "gray",
         "tag": "Input file"
@@ -593,7 +640,7 @@
           125
         ],
         "body": [
-          "Read metadata and index"
+          "Result index + model presence"
         ],
         "color": "purple",
         "tag": "Open"
@@ -680,7 +727,7 @@
           135
         ],
         "body": [
-          "Persist tables + index"
+          "Optional model + result tables"
         ],
         "color": "purple",
         "tag": "Export"
@@ -758,7 +805,8 @@
           776
         ],
         "text": [
-          "The archive index is small; loading result values is a separate operation controlled by selection."
+          "Result values load by selection. model() loads and attaches the optional model separately.",
+          "Archive writing includes the attached model and preserves embedded models when copying."
         ]
       }
     ],

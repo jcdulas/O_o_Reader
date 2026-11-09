@@ -1,5 +1,7 @@
 #pragma once
 
+#include "oor/model/core/Model.hpp"
+#include "oor/model/core/ModelReadOptions.hpp"
 #include "oor/results/core/NamedResult.hpp"
 #include "oor/results/core/ResultFile.hpp"
 #include "oor/results/core/ResultTable.hpp"
@@ -29,7 +31,11 @@ public:
     [[nodiscard]] const std::vector<base::Diagnostic>& diagnostics() const noexcept override { return m_diagnostics; }
     [[nodiscard]] ResultTables tables(const ResultFilter& filter) const override;
 
-    // The format version written in the file ("1").
+    // The optional model is read only when requested. No Include record may access files outside the archive.
+    [[nodiscard]] bool hasModel() const noexcept { return m_hasModel; }
+    [[nodiscard]] std::shared_ptr<model::Model> readModel(const model::ModelReadOptions& options = {}) const;
+
+    // The format version written in the file.
     [[nodiscard]] const std::string& formatVersion() const noexcept { return m_formatVersion; }
 
 private:
@@ -39,6 +45,7 @@ private:
     ResultFileMetadata m_metadata;
     std::vector<base::Diagnostic> m_diagnostics;
     std::string m_formatVersion;
+    bool m_hasModel = false;
     std::vector<std::shared_ptr<ResultTable>> m_tables;
     std::vector<std::shared_ptr<NamedResult>> m_named;
 };

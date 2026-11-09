@@ -176,7 +176,7 @@ double offsetOf(const model::Model& model, model::CardLocation location)
 // plane its offset ZOFFS gives) to the middle of the stack. format reference PCOMP and PCOMPG: Z0 is the distance from
 // the reference plane to the bottom surface, -T/2 by default (the laminate centred on its plane); a laminate maintained
 // at the outer mould line has Z0 = 0 and stands entirely on the side of the normal. 0 for any other property. The
-// library's assumption, which the deck glued_contact/glued_pcomp_z0.bdf settles: the solver's contact places the skins
+// library's assumption, which the model glued_contact/glued_pcomp_z0.oos exercises: contact places the skins
 // of a laminate on its plies, as its stiffness does. One value per property.
 class LaminateCentres
 {

@@ -8,7 +8,7 @@
 #   - solution: SOL 115 (cyclic symmetry normal modes, all harmonics)
 #   - outputs: eigenvalues, eigenvectors of the segments
 # Run notes:
-#   - the segment of cyclic_rot_static_sol114.bdf, left free but for the
+#   - the segment of cyclic_rot_static_sol114.oos, left free but for the
 #     axial motion of the hub point; the rigid body modes of harmonics 0
 #     and 1 are defined by the fictitious supports of CYSUP
 # Written for this project, to exercise the reader.

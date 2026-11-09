@@ -42,7 +42,7 @@
 <rect x="56" y="302" width="4" height="88" rx="2" fill="#7951a8"/>
 <text x="75" y="313" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">04 LIBRARY</text>
 <text x="75" y="341" font-size="21" font-weight="700">results</text>
-<text x="75" y="370" font-size="20" fill="#43546d">Result catalogue, lazy tables and writers</text>
+<text x="75" y="370" font-size="20" fill="#43546d">Native model storage, lazy result tables</text>
 <rect x="55" y="446" width="450" height="116" rx="12" fill="#e9f6f2" stroke="#237d69" stroke-width="1.5"/>
 <rect x="56" y="460" width="4" height="88" rx="2" fill="#237d69"/>
 <text x="75" y="471" font-size="12" font-weight="700" letter-spacing="1.2" fill="#237d69">05 LIBRARY</text>

@@ -9,12 +9,6 @@
 #     OESTRCP) and a hyperelastic CQUAD4 on PLPLANE
 #   - the frame of the nonlinear shell tables (deformed or original element
 #     system): the shell turns by about 90 degrees, so the two systems differ
-# Settles (library item: current status):
-#   - stress.cbush_nonlinear, celas3_nonlinear, cpyram_nonlinear real SORT1;
-#     strain.cquad4_hyperelastic real SORT1 (not_validated -> validated)
-#   - the 'nonlinear' family is refused for any frame change (no file settles
-#     the frame)
-#   - the OESCP layout of the laminates (assumed equal to OES1C)
 # Run notes:
 #   - NLSTRESS asks for the nonlinear stresses; the HDF5 file holds the SOL
 #     400 datasets (no decoder: raw tables)
@@ -38,8 +32,6 @@ ElemForceOutput;All;PlotOnly
 NonlinearStressOutput;All;PlotOnly
 SinglePointConstrForceOutput;All;PlotOnly
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Nonlinear element regions, each clamped at its root, loaded in ten

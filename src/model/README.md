@@ -16,3 +16,11 @@ The model: cards, column storage, containers, handles, editing, control sections
   fields of a record to the slots a card reader reads, `format/CardLayouts.hpp` (the catalogue
   `formats/oos-layouts.json`, compiled in; made by `tools/oos_layouts/`, listed in `docs/model-format-cards.md`); the
   records of the control sections, `control/ControlRecords.hpp`.
+- `format/FieldValue.hpp` carries typed slot values. `FieldWriter::typedFields()` exposes binary numeric output;
+  the typed `FieldReader` constructor accepts archive values without decimal conversion. The native archive uses
+  the same card readers and tables as `.oos` input.
+
+The native `.oorh5` reader/writer lives in `results/archive/ArchiveModel.cpp`, above this module in the dependency
+order. The facade `api::Deck::readModel` detects either format by content. See
+[the archive specification](../../docs/archive-format.md#native-model) for the versioned slot contract, sparse and
+constant columns, source precision and pending defaults masks.

@@ -6,7 +6,7 @@
 #   - cards: CAERO4 PAERO4 MKAERO2 SPLINE7
 #   - solution: SOL 146 (modal aeroelastic frequency response of the plate wing
 #     to a tip force, strip theory aerodynamics at Mach 0.5)
-#   - outputs: complex displacements, SORT1 (OUTPUT2)
+#   - outputs: complex displacements, SORT1
 # Run notes:
 #   - strip theory is accepted in SOL 146 with mechanical loads only (no
 #     gust); PARAM,Q gives the dynamic pressure (0.5 rho V**2 of the AERO

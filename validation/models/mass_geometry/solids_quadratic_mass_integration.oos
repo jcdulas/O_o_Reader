@@ -11,11 +11,6 @@
 #   - the stresses at the corners and the centre of the same elements under a
 #     force (subcase 2), PSOLID IN and ISOP blank: the default integration of
 #     each (the CHEXA 3 x 3 x 3 with reduced shear, the CPENTA)
-# Settles (library item: current status):
-#   - a companion package: the lumped mass of the quadratic solids (one box observed:
-#     no mass on the CHEXA corners and M(S/3 + L^2)/(8S) on its mid-side
-#     points; HRZ kept until a second shape) and the default integration of
-#     the CPENTA (15 nodes)
 # Run notes:
 #   - PARAM,GRDPNT,0 prints the grid point weight (the total mass to compare)
 # Written for this project, to exercise the reader.
@@ -37,8 +32,6 @@ SubcaseStart;2
 LabelText;a force on the top corners: the stresses
 StaticLoadSelection;2
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 Parameter;WeightReferenceNode;0
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression

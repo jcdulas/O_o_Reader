@@ -181,7 +181,7 @@ Beam3TemperatureLoad;20;301;80.;60.;70.;0.5;0.;0.5;0.;0.5;0.;82.5;82.5;77.5;77.5
 EnforcedMotionConstr;21;15;3;0.5
 # Subcase 12: right-hand side of the MPCY equation of grid point 15.
 MultiPointConstrValue;22;15;3;0.2
-# Meta data group of the plate elements (HDF5 and OUTPUT2).
+# Meta data group of the plate elements (result tables).
 MetadataGroup;PLATE;60;ShellQuad4;101;102;103;104;105;106;107
 MetadataGroup;PLATE;60;ShellTria3;108;109
 MetadataTextPairs;60;ABSNAME;cantilever_plate;ABSDESC;plate_of_seven_quads_and_two_trias

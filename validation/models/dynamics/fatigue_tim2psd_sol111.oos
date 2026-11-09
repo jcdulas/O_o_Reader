@@ -7,7 +7,7 @@
 #   - solution: SOL 111 (modal frequency response with a vibration fatigue
 #               analysis)
 #   - outputs: displacements: complex magnitude/phase, SORT1; the fatigue
-#              results (listing and OUTPUT2)
+#              results (listing and results)
 # Run notes:
 #   - FATIGUE = 10 runs the fatigue analysis 10 (FTGPARM, FTGDEF, FTGSEQ 10):
 #     one event of one PSD load whose PSD TIM2PSD 10 computes from the time

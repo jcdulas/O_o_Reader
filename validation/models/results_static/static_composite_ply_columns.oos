@@ -7,12 +7,6 @@
 #     STRESS(MAXS) (subcases 1 and 2)
 #   - the failure indices (OEFIT) of CQUAD4 and CTRIA3 laminates for the four
 #     theories, and the strength ratios (PARAM,SRCOMPS,YES: OESRT)
-# Settles (library item: current status):
-#   - the ply column flagged maximum shear that holds von Mises
-#   - failure_indices.ctria3_composite real SORT1 (not_validated ->
-#     validated)
-#   - the strength ratios (OESRT is raw; the composite criteria of the
-#     queries use stored ratios when present)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -32,8 +26,6 @@ SubcaseStart;2
 LabelText;maximum shear in the last column
 StressOutput;All;PlotOnly;PrintListing;MaxShearStress
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Four laminated plates, one failure theory each (HILL, HOFF, TSAI, STRN),

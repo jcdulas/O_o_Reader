@@ -10,12 +10,6 @@
 #     ELPAT and PARTPAT (the numbering after the first connector), PWELD TYPE
 #     SPOT
 #   - the weld forces and stresses (FORCE, STRESS)
-# Settles (library item: current status):
-#   - the piercing points of CWELD PARTPAT (taken as CFAST PROP), ELEMID,
-#     GRIDID, point to patch; CQUAD8, CTRIA6 and GRIDID shapes with mid-side
-#     nodes; the length of a SPOT weld; the generated IDs beyond the first
-#     connector
-#   - the stress/strain/forces tables of cweld (not_validated)
 # Run notes:
 #   - SWLDPRM PRTSW 1 prints the projections in the listing: bring the listing back
 # Written for this project, to exercise the reader.
@@ -34,8 +28,6 @@ NodeForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip loads on the upper plates
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Two pairs of parallel plates 2 mm apart (units mm, N, tonne). Pair 1: linear

@@ -10,7 +10,7 @@
 #   - outputs: none the library decodes (the explicit solver writes its own
 #     result files; bring back the listing)
 # Run notes:
-#   - no PARAM,POST: SOL 700 has no OUTPUT2 output; CORD3R 50 follows plate B
+#   - no PARAM,POST: SOL 700 has no results output; CORD3R 50 follows plate B
 #     (origin 201, z axis to 207, x-z plane through 203)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

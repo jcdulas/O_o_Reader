@@ -1,7 +1,10 @@
-# The O_o model format
+# The O_o text model format
 
-O_o_Reader reads and writes `.oos` model files. O_o_Solver consumes the reader's table packages. O_o_Converter handles
-translation between this model format and external input formats.
+O_o_Reader reads and writes `.oos` model files. O_o_Solver consumes the reader's typed table packages.
+
+The same model can be saved in `.oorh5` as native typed HDF5 columns, with optional result tables. See
+[the archive format](archive-format.md#native-model) for its binary layout and compatibility rules. `oor.readModel`
+recognizes both formats by content; this page specifies the `.oos` text syntax and compact field order.
 
 ## File syntax
 

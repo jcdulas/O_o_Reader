@@ -11,7 +11,7 @@
 #     tables (PSDF, ATOC, CRMS, RMS, number of zero crossings) in SORT1 and
 #     SORT2
 # Run notes:
-#   - results_dynamics/acoustic_fluid_frequency.bdf asks for the real and
+#   - results_dynamics/acoustic_fluid_frequency.oos asks for the real and
 #     imaginary form of the same tables
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

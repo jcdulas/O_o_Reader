@@ -1,6 +1,6 @@
 # Element names
 
-An element has one descriptive, case-sensitive name throughout the three projects. Its model record, table metadata,
+An element has one descriptive, case-sensitive name throughout Reader and Solver. Its model record, table metadata,
 result container, diagnostic and formulation selector use the same root: `ShellQuad4`, for example.
 
 ## Build a name
@@ -53,12 +53,14 @@ Derived directory and function names use a lower-case first letter. Exposed elem
 their exact capitalized spelling. A result layout suffix describes the result rows; it does not create another model
 card type. Formulation names remain separate from the element type.
 
-The converter translates external syntax to this vocabulary. External file-format keywords remain in their original
-format; they are not additional names accepted by the reader or solver.
+Native model records and table packages use this vocabulary directly.
 
 ## Compatibility
 
-The three packages are version `0.2.0`. Build and update them together. Table packages use data contract **75** and
-results archives use format version **3**. Earlier element names have no aliases. Update model records, API selectors,
-result metadata and any dependent client to the current vocabulary before use. Incompatible table packages and archive
-versions are refused.
+Reader and Solver are version `0.2.0`. Build and update them together. Table packages use data contract **75**.
+New `.oorh5` archives use format version **4** and native model schema **1**; the reader also accepts version **3**
+result archives. Version 4 retains version 3 result layouts and element names while adding native model columns.
+Older version 3 readers reject version 4 files. See [archive compatibility](archive-format.md#versions).
+
+Earlier element names have no aliases. Update model records, API selectors, result metadata and any dependent client
+to the current vocabulary before use. Incompatible table packages and unknown archive or model schema versions are refused.

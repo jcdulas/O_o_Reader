@@ -1,6 +1,7 @@
 #pragma once
 
 #include "oor/model/core/Model.hpp"
+#include "oor/results/archive/ArchiveWriter.hpp"
 
 #include <cstddef>
 #include <memory>
@@ -34,11 +35,11 @@ struct DiagnosticText
     std::string location; // "file:line (CARD, field)"; empty when unknown
 };
 
-// A model: its control sections and its cards, read from an O_o model file (.oos).
+// A model: its control sections and cards, read from .oos text or a native .oorh5 archive.
 class Deck
 {
 public:
-    // Reads the model and its Include files. The content always uses model records, whatever the path's extension.
+    // Detects a native archive by content; otherwise reads model records and their Include files.
     // Throws IoError when the file cannot be read, DeckError in strict mode.
     [[nodiscard]] static std::shared_ptr<Deck> readModel(const std::string& path,
                                                          const DeckReadSettings& settings = {});
@@ -46,6 +47,9 @@ public:
     std::vector<std::string> writeModel(const std::string& path, const DeckWriteSettings& settings = {}) const;
     // The model file text (one file, the Include structure flattened).
     [[nodiscard]] std::string toModelText(const DeckWriteSettings& settings = {}) const;
+    // Writes an archive containing this model alone (no result tables).
+    results::ResultWriteReport writeArchive(const std::string& path,
+                                            const results::ArchiveWriteOptions& options = {}) const;
 
     // The number of cards of each type the deck holds, by card name, in alphabetical order.
     [[nodiscard]] std::vector<std::pair<std::string, std::size_t>> cardCounts() const;
@@ -54,6 +58,7 @@ public:
     [[nodiscard]] const std::shared_ptr<model::Model>& model() const noexcept { return m_model; }
 
 private:
+    friend class Results;
     explicit Deck(std::shared_ptr<model::Model> model) : m_model(std::move(model)) {}
 
     std::shared_ptr<model::Model> m_model;

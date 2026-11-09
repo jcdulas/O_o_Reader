@@ -4,6 +4,7 @@
 #include "oor/base/errors/Errors.hpp"
 #include "oor/io/hdf5/Hdf5StreamWriter.hpp"
 #include "oor/io/hdf5/Hdf5Writer.hpp"
+#include "oor/results/archive/ArchiveModel.hpp"
 #include "oor/results/archive/ArchiveFormat.hpp"
 
 #include <cstdio>
@@ -244,7 +245,17 @@ public:
         builder.request().groups.push_back(std::move(root));
         for (const std::string_view path : {std::string_view("/index"), archive::TABLE_GROUPS, archive::NAMED_GROUPS})
             builder.request().groups.push_back(Hdf5WriteGroup{std::string(path), {}});
-        io::writeHdf5(m_temporary, builder.request());
+        try
+        {
+            io::writeHdf5(m_temporary, builder.request());
+            if (m_options.model)
+                archive::writeModel(m_temporary, *m_options.model, m_options.compressionLevel, m_options.shuffle);
+        }
+        catch (...)
+        {
+            abort();
+            throw;
+        }
     }
 
     ~ArchiveSession() override

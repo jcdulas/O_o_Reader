@@ -5,12 +5,8 @@
 # Validates:
 #   - the HDF5 file in single precision (HDF5OUT PRCISION 32: 32-bit integers
 #     and most reals), which no observed file shows
-# Settles (library item: current status):
-#   - 'every number is float64, every ID int64' (the files observed so far):
-#     the layout of a 32-bit file and the SCHEMA it carries (another
-#     schema makes every table experimental)
 # Run notes:
-#   - bring back the .h5 and the OUTPUT2 file of the same run (the OUTPUT2 file twin proves the
+#   - bring back the .h5 and the result data of the same run (the matching result data proves the
 #     HDF5 tables)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
@@ -34,8 +30,6 @@ NodeForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip load
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1) and the HDF5 database in the form this
-# deck tests.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;32;CompressionMethod;GzipCompression
 Parameter;WeightReferenceNode;0

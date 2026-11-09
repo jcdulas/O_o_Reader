@@ -8,12 +8,6 @@
 #     (CORDM -1), a turned rectangular system, a cylindrical and a spherical
 #     system: the system word of each entry and the values in each system (the
 #     CORDM 0 block is the reference)
-# Settles (library item: current status):
-#   - solidStress and solidStrain to element and material systems
-#     (refused: no file shows a solid result stored in its element system, a
-#     rule of the format reference); a solid with a cylindrical
-#     or spherical CORDM or CORDM below 0 (refused: where the curvilinear
-#     system is evaluated is not in the format reference)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -29,8 +23,6 @@ StrainOutput;All;PlotOnly;PrintListing;CornerResults
 SubcaseStart;1
 LabelText;the same tip load on every block
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Five identical CHEXA cantilever blocks (10 x 10 x 30, clamped at x = 0, the

@@ -121,5 +121,5 @@ TEST_CASE("a model file is known by its extension", "[deck][model-file]")
 {
     CHECK(deck::isModelFile("a/plate.oos"));
     CHECK(deck::isModelFile("PLATE.OOS"));
-    CHECK_FALSE(deck::isModelFile("plate.bdf"));
+    CHECK_FALSE(deck::isModelFile("plate.data"));
 }

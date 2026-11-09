@@ -3,6 +3,8 @@
 #include "oor/base/errors/Errors.hpp"
 #include "oor/results/attach/ResultAttachment.hpp"
 #include "oor/results/core/ReadResults.hpp"
+#include "oor/results/archive/ArchiveResultFile.hpp"
+#include "oor/base/text/TextUtilities.hpp"
 
 #include <filesystem>
 
@@ -126,12 +128,37 @@ void Results::attach(const std::shared_ptr<Deck>& deck, bool strict)
     results::AttachOptions options;
     options.strict = strict;
     m_attachment = results::ResultAttachment::attach(deck->model(), m_file, m_tables, options);
+    m_deck = deck;
+}
+
+bool Results::hasModel() const
+{
+    const auto archive = std::dynamic_pointer_cast<results::ArchiveResultFile>(m_file);
+    return m_deck || (archive && archive->hasModel());
+}
+
+std::shared_ptr<Deck> Results::model()
+{
+    if (!m_deck)
+        if (const auto archive = std::dynamic_pointer_cast<results::ArchiveResultFile>(m_file);
+            archive && archive->hasModel())
+            attach(std::shared_ptr<Deck>(new Deck(archive->readModel())));
+    return m_deck;
 }
 
 results::ResultWriteReport Results::writeArchive(const std::string& path,
                                                  const results::ArchiveWriteOptions& options) const
 {
-    return results::writeArchive(path, *m_tables, options);
+    auto settings = options;
+    if (!settings.model)
+    {
+        if (m_deck)
+            settings.model = m_deck->model();
+        else if (const auto archive = std::dynamic_pointer_cast<results::ArchiveResultFile>(m_file);
+                 archive && archive->hasModel())
+            settings.model = archive->readModel();
+    }
+    return results::writeArchive(base::pathFromUtf8(path), *m_tables, settings);
 }
 
 results::ResultWriteReport Results::writeXlsx(const std::string& path, const results::XlsxWriteOptions& options) const

@@ -5,12 +5,8 @@
 # Validates:
 #   - the automatic boundary search for an external superelement (SEBULK
 #     EXTOP4 with METHOD AUTO), the boundary points it joins and their numbers
-# Settles (library item: current status):
-#   - 'Not validated against the solver': AUTO for an external superelement
-#   - the T14 query part_boundaries for an EXTOP4 part (assigned_file from the
-#     ASSIGN of the SEBULK UNITNO)
 # Run notes:
-#   - run op4_matrices/op4_extseout_sparse_binary.bdf first: this deck reads
+#   - run op4_matrices/op4_extseout_sparse_binary.oos first: this deck reads
 #     its OP4 file (../op4_matrices/op4_extseout_sparse_binary.op4)
 #   - PARAM,POST,-2 writes the GPLS tables
 # Written for this project, to exercise the reader.
@@ -27,8 +23,6 @@ DisplacementOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;load on the residual
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-2
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Assembly residual: a plate of 4 x 2 CQUAD4 at x 0 to 40, y 0 to 20, clamped

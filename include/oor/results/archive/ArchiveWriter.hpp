@@ -1,5 +1,6 @@
 #pragma once
 
+#include "oor/model/core/Model.hpp"
 #include "oor/results/core/ResultTables.hpp"
 #include "oor/results/writers/ResultWriteReport.hpp"
 #include "oor/results/writers/ResultWriteSession.hpp"
@@ -27,6 +28,8 @@ struct ArchiveWriteOptions
     std::string title;
     std::string subtitle;
     std::string label;
+    // Optional model, serialized as native typed columns. An unrepresentable control entry raises UsageError.
+    std::shared_ptr<const model::Model> model;
 };
 
 // Writes an archive by batches: `beginArchive`, then `push` tables and `pushNamed` named results as many times as

@@ -8,7 +8,7 @@
 #   - solution: SOL 144 (restrained static trim driven by user supplied force
 #     vectors on an external aerodynamic mesh: no aerodynamic theory runs on
 #     an AEGRID mesh, every load comes from AEFORCE and DMIK)
-#   - outputs: displacements, CQUAD4 stresses, trim variables (OUTPUT2)
+#   - outputs: displacements, CQUAD4 stresses, trim variables
 # Run notes:
 #   - the aerodynamic mesh is given in metres and scaled to mm by AESCALE;
 #     the wing mesh has three splines blended twice (strip based, then curve

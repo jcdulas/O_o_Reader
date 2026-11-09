@@ -6,12 +6,6 @@
 #   - complex eigenvalues (CLAMA, SUMMARY/EIGENVALUE_CPLX) and complex
 #     eigenvectors, real/imaginary and magnitude/phase, SORT1 and SORT2, with
 #     the complex element tables of a damped structure
-# Settles (library item: current status):
-#   - eigenvectors complex magnitude/phase SORT1, complex SORT2
-#     (not_validated)
-#   - HDF5 NODAL/EIGENVECTOR_CPLX, SUMMARY/EIGENVALUE_CPLX (not_validated)
-#   - the OUTPUT2 file and HDF5 files of one run of a structure that is not free (the
-#     vectors of a free structure are arbitrary)
 # Run notes:
 #   - the eigenvalue problem is solved again in each subcase: the four
 #     subcases differ only in their output form
@@ -43,8 +37,6 @@ SubcaseStart;4
 LabelText;SORT2 eigenvectors, real and imaginary
 DisplacementOutput;All;PlotOnly;SortByTime;RealPart
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;UniformStructuralDamping;0.02

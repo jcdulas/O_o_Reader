@@ -1,13 +1,14 @@
 # CLAUDE.md: working on O_o_Reader
 
-O_o_Reader is a C++20 library, compiled to WebAssembly, that reads and writes O_o model files (`.oos`),
-stores results and custom outputs in an HDF5 archive of its own layout, writes results as Excel workbooks, and runs named
-queries on a model and its results. Start with [README.md](README.md) and [docs/architecture.md](docs/architecture.md).
+O_o_Reader is a C++20 library, compiled to WebAssembly, that reads and writes O_o model records (`.oos`) and native
+HDF5 model/results archives (`.oorh5`). Archives can contain a model, results or both; model columns load on demand.
+The library also exports query tables, writes results as Excel workbooks, and runs named queries on models and results.
+Start with [README.md](README.md) and [docs/architecture.md](docs/architecture.md).
 
 ## Rules
 
 1. **Legal** ([LEGAL.md](LEGAL.md)): no binary result format or result database of another vendor; no vendor or
-   product name in code, comments, messages, tests or file formats ("Nastran" only to describe the separate converter's input format);
+   product name in code, comments, messages, tests or file formats;
    never copy or quote the documentation of other software, never add it to the repository, never take test data from
    its examples. Test decks and samples are written for the project. Keep the history of the code out of the
    repository and of the commit messages.
@@ -23,9 +24,13 @@ queries on a model and its results. Start with [README.md](README.md) and [docs/
 6. **WebAssembly is 64-bit (Memory64) and single-threaded**: every object, libhdf5 and zlib included, is built with
    `-sMEMORY64=1`; code that starts threads goes through `base::ThreadPool`, which has zero workers
    in the WebAssembly build.
-7. **File formats**: the archive layout is spelled in `include/oor/results/archive/ArchiveFormat.hpp` and described in
-   `docs/archive-format.md`; a change that an earlier reader cannot read raises `FORMAT_VERSION`. The Excel workbook
-   (`src/results/xlsx/`) is an output only.
+7. **File formats**: root archive names and version constants are declared in
+   `include/oor/results/archive/ArchiveFormat.hpp`; the layout is specified in `docs/archive-format.md`.
+   New archives use `FORMAT_VERSION` 4; the reader also accepts version 3 result archives.
+   Native model columns use `MODEL_VERSION` 1 and are implemented in `src/results/archive/ArchiveModel.cpp`, keeping
+   the `model` module independent of archive storage. A change an earlier reader cannot read raises `FORMAT_VERSION`;
+   a change to native model slots, kinds or their meaning also raises `MODEL_VERSION`. Update the specification, API
+   guide and archive round-trip tests together. The Excel workbook (`src/results/xlsx/`) is an output only.
 
 ## Build and test
 

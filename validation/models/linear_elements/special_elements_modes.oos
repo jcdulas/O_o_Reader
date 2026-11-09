@@ -6,7 +6,7 @@
 #   - cards: GENEL, CONM1, CMASS3, NSM, NSM1, NSML, NSML1, NSMADD, PLOTEL,
 #     PLTSURF (with PMASS, CELAS3, SPOINT, CQUAD4, CBAR, EIGRL)
 #   - solution: SOL 103 (real eigenvalues, Lanczos)
-#   - outputs: eigenvalues, eigenvectors (OUTPUT2); the mass summary of ELSUM and
+#   - outputs: eigenvalues, eigenvectors; the mass summary of ELSUM and
 #     of PARAM,GRDPNT (listing)
 # Run notes:
 #   - the Case Control NSM = 20 selects NSMADD 20, the sum of the four

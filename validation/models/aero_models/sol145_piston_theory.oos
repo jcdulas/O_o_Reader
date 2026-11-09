@@ -7,7 +7,7 @@
 #   - solution: SOL 145 (PK flutter of the plate wing at Mach 2.5, piston
 #     theory strips)
 #   - outputs: flutter summary, real eigenvalues and eigenvectors of the
-#     structural modes (OUTPUT2)
+#     structural modes
 # Run notes:
 #   - the thickness integrals of the strips are given (AEFACT 7002): a
 #     symmetric biconvex section of 4 percent thickness; no control surface

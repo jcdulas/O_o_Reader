@@ -7,7 +7,7 @@
 #   - solution: SOL 145 (PK flutter of the plate wing at Mach 1.3, Mach box
 #     lifting surface)
 #   - outputs: flutter summary, real eigenvalues and eigenvectors of the
-#     structural modes (OUTPUT2)
+#     structural modes
 # Run notes:
 #   - the Mach box method needs a supersonic Mach number; the surface has no
 #     crank and no control surface

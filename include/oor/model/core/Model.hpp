@@ -334,6 +334,8 @@ public:
 
     // The key the next created card will get; the markers and comments are positioned by keys.
     [[nodiscard]] std::uint32_t nextKeyValue() const noexcept { return m_nextKey; }
+    // Restore the creation counter after loading persisted card keys (including holes left by removed cards).
+    void restoreNextKey(std::uint32_t next);
 
 private:
     void checkFree(std::uint16_t type, base::IdSpace space, base::EntityId id) const;

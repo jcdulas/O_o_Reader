@@ -7,7 +7,7 @@
 #     CQUAD4, TABLED1, RLOAD1, DAREA, FREQ1)
 #   - solution: SOL 108 (direct frequency response)
 #   - outputs: complex displacements, SPC forces and element forces,
-#     real/imaginary (OUTPUT2)
+#     real/imaginary
 # Run notes:
 #   - PDAMPT and PFASTT only act in frequency response: the damper coefficient
 #     and the fastener stiffnesses and damping follow their TABLED1 at each

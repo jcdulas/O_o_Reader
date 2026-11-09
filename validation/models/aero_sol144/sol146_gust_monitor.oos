@@ -5,16 +5,13 @@
 # Validates:
 #   - the transient monitor point loads (MONITOR, AEMONPT, the TOL steps, the
 #     load matrices) of a run with a deck and a listing
-# Settles (library item: current status):
-#   - the transient form of monitor_point_loads (not_validated), the hinge
-#     moment rows (AESURF, class HM: an inference)
 # Run notes:
 #   - PARAM,MPTUNIT,40 with the ASSIGN writes the monitor tables to
-#     sol146_monitor.out2
+#     sol146_monitor.data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
-FileAssignment;OUTPUT2='sol146_monitor.out2';FileUnit=40;FileForm=Unformatted
+FileAssignment;RESULTS='sol146_monitor.data';FileUnit=40;FileForm=Unformatted
 SolutionSequence;146
 [case]
 TitleText;O_o_Reader validation: transient gust, monitor points
@@ -31,8 +28,6 @@ MonitorPointOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;one-minus-cosine gust
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate filter).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;MonitorPointUnit;40

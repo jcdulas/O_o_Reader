@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1120" height="815" viewBox="0 0 1120 815" role="img" aria-labelledby="title description">
-<title id="title">Indexed files, lazy values, shared result interfaces</title>
-<desc id="description">An archive opens its index first. Filters select tables and steps before reading their values. Results made in memory use the same table interfaces and catalogue as file-backed results.</desc>
+<title id="title">Archive indexes and independent lazy loading</title>
+<desc id="description">A model/results archive opens its result indexes first. Result selection loads table values; model() separately loads and attaches the optional model. Memory results share the same result interfaces.</desc>
 <rect width="100%" height="100%" rx="18" fill="#f8fafc"/>
 <g font-family="sans-serif" fill="#1c2e48">
 <text x="36" y="40" font-size="13" font-weight="700" letter-spacing="1.5" fill="#52647e">ARCHITECTURE</text>
-<text x="36" y="77" font-size="28" font-weight="700">Indexed files, lazy values, shared result interfaces</text>
+<text x="36" y="77" font-size="28" font-weight="700">Archive indexes and independent lazy loading</text>
 <path d="M335 197 H415" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
 <polygon points="415,197 403,192 403,202" fill="#50627b"/>
 <path d="M705 197 H785" fill="none" stroke="#50627b" stroke-width="2.4" stroke-linejoin="round"/>
@@ -24,13 +24,15 @@
 <rect x="45" y="135" width="290" height="125" rx="12" fill="#f0f3f7" stroke="#64748b" stroke-width="1.5"/>
 <rect x="46" y="149" width="4" height="97" rx="2" fill="#64748b"/>
 <text x="65" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#64748b">INPUT FILE</text>
-<text x="65" y="188" font-size="21" font-weight="700">Results archive</text>
-<text x="65" y="217" font-size="20" fill="#43546d">Index + table datasets</text>
+<text x="65" y="188" font-size="21" font-weight="700">.oorh5 archive</text>
+<text x="65" y="217" font-size="20" fill="#43546d">Result indexes + optional</text>
+<text x="65" y="241" font-size="20" fill="#43546d">model</text>
 <rect x="415" y="135" width="290" height="125" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>
 <rect x="416" y="149" width="4" height="97" rx="2" fill="#7951a8"/>
 <text x="435" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">OPEN</text>
 <text x="435" y="188" font-size="21" font-weight="700">ArchiveResultFile</text>
-<text x="435" y="217" font-size="20" fill="#43546d">Read metadata and index</text>
+<text x="435" y="217" font-size="20" fill="#43546d">Result index + model</text>
+<text x="435" y="241" font-size="20" fill="#43546d">presence</text>
 <rect x="785" y="135" width="290" height="125" rx="12" fill="#edf3ff" stroke="#4366b3" stroke-width="1.5"/>
 <rect x="786" y="149" width="4" height="97" rx="2" fill="#4366b3"/>
 <text x="805" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#4366b3">FILTER</text>
@@ -66,12 +68,14 @@
 <rect x="416" y="619" width="4" height="107" rx="2" fill="#7951a8"/>
 <text x="435" y="630" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">EXPORT</text>
 <text x="435" y="658" font-size="21" font-weight="700">Archive writer</text>
-<text x="435" y="687" font-size="20" fill="#43546d">Persist tables + index</text>
+<text x="435" y="687" font-size="20" fill="#43546d">Optional model + result</text>
+<text x="435" y="711" font-size="20" fill="#43546d">tables</text>
 <rect x="785" y="605" width="290" height="135" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>
 <rect x="786" y="619" width="4" height="107" rx="2" fill="#7951a8"/>
 <text x="805" y="630" font-size="12" font-weight="700" letter-spacing="1.2" fill="#7951a8">EXPORT</text>
 <text x="805" y="658" font-size="21" font-weight="700">Workbook writer</text>
 <text x="805" y="687" font-size="20" fill="#43546d">Index and result sheets</text>
-<text x="45" y="776" font-size="16" fill="#43546d">The archive index is small; loading result values is a separate operation controlled by selection.</text>
+<text x="45" y="776" font-size="16" fill="#43546d">Result values load by selection. model() loads and attaches the optional model separately.</text>
+<text x="45" y="800" font-size="16" fill="#43546d">Archive writing includes the attached model and preserves embedded models when copying.</text>
 </g>
 </svg>

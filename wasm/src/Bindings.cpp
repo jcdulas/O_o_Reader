@@ -540,18 +540,39 @@ void resultsAttach(api::Results& results, std::shared_ptr<api::Deck> deck, bool 
     guarded([&] { results.attach(deck, strict); });
 }
 
+results::ArchiveWriteOptions archiveSettings(const val& options)
+{
+    results::ArchiveWriteOptions settings;
+    settings.compressionLevel = option<int>(options, "compressionLevel", settings.compressionLevel);
+    settings.shuffle = option<bool>(options, "shuffle", settings.shuffle);
+    settings.strict = option<bool>(options, "strict", settings.strict);
+    settings.title = option<std::string>(options, "title", settings.title);
+    settings.subtitle = option<std::string>(options, "subtitle", settings.subtitle);
+    settings.label = option<std::string>(options, "label", settings.label);
+    return settings;
+}
+
+val deckWriteArchive(api::Deck& deck, const std::string& path, const val& options)
+{
+    return guarded([&] { return reportObject(deck.writeArchive(path, archiveSettings(options))); });
+}
+
+bool resultsHasModel(api::Results& results)
+{
+    return guarded([&] { return results.hasModel(); });
+}
+
+std::shared_ptr<api::Deck> resultsModel(api::Results& results)
+{
+    return guarded([&] { return results.model(); });
+}
+
 val resultsWriteArchive(api::Results& results, const std::string& path, const val& options)
 {
     return guarded(
         [&]
         {
-            results::ArchiveWriteOptions settings;
-            settings.compressionLevel = option<int>(options, "compressionLevel", settings.compressionLevel);
-            settings.shuffle = option<bool>(options, "shuffle", settings.shuffle);
-            settings.strict = option<bool>(options, "strict", settings.strict);
-            settings.title = option<std::string>(options, "title", settings.title);
-            settings.subtitle = option<std::string>(options, "subtitle", settings.subtitle);
-            settings.label = option<std::string>(options, "label", settings.label);
+            auto settings = archiveSettings(options);
             return reportObject(results.writeArchive(path, settings));
         });
 }
@@ -881,6 +902,7 @@ EMSCRIPTEN_BINDINGS(oor_reader)
         .smart_ptr<std::shared_ptr<api::Deck>>("DeckPointer")
         .class_function("readModel", &readModel)
         .function("writeModel", &writeModel)
+        .function("writeArchive", &deckWriteArchive)
         .function("toModelText", &modelText)
         .function("cardCounts", &deckCardCounts)
         .function("cardCount", &deckCardCount)
@@ -906,6 +928,8 @@ EMSCRIPTEN_BINDINGS(oor_reader)
         .function("tables", &resultsTables)
         .function("read", &resultsRead)
         .function("attach", &resultsAttach)
+        .function("hasModel", &resultsHasModel)
+        .function("model", &resultsModel)
         .function("writeArchive", &resultsWriteArchive)
         .function("writeXlsx", &resultsWriteXlsx);
 

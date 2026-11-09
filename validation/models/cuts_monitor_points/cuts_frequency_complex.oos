@@ -6,17 +6,13 @@
 #   - complex grid point forces and MPC forces through the same connections,
 #     real/imaginary and magnitude/phase; the complex MONPNT3 resultants;
 #     damper rows in the grid point forces of a frequency response
-# Settles (library item: current status):
-#   - not validated against the solver: a complex cut (summed as complex numbers,
-#     both complex forms); not done: the dynamic forces of dampers in a cut
-#     of a frequency response
 # Run notes:
 #   - PARAM,MPTUNIT,40 with the ASSIGN writes the monitor tables to
-#     cuts_frequency_monitor.out2
+#     cuts_frequency_monitor.data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
-FileAssignment;OUTPUT2='cuts_frequency_monitor.out2';FileUnit=40;FileForm=Unformatted
+FileAssignment;RESULTS='cuts_frequency_monitor.data';FileUnit=40;FileForm=Unformatted
 SolutionSequence;108
 [case]
 TitleText;section cuts and MONPNT3 (frequency response)
@@ -36,8 +32,6 @@ LabelText;magnitude and phase
 DisplacementOutput;All;PlotOnly;MagnitudePhase
 MultiPointConstrForceOutput;All;PlotOnly;MagnitudePhase
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;MonitorPointUnit;40

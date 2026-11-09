@@ -8,8 +8,8 @@
 #   - solution: SOL 101 (linear static: harmonic loads, then a temperature
 #     field)
 #   - outputs: displacements of the ring harmonics and of the points and
-#     sectors, SPC and MPC forces (OUTPUT2); CCONEAX stresses and forces (listing,
-#     OUTPUT2)
+#     sectors, SPC and MPC forces; CCONEAX stresses and forces (listing,
+#     results)
 # Run notes:
 #   - HARMONICS = ALL asks the output of every harmonic (only harmonic 0 is
 #     printed without it); ring results carry the identifier ring + 1000000 *

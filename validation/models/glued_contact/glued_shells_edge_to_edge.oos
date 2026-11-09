@@ -10,15 +10,9 @@
 #   - the thickness of side by side shells in the contact distance: the two
 #     plates are 2 and 3 mm thick, their skins are level; the solver's automatic
 #     ERROR is the thinnest shell over 4 (0.5)
-# Settles (library item: current status):
-#   - the shells glued edge to edge: the library takes no thickness in the gap
-#     of a grid point whose shells are coplanar with the face it meets at the
-#     boundary of the face (contactNodePairs(rule="solver") ties grid points
-#     5, 10 and 15 of body 1 at gap 0, searched first: ISEARCH 0), not
-#     validated against the solver
 # Run notes:
 #   - NLOPRM MPCPCH punches the glue equations (format reference BCTABLE remark 18): bring
-#     the .pch back with the listing and the OUTPUT2 file
+#     the .pch back with the listing and the result data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -36,8 +30,6 @@ StressOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tension and bending across the glued edge
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Body 1: a 40 x 20 plate of 4 x 2 CQUAD4 at z = 0, x 0 to 40, 2 mm thick, grid

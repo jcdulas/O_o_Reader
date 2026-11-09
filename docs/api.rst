@@ -59,3 +59,31 @@ Design.hpp
 .. literalinclude:: ../include/oor/api/Design.hpp
    :language: cpp
    :linenos:
+
+Native archive interfaces
+-------------------------
+
+The :doc:`archive-format` guide specifies archive version 4 and native model schema 1. These lower-level interfaces
+write a model with optional result tables, stream result tables into an archive, and load native model data independently.
+The ``Deck`` and ``Results`` facade above also exposes these operations to application code.
+
+ArchiveWriter.hpp
+~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../include/oor/results/archive/ArchiveWriter.hpp
+   :language: cpp
+   :linenos:
+
+ArchiveResultFile.hpp
+~~~~~~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../include/oor/results/archive/ArchiveResultFile.hpp
+   :language: cpp
+   :linenos:
+
+ArchiveModel.hpp
+~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../include/oor/results/archive/ArchiveModel.hpp
+   :language: cpp
+   :linenos:

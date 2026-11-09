@@ -12,6 +12,11 @@ export interface DeckWriteOptions {
   headerComment?: string;
 }
 
+export interface ArchiveWriteOptions {
+  compressionLevel?: number; shuffle?: boolean; strict?: boolean;
+  title?: string; subtitle?: string; label?: string;
+}
+
 // A named value of a card: a number, a list (Float64Array), a text, a list of texts, or null when blank.
 export type CardValue = number | Float64Array | string | string[] | null;
 
@@ -35,6 +40,8 @@ export interface CardsById {
 }
 
 export interface Deck {
+  // A native archive containing the model alone.
+  writeArchive(path: string, options?: ArchiveWriteOptions): WriteReport;
   // Writes an O_o model file; returns any content that could not be carried, one description per item.
   writeModel(path: string, options?: DeckWriteOptions): string[];
   // The model file text (one file).
@@ -155,9 +162,11 @@ export interface Results {
   tables(): TableDescription[];
   read(index: number, selection?: TableSelection): TableValues;
   attach(deck: Deck, strict: boolean): void;
-  writeArchive(path: string, options?: {
-    compressionLevel?: number; shuffle?: boolean; strict?: boolean; title?: string; subtitle?: string; label?: string;
-  }): WriteReport;
+  hasModel(): boolean;
+  // Loads and attaches the embedded model on demand; null when no model is available.
+  model(): Deck | null;
+  // Includes the attached model, or preserves the embedded model when rewriting an archive.
+  writeArchive(path: string, options?: ArchiveWriteOptions): WriteReport;
   // An Excel workbook (.xlsx) of the tables, for people: an index sheet, one sheet per table.
   writeXlsx(path: string, options?: {
     title?: string; subtitle?: string; label?: string; compressionLevel?: number;

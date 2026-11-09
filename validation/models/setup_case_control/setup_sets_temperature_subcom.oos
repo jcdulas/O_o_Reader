@@ -9,14 +9,8 @@
 #     TEMPERATURE(LOAD) and TEMPERATURE(MATERIAL) in different subcases, the
 #     combinations of SUBCOM with SUBSEQ (fewer factors than subcases) and
 #     with SUBSEQ1, the plot sets
-# Settles (library item: current status):
-#   - the hand decks of the gaps (MEFFMASS,
-#     TEMPERATURE(BOTH), a bare TEMPERATURE, THRU and EXCEPT, SUBSEQ1, plot
-#     sets) are tests only: subcases_table, case_sets_table, load_case_groups
-#     against the solver
-#   - SUBSEQ aligned on the last subcases (format reference SUBSEQ remark 4)
 # Run notes:
-#   - the listing echo and the subcase headings give the solver's reading; the OUTPUT2 file tables
+#   - the listing echo and the subcase headings give the solver's reading; the result data tables
 #     give the members of the sets
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
@@ -58,8 +52,6 @@ SubcaseCombinationFactors1;1.,1.,1.,0.5,4.
 OutputBlock;;Plot
 SetDefinition;5;All;Except;4
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # A plate of 4 x 2 CQUAD4 (x 0 to 40, y 0 to 20) clamped at x = 0 with a

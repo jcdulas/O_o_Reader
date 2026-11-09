@@ -11,7 +11,7 @@
 #     strains and forces at the corners of CQUAD4 (type 144), CQUADR (82) and
 #     CTRIAR (70), in SORT1 and SORT2 as the solver writes the random tables
 # Run notes:
-#   - the corner twin of results_dynamics/random_psd_rms.bdf
+#   - the corner twin of results_dynamics/random_psd_rms.oos
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================

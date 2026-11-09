@@ -5,9 +5,6 @@
 # Validates:
 #   - the AUXCASE and AUXMODEL sections the solver reads, the boundary shape of the
 #     auxiliary model and the shape design variable built from it (DVBSHAP)
-# Settles (library item: current status):
-#   - 'Not validated against the solver': auxiliary models
-#   - DVBSHAP is not applied (listed by not_applied())
 # Run notes:
 #   - PARAM,DESPCH,1 punches the final design
 # Written for this project, to exercise the reader.
@@ -32,8 +29,6 @@ LabelText;boundary shape: clamped plate under pressure
 SinglePointConstrSelection;100
 StaticLoadSelection;101
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;DesignPunchOutput;1

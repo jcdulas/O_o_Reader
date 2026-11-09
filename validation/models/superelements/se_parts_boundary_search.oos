@@ -8,11 +8,6 @@
 #     5e-6 to 1e-4 near 0 and near 1e3)
 #   - the boundary points and their numbers (GPLS tables of PARAM,POST,-2; the
 #     listing BOUNDARY SEQUENCE ASSIGNMENT TABLE)
-# Settles (library item: current status):
-#   - 'Not validated against the solver': SEBNDRY, SEEXCLD,
-#     SECONCT with LOC = NO, the precedence of two SEBULK TOLs
-#   - the tolerance rule (points 2.77e-5 apart joined by the solver)
-#   - superelement_point_list (experimental)
 # Run notes:
 #   - PARAM,POST,-2 writes the GPLS tables; run it a
 #     second time with PARAM,POST,-1 into a subfolder post-1 for the per-
@@ -33,8 +28,6 @@ SinglePointConstrForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip load on the residual
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-2
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;SuperelementMappingPrint;1

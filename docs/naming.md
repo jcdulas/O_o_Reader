@@ -1,6 +1,7 @@
 # Names
 
-O_o_Reader, O_o_Solver and `.oos` model files use the same neutral names. Names are exact and case-sensitive.
+O_o_Reader, O_o_Solver, `.oos` model files and `.oorh5` model tables use the same neutral names.
+Names are exact and case-sensitive.
 
 | What | Convention | Example |
 | --- | --- | --- |
@@ -12,8 +13,7 @@ O_o_Reader, O_o_Solver and `.oos` model files use the same neutral names. Names 
 | Class member | `m_` followed by lowerCamelCase | `m_tables` |
 
 A message identifies a card and a field by the same names the file and API use: `ShellQuad4 12, field offset`.
-The reader has no keyword dictionary or translated labels. O_o_Converter owns translation to and from external
-input formats.
+The reader uses the native model vocabulary directly, without a keyword dictionary or translated labels.
 
 See [element names](element-naming.md) for the shared physical-family vocabulary, implementation roles and compatibility.
 
@@ -21,7 +21,9 @@ See [element names](element-naming.md) for the shared physical-family vocabulary
 
 `formats/oos-layouts.json` gives each card's fields, alternatives, repeated groups, sections and forms.
 `docs/model-format-cards.md` is its generated reference. The compact order described there is the record order;
-internal field placement is an implementation detail.
+card-editing APIs use that order too. The native archive stores versioned slot numbers and includes the catalogue
+that describes their neutral field names. Changing a native slot's meaning requires a new model schema version;
+see [the native model contract](archive-format.md#native-model).
 
 `formats/value-fields.json` distinguishes keyword values from literal labels, identifiers and text. Literal values
 retain their contents: a label spelled `YES` remains that label. A keyword field uses its accepted neutral word.
@@ -44,3 +46,7 @@ values use neutral names too. A schema or value change that makes a consumer inc
 
 To add a card or field, update its typed table, registry entry, layout, field semantics and generated reference.
 Keep the code, model records, diagnostics and exported columns consistent. Run `scripts/check.sh` after the change.
+
+The table-package data contract, root archive version and native model schema version are separate contracts.
+Archive dataset paths such as `field_counts` and `value_offsets` retain the storage spelling specified in
+[archive-format.md](archive-format.md); the table-package and card APIs keep neutral field names such as `propId`.

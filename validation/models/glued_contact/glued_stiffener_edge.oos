@@ -8,12 +8,8 @@
 #     inside the panel, 2 mm below its skin) and without it (COPTM1 61, format reference
 #     BCTABLE remark 9: "for node-to-segment with edge-to-edge glue contact,
 #     use B=6"): the punched glue equations (NLOPRM MPCPCH)
-# Settles (library item: current status):
-#   - a stiffener on a panel (met by the components' rule, not by the solver's
-#     unless the thickness is left out) and COPTS, COPTM:
-#     the library's reading of the format reference, not validated against the solver
 # Run notes:
-#   - bring the .pch back with the listing and the OUTPUT2 file
+#   - bring the .pch back with the listing and the result data
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -30,8 +26,6 @@ MultiPointConstrForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;loads on the stiffeners
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Two assemblies 100 mm apart, each a 40 x 40 panel of 2 x 2 CQUAD4 at z = 0,

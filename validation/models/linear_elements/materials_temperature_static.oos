@@ -9,7 +9,7 @@
 #   - solution: SOL 101 (linear static: a mechanical subcase and a thermal
 #     subcase)
 #   - outputs: displacements, SPC forces, element stresses and forces, ply
-#     stresses of the laminate (OUTPUT2)
+#     stresses of the laminate
 # Run notes:
 #   - TEMPERATURE(MATERIAL) = 10 (120 C everywhere) sets the temperature at
 #     which every MATTi table is read; the thermal load of subcase 2 is

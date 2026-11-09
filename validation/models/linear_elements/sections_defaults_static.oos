@@ -6,7 +6,7 @@
 #   - cards: BAROR, BEAMOR, PBRSECT, PBMSECT, PBCOMP, PDISTB, PDISTBM (with
 #     CBAR, CBEAM, CQUAD4, PBAR, PBEAM, PSHELL, POINT, SET1)
 #   - solution: SOL 101 (linear static, one subcase)
-#   - outputs: displacements, SPC forces, element stresses and forces (OUTPUT2)
+#   - outputs: displacements, SPC forces, element stresses and forces
 # Run notes:
 #   - the CBAR and CBEAM entries of regions 1 and 2 leave the property and the
 #     orientation fields blank on purpose: BAROR and BEAMOR supply them

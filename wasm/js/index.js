@@ -1,4 +1,4 @@
-// oor-reader: reads and writes .oos model files and HDF5 results archives,
+// oor-reader: reads and writes .oos model files and native HDF5 model/results archives,
 // writes them as an Excel workbook, and runs the named queries of the library, in the browser or in Node.js.
 //
 //   import { loadOorReader } from "oor-reader";
@@ -148,7 +148,7 @@ export class OorReader {
 
   // ---- decks
 
-  // Reads an O_o model file and its Include files. The content always uses model records.
+  // Reads .oos records and their Include files, or the typed model of a native .oorh5 archive.
   readModel(path, options = {}) {
     return this.core.Deck.readModel(path, { strict: options.strict ?? false });
   }

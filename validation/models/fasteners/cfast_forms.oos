@@ -8,11 +8,6 @@
 #     and CTRIA6 shells; the fastener frame of PFAST MFLAG 1 and of a
 #     cylindrical MCID
 #   - the fastener forces (FORCE) in the element system each PFAST defines
-# Settles (library item: current status):
-#   - the piercing points of CFAST ELEM placed by GS or XS YS ZS, a given GA
-#     with a blank GB, on CQUAD8 and CTRIA6 shells and on a warped
-#     quadrilateral
-#   - forces and strain energy of cfast (not_validated lines)
 # Run notes:
 #   - SWLDPRM PRTSW 1 prints the projections in the listing
 # Written for this project, to exercise the reader.
@@ -31,8 +26,6 @@ ElemStrainEnergyOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip loads on the upper plates
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Two parallel plates 2 mm apart (PSHELL 21 lower 4 x 4 CQUAD4 clamped at x =

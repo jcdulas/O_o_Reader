@@ -1,4 +1,4 @@
-# Shared mesh of sol101_shape_basis.bdf and sol200_dvshap_basis_vectors.bdf
+# Shared mesh of sol101_shape_basis.oos and sol200_dvshap_basis_vectors.oos
 # (INCLUDEd by both, so that the database of the first run matches the second
 # model): a steel plate 100 x 50 mm, 10 x 5 CQUAD4 of 10 mm, 2 mm thick.
 # Units: mm, N, t, s.

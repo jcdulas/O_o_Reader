@@ -9,7 +9,7 @@
 #     pressure, downwash and force controllers; static divergence)
 #   - outputs: displacements, CQUAD4 stresses, trim variables, stability and
 #     hinge moment derivatives, control surface positions and hinge moments,
-#     aerodynamic pressures and forces (OUTPUT2)
+#     aerodynamic pressures and forces
 # Run notes:
 #   - reuses the wing of aero_sol144/aero_model.inc (CAERO1 1001, 8 x 4
 #     boxes, surface ELEV); symmetric half model, root clamped
@@ -86,5 +86,5 @@ MonitorChordNormalCoeffs;WINGCN;strip coefficients of the wing;0.25;1001
 AeroDivergence;70;2;0.5
 ComplexEigenMethod;10;HessenbergMethod;Maximum;;;;4
 # A list of names for an external procedure: nothing in this deck uses it
-# (see read_only_aero/sol144_external_spline.bdf for its consumer).
+# (see read_only_aero/sol144_external_spline.oos for its consumer).
 AeroLabelList;1701;WINGBOX;TIPZONE

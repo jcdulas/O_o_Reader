@@ -10,6 +10,17 @@
 namespace oor::model
 {
 
+void Model::restoreNextKey(std::uint32_t next)
+{
+    if (next < m_nextKey)
+        throw base::UsageError("the next card key cannot move backwards");
+    for (const auto& table : m_tables)
+        if (table && table->rows().rowCount() &&
+            table->rows().keyAt(table->rows().rowCount() - 1).value >= next)
+            throw base::UsageError("the next card key must follow every stored card key");
+    m_nextKey = next;
+}
+
 namespace
 {
 

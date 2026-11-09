@@ -2,6 +2,7 @@
 
 #include "oor/base/ids/EntityId.hpp"
 #include "oor/base/text/NumberParser.hpp"
+#include "oor/base/text/NumberFormatter.hpp"
 #include "oor/model/format/SignificantDigits.hpp"
 
 #include <functional>
@@ -14,6 +15,41 @@ FieldReader::FieldReader(const deck::RawCardBlock& block, const deck::RawCard& c
                          std::string_view fileName) noexcept
     : m_card(card), m_fields(block.fieldsOf(card)), m_sink(sink), m_file(fileName)
 {
+}
+
+FieldReader::FieldReader(std::span<const FieldValue> fields, const deck::RawCard& card, base::DiagnosticSink& sink,
+                         std::string_view fileName)
+    : m_card(card), m_typed(true), m_typedFields(fields), m_sink(sink), m_file(fileName)
+{
+}
+
+const FieldValue* FieldReader::typedValue(int field) const noexcept
+{
+    return m_typed && field >= 1 && field <= slotCount() ? &m_typedFields[static_cast<std::size_t>(field - 1)] : nullptr;
+}
+
+bool FieldReader::isBlank(int field) const noexcept
+{
+    if (const FieldValue* value = typedValue(field))
+        return value->kind == FieldValue::Kind::Blank ||
+               (value->kind == FieldValue::Kind::Text && value->text.empty());
+    return field < 1 || field > slotCount() || m_fields[static_cast<std::size_t>(field - 1)].empty();
+}
+
+std::string_view FieldReader::typedText(int field) const
+{
+    const FieldValue& value = *typedValue(field);
+    if (value.kind == FieldValue::Kind::Blank)
+        return {};
+    if (value.kind == FieldValue::Kind::Text)
+        return value.text;
+    if (m_formatted.empty())
+        m_formatted.resize(m_typedFields.size());
+    std::string& formatted = m_formatted[static_cast<std::size_t>(field - 1)];
+    if (formatted.empty())
+        formatted = value.kind == FieldValue::Kind::Integer ? base::NumberFormatter::formatInteger(value.integer)
+                                                           : base::NumberFormatter::formatRealFree(value.real);
+    return formatted;
 }
 
 std::string FieldReader::fieldLabel(const char* name) const
@@ -65,7 +101,7 @@ int FieldReader::lastUsedField() const noexcept
 {
     for (int field = slotCount(); field >= 1; --field)
     {
-        if (!m_fields[static_cast<std::size_t>(field - 1)].empty())
+        if (!isBlank(field))
             return field;
     }
     return 0;
@@ -83,6 +119,13 @@ void FieldReader::noteName(int field, const char* name, [[maybe_unused]] const c
 std::optional<std::int32_t> FieldReader::optionalInteger(int field, const char* name)
 {
     noteName(field, name, "integer");
+    if (const FieldValue* value = typedValue(field); value && value->kind == FieldValue::Kind::Integer)
+    {
+        const auto id = base::toEntityId(value->integer);
+        if (!id)
+            error("card.integer-too-large", "field " + fieldLabel(name) + " does not fit in 32 bits", name);
+        return id;
+    }
     const std::string_view value = text(field);
     if (value.empty())
         return std::nullopt;
@@ -123,6 +166,13 @@ std::int32_t FieldReader::requiredInteger(int field, const char* name)
 std::optional<double> FieldReader::optionalReal(int field, const char* name)
 {
     noteName(field, name, "real");
+    if (const FieldValue* value = typedValue(field))
+    {
+        if (value->kind == FieldValue::Kind::Real)
+            return value->real;
+        if (value->kind == FieldValue::Kind::Integer)
+            return static_cast<double>(value->integer);
+    }
     const std::string_view value = text(field);
     if (value.empty())
         return std::nullopt;
@@ -167,6 +217,16 @@ double FieldReader::requiredReal(int field, const char* name)
 std::optional<std::variant<std::int32_t, double>> FieldReader::integerOrReal(int field, const char* name)
 {
     noteName(field, name, "number");
+    if (const FieldValue* value = typedValue(field))
+    {
+        if (value->kind == FieldValue::Kind::Real)
+            return std::variant<std::int32_t, double>(value->real);
+        if (value->kind == FieldValue::Kind::Integer)
+        {
+            if (const auto id = base::toEntityId(value->integer))
+                return std::variant<std::int32_t, double>(*id);
+        }
+    }
     const std::string_view value = text(field);
     if (value.empty())
         return std::nullopt;

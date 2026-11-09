@@ -9,7 +9,7 @@
 #     the buckling subcase)
 #   - outputs: displacements, eigenvalues, eigenvectors of the segments
 # Run notes:
-#   - the segment of cyclic_rot_static_sol114.bdf without the hub: the
+#   - the segment of cyclic_rot_static_sol114.oos without the hub: the
 #     inner edge is pushed outwards, the outer edge clamped; buckling loads
 #     are given as harmonic 0 (LOADCYH), as the solution asks
 # Written for this project, to exercise the reader.

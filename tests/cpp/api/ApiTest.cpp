@@ -147,11 +147,37 @@ TEST_CASE("results are listed, read, attached to a deck and converted", "[api]")
     const auto reopened = api::Results::open(archive.string());
     CHECK(reopened->format() == "archive");
     CHECK(reopened->tables().size() == 1);
+    CHECK(reopened->hasModel());
+    CHECK(reopened->model()->toModelText() == deck->toModelText());
+    CHECK(api::Deck::readModel(archive.string())->toModelText() == deck->toModelText());
+    CHECK(api::runQuery("maxDisplacement", reopened->model(), reopened, {})->rowCount() >= 1);
+    // Rewriting an archive before requesting its model must preserve that model too.
+    const auto copy = files.root() / "copy.oorh5";
+    CHECK(api::Results::open(archive.string())->writeArchive(copy.string()).finished);
+    CHECK(api::Deck::readModel(copy.string())->toModelText() == deck->toModelText());
 
     const auto workbook = files.root() / "plate.xlsx";
     const results::ResultWriteReport report = results->writeXlsx(workbook.string());
     CHECK(report.finished);
     CHECK(std::filesystem::file_size(workbook) == report.bytes);
+}
+
+TEST_CASE("a native archive holds a model alone or results alone", "[api][archive-model]")
+{
+    const testing::TestFiles files;
+    const auto deck = api::Deck::readModel(files.write("plate.oos", PLATE).string());
+    const auto modelOnly = files.root() / "model.oorh5";
+    CHECK(deck->writeArchive(modelOnly.string()).finished);
+    const auto archive = api::Results::open(modelOnly.string());
+    CHECK(archive->tables().empty());
+    CHECK(archive->hasModel());
+    CHECK(archive->model()->toModelText() == deck->toModelText());
+    const auto resultsOnly = files.root() / "results.oorh5";
+    CHECK(plateDisplacements()->writeArchive(resultsOnly.string()).finished);
+    const auto results = api::Results::open(resultsOnly.string());
+    CHECK_FALSE(results->hasModel());
+    CHECK(results->model() == nullptr);
+    CHECK_THROWS(api::Deck::readModel(resultsOnly.string()));
 }
 
 TEST_CASE("query tables are written to HDF5 as custom outputs", "[api]")

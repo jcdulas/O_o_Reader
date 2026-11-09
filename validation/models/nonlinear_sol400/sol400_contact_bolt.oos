@@ -5,13 +5,7 @@
 # Validates:
 #   - the contact forces and tractions of a touching contact (BCONTACT,
 #     BOUTPUT) and the bolt results (BOLT with a preload on its control grid
-#     point), 32-bit OUTPUT2 and HDF5
-# Settles (library item: current status):
-#   - contact_tractions real SORT1 and bolt_results real
-#     SORT1 32-bit (not_validated: the bolt tables are validated in 64-bit
-#     files only)
-#   - the contact and bolt datasets of the HDF5 file (no
-#     decoder: never observed)
+#     point), 32-bit result tables
 # Run notes:
 #   - run it also with the i8 executable for the 64-bit twin of the bolt
 #     tables
@@ -34,8 +28,6 @@ StressOutput;All;PlotOnly
 SinglePointConstrForceOutput;All;PlotOnly
 SlidelineContactOutput;All;PlotOnly
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Two blocks of 2 x 2 x 1 CHEXA in contact (the upper one pressed on the lower

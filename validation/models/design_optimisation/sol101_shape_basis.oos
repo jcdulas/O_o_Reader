@@ -5,13 +5,13 @@
 # Covers:
 #   - cards: PLOAD2 FORCE SPC1, the auxiliary loads and supports whose
 #     displacements (UG, with GEOM1 and GEOM2 of this run) are the basis
-#     vectors that sol200_dvshap_basis_vectors.bdf reads from the database
+#     vectors that sol200_dvshap_basis_vectors.oos reads from the database
 #   - solution: SOL 101 (two auxiliary static subcases: their displacements
 #     are the shape basis vectors 1 and 2)
 #   - outputs: displacements
 # Run notes:
 #   - run it first, with scr=no, in the folder where
-#     sol200_dvshap_basis_vectors.bdf runs: that deck attaches
+#     sol200_dvshap_basis_vectors.oos runs: that deck attaches
 #     sol101_shape_basis.MASTER (ASSIGN and DBLOCATE)
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

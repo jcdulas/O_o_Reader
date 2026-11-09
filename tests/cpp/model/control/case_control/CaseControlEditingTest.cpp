@@ -190,7 +190,7 @@ TEST_CASE("commands, sets and parameters are removed; a subcase with INCLUDE mar
 
     CaseEntry begin;
     begin.kind = EntryKind::IncludeBegin;
-    begin.text = "INCLUDE 'a.bdf'";
+    begin.text = "INCLUDE 'a.oos'";
     control.segments()[1].entries.push_back(begin);
     REQUIRE_FALSE(control.removeSubcase(control.segments()[1].key));
     REQUIRE(control.segments().size() == 2);

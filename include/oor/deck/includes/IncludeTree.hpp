@@ -32,7 +32,7 @@ public:
     }
 
     [[nodiscard]] std::size_t depth() const noexcept { return m_open.size(); }
-    // The open files joined as "a.bdf -> b.bdf -> c.bdf", for messages.
+    // The open files joined as "a.oos -> b.oos -> c.oos", for messages.
     [[nodiscard]] std::string describe() const;
 
 private:

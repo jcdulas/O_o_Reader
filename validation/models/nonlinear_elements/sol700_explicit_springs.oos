@@ -10,7 +10,7 @@
 #   - two one-degree-of-freedom oscillators of 1 kg: a CELAS1D whose force
 #     follows a TABLED1 curve (PELAS1) and a CSPR of linear stiffness
 #     (PSPRMAT), both under a step force of 100 N for 10 ms
-#   - SOL 700 needs the explicit solver installed (sol700.pth); no OUTPUT2 is
+#   - SOL 700 needs the explicit solver installed (sol700.pth); no results are
 #     asked, the explicit solver writes its own result files
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.

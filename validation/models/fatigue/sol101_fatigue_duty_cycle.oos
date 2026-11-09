@@ -8,7 +8,7 @@
 #     analysis of the FATIGUE request: rainflow counting of the superposed
 #     stress histories, S-N damage)
 #   - outputs: displacements, CQUAD4 stresses, the fatigue results (life,
-#     damage) in the listing and the OUTPUT2 file
+#     damage) in the listing and the result data
 # Run notes:
 #   - the fatigue tables (OEFTG) have no decoder in the library yet: compare
 #     them with the listing

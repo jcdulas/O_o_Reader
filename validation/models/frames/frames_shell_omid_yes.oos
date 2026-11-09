@@ -6,14 +6,8 @@
 #   - the stresses, strains and forces of CQUAD4, CTRIA3, CTRIAR and CQUAD8
 #     with THETA and MCID written with PARAM,OMID,YES
 #   - the same results without OMID come from the other deck of the pair
-# Settles (library item: current status):
-#   - PARAM,OMID,YES (the format's word; no file with shells that have a THETA
-#     and an OUTPUT2 file) and 'a run with both forms (BOTH) is refused': the first
-#     pair of runs settles it
-#   - the shellStress, shellStrain and shellForce rows element <-> material
-#     of the convention table (validated by analysis only)
 # Run notes:
-#   - run frames_shell_omid_yes.bdf also with the PARAM,OMID line removed
+#   - run frames_shell_omid_yes.oos also with the PARAM,OMID line removed
 #     (subfolder omid_no) for the standard-form twin
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
@@ -31,8 +25,6 @@ ElemForceOutput;All;PlotOnly;PrintListing
 SubcaseStart;1
 LabelText;in-plane and bending tip loads
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;OutputMaterialFrame;Yes

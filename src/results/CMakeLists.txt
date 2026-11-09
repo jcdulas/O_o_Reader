@@ -22,6 +22,7 @@ add_library(oor_results STATIC
     # the HDF5 results archive (docs/archive-format.md)
     archive/ArchiveResultFile.cpp
     archive/ArchiveWriter.cpp
+    archive/ArchiveModel.cpp
     # the Excel workbook of results (an output only)
     xlsx/XlsxWriter.cpp)
 add_library(oor::results ALIAS oor_results)

@@ -8,7 +8,7 @@
 #     superelement read from an OP4 file)
 #   - outputs: displacements, SPC forces, MPC forces
 # Run notes:
-#   - run op4_matrices/op4_extseout_sparse_binary.bdf first: this deck reads
+#   - run op4_matrices/op4_extseout_sparse_binary.oos first: this deck reads
 #     its OP4 file (../op4_matrices/op4_extseout_sparse_binary.op4)
 #   - subcase 2 applies column 1 of the load matrix of the external
 #     superelement (no LDLABEL in its creation run, hence COLNUM)

@@ -41,8 +41,7 @@ enum class BarLoadScale : std::uint8_t
 // Card layout: PLOAD1  SID  EID  TYPE  SCALE  X1  P1  X2  P2
 // A blank X2 is X1 (blank X2 or X2 = X1 is a concentrated load P1 at X1): X2 is stored resolved and
 // always written. A blank P2 stays blank on the card (written back blank): the solver reads it as 0 when X2 differs
-// from X1, a load that falls linearly from P1 to 0 (the public pload1.bdf, subcases 7 to 9: its results are those of P2
-// = 0.0), which the letter of the format reference does not say; effectiveP2() is the value the solver uses.
+// from X1, a load that falls linearly from P1 to 0; effectiveP2() is the value the solver uses.
 struct BeamDistributedLoadCard
 {
     base::EntityId id = 0;

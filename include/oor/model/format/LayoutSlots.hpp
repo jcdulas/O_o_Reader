@@ -24,8 +24,8 @@ struct SpanPlace
 };
 
 // A count field of a card whose number is more than the slots of the card can hold (a repetition takes one slot at
-// least): CardLayout::toValues would go through every repetition, so the converter reads the slots with a smaller
-// count and gives the record the number as written.
+// least): CardLayout::toValues would go through every repetition. A caller can read the slots with a smaller count
+// and retain the record's original count.
 struct LargeCount
 {
     std::string field; // the name of the count field
@@ -42,7 +42,7 @@ struct SlotPlaces
     const CardLayout* layout = nullptr;
     // The filled slots (numbers, slot 1 first) that no field covers: a padding slot of the old layout that a deck
     // filled anyway, or a line of sections that no key word opens. CardLayout::toValues refuses a card with such a
-    // slot; the converter reports and blanks them.
+    // slot; callers can report and blank them before writing a record.
     std::vector<int> withoutField;
     // The text fields spread over several slots: the fixed fields with a span (a span to the end of the card ends at
     // the last slot), the group fields with a span in every repetition the slots reach, and the section fields and

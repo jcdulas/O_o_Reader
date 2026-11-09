@@ -2,16 +2,17 @@
 
 #include <string_view>
 
-// The names of the HDF5 results archive: the file format this library writes for results and custom outputs.
+// The names of the HDF5 archive: the file format this library writes for models, results and custom outputs.
 // docs/archive-format.md describes it in full; this header is the single place where its names are spelled.
 //
-// In short (version 3):
+// In short (version 4):
 //
 //   /                       attributes: format, format_version, producer, created_at, title, subtitle, label
 //   /index/tables           one row per result table (compound): where its group is and what it holds
 //   /index/named            one row per named result (compound)
 //   /data/tables/<n>/       a result table: values (steps, rows, components[, 2]) and the labels of its axes
 //   /data/named/<n>/        a named result: its arrays and text labels
+//   /model/                 optional native typed model (ArchiveModel.hpp), loaded independently of results
 //
 // Design choices, for a web viewer:
 // - the index is one small dataset: opening an archive reads it once, without walking thousands of groups;
@@ -23,7 +24,8 @@ namespace oor::results::archive
 {
 
 inline constexpr std::string_view FORMAT_NAME = "oor-results-archive";
-inline constexpr std::string_view FORMAT_VERSION = "3";
+inline constexpr std::string_view FORMAT_VERSION = "4";
+inline constexpr std::string_view LEGACY_FORMAT_VERSION = "3";
 
 // Attributes of the root group (fixed-length UTF-8 strings).
 inline constexpr std::string_view ATTRIBUTE_FORMAT = "format";
@@ -39,6 +41,12 @@ inline constexpr std::string_view TABLE_INDEX = "/index/tables";
 inline constexpr std::string_view NAMED_INDEX = "/index/named";
 inline constexpr std::string_view TABLE_GROUPS = "/data/tables";
 inline constexpr std::string_view NAMED_GROUPS = "/data/named";
+// Optional native model, indexed by part and card type. Numeric columns never pass through model text.
+inline constexpr std::string_view MODEL_GROUP = "/model";
+inline constexpr std::string_view MODEL_FORMAT = "oor-column-model";
+inline constexpr std::string_view MODEL_VERSION = "1";
+inline constexpr std::string_view MODEL_PARTS = "/model/parts";
+inline constexpr std::string_view MODEL_CARD_SCHEMA = "/model/schema/card_layouts";
 // The steps of every table, one after the other in the order of /index/tables (the columns step_offset and step_count
 // of the index say where the steps of a table are): listing an archive reads them once instead of one small dataset a
 // table. NaN where a table has no such value; the columns has_eigenvalues, has_eigenvalues_imag and has_cycles say

@@ -6,10 +6,6 @@
 #   - the applied loads (OLOAD) and the SPC forces of each PLOAD4 form:
 #     uniform, corner pressures on a warped quadrilateral, a direction by CID
 #     and N1-N3, a solid face (CHEXA, CTETRA)
-# Settles (library item: current status):
-#   - a PLOAD4 whose resultant the library does not reproduce (not
-#     investigated)
-#   - the load resultants of loads_table against the solver's OLOAD
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -26,8 +22,6 @@ NodeForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;PLOAD4 forms
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # PLOAD4 in each of its forms on single elements: uniform, four corner

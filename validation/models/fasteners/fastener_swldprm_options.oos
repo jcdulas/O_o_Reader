@@ -6,11 +6,6 @@
 #   - the piercing points the solver finds with MOVGAB 1, GSPROJ, GSMOVE,
 #     PROJTOL 0.05, ACTVTOL, GMCHK, DRATIO, NREDIA and GSTOL: the generated
 #     grid points in GEOM1, the PRTSW print
-# Settles (library item: current status):
-#   - the piercing points under these parameters (the library applies
-#     PROJTOL; the other checks and fall-backs of the projection are not
-#     implemented): MOVGAB 1, GSMOVE, NREDIA, DRATIO, PROJTOL other than 0.02,
-#     ACTVTOL, GMCHK, GSPROJ, GSTOL
 # Run notes:
 #   - a connector that the solver cannot place is reported in the listing; the run
 #     continues (CHKRUN 0)
@@ -28,8 +23,6 @@ ElemForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip loads on the upper plate
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Two parallel plates 2 mm apart (PSHELL 41 lower clamped at x = 0, PSHELL 42

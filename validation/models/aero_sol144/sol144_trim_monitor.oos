@@ -4,25 +4,16 @@
 #
 # Validates:
 #   - the trim variables, stability derivatives, hinge moments, aerodynamic
-#     pressures and forces (OUTPUT2 and HDF5 of one run), the static monitor point
+#     pressures and forces (result tables of one run), the static monitor point
 #     loads (MONPNT1 structural and aerodynamic, MONPNT3 with and without
 #     XFLAG S, MONDSP1)
-# Settles (library item: current status):
-#   - the aeroelastic tables (experimental in OUTPUT2 and HDF5: cross-checked
-#     with a listing only)
-#   - the HDF5 datasets AERODYNAMIC/TRIM, VARIABLE, DERIVATIVE, PRESSURE,
-#     FORCE, MONITOR/* (experimental -> validated against the OUTPUT2 file of the same
-#     run)
-#   - where a SOL 144 run stores its monitor loads (no file layout yet for a
-#     static monitor_point_loads)
-#   - the order in which the solver names the rows of an MP3F of several MONPNT3
 # Run notes:
 #   - PARAM,MPTUNIT,40 with the ASSIGN asks the solver to write the monitor tables to
-#     sol144_monitor.out2; bring back both OUTPUT2 files
+#     sol144_monitor.data; retain the requested result data for comparison
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
-FileAssignment;OUTPUT2='sol144_monitor.out2';FileUnit=40;FileForm=Unformatted
+FileAssignment;RESULTS='sol144_monitor.data';FileUnit=40;FileForm=Unformatted
 SolutionSequence;144
 [case]
 TitleText;O_o_Reader validation: static aeroelastic trim, monitor points
@@ -39,8 +30,6 @@ MonitorPointOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;restrained trim, angle of attack and elevator fixed
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate filter).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;MonitorPointUnit;40

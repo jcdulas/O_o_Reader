@@ -4,7 +4,7 @@
 #
 # Covers:
 #   - cards: SEDRSP3 (with the parts, SEDLINK and SEDRSP2 of
-#     superelements_parts/se_parts_design_sol200.bdf)
+#     superelements_parts/se_parts_design_sol200.oos)
 #   - solution: SOL 200 (sizing of two part superelements)
 #   - outputs: none (not run)
 # Run notes:

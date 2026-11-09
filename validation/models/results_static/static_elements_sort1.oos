@@ -17,30 +17,12 @@
 #   - the grid point weight (PARAM,GRDPNT,0: OGPWG and NODAL/GRID_WEIGHT of
 #     the same run)
 #   - EPSILON and the external work of each subcase (printed in the listing)
-#   - the same results in the HDF5 file of the same run (OUTPUT2 twin: proves the
+#   - the same results in the HDF5 file of the same run (matching result data: proves the
 #     HDF5 datasets)
 #   - the grid point stresses and strains of a volume (PRINCIPAL and DIRECT)
 #     and of a surface, the mesh stress discontinuities (GPSDCON, ELSDCON)
 #   - the strain/curvature form of the shell strains (STRAIN(STRCUR)) in
 #     subcase 2
-# Settles (library item: current status):
-#   - the not_validated 32-bit lines of
-#     stress, strain, forces and strain_energy in real SORT1 for celas1-4,
-#     cbush, cbush1d, cfast, cweld, cpyram, cshear, cquadr, ctriar, cquad8,
-#     ctria6, the *_composite containers, cbar100, cbend, ctube, conrod
-#     (not_validated -> validated)
-#   - the HDF5 datasets of the same tables
-#     (ELAS1-3, SHEAR, QUAD8, TRIA6, QUADR, TRIAR, *_COMP, BARS, CONROD, TUBE,
-#     MPC_FORCE, APPLIED_LOAD; not_validated -> validated)
-#   - NODAL/GRID_WEIGHT (experimental ->
-#     validated against the OUTPUT2 file OGPWG)
-#   - the HDF5 datasets not proved yet (an OUTPUT2 file twin from the same run, not a
-#     mechanism, not only zeros)
-#   - grid_point_stresses.volume_principal,
-#     grid_point_strains.volume_principal and surface_discontinuity
-#     (not_validated), failure_indices.ctria3_composite (not_validated)
-#   - the OESRT strength ratio table (raw today: its layout)
-#   - the strain bit of OES1A/OEF1 with STRCUR
 # Run notes:
 #   - run it twice: once as is, once with the 64-bit (i8) executable (for
 #     example the run command of this deck with mode=i8, or the i8
@@ -86,8 +68,6 @@ PlotVolume;21 SET 91 PRINCIPAL DIRECT SYSTEM BASIC
 SetDefinition;92;101;102
 PlotSurface;22 SET 92 FIBRE ALL SYSTEM BASIC AXIS X NORMAL Z
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;WeightReferenceNode;0

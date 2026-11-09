@@ -6,13 +6,6 @@
 #   - the SORT2 heat flux tables of every conduction element of the model and
 #     the SORT2 heat flows of CHBDYE, CHBDYG, CHBDYP and CONV; the temperature
 #     rates (NODAL/VELOCITY of a heat transfer run)
-# Settles (library item: current status):
-#   - heat_flux real SORT2 of cbar, cbeam, cbend, chexa,
-#     conrod, cpenta, cquad4, cquad8, crod, ctetra, ctria3, ctria6, ctriax6,
-#     ctube; heat_flows real SORT2 of chbdye, chbdyg, chbdyp, conv
-#     (not_validated)
-#   - the OUTPUT2 file and HDF5 tables of one run (noise at the end of a transient
-#     thermal run)
 # Run notes:
 #   - the heat load of load set 1 is switched on by TLOAD1 51 and its table (a
 #     step at t = 0)
@@ -35,8 +28,6 @@ AppliedLoadOutput;All;PlotOnly;SortByTime
 SubcaseStart;1
 LabelText;heat load switched on at t = 0
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate filter).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 TransientTableLoad1;51;1;;;;52

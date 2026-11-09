@@ -4,20 +4,13 @@
 #
 # Validates:
 #   - a moved shape (DVGRID) and the positions the solver writes at each cycle (the
-#     punched final design, the OUTPUT2 file geometry), DVMREL2 and DVCREL2 applied by
+#     punched final design, the result data geometry), DVMREL2 and DVCREL2 applied by
 #     the solver, DVPREL1 on a PSHELL with Z1 and Z2 blank and on a PCOMP ply with Z0
 #     blank
-#   - the SOL 200 OUTPUT2 tables (DESCYC, DBCOPT, HISADD, DESTAB, R1TABRG,
+#   - the SOL 200 result tables (DESCYC, DBCOPT, HISADD, DESTAB, R1TABRG,
 #     DSCMCOL, DSCM2) and the HDF5 optimisation datasets of the same run
 #   - the design sensitivity print (DSAPRT) and the result tables of each
 #     design cycle
-# Settles (library item: current status):
-#   - DVGRID applied (N not made a unit vector, the XINIT rule), DVMREL2 and
-#     DVCREL2 applied (not validated against the solver)
-#   - a blank Z1/Z2 of a PSHELL and Z0 of a PCOMP follow the designed
-#     thickness (inferred)
-#   - SOL 200 'responses' (R1TABRG) not_validated
-#   - the optimisation tables of the HDF5 file (no decoder: never observed)
 # Run notes:
 #   - PARAM,NASPRT,1 and DSAPRT print the sensitivities; the final design is
 #     punched (.pch): bring it back
@@ -40,8 +33,6 @@ ElemForceOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;tip loads
 [model]
-# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
-# deflate filter).
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 Parameter;DesignPrintFrequency;1

@@ -69,7 +69,7 @@ struct TableValues
 class Results
 {
 public:
-    // Opens a file by its content. Throws IoError when it is neither an archive nor readable text.
+    // Opens an archive by content. Model and result values are loaded only when requested.
     [[nodiscard]] static std::shared_ptr<Results> open(const std::string& path);
     // A result set of tables made in memory (a solver hands over its results): each input is checked against the result
     // catalogue (makeMemoryTable). `label` names the set. Throws UsageError with every problem of an input.
@@ -84,6 +84,9 @@ public:
     // Reads a table (by its index in `tables()`). Throws UsageError for an index out of range, EmptySelectionError when
     // the selection keeps nothing.
     [[nodiscard]] TableValues read(std::size_t index, const TableSelection& selection = {}) const;
+    [[nodiscard]] bool hasModel() const;
+    // The attached or embedded model, or nullptr when absent. Loading also attaches it to the results for queries.
+    [[nodiscard]] std::shared_ptr<Deck> model();
 
     // Links the results to the cards of a deck: what the queries that combine both need. Throws DeckError when the
     // results name cards the deck does not have and `strict` is set.
@@ -104,6 +107,7 @@ private:
     std::shared_ptr<results::ResultTables> m_tables;
     std::vector<std::shared_ptr<results::ResultTable>> m_list; // the tables in a stable order: the handles
     std::shared_ptr<results::ResultAttachment> m_attachment;
+    std::shared_ptr<Deck> m_deck;
 };
 
 } // namespace oor::api

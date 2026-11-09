@@ -3,18 +3,12 @@
 # O_o_Reader validation deck: mechanism shapes (statics)
 #
 # Validates:
-#   - how the solver writes the potential mechanism shapes in the OUTPUT2 file and the HDF5
+#   - how the solver writes the potential mechanism shapes in the result data and the HDF5
 #     file
 #   - EPSILON and the external work of a run with a mechanism (listing)
-# Settles (library item: current status):
-#   - the kind 'mechanism_shapes' has no
-#     decoder and no file layout (no-file-layout in both writers): the first
-#     file that shows one
-#   - the named results 'epsilon' and 'external_work' (made in memory only):
-#     their listing values
 # Run notes:
 #   - the run is expected to end with the mechanism messages (BAILOUT -1 keeps
-#     it going); bring back the listing even if the OUTPUT2 file holds no mechanism table
+#     it going); bring back the listing even if the result data holds no mechanism table
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
@@ -30,8 +24,6 @@ AppliedLoadOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;in-plane loads on a plate free to turn about its hinge
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # A plate of 2 x 2 CQUAD4 hinged on one edge about its own line (only

@@ -11,14 +11,14 @@
 # Run notes:
 #   - FRF(COMPID=20 ...) generates the FRFs of two steel struts standing under
 #     the free corners of the plate (their top points 201 and 211 coincide
-#     with plate points 5 and 15) on frf_gen_strut_frf.out2 (unit 26)
+#     with plate points 5 and 15) on frf_gen_strut_frf.data (unit 26)
 #   - unit loads: FRFXIT1 along x at the mid points 202 and 212, plus the
 #     program's loads at the connection points 201 and 211 (SET 200)
-#   - bring back frf_gen_strut_frf.out2 and the .asm file next to the deck
+#   - bring back frf_gen_strut_frf.data and the .asm file next to the deck
 # Written for this project, to exercise the reader.
 # How to run it, what to bring back: validation/models/README.md.
 # ============================================================================
-FileAssignment;OUTPUT2='frf_gen_strut_frf.out2';FileUnit=26;FileForm=Unformatted
+FileAssignment;RESULTS='frf_gen_strut_frf.data';FileUnit=26;FileForm=Unformatted
 SolutionSequence;108
 [case]
 TitleText;O_o_Reader test model: FRF generation, strut component
@@ -26,7 +26,7 @@ BulkEcho;None
 SinglePointConstrSelection;1
 FreqSetSelection;41
 SetDefinition;200;201;211
-FrfGeneration;;COMPID = 20 COMPNAME = STRUT CONNPTS = 200 OP2 = 26
+FrfGeneration;;COMPID = 20 COMPNAME = STRUT CONNPTS = 200
 DisplacementOutput;All;PlotOnly;MagnitudePhase
 SubcaseStart;1
 LabelText;FRFs of the struts

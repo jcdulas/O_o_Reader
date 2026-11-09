@@ -6,7 +6,7 @@
 #   - cards: CDAMP5, PDAMP5 (with MAT4, PROD, CROD, QVOL, TLOAD1, TABLED1,
 #     TEMPD, TSTEPNL)
 #   - solution: SOL 159 (transient heat transfer)
-#   - outputs: temperatures, SORT1 (OUTPUT2)
+#   - outputs: temperatures, SORT1
 # Run notes:
 #   - CDAMP5 is a heat transfer element: PDAMP5 multiplies the specific heat
 #     of MAT4 1 by a mass and lumps the capacity at the grid point (G2 blank:

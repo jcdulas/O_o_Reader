@@ -8,11 +8,6 @@
 #     strains and forces of every family of the shared model
 #   - the HDF5 NODAL/VELOCITY, NODAL/ACCELERATION, NODAL/MPC_FORCE of the same
 #     run
-# Settles (library item: current status):
-#   - NODAL/ACCELERATION (no decoder: never observed) and NODAL/VELOCITY,
-#     NODAL/MPC_FORCE (not_validated); the HDF5 writer's 'no-observed-layout'
-#     for accelerations
-#   - the OUTPUT2 file and HDF5 files of one transient run that is not a mechanism
 # Run notes:
 #   - the transient load is load set 1 times a ramp (TABLED1 52); 100 steps of
 #     1e-4 s, output every 5th
@@ -41,8 +36,6 @@ ElemForceOutput;All;PlotOnly;SortByPoint;CornerResults
 SubcaseStart;1
 LabelText;ramped load set 1
 [model]
-# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
-# database in double precision with the deflate (GZIP) filter.
 Parameter;PostprocessingFile;-1
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 LanczosEigenMethod;71;;;12

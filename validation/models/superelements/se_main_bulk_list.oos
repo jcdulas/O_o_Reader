@@ -8,13 +8,6 @@
 #     point, a released component (RELEASE), scalar points of a list
 #     superelement, a two-level tree whose upstream exterior point is interior
 #     to its downstream superelement
-# Settles (library item: current status):
-#   - 'Not validated against the solver': CSUPER, RELEASE,
-#     multi-level trees, a list superelement whose exterior point is interior
-#     to another, scalar points of list superelements, CSUPEXT for an MPC-only
-#     point
-#   - the T14 queries parts_table and part_boundaries on main Bulk Data
-#     superelements
 # Run notes:
 #   - PARAM,POST,-2 writes the GPLS tables; the listing prints the exterior points
 #     of each superelement
@@ -33,8 +26,6 @@ DisplacementOutput;All;PlotOnly
 SubcaseStart;1
 LabelText;loads on superelements 1, 5 and the MPC point
 [model]
-# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
-# (double precision, deflate).
 Parameter;PostprocessingFile;-2
 ResultFileParams;Precision;64;CompressionMethod;GzipCompression
 # Main Bulk Data superelements. The residual is a plate of 4 x 2 CQUAD4 (grid

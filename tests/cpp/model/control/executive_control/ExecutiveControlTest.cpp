@@ -10,8 +10,7 @@ using namespace oor::model;
 using oor::testing::readModelText;
 using oor::testing::writeModelText;
 
-// The executive section of a model: its statements read from a model file, written back, edited, copied. The syntax of
-// the executive control of other formats (abbreviations, DMAP text, INCLUDE) is the converter's.
+// The executive section of a native model: its statements read from a model file, written back, edited and copied.
 
 namespace
 {
