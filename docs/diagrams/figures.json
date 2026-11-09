@@ -1,0 +1,767 @@
+[
+  {
+    "id": "reader-solver-boundary",
+    "title": "Two modules, an explicit data boundary",
+    "description": "JavaScript coordinates two independent WebAssembly memories. Reader query tables cross as byte packages. Solver results return as arrays and may be added to Reader result storage.",
+    "size": [
+      1120,
+      840
+    ],
+    "nodes": [
+      {
+        "title": "O_o_Reader",
+        "box": [
+          55,
+          195,
+          365,
+          130
+        ],
+        "body": [
+          "Read .oos records",
+          "Build and query typed tables"
+        ],
+        "color": "blue",
+        "tag": "Memory A"
+      },
+      {
+        "title": "Table package",
+        "box": [
+          465,
+          205,
+          190,
+          110
+        ],
+        "body": [
+          "Uint8Array"
+        ],
+        "color": "amber",
+        "tag": "JavaScript"
+      },
+      {
+        "title": "O_o_Solver",
+        "box": [
+          700,
+          195,
+          365,
+          130
+        ],
+        "body": [
+          "Validate imported tables",
+          "Build a model snapshot"
+        ],
+        "color": "purple",
+        "tag": "Memory B"
+      },
+      {
+        "title": "Results in memory",
+        "box": [
+          55,
+          495,
+          365,
+          140
+        ],
+        "body": [
+          "Attach arrays to a model",
+          "Query, archive or export"
+        ],
+        "color": "teal",
+        "tag": "Reader result API"
+      },
+      {
+        "title": "Result arrays",
+        "box": [
+          465,
+          510,
+          190,
+          110
+        ],
+        "body": [
+          "IDs + values"
+        ],
+        "color": "amber",
+        "tag": "JavaScript"
+      },
+      {
+        "title": "Finite element analysis",
+        "box": [
+          700,
+          495,
+          365,
+          140
+        ],
+        "body": [
+          "Statics, modes, buckling",
+          "Recover requested outputs"
+        ],
+        "color": "purple",
+        "tag": "Solver run API"
+      }
+    ],
+    "arrows": [
+      {
+        "path": "M420 260 H465",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M655 260 H700",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M882 325 V495",
+        "label": "solve",
+        "label_at": [
+          882,
+          416
+        ],
+        "dashed": false
+      },
+      {
+        "path": "M700 565 H655",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M465 565 H420",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      }
+    ],
+    "groups": [
+      {
+        "box": [
+          30,
+          120,
+          415,
+          560
+        ],
+        "title": "Reader module",
+        "subtitle": "Owns model parsing and result storage",
+        "color": "blue"
+      },
+      {
+        "box": [
+          675,
+          120,
+          415,
+          560
+        ],
+        "title": "Solver module",
+        "subtitle": "Owns finite element computations",
+        "color": "purple"
+      }
+    ],
+    "notes": [
+      {
+        "at": [
+          55,
+          727
+        ],
+        "text": [
+          "Data contract checked on import. Each module owns its memory.",
+          "The modules exchange bytes and arrays; C++ pointers stay within their owning module.",
+          "Adding result arrays to the reader is an explicit application step."
+        ]
+      }
+    ],
+    "category": "Data ownership"
+  },
+  {
+    "id": "reader-layers",
+    "title": "Reader library dependency spine",
+    "description": "The main direct library dependencies from the project build files. An arrow points from a library to a library it requires.",
+    "size": [
+      1120,
+      812
+    ],
+    "nodes": [
+      {
+        "title": "api",
+        "box": [
+          55,
+          130,
+          450,
+          116
+        ],
+        "body": [
+          "Public facade: Deck, Results, queries"
+        ],
+        "color": "blue",
+        "tag": "01 Library"
+      },
+      {
+        "title": "query",
+        "box": [
+          610,
+          130,
+          450,
+          116
+        ],
+        "body": [
+          "Named queries, plans and table exports"
+        ],
+        "color": "blue",
+        "tag": "02 Library"
+      },
+      {
+        "title": "analysis",
+        "box": [
+          610,
+          288,
+          450,
+          116
+        ],
+        "body": [
+          "Geometry, mass, connectivity, validation"
+        ],
+        "color": "teal",
+        "tag": "03 Library"
+      },
+      {
+        "title": "results",
+        "box": [
+          55,
+          288,
+          450,
+          116
+        ],
+        "body": [
+          "Result catalogue, lazy tables and writers"
+        ],
+        "color": "purple",
+        "tag": "04 Library"
+      },
+      {
+        "title": "model",
+        "box": [
+          55,
+          446,
+          450,
+          116
+        ],
+        "body": [
+          "Typed card tables and model semantics"
+        ],
+        "color": "teal",
+        "tag": "05 Library"
+      },
+      {
+        "title": "deck",
+        "box": [
+          610,
+          446,
+          450,
+          116
+        ],
+        "body": [
+          "Records, comments, sections and includes"
+        ],
+        "color": "blue",
+        "tag": "06 Library"
+      },
+      {
+        "title": "io",
+        "box": [
+          610,
+          604,
+          450,
+          116
+        ],
+        "body": [
+          "Bytes, mapped files and HDF5 access"
+        ],
+        "color": "gray",
+        "tag": "07 Library"
+      },
+      {
+        "title": "base",
+        "box": [
+          55,
+          604,
+          450,
+          116
+        ],
+        "body": [
+          "IDs, diagnostics, utilities and threading"
+        ],
+        "color": "gray",
+        "tag": "08 Library"
+      }
+    ],
+    "arrows": [
+      {
+        "path": "M505 188 H610",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M835 246 V288",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M610 346 H505",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M280 404 V446",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M505 504 H610",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M835 562 V604",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M610 662 H505",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M475 404 V425 H1090 V662 H1060",
+        "label": "direct archive I/O",
+        "label_at": [
+          815,
+          419
+        ],
+        "dashed": true
+      }
+    ],
+    "groups": [],
+    "notes": [
+      {
+        "at": [
+          55,
+          778
+        ],
+        "text": [
+          "Arrows point to required libraries. Read the detailed module guides for each interface."
+        ]
+      }
+    ],
+    "category": "C++ dependencies"
+  },
+  {
+    "id": "reader-model-query",
+    "title": "From records to query tables",
+    "description": "The lexer preserves sections, comments and includes. ModelFileReader uses the layout catalogue to build typed tables. Queries combine stored columns, computed model data and selected results.",
+    "size": [
+      1120,
+      810
+    ],
+    "nodes": [
+      {
+        "title": ".oos model text",
+        "box": [
+          45,
+          135,
+          290,
+          125
+        ],
+        "body": [
+          "Sections, records, includes"
+        ],
+        "color": "gray",
+        "tag": "Input"
+      },
+      {
+        "title": "ModelFileLexer",
+        "box": [
+          415,
+          135,
+          290,
+          125
+        ],
+        "body": [
+          "Tokens and source metadata"
+        ],
+        "color": "blue",
+        "tag": "deck"
+      },
+      {
+        "title": "ModelFileReader",
+        "box": [
+          785,
+          135,
+          290,
+          125
+        ],
+        "body": [
+          "Read and validate fields"
+        ],
+        "color": "blue",
+        "tag": "model"
+      },
+      {
+        "title": "Layout catalogue",
+        "box": [
+          785,
+          345,
+          290,
+          125
+        ],
+        "body": [
+          "Compact values to slots"
+        ],
+        "color": "amber",
+        "tag": "Embedded data"
+      },
+      {
+        "title": "Typed model tables",
+        "box": [
+          415,
+          345,
+          290,
+          125
+        ],
+        "body": [
+          "Columns, references, IDs"
+        ],
+        "color": "teal",
+        "tag": "Model"
+      },
+      {
+        "title": "Named query / plan",
+        "box": [
+          45,
+          345,
+          290,
+          125
+        ],
+        "body": [
+          "Stored + computed data"
+        ],
+        "color": "blue",
+        "tag": "query"
+      },
+      {
+        "title": "Model analysis",
+        "box": [
+          45,
+          555,
+          290,
+          125
+        ],
+        "body": [
+          "Geometry, mass, frames"
+        ],
+        "color": "teal",
+        "tag": "analysis"
+      },
+      {
+        "title": "Selected results",
+        "box": [
+          415,
+          555,
+          290,
+          125
+        ],
+        "body": [
+          "Table metadata and values"
+        ],
+        "color": "purple",
+        "tag": "results"
+      },
+      {
+        "title": "QueryTable",
+        "box": [
+          785,
+          555,
+          290,
+          125
+        ],
+        "body": [
+          "Columns, CSV, HDF5, package"
+        ],
+        "color": "blue",
+        "tag": "Output"
+      }
+    ],
+    "arrows": [
+      {
+        "path": "M335 197 H415",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M705 197 H785",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M930 345 V260",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M785 260 V300 H560 V345",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M415 407 H335",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M190 555 V470",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M560 555 V530 H355 V435 H335",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M335 407 H370 V510 H930 V555",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      }
+    ],
+    "groups": [],
+    "notes": [
+      {
+        "at": [
+          45,
+          742
+        ],
+        "text": [
+          "Parsing creates typed model data. Model analysis derives quantities without running a finite element solve.",
+          "Query buffers can be shared inside the reader; a package is the transport boundary to another module."
+        ]
+      }
+    ],
+    "category": "Architecture"
+  },
+  {
+    "id": "reader-results",
+    "title": "Indexed files, lazy values, shared result interfaces",
+    "description": "An archive opens its index first. Filters select tables and steps before reading their values. Results made in memory use the same table interfaces and catalogue as file-backed results.",
+    "size": [
+      1120,
+      815
+    ],
+    "nodes": [
+      {
+        "title": "Results archive",
+        "box": [
+          45,
+          135,
+          290,
+          125
+        ],
+        "body": [
+          "Index + table datasets"
+        ],
+        "color": "gray",
+        "tag": "Input file"
+      },
+      {
+        "title": "ArchiveResultFile",
+        "box": [
+          415,
+          135,
+          290,
+          125
+        ],
+        "body": [
+          "Read metadata and index"
+        ],
+        "color": "purple",
+        "tag": "Open"
+      },
+      {
+        "title": "Table selection",
+        "box": [
+          785,
+          135,
+          290,
+          125
+        ],
+        "body": [
+          "Kind, type, subcase, step"
+        ],
+        "color": "blue",
+        "tag": "Filter"
+      },
+      {
+        "title": "ResultTable / data()",
+        "box": [
+          785,
+          355,
+          290,
+          145
+        ],
+        "body": [
+          "Load requested values",
+          "Cache decoded data"
+        ],
+        "color": "purple",
+        "tag": "Lazy access"
+      },
+      {
+        "title": "MemoryResults",
+        "box": [
+          45,
+          355,
+          290,
+          145
+        ],
+        "body": [
+          "Arrays supplied by a caller",
+          "Check component layouts"
+        ],
+        "color": "teal",
+        "tag": "In-memory input"
+      },
+      {
+        "title": "Common result tables",
+        "box": [
+          415,
+          355,
+          290,
+          145
+        ],
+        "body": [
+          "Layouts from the catalogue",
+          "Values, shapes and labels"
+        ],
+        "color": "amber",
+        "tag": "ResultTable / ResultData"
+      },
+      {
+        "title": "Queries + model links",
+        "box": [
+          45,
+          605,
+          290,
+          135
+        ],
+        "body": [
+          "Join results to model rows"
+        ],
+        "color": "blue",
+        "tag": "Use"
+      },
+      {
+        "title": "Archive writer",
+        "box": [
+          415,
+          605,
+          290,
+          135
+        ],
+        "body": [
+          "Persist tables + index"
+        ],
+        "color": "purple",
+        "tag": "Export"
+      },
+      {
+        "title": "Workbook writer",
+        "box": [
+          785,
+          605,
+          290,
+          135
+        ],
+        "body": [
+          "Index and result sheets"
+        ],
+        "color": "purple",
+        "tag": "Export"
+      }
+    ],
+    "arrows": [
+      {
+        "path": "M335 197 H415",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M705 197 H785",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M930 260 V355",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M785 427 H705",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M335 427 H415",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M560 500 V550 H190 V605",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M560 500 V605",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      },
+      {
+        "path": "M560 550 H930 V605",
+        "label": null,
+        "label_at": null,
+        "dashed": false
+      }
+    ],
+    "groups": [],
+    "notes": [
+      {
+        "at": [
+          45,
+          776
+        ],
+        "text": [
+          "The archive index is small; loading result values is a separate operation controlled by selection."
+        ]
+      }
+    ],
+    "category": "Architecture"
+  }
+]

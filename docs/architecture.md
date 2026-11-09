@@ -2,6 +2,20 @@
 
 A guide for a developer who joins the project: where things are, how they fit, and where to start reading.
 
+## Reader and solver boundary
+
+![Two independent module memories exchange model table packages and result arrays through JavaScript.](images/reader-solver-boundary.svg)
+
+*The reader owns parsing, model queries and result storage. The solver owns finite element computations.*
+
+The application loads each module independently. A query table becomes a byte package through `toPackage()`;
+the receiving module imports that package and checks its data contract. A C++ pointer stays in the memory that owns
+it. The [table-package guide](table-package.md) describes the transport and retained ownership.
+
+The solver returns result arrays. The application may explicitly add them to the reader's `MemoryResults`, attach
+them to a model and use the same query and export APIs as for file-backed results. The
+[solver architecture guide](https://jcdulas.github.io/O_o_Solver/docs/architecture.html) follows the calculation side.
+
 ## The modules
 
 The library is a stack of static libraries. A module uses only the modules below it (`tools/check_layering.py`
@@ -20,12 +34,15 @@ checks it), so each can be read and tested on its own.
 
 The WebAssembly module (`wasm/src/Bindings.cpp`) only converts JavaScript values to the types of `oor::api` and back.
 
+![The reader dependency chain api, query, analysis, results, model, deck, io and base, with a direct results-to-io archive dependency.](images/reader-layers.svg)
+
+*Arrows point to directly required libraries. The extra storage link lets result readers and writers use `io`.*
+
 ## How a model file is read
 
-```text
-text ──deck::ModelFileLexer──▶ sections, records, comments ──model::ModelFileReader──▶ model::Model
-        (Include records followed)                          (record fields to typed card tables)
-```
+![The lexer reads model records, ModelFileReader maps fields into typed tables using the layout catalogue, and queries combine stored columns, model analysis and results.](images/reader-model-query.svg)
+
+*Parsing constructs the model. Model analysis derives geometric and structural quantities for queries.*
 
 A model file (`.oos`, [model-format.md](model-format.md)) writes a card as one record in a compact order. The card
 layout catalogue (`formats/oos-layouts.json`, compiled into the library) maps each record field to the internal slots
@@ -38,12 +55,10 @@ table and a card struct in `include/oor/model/cards/<family>/<card>/`. The regis
 
 ## How results are read
 
-```text
-file ──results::readResults──▶ ResultFile ──tables(filter)──▶ ResultTables ──▶ ResultTable ──data()──▶ ResultData
-        (an archive, by          (metadata,                    (containers by     (description;      (values, shape
-         by its content)          diagnostics)                  kind, element)     values read        (steps, rows,
-                                                                                   when first asked)  components), labels)
-```
+![An archive opens its index first, selects tables and steps, and loads values lazily; file-backed and memory results share the table APIs used by queries and writers.](images/reader-results.svg)
+
+*Metadata selection precedes value loading. The result catalogue supplies the component layouts shared by the input
+paths and writers.*
 
 - **`ResultCatalogue`** (`results/core/ResultCatalogue.hpp`, data in `ResultCatalogueData.cpp`) says which components a
   table of each kind and element type has. Every reader, writer and table made in memory uses it, so a ShellQuad4 stress
@@ -63,6 +78,10 @@ arguments (`QueryRun`), and returns a `QueryTable` (columns that share their buf
 ("id", "xyz" of a Node) come from the `StoredColumnCatalogue`, filled once by `src/query/providers/columns/` (one file
 per family of cards).
 
+Stored columns and computed quantities feed the same table interface. Buffers can be shared within the reader.
+Exporting a table package is the explicit transport step to an independently loaded module; it preserves the column
+layout and metadata rather than exposing the reader's memory.
+
 ## Conventions
 
 - C++20, the subset GCC 12 supports; `-Wall -Wextra -Wpedantic -Werror` natively.
@@ -81,3 +100,6 @@ per family of cards).
 - `wasm/test/smoke.test.mjs`: the WebAssembly package end to end, in Node.js.
 - The tests of the archive and the workbook (`tests/cpp/results/ArchiveTest.cpp`, `XlsxTest.cpp`) write tables and
   read them back (the workbook through `io::readZip`).
+
+The diagrams are committed SVG images. See the [documentation maintenance guide](documentation.md#architecture-images)
+for their editable specifications and regeneration command.

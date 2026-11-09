@@ -15,10 +15,10 @@ the reader works with model records and their neutral names. The project's rules
 
 ## Documentation
 
-[Documentation index](index.md) · [Download the private HTML site](https://github.com/jcdulas/O_o_Reader/actions/workflows/documentation.yml)
+**[Read online](https://jcdulas.github.io/O_o_Reader/)** · [Architecture with diagrams](docs/architecture.md) · [Documentation index](index.md)
 
-The Sphinx site is built by the Documentation workflow and downloadable as a private artifact.
-See [build and download instructions](docs/documentation.md).
+The Documentation workflow publishes the HTML site and provides a downloadable archive.
+See [read, download and build instructions](docs/documentation.md).
 
 ## Use it from JavaScript
 
