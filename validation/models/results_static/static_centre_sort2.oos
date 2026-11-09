@@ -1,0 +1,40 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: static element tables at the centres, SORT2
+#
+# Covers:
+#   - solution: SOL 101 (linear statics) of the shared element model of
+#     common/elements_model.inc, three subcases
+#   - outputs: the real SORT2 stresses, strains and forces at the element
+#     centres (CENTER: CQUAD4 type 33, CQUADR 228, CTRIAR 227), the SORT2 ply
+#     tables of the laminates (PCOMP 2), the strain energy of every element
+#     (ESE, with CQUADR and CTRIAR)
+# Run notes:
+#   - the centre twin of results_static/static_elements_sort2.bdf, which asks
+#     for the corners; run it a second time with the i8 executable
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: statics at the centres, SORT2
+BulkEcho;None
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DisplacementOutput;All;PlotOnly;SortByTime
+StressOutput;All;PlotOnly;SortByTime;VonMisesStress;CenterOnly
+StrainOutput;All;PlotOnly;SortByTime;VonMisesStress;FiberDistance;CenterOnly
+ElemForceOutput;All;PlotOnly;SortByTime;CenterOnly
+ElemStrainEnergyOutput;All;PlotOnly
+SubcaseStart;1
+StaticLoadSelection;1
+SubcaseStart;2
+StaticLoadSelection;2
+SubcaseStart;3
+StaticLoadSelection;3
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Load set 3: the two load sets of the model, scaled
+LoadCombination;3;1.;0.5;1;-1.;2
+Include;../common/elements_model.oos

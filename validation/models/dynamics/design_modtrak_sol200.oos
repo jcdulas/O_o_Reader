@@ -1,0 +1,39 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: design optimisation of the plate with mode tracking
+#
+# Covers:
+#   - cards: MODTRAK
+#   - solution: SOL 200 (design optimisation, normal modes)
+#   - outputs: eigenvectors: real, SORT1
+# Run notes:
+#   - minimum weight with the first bending frequency kept above 45 Hz, the
+#     plate thickness as design variable; MODTRAK 100 tracks the designed mode
+#     among modes 1 to 6 from one design cycle to the next
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: mode tracking in SOL 200
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+DesignObjectiveSelection;2;MinimumObjective
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;normal modes
+AnalysisKind;NormalModes
+SubcaseDesignConstrSelection;10
+ModeTrackingSelection;100
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;71;;;6
+DesignVar;1;THICK;2.;1.;4.
+DesignPropRelation1;11;ShellProp;1;thickness;;;;1;1.
+DesignResp1;1;FREQ1;Frequency;;;1
+DesignResp1;2;MASS;Weight
+DesignConstr;10;1;45.
+DesignOptimParams;MaxDesignCycles;5
+ModeTracking;100;1;6;0.8
+Include;plate_model.oos

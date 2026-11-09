@@ -1,0 +1,6265 @@
+{
+  "description": "Reviewed card layouts of the properties family (src/model/cards/properties).",
+  "cards": {
+    "AxisymHarmonicProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "frameId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "harmonicIndex",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "integration",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "AxisymShellProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "thickness1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "thickness2",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "analysisType",
+          "slot": 6,
+          "kind": "text"
+        }
+      ]
+    },
+    "BarArbitrarySectionProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "form",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "description",
+          "slot": 9,
+          "kind": "text"
+        }
+      ]
+    },
+    "BarProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "area",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "bendingInertia1",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "bendingInertia2",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "torsionConstant",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointCy",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointCz",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointDy",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointDz",
+          "slot": 12,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointEy",
+          "slot": 13,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointEz",
+          "slot": 14,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointFy",
+          "slot": 15,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointFz",
+          "slot": 16,
+          "kind": "real"
+        },
+        {
+          "name": "shearFactor1",
+          "slot": 17,
+          "kind": "real"
+        },
+        {
+          "name": "shearFactor2",
+          "slot": 18,
+          "kind": "real"
+        },
+        {
+          "name": "productInertia12",
+          "slot": 19,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "BarPropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "sectionIntegration",
+          "slot": 4,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "behaviorLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "TwoNodeElems",
+            "name": "twoNodeBehavior",
+            "fields": [
+              {
+                "name": "behavior2",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration2",
+                "offset": 2,
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "BarShapeProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "sectionGroup",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "kind",
+          "slot": 4,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "dimensions",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "dimension",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "BeamArbitrarySectionProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "form",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "description",
+          "slot": 9,
+          "kind": "text"
+        }
+      ]
+    },
+    "BeamLumpedAreaProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "area",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertia1",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "bendingInertia2",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "productInertia12",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "torsionConstant",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "shearFactor1",
+          "slot": 9,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "shearFactor2",
+          "slot": 10,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "nsmCenterY",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "nsmCenterZ",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "neutralAxisY",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "neutralAxisZ",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "symmetricOption",
+          "slot": 15,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "areas",
+        "firstSlot": 17,
+        "period": 8,
+        "fields": [
+          {
+            "name": "areaY",
+            "offset": 0,
+            "kind": "real"
+          },
+          {
+            "name": "areaZ",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "areaFraction",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "areaMatId",
+            "offset": 3,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "BeamProp": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "noStressPointsAtEndA",
+          "when": {
+            "field": "stations",
+            "kinds": [
+              "text"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "area",
+              "slot": 3,
+              "kind": "real"
+            },
+            {
+              "name": "bendingInertia1",
+              "slot": 4,
+              "kind": "real"
+            },
+            {
+              "name": "bendingInertia2",
+              "slot": 5,
+              "kind": "real"
+            },
+            {
+              "name": "productInertia12",
+              "slot": 6,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "torsionConstant",
+              "slot": 7,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 8,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "sections": {
+            "name": "stations",
+            "firstSlot": 9,
+            "keyOffset": 0,
+            "kinds": [
+              {
+                "key": "Yes",
+                "name": "stationWithStressPoints",
+                "allLines": true,
+                "fields": [
+                  {
+                    "name": "stationRatio",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationArea",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia1",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia2",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationProductInertia12",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationTorsionConstant",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationNonStructMass",
+                    "offset": 7,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointCy",
+                    "offset": 8,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointCz",
+                    "offset": 9,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointDy",
+                    "offset": 10,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointDz",
+                    "offset": 11,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointEy",
+                    "offset": 12,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointEz",
+                    "offset": 13,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointFy",
+                    "offset": 14,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointFz",
+                    "offset": 15,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "YesSameAsEndA",
+                "name": "stationStressAtCorners",
+                "fields": [
+                  {
+                    "name": "stationRatio",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationArea",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia1",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia2",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationProductInertia12",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationTorsionConstant",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationNonStructMass",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "No",
+                "name": "stationWithoutStress",
+                "fields": [
+                  {
+                    "name": "stationRatio",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationArea",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia1",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia2",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationProductInertia12",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationTorsionConstant",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationNonStructMass",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "",
+                "name": "lastLines",
+                "allLines": true,
+                "fields": [
+                  {
+                    "name": "shearFactor1",
+                    "offset": 0,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "shearFactor2",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "shearRelief1",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "shearRelief2",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmInertiaA",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmInertiaB",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "warpingCoefficientA",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "warpingCoefficientB",
+                    "offset": 7,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterYA",
+                    "offset": 8,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterZA",
+                    "offset": 9,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterYB",
+                    "offset": 10,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterZB",
+                    "offset": 11,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisYA",
+                    "offset": 12,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisZA",
+                    "offset": 13,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisYB",
+                    "offset": 14,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisZB",
+                    "offset": 15,
+                    "kind": "real"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "stressPointsAtEndA",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "area",
+              "slot": 3,
+              "kind": "real"
+            },
+            {
+              "name": "bendingInertia1",
+              "slot": 4,
+              "kind": "real"
+            },
+            {
+              "name": "bendingInertia2",
+              "slot": 5,
+              "kind": "real"
+            },
+            {
+              "name": "productInertia12",
+              "slot": 6,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "torsionConstant",
+              "slot": 7,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 8,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointCy",
+              "slot": 9,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointCz",
+              "slot": 10,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointDy",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointDz",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointEy",
+              "slot": 13,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointEz",
+              "slot": 14,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointFy",
+              "slot": 15,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointFz",
+              "slot": 16,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "sections": {
+            "name": "stations",
+            "firstSlot": 17,
+            "keyOffset": 0,
+            "kinds": [
+              {
+                "key": "Yes",
+                "name": "stationWithStressPoints",
+                "allLines": true,
+                "fields": [
+                  {
+                    "name": "stationRatio",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationArea",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia1",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia2",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationProductInertia12",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationTorsionConstant",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationNonStructMass",
+                    "offset": 7,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointCy",
+                    "offset": 8,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointCz",
+                    "offset": 9,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointDy",
+                    "offset": 10,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointDz",
+                    "offset": 11,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointEy",
+                    "offset": 12,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointEz",
+                    "offset": 13,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointFy",
+                    "offset": 14,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationStressPointFz",
+                    "offset": 15,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "YesSameAsEndA",
+                "name": "stationStressAtCorners",
+                "fields": [
+                  {
+                    "name": "stationRatio",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationArea",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia1",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia2",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationProductInertia12",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationTorsionConstant",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationNonStructMass",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "No",
+                "name": "stationWithoutStress",
+                "fields": [
+                  {
+                    "name": "stationRatio",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationArea",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia1",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationBendingInertia2",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationProductInertia12",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationTorsionConstant",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "stationNonStructMass",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "",
+                "name": "lastLines",
+                "allLines": true,
+                "fields": [
+                  {
+                    "name": "shearFactor1",
+                    "offset": 0,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "shearFactor2",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "shearRelief1",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "shearRelief2",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmInertiaA",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmInertiaB",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "warpingCoefficientA",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "warpingCoefficientB",
+                    "offset": 7,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterYA",
+                    "offset": 8,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterZA",
+                    "offset": 9,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterYB",
+                    "offset": 10,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "nsmCenterZB",
+                    "offset": 11,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisYA",
+                    "offset": 12,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisZA",
+                    "offset": 13,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisYB",
+                    "offset": 14,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "neutralAxisZB",
+                    "offset": 15,
+                    "kind": "real"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "BeamProp3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "area",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertiaZ",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertiaY",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "productInertiaYZ",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "torsionConstant",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointCy",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointCz",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointDy",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointDz",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointEy",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointEz",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointFy",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointFz",
+          "slot": 16,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressOutputEndB",
+          "slot": 17,
+          "kind": "text"
+        },
+        {
+          "name": "areaEndB",
+          "slot": 19,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertiaZEndB",
+          "slot": 20,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertiaYEndB",
+          "slot": 21,
+          "kind": "real"
+        },
+        {
+          "name": "productInertiaYZEndB",
+          "slot": 22,
+          "kind": "real"
+        },
+        {
+          "name": "torsionConstantEndB",
+          "slot": 23,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMassEndB",
+          "slot": 24,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointCyEndB",
+          "slot": 25,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointCzEndB",
+          "slot": 26,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointDyEndB",
+          "slot": 27,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointDzEndB",
+          "slot": 28,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointEyEndB",
+          "slot": 29,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointEzEndB",
+          "slot": 30,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointFyEndB",
+          "slot": 31,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointFzEndB",
+          "slot": 32,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressOutputNodeC",
+          "slot": 33,
+          "kind": "text"
+        },
+        {
+          "name": "areaNodeC",
+          "slot": 35,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertiaZNodeC",
+          "slot": 36,
+          "kind": "real"
+        },
+        {
+          "name": "bendingInertiaYNodeC",
+          "slot": 37,
+          "kind": "real"
+        },
+        {
+          "name": "productInertiaYZNodeC",
+          "slot": 38,
+          "kind": "real"
+        },
+        {
+          "name": "torsionConstantNodeC",
+          "slot": 39,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMassNodeC",
+          "slot": 40,
+          "kind": "real"
+        },
+        {
+          "name": "stressPointCyNodeC",
+          "slot": 41,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointCzNodeC",
+          "slot": 42,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointDyNodeC",
+          "slot": 43,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointDzNodeC",
+          "slot": 44,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointEyNodeC",
+          "slot": 45,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointEzNodeC",
+          "slot": 46,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointFyNodeC",
+          "slot": 47,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressPointFzNodeC",
+          "slot": 48,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "shearFactorY",
+          "slot": 49,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "shearFactorZ",
+          "slot": 50,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "neutralAxisY",
+          "slot": 51,
+          "kind": "real"
+        },
+        {
+          "name": "neutralAxisZ",
+          "slot": 52,
+          "kind": "real"
+        },
+        {
+          "name": "neutralAxisYEndB",
+          "slot": 53,
+          "kind": "real"
+        },
+        {
+          "name": "neutralAxisZEndB",
+          "slot": 54,
+          "kind": "real"
+        },
+        {
+          "name": "neutralAxisYNodeC",
+          "slot": 55,
+          "kind": "real"
+        },
+        {
+          "name": "neutralAxisZNodeC",
+          "slot": 56,
+          "kind": "real"
+        },
+        {
+          "name": "nsmCenterY",
+          "slot": 57,
+          "kind": "real"
+        },
+        {
+          "name": "nsmCenterZ",
+          "slot": 58,
+          "kind": "real"
+        },
+        {
+          "name": "nsmCenterYEndB",
+          "slot": 59,
+          "kind": "real"
+        },
+        {
+          "name": "nsmCenterZEndB",
+          "slot": 60,
+          "kind": "real"
+        },
+        {
+          "name": "nsmCenterYNodeC",
+          "slot": 61,
+          "kind": "real"
+        },
+        {
+          "name": "nsmCenterZNodeC",
+          "slot": 62,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaY",
+          "slot": 63,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaZ",
+          "slot": 64,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaYZ",
+          "slot": 65,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaYEndB",
+          "slot": 66,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaZEndB",
+          "slot": 67,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaYZEndB",
+          "slot": 68,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaYNodeC",
+          "slot": 69,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaZNodeC",
+          "slot": 70,
+          "kind": "real"
+        },
+        {
+          "name": "nsmInertiaYZNodeC",
+          "slot": 71,
+          "kind": "real"
+        },
+        {
+          "name": "warpingCoefficient",
+          "slot": 72,
+          "kind": "real"
+        },
+        {
+          "name": "warpingCoefficientEndB",
+          "slot": 73,
+          "kind": "real"
+        },
+        {
+          "name": "warpingCoefficientNodeC",
+          "slot": 74,
+          "kind": "real"
+        },
+        {
+          "name": "stressLocation",
+          "slot": 75,
+          "kind": "text"
+        },
+        {
+          "name": "warpingAtC",
+          "slot": 81,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtC",
+          "slot": 82,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtC",
+          "slot": 83,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtD",
+          "slot": 84,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtD",
+          "slot": 85,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtD",
+          "slot": 86,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtE",
+          "slot": 87,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtE",
+          "slot": 88,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtE",
+          "slot": 89,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtF",
+          "slot": 90,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtF",
+          "slot": 91,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtF",
+          "slot": 92,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtCEndB",
+          "slot": 93,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtCEndB",
+          "slot": 94,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtCEndB",
+          "slot": 95,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtDEndB",
+          "slot": 96,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtDEndB",
+          "slot": 97,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtDEndB",
+          "slot": 98,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtEEndB",
+          "slot": 99,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtEEndB",
+          "slot": 100,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtEEndB",
+          "slot": 101,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtFEndB",
+          "slot": 102,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtFEndB",
+          "slot": 103,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtFEndB",
+          "slot": 104,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtCNodeC",
+          "slot": 105,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtCNodeC",
+          "slot": 106,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtCNodeC",
+          "slot": 107,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtDNodeC",
+          "slot": 108,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtDNodeC",
+          "slot": 109,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtDNodeC",
+          "slot": 110,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtENodeC",
+          "slot": 111,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtENodeC",
+          "slot": 112,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtENodeC",
+          "slot": 113,
+          "kind": "real"
+        },
+        {
+          "name": "warpingAtFNodeC",
+          "slot": 114,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientYAtFNodeC",
+          "slot": 115,
+          "kind": "real"
+        },
+        {
+          "name": "warpingGradientZAtFNodeC",
+          "slot": 116,
+          "kind": "real"
+        }
+      ]
+    },
+    "BeamShapeProp": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "oneDimension",
+          "when": {
+            "field": "kind",
+            "values": [
+              "Rod"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 10,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 11,
+            "period": 4,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "twoDimensions",
+          "when": {
+            "field": "kind",
+            "values": [
+              "Tube",
+              "Tube2",
+              "Bar"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "dimension2",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 12,
+            "period": 5,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 4,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "threeDimensions",
+          "when": {
+            "field": "kind",
+            "values": [
+              "Hexagon"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "dimension2",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "dimension3",
+              "slot": 11,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 13,
+            "period": 6,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 5,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fiveDimensions",
+          "when": {
+            "field": "kind",
+            "values": [
+              "Hat1"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "dimension2",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "dimension3",
+              "slot": 11,
+              "kind": "real"
+            },
+            {
+              "name": "dimension4",
+              "slot": 12,
+              "kind": "real"
+            },
+            {
+              "name": "dimension5",
+              "slot": 13,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 14,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 15,
+            "period": 8,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension5",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sixDimensions",
+          "when": {
+            "field": "kind",
+            "values": [
+              "ISection",
+              "Box1"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "dimension2",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "dimension3",
+              "slot": 11,
+              "kind": "real"
+            },
+            {
+              "name": "dimension4",
+              "slot": 12,
+              "kind": "real"
+            },
+            {
+              "name": "dimension5",
+              "slot": 13,
+              "kind": "real"
+            },
+            {
+              "name": "dimension6",
+              "slot": 14,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 15,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 16,
+            "period": 9,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension5",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension6",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 8,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tenDimensions",
+          "when": {
+            "field": "kind",
+            "values": [
+              "DoubleBoxSection"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "dimension2",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "dimension3",
+              "slot": 11,
+              "kind": "real"
+            },
+            {
+              "name": "dimension4",
+              "slot": 12,
+              "kind": "real"
+            },
+            {
+              "name": "dimension5",
+              "slot": 13,
+              "kind": "real"
+            },
+            {
+              "name": "dimension6",
+              "slot": 14,
+              "kind": "real"
+            },
+            {
+              "name": "dimension7",
+              "slot": 15,
+              "kind": "real"
+            },
+            {
+              "name": "dimension8",
+              "slot": 16,
+              "kind": "real"
+            },
+            {
+              "name": "dimension9",
+              "slot": 17,
+              "kind": "real"
+            },
+            {
+              "name": "dimension10",
+              "slot": 18,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 19,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 20,
+            "period": 13,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension5",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension6",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension7",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension8",
+                "offset": 9,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension9",
+                "offset": 10,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension10",
+                "offset": 11,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 12,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "fourDimensions",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "sectionGroup",
+              "slot": 3,
+              "kind": "text"
+            },
+            {
+              "name": "kind",
+              "slot": 4,
+              "kind": "text"
+            },
+            {
+              "name": "dimension1",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "dimension2",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "dimension3",
+              "slot": 11,
+              "kind": "real"
+            },
+            {
+              "name": "dimension4",
+              "slot": 12,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 13,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ],
+          "group": {
+            "name": "stations",
+            "firstSlot": 14,
+            "period": 7,
+            "fields": [
+              {
+                "name": "stressOutput",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "stationRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stationDimension4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "stationNonStructMass",
+                "offset": 6,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "BushProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 1,
+        "keyOffset": 1,
+        "kinds": [
+          {
+            "key": "Stiffness",
+            "name": "stiffnessLine",
+            "fields": [
+              {
+                "name": "stiffness1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stiffness2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "stiffness3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stiffness4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "stiffness5",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "stiffness6",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Damping",
+            "name": "dampingLine",
+            "fields": [
+              {
+                "name": "damping1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "damping2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "damping3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "damping4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "damping5",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "damping6",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "StructuralDamping",
+            "name": "structuralDampingLine",
+            "fields": [
+              {
+                "name": "structuralDamping1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "structuralDamping2",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "structuralDamping3",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "structuralDamping4",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "structuralDamping5",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "structuralDamping6",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Recovery",
+            "name": "recoveryLine",
+            "fields": [
+              {
+                "name": "stressFactorTranslational",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "stressFactorRotational",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "strainFactorTranslational",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "strainFactorRotational",
+                "offset": 5,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Mass",
+            "name": "massLine",
+            "fields": [
+              {
+                "name": "mass",
+                "offset": 2,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Thermal",
+            "name": "thermalLine",
+            "fields": [
+              {
+                "name": "alphaCoefficient",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "referenceTemperature",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "coincidentLength",
+                "offset": 4,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "BushProp1D": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffness",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "damping",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "mass",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stressFactor",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "strainFactor",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "sections": {
+        "name": "behaviors",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "ShockAbsorber",
+            "name": "shockAbsorber",
+            "fields": [
+              {
+                "name": "kind",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "dampingTension",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "dampingCompression",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "velocityExponentTension",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "velocityExponentCompression",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "scaleTableId",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "scaleTensionEquationId",
+                "offset": 10,
+                "kind": "integer"
+              },
+              {
+                "name": "scaleCompressionEquationId",
+                "offset": 11,
+                "kind": "integer"
+              },
+              {
+                "name": "scaleTensionDerivativeEquationId",
+                "offset": 12,
+                "kind": "integer"
+              },
+              {
+                "name": "scaleCompressionDerivativeEquationId",
+                "offset": 13,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Spring",
+            "name": "spring",
+            "fields": [
+              {
+                "name": "kind",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "tensionCurveId",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionCurveId",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "tensionDisplacementDerivativeId",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionDisplacementDerivativeId",
+                "offset": 5,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Damper",
+            "name": "damper",
+            "fields": [
+              {
+                "name": "kind",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "tensionCurveId",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionCurveId",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "tensionVelocityDerivativeId",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionVelocityDerivativeId",
+                "offset": 5,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "General",
+            "name": "general",
+            "fields": [
+              {
+                "name": "kind",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "tensionCurveId",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionCurveId",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "tensionDisplacementDerivativeId",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionDisplacementDerivativeId",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "tensionVelocityDerivativeId",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "compressionVelocityDerivativeId",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "BushProp2D": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "squeezeFilm",
+          "when": {
+            "field": "secondLineOption",
+            "values": [
+              "SqueezeFilm"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "stiffness11",
+              "slot": 2,
+              "kind": "real"
+            },
+            {
+              "name": "stiffness22",
+              "slot": 3,
+              "kind": "real"
+            },
+            {
+              "name": "damping11",
+              "slot": 4,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "damping22",
+              "slot": 5,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass11",
+              "slot": 6,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass22",
+              "slot": 7,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "secondLineOption",
+              "slot": 9,
+              "kind": "text"
+            },
+            {
+              "name": "bearingDiameter",
+              "slot": 10,
+              "kind": "real"
+            },
+            {
+              "name": "bearingLength",
+              "slot": 11,
+              "kind": "real"
+            },
+            {
+              "name": "bearingClearance",
+              "slot": 12,
+              "kind": "real"
+            },
+            {
+              "name": "bearingModel",
+              "slot": 13,
+              "kind": "text",
+              "default": "Long"
+            },
+            {
+              "name": "viscosity",
+              "slot": 14,
+              "kind": "real"
+            },
+            {
+              "name": "vaporPressure",
+              "slot": 15,
+              "kind": "real"
+            },
+            {
+              "name": "portCount",
+              "slot": 17,
+              "kind": "integer"
+            },
+            {
+              "name": "pressure1",
+              "slot": 18,
+              "kind": "real"
+            },
+            {
+              "name": "portAngle1",
+              "slot": 19,
+              "kind": "real"
+            },
+            {
+              "name": "pressure2",
+              "slot": 20,
+              "kind": "real"
+            },
+            {
+              "name": "portAngle2",
+              "slot": 21,
+              "kind": "real"
+            },
+            {
+              "name": "offset1",
+              "slot": 22,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "offset2",
+              "slot": 23,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ]
+        },
+        {
+          "name": "crossTerms",
+          "when": {
+            "field": "secondLineOption",
+            "values": [
+              "Cross"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "stiffness11",
+              "slot": 2,
+              "kind": "real"
+            },
+            {
+              "name": "stiffness22",
+              "slot": 3,
+              "kind": "real"
+            },
+            {
+              "name": "damping11",
+              "slot": 4,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "damping22",
+              "slot": 5,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass11",
+              "slot": 6,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass22",
+              "slot": 7,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "secondLineOption",
+              "slot": 9,
+              "kind": "text"
+            },
+            {
+              "name": "stiffness12",
+              "slot": 10,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stiffness21",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "damping12",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "damping21",
+              "slot": 13,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass12",
+              "slot": 14,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass21",
+              "slot": 15,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ]
+        },
+        {
+          "name": "plain",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "stiffness11",
+              "slot": 2,
+              "kind": "real"
+            },
+            {
+              "name": "stiffness22",
+              "slot": 3,
+              "kind": "real"
+            },
+            {
+              "name": "damping11",
+              "slot": 4,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "damping22",
+              "slot": 5,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass11",
+              "slot": 6,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "mass22",
+              "slot": 7,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ]
+        }
+      ]
+    },
+    "BushProp2DFreq": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 1,
+        "keyOffset": 1,
+        "kinds": [
+          {
+            "key": "Stiffness",
+            "name": "stiffnessLine",
+            "fields": [
+              {
+                "name": "stiffnessTableId11",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId22",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId12",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId21",
+                "offset": 5,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Damping",
+            "name": "dampingLine",
+            "fields": [
+              {
+                "name": "dampingTableId11",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId22",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId12",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId21",
+                "offset": 5,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Mass",
+            "name": "massLine",
+            "fields": [
+              {
+                "name": "massTableId11",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "massTableId22",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "massTableId12",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "massTableId21",
+                "offset": 5,
+                "kind": "integer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "BushPropFreq": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 1,
+        "keyOffset": 1,
+        "kinds": [
+          {
+            "key": "Stiffness",
+            "name": "stiffnessLine",
+            "fields": [
+              {
+                "name": "stiffnessTableId1",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId2",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId3",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId4",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId5",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId6",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Damping",
+            "name": "dampingLine",
+            "fields": [
+              {
+                "name": "dampingTableId1",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId2",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId3",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId4",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId5",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingTableId6",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "StructuralDamping",
+            "name": "structuralDampingLine",
+            "fields": [
+              {
+                "name": "structuralDampingTableId1",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "structuralDampingTableId2",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "structuralDampingTableId3",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "structuralDampingTableId4",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "structuralDampingTableId5",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "structuralDampingTableId6",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "NonlinearForce",
+            "name": "nonlinearForceLine",
+            "fields": [
+              {
+                "name": "nonlinearForceTableId1",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId2",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId3",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId4",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId5",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId6",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "",
+            "name": "fuse",
+            "allLines": true,
+            "fields": [
+              {
+                "name": "forceDeflectionRule",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "fuseMode",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "direction",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "fuseOption",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "lowerBound",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "upperBound",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "fuseStiffnessRetention",
+                "offset": 10,
+                "kind": "real"
+              },
+              {
+                "name": "largeRotationEndA",
+                "offset": 11,
+                "kind": "integer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "CompProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bottomOffset",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "bondAllowable",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "failureTheory",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "referenceTemperature",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "laminateOption",
+          "slot": 8,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "plies",
+        "firstSlot": 9,
+        "period": 4,
+        "fields": [
+          {
+            "name": "plyMatId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "plyThickness",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "plyAngle",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "plyStressOutput",
+            "offset": 3,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "CompPropExplicit": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "formulation",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "shearFactor",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "referenceSurface",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "stressDefinition",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "skipFiberTimeStep",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "strainOutput",
+          "slot": 7,
+          "kind": "text"
+        },
+        {
+          "name": "laminationTheory",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "spinCorrection",
+          "slot": 9,
+          "kind": "text"
+        }
+      ]
+    },
+    "CompPropFreqDamping": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "CompPropGlobal": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bottomOffset",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "bondAllowable",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "failureTheory",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "referenceTemperature",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "laminateOption",
+          "slot": 8,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "plies",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "globalPlyId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "plyMatId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "plyThickness",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "plyAngle",
+            "offset": 3,
+            "kind": "real"
+          },
+          {
+            "name": "plyStressOutput",
+            "offset": 4,
+            "kind": "text"
+          },
+          {
+            "name": "structuralDampingFlag",
+            "offset": 5,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "CompPropIntegration": {
+      "fields": [
+        {
+          "name": "integration",
+          "slot": 1,
+          "kind": "integer",
+          "default": "1"
+        }
+      ],
+      "group": {
+        "name": "propIds",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "propId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "CompSolidProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matFrameId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "stackingDirection",
+          "slot": 3,
+          "kind": "integer",
+          "default": "13"
+        },
+        {
+          "name": "bondAllowable",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "normalBondAllowable",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "referenceTemperature",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "plies",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "globalPlyId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "matId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "thickness",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "materialAngle",
+            "offset": 3,
+            "kind": "real"
+          },
+          {
+            "name": "failureTheory",
+            "offset": 4,
+            "kind": "text"
+          },
+          {
+            "name": "interlaminarTheory",
+            "offset": 5,
+            "kind": "text"
+          },
+          {
+            "name": "plyStressOutput",
+            "offset": 6,
+            "kind": "text"
+          },
+          {
+            "name": "plyTail",
+            "offset": 7,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "CompSolidPropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "direction",
+          "slot": 2,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "matFrameId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "bondAllowable",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "analysisType",
+          "slot": 5,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "EightNodeElems",
+            "name": "behaviorLineC8",
+            "fields": [
+              {
+                "name": "behavior8",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration8",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior8",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration8",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "TwentyNodeElems",
+            "name": "behaviorLineC20",
+            "fields": [
+              {
+                "name": "behavior20",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration20",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior20",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration20",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "",
+            "name": "ply",
+            "fields": [
+              {
+                "name": "globalPlyId",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "plyMatId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "thickness",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "materialAngle",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "CurvedBeamProp": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "pipe",
+          "when": {
+            "field": "flexibilityOption",
+            "kinds": [
+              "integer"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "flexibilityOption",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "meanRadius",
+              "slot": 4,
+              "kind": "real"
+            },
+            {
+              "name": "thickness",
+              "slot": 5,
+              "kind": "real"
+            },
+            {
+              "name": "internalPressure",
+              "slot": 6,
+              "kind": "real"
+            },
+            {
+              "name": "bendRadius",
+              "slot": 7,
+              "kind": "real"
+            },
+            {
+              "name": "arcAngle",
+              "slot": 8,
+              "kind": "real"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "centroidRadialOffset",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "centerZ",
+              "slot": 13,
+              "kind": "real",
+              "default": "0.0"
+            }
+          ]
+        },
+        {
+          "name": "section",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "area",
+              "slot": 3,
+              "kind": "real"
+            },
+            {
+              "name": "bendingInertia1",
+              "slot": 4,
+              "kind": "real"
+            },
+            {
+              "name": "bendingInertia2",
+              "slot": 5,
+              "kind": "real"
+            },
+            {
+              "name": "torsionConstant",
+              "slot": 6,
+              "kind": "real"
+            },
+            {
+              "name": "bendRadius",
+              "slot": 7,
+              "kind": "real"
+            },
+            {
+              "name": "arcAngle",
+              "slot": 8,
+              "kind": "real"
+            },
+            {
+              "name": "stressPointCy",
+              "slot": 9,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointCz",
+              "slot": 10,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointDy",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointDz",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointEy",
+              "slot": 13,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointEz",
+              "slot": 14,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointFy",
+              "slot": 15,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "stressPointFz",
+              "slot": 16,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "shearFactor1",
+              "slot": 17,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "shearFactor2",
+              "slot": 18,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "nonStructMass",
+              "slot": 19,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "centroidRadialOffset",
+              "slot": 20,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "centerZ",
+              "slot": 21,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "neutralAxisOffset",
+              "slot": 22,
+              "kind": "real"
+            }
+          ]
+        }
+      ]
+    },
+    "DamperProp": {
+      "fields": [
+        {
+          "name": "id1",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "damping1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "id2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "damping2",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "id3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "damping3",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "id4",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "damping4",
+          "slot": 8,
+          "kind": "real"
+        }
+      ]
+    },
+    "DamperPropFreq": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "dampingTableId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "FastenerProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "diameter",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "matFrameId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "absoluteFrame",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "translationalStiffness1",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "translationalStiffness2",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "translationalStiffness3",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "rotationalStiffness1",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "rotationalStiffness2",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "rotationalStiffness3",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "mass",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "alphaCoefficient",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "referenceTemperature",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "coincidentLength",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "FastenerPropFreq": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 1,
+        "keyOffset": 1,
+        "kinds": [
+          {
+            "key": "Stiffness",
+            "name": "stiffnessLine",
+            "fields": [
+              {
+                "name": "stiffnessTableId1",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId2",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId3",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId4",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId5",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "stiffnessTableId6",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "StructuralDamping",
+            "name": "structuralDampingLine",
+            "fields": [
+              {
+                "name": "structuralDampingTableId",
+                "offset": 2,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "NonlinearForce",
+            "name": "nonlinearForceLine",
+            "fields": [
+              {
+                "name": "nonlinearForceTableId1",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId2",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId3",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId4",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId5",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "nonlinearForceTableId6",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "",
+            "name": "fuse",
+            "allLines": true,
+            "fields": [
+              {
+                "name": "forceDeflectionRule",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "fuseMode",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "direction",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "fuseOption",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "lowerBound",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "upperBound",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "fuseStiffnessRetention",
+                "offset": 10,
+                "kind": "real"
+              },
+              {
+                "name": "largeRotationEndA",
+                "offset": 11,
+                "kind": "integer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "GapProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "initialOpening",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "preload",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "closedStiffness",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "openStiffness",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "transverseStiffness",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "frictionCoeff1",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "frictionCoeff2",
+          "slot": 8,
+          "kind": "real",
+          "default": "same as frictionCoeff1"
+        },
+        {
+          "name": "maxPenetration",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "maxAdjustmentRatio",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "minPenetrationRatio",
+          "slot": 11,
+          "kind": "real"
+        }
+      ]
+    },
+    "HeatCapacityProp5": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "heatCapacity",
+          "slot": 3,
+          "kind": "real"
+        }
+      ]
+    },
+    "MassProp": {
+      "fields": [
+        {
+          "name": "id1",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "mass1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "id2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "mass2",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "id3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "mass3",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "id4",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "mass4",
+          "slot": 8,
+          "kind": "real"
+        }
+      ]
+    },
+    "NonStructMass": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "type",
+          "slot": 2,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "targetId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "targetValue",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "NonStructMass1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "type",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 3,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "targets",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "targetId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "NonStructMassLumped": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "type",
+          "slot": 2,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "targetId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "targetValue",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "NonStructMassLumped1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "type",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 3,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "targets",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "targetId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "NonStructMassUnion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "memberSets",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "memberSetId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "PerforatedShellProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "thickness",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "holeSpacing",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "holeRadius",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "topology",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "fluidDensity",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "fluidViscosity",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "homogenization",
+          "slot": 9,
+          "kind": "integer",
+          "default": "1"
+        }
+      ]
+    },
+    "PlaneCompProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "direction",
+          "slot": 2,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "thicknessOption",
+          "slot": 3,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "bondAllowable",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "analysisType",
+          "slot": 5,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "FourNodeElems",
+            "name": "behaviorLineC4",
+            "fields": [
+              {
+                "name": "behavior4",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration4",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior4",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration4",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "EightNodeElems",
+            "name": "behaviorLineC8",
+            "fields": [
+              {
+                "name": "behavior8",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration8",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior8",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration8",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "",
+            "name": "ply",
+            "fields": [
+              {
+                "name": "globalPlyId",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "plyMatId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "thickness",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "materialAngle",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "PlaneProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "thickness",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "formulationOption",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "PlanePropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "frameId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "stressLocation",
+          "slot": 4,
+          "kind": "text"
+        }
+      ]
+    },
+    "PlanePropNonlinearExt": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "direction",
+          "slot": 3,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "thickness",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "analysisType",
+          "slot": 5,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "behaviorLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "ThreeNodeElems",
+            "name": "nodes3Behavior",
+            "fields": [
+              {
+                "name": "behavior3",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration3",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior3",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration3",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "FourNodeElems",
+            "name": "nodes4Behavior",
+            "fields": [
+              {
+                "name": "behavior4",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration4",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior4",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration4",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "SixNodeElems",
+            "name": "nodes6Behavior",
+            "fields": [
+              {
+                "name": "behavior6",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration6",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior6",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration6",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "EightNodeElems",
+            "name": "nodes8Behavior",
+            "fields": [
+              {
+                "name": "behavior8",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration8",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior8",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration8",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "PropDistribution": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "type",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "locationNumber",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "valueOffset",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "entries",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "elemValue",
+            "offset": 1,
+            "kind": "number"
+          }
+        ]
+      }
+    },
+    "PropMatDistribution": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "type",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "materialIndex",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        }
+      ],
+      "group": {
+        "name": "entries",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "elemMatId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "RodProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "area",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "torsionConstant",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "torsionStressCoefficient",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "RodPropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "analysisType",
+          "slot": 5,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "behaviorLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "TwoNodeElems",
+            "name": "nodes2Behavior",
+            "fields": [
+              {
+                "name": "behavior2",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration2",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior2",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration2",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ShearPanelProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "thickness",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "extensionalFactor1",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "extensionalFactor2",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "ShearPanelPropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "analysisType",
+          "slot": 5,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "behaviorLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "FourNodeElems",
+            "name": "nodes4Behavior",
+            "fields": [
+              {
+                "name": "behavior4",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration4",
+                "offset": 2,
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ShellProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "membraneMatId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "thickness",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "bendingMatId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "bendingStiffnessRatio",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "shearMatId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "shearThicknessRatio",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.833333"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "fiberDistance1",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "fiberDistance2",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "couplingMatId",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "ShellPropNodal": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "formulation",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "quadrature",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "integrationPointCount",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "shearFactor",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "referenceSurface",
+          "slot": 7,
+          "kind": "text"
+        },
+        {
+          "name": "spinCorrection",
+          "slot": 8,
+          "kind": "text"
+        },
+        {
+          "name": "thickness1",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "thickness2",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "thickness3",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "thickness4",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "transverseShear",
+          "slot": 13,
+          "kind": "text"
+        },
+        {
+          "name": "shearLocking",
+          "slot": 14,
+          "kind": "text"
+        }
+      ]
+    },
+    "ShellPropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId1",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "matId2",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "analysisType",
+          "slot": 5,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "behaviorLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "ThreeNodeElems",
+            "name": "nodes3Behavior",
+            "fields": [
+              {
+                "name": "behavior3",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration3",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior3",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration3",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "FourNodeElems",
+            "name": "nodes4Behavior",
+            "fields": [
+              {
+                "name": "behavior4",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration4",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior4",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration4",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "SixNodeElems",
+            "name": "nodes6Behavior",
+            "fields": [
+              {
+                "name": "behavior6",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration6",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior6",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration6",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "EightNodeElems",
+            "name": "nodes8Behavior",
+            "fields": [
+              {
+                "name": "behavior8",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "integration8",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "heatBehavior8",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "heatIntegration8",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "SolidProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "matFrameId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "integration",
+          "slot": 4,
+          "kind": "any"
+        },
+        {
+          "name": "stressLocation",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "integrationOrder",
+          "slot": 6,
+          "kind": "any"
+        },
+        {
+          "name": "elementFunction",
+          "slot": 7,
+          "kind": "text"
+        }
+      ]
+    },
+    "SolidPropHyperelastic": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "stressLocation",
+          "slot": 3,
+          "kind": "text"
+        }
+      ]
+    },
+    "SpringOffsetProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffness",
+          "slot": 17,
+          "kind": "real"
+        },
+        {
+          "name": "tensileFailureForce",
+          "slot": 18,
+          "kind": "real"
+        },
+        {
+          "name": "compressiveFailureForce",
+          "slot": 19,
+          "kind": "real"
+        },
+        {
+          "name": "loadingTableId",
+          "slot": 20,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "unloadingTableId",
+          "slot": 21,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "SpringProp": {
+      "fields": [
+        {
+          "name": "id1",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffness1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "structuralDamping1",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "stressCoefficient1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "id2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffness2",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "structuralDamping2",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "stressCoefficient2",
+          "slot": 8,
+          "kind": "real"
+        }
+      ]
+    },
+    "SpringPropFreq": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffnessTableId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "structuralDampingTableId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "nonlinearForceTableId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "SpringPropTable": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "tableId",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ]
+    },
+    "TiltingPadBearingProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "timeLimit",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "title1",
+          "slot": 9,
+          "kind": "text",
+          "span": 8
+        },
+        {
+          "name": "title2",
+          "slot": 17,
+          "kind": "text",
+          "span": 8
+        },
+        {
+          "name": "journalRadius",
+          "slot": 25,
+          "kind": "real"
+        },
+        {
+          "name": "radialClearance",
+          "slot": 26,
+          "kind": "real"
+        },
+        {
+          "name": "padOuterRadius",
+          "slot": 27,
+          "kind": "real"
+        },
+        {
+          "name": "bearingLength",
+          "slot": 28,
+          "kind": "real"
+        },
+        {
+          "name": "padModulus",
+          "slot": 29,
+          "kind": "real"
+        },
+        {
+          "name": "padExpansion",
+          "slot": 30,
+          "kind": "real"
+        },
+        {
+          "name": "journalExpansion",
+          "slot": 31,
+          "kind": "real"
+        },
+        {
+          "name": "housingExpansion",
+          "slot": 32,
+          "kind": "real"
+        },
+        {
+          "name": "padCount",
+          "slot": 33,
+          "kind": "integer"
+        },
+        {
+          "name": "elementCount",
+          "slot": 34,
+          "kind": "integer"
+        },
+        {
+          "name": "eccentricityInput",
+          "slot": 35,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "pads",
+        "firstSlot": 41,
+        "period": 8,
+        "count": "padCount",
+        "fields": [
+          {
+            "name": "padArc",
+            "offset": 0,
+            "kind": "real"
+          },
+          {
+            "name": "pivotOffset",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "preload",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "pivotAngle",
+            "offset": 3,
+            "kind": "real"
+          },
+          {
+            "name": "padPolarInertia",
+            "offset": 4,
+            "kind": "real"
+          },
+          {
+            "name": "pivotStiffness",
+            "offset": 5,
+            "kind": "real"
+          },
+          {
+            "name": "padMass",
+            "offset": 6,
+            "kind": "real"
+          },
+          {
+            "name": "padBendingInertia",
+            "offset": 7,
+            "kind": "real"
+          }
+        ]
+      },
+      "nextGroups": [
+        {
+          "name": "afterPads",
+          "period": 56,
+          "count": 1,
+          "fields": [
+            {
+              "name": "oilConductivity",
+              "offset": 0,
+              "kind": "real"
+            },
+            {
+              "name": "padConductivity",
+              "offset": 1,
+              "kind": "real"
+            },
+            {
+              "name": "padBackTemperature",
+              "offset": 2,
+              "kind": "real"
+            },
+            {
+              "name": "journalTemperature",
+              "offset": 3,
+              "kind": "real"
+            },
+            {
+              "name": "sumpPressure",
+              "offset": 4,
+              "kind": "real"
+            },
+            {
+              "name": "inletTemperature",
+              "offset": 5,
+              "kind": "real"
+            },
+            {
+              "name": "cavitationConductivity",
+              "offset": 6,
+              "kind": "real"
+            },
+            {
+              "name": "cavitationSpecificHeat",
+              "offset": 7,
+              "kind": "real"
+            },
+            {
+              "name": "oilDensity",
+              "offset": 8,
+              "kind": "real"
+            },
+            {
+              "name": "oilSpecificHeat",
+              "offset": 9,
+              "kind": "real"
+            },
+            {
+              "name": "viscosityTemperatureA",
+              "offset": 10,
+              "kind": "real"
+            },
+            {
+              "name": "viscosityA",
+              "offset": 11,
+              "kind": "real"
+            },
+            {
+              "name": "viscosityTemperatureB",
+              "offset": 12,
+              "kind": "real"
+            },
+            {
+              "name": "viscosityB",
+              "offset": 13,
+              "kind": "real"
+            },
+            {
+              "name": "sumpMixingFactor",
+              "offset": 14,
+              "kind": "real"
+            },
+            {
+              "name": "manufacturingTemperature",
+              "offset": 15,
+              "kind": "real"
+            },
+            {
+              "name": "convergenceTolerance",
+              "offset": 16,
+              "kind": "real"
+            },
+            {
+              "name": "initialPositionX",
+              "offset": 17,
+              "kind": "real"
+            },
+            {
+              "name": "initialPositionY",
+              "offset": 18,
+              "kind": "real"
+            },
+            {
+              "name": "axialNodeCount",
+              "offset": 21,
+              "kind": "real"
+            },
+            {
+              "name": "pressureRelaxation",
+              "offset": 22,
+              "kind": "real"
+            },
+            {
+              "name": "temperatureRelaxation",
+              "offset": 23,
+              "kind": "real"
+            },
+            {
+              "name": "journalThermalModel",
+              "offset": 24,
+              "kind": "integer"
+            },
+            {
+              "name": "inletThermalBoundary",
+              "offset": 25,
+              "kind": "integer"
+            },
+            {
+              "name": "turbulence",
+              "offset": 26,
+              "kind": "integer"
+            },
+            {
+              "name": "dimensionalOutput",
+              "offset": 27,
+              "kind": "integer"
+            },
+            {
+              "name": "padConduction",
+              "offset": 29,
+              "kind": "integer"
+            },
+            {
+              "name": "padBackThermal",
+              "offset": 30,
+              "kind": "integer"
+            },
+            {
+              "name": "journalThermalGradient",
+              "offset": 31,
+              "kind": "integer"
+            },
+            {
+              "name": "cavitation",
+              "offset": 34,
+              "kind": "integer"
+            },
+            {
+              "name": "crossCoupling",
+              "offset": 35,
+              "kind": "integer"
+            },
+            {
+              "name": "padDeformation",
+              "offset": 36,
+              "kind": "integer"
+            },
+            {
+              "name": "pivotFlexibility",
+              "offset": 37,
+              "kind": "integer"
+            },
+            {
+              "name": "unitSystem",
+              "offset": 38,
+              "kind": "integer"
+            },
+            {
+              "name": "floodedSump",
+              "offset": 39,
+              "kind": "integer"
+            },
+            {
+              "name": "pivotRotationStiffness",
+              "offset": 40,
+              "kind": "real"
+            },
+            {
+              "name": "initialPivotDeflection",
+              "offset": 41,
+              "kind": "real"
+            },
+            {
+              "name": "hotOilCarryOver",
+              "offset": 42,
+              "kind": "real"
+            },
+            {
+              "name": "coldOilCarryOver",
+              "offset": 43,
+              "kind": "real"
+            },
+            {
+              "name": "caseCount",
+              "offset": 48,
+              "kind": "integer"
+            },
+            {
+              "name": "maxIterations",
+              "offset": 49,
+              "kind": "real"
+            },
+            {
+              "name": "stiffnessSmoothing",
+              "offset": 50,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "cases",
+          "period": 8,
+          "count": "caseCount",
+          "fields": [
+            {
+              "name": "speed",
+              "offset": 0,
+              "kind": "real"
+            },
+            {
+              "name": "loadX",
+              "offset": 1,
+              "kind": "real"
+            },
+            {
+              "name": "loadY",
+              "offset": 2,
+              "kind": "real"
+            },
+            {
+              "name": "whirlRatio",
+              "offset": 3,
+              "kind": "real"
+            },
+            {
+              "name": "positionRelaxation",
+              "offset": 4,
+              "kind": "real"
+            },
+            {
+              "name": "oilFlow",
+              "offset": 5,
+              "kind": "real"
+            },
+            {
+              "name": "deformationRelaxation",
+              "offset": 6,
+              "kind": "real"
+            }
+          ]
+        }
+      ]
+    },
+    "TubeProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "outerDiameter",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "thickness",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "nonStructMass",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "outerDiameter2",
+          "slot": 6,
+          "kind": "real",
+          "default": "same as outerDiameter"
+        }
+      ]
+    },
+    "UserElemService": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "propType",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "groupName",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "userRoutineName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "dependence",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "nominalSpeed",
+          "slot": 6,
+          "kind": "real"
+        }
+      ],
+      "sections": {
+        "name": "blocks",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "IntegerBlock",
+            "name": "integerBlock",
+            "fields": [],
+            "list": {
+              "name": "integers",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "integerData",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "RealBlock",
+            "name": "realBlock",
+            "fields": [],
+            "list": {
+              "name": "reals",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "realData",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "TextBlock",
+            "name": "textBlock",
+            "fields": [],
+            "list": {
+              "name": "words",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "textData",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ViscousDamperProp": {
+      "fields": [
+        {
+          "name": "id1",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "extensionalDamping1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "rotationalDamping1",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "id2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "extensionalDamping2",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "rotationalDamping2",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "ViscousDamperPropNonlinear": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "tableId",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ]
+    },
+    "WeldProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "diameter",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "eliminateConstraints",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "kind",
+          "slot": 8,
+          "kind": "text"
+        },
+        {
+          "name": "minLengthRatio",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "maxLengthRatio",
+          "slot": 10,
+          "kind": "real"
+        }
+      ]
+    }
+  }
+}

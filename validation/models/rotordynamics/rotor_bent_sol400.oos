@@ -1,0 +1,66 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: bent rotor pulled onto its bearings (ROTOR, ROTBENT)
+#
+# Covers:
+#   - cards: ROTOR, ROTBENT
+#   - solution: SOL 400 (STEP 1 ANALYSIS = NLSTAT, STEP 2 ANALYSIS = DCEIG
+#               with gyroscopic effects)
+#   - outputs: displacements of step 1: real, SORT1; eigenvectors of step 2:
+#              complex real/imaginary, SORT1
+# Run notes:
+#   - rotor 10 is the shaft of rotor_line_model.inc's dimensions defined by
+#     ROTOR (fixed frame, its CBEAM and its disk CONM2, axis 1001 to 1005) on
+#     bearings to the stator points 3001 and 3005
+#   - ROTBENT 700: a 0.05 degree kink at 200 mm; step 1 pulls the bent rotor
+#     onto the bearings (the BRGDPR pairs) under the gravity load 99, step 2
+#     computes the complex modes at 3000 rpm (RGYRO = 700)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: bent rotor
+BulkEcho;None
+SinglePointConstrSelection;2
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+StepStart;1
+LabelText;pull the bent rotor onto its bearings
+AnalysisKind;NonlinearStatics
+StaticLoadSelection;99
+StepStart;2
+LabelText;complex modes of the spinning rotor
+AnalysisKind;DirectComplexEigen
+ComplexEigenMethodSelection;40
+RotordynamicSelection;700
+[model]
+Parameter;PostprocessingFile;-1
+ComplexEigenMethod;40;ComplexLanczos;;;;;;0.;0.;;;;;8
+# Rotor 10 (3D model in the fixed frame): the four CBEAM and the disk.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BeamProp;1;1;314.16;7853.98;7853.98;0.;15707.96
+Node;1001;;0.;0.;0.
+Node;1002;;100.;0.;0.
+Node;1003;;200.;0.;0.
+Node;1004;;300.;0.;0.
+Node;1005;;400.;0.;0.
+Beam2;1001;1;1001;1002;0.;;1.;0.
+Beam2;1002;1;1002;1003;0.;;1.;0.
+Beam2;1003;1;1003;1004;0.;;1.;0.
+Beam2;1004;1;1004;1005;0.;;1.;0.
+PointMassInertia;1010;1003;0;0.002;;;;2.5;0.;1.25;0.;0.;1.25
+RotorModel3D;10;FixedEnd;Elements;5;1001;1002;1003;1004;1010;Axis;5;1001;1002;1003;1004;1005
+# Stator points and bearings (CBUSH between rotor and stator, torsional
+# stiffness too).
+Node;3001;;0.;0.;0.
+Node;3005;;400.;0.;0.
+BushProp;3;Stiffness;1.E+3;1.E+4;1.E+4;1.E+3;;;Damping;;1.;1.
+Bushing;3001;3;1001;3001;;;;;0
+Bushing;3002;3;1005;3005;;;;;0
+SinglePointConstrList;2;123456;3001;3005
+GravityLoad;99;0;9810.;0.;0.;-1.
+# Kink of the rotor and the rotor-stator pairs.
+RotorInitialBend;700;10;99;UnbalanceFrame;0.;1.;0.;KinkDeformation;1;200.;0.05;0.;BearingDeflectionProfile;2;1001;3001;1005;3005
+RotorRelativeSpin;10;1001;1005;RevolutionsPerMinute;;1.
+RotordynamicParams;700;AsynchronousWhirl;10;RevolutionsPerMinute;;;3.E+3

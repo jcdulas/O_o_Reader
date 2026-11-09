@@ -1,0 +1,177 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: glued double cantilever beam with a crack (SOL 400)
+#
+# Covers:
+#   - cards: VCCT, UNGLUE
+#   - solution: SOL 400 (nonlinear static, glued contact between the two
+#     arms, virtual crack closure at the crack front)
+#   - outputs: displacements, SPC forces, nonlinear stresses
+# Run notes:
+#   - two arms of 10 CHEXA (100 x 10 x 5 mm each) glued along their
+#     interface (BCONPRG IGLUE 1; BCPARA NLGLUE 1 keeps it a general glue so
+#     that it can be released); the first 20 mm are not glued (UNGLUE) and
+#     the crack front is at x = 30 (grid points 503 and 603)
+#   - the arms are opened by 50 N at x = 0; the crack may grow by releasing
+#     the glue (ITYPE 2, IGROW 2) when the energy release rate exceeds 0.3
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: VCCT and UNGLUE on a DCB (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+StepStart;1
+LabelText;arms opened at the cracked end
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;1
+StaticLoadSelection;1
+ContactSelection;10
+CrackClosureSelection;1
+[model]
+Parameter;PostprocessingFile;-1
+# Aluminium arms, advanced nonlinear solids (PSLDN1, as VCCT needs). Lower
+# arm: grid points 100 + i (y = 0, z = 0), 200 + i (y = 10, z = 0), 300 + i
+# (y = 0, z = 5), 400 + i (y = 10, z = 5); upper arm: 500, 600 (z = 5), 700,
+# 800 (z = 10); i = 0 to 10 along x every 10 mm; no rotations (PS 456).
+# Units: mm, N, t.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+SolidProp;1;1
+SolidProp;2;1
+SolidPropNonlinear;1;1;;ImplicitStructural
+SolidPropNonlinear;2;1;;ImplicitStructural
+Node;100;;0.;0.;0.;;456
+Node;101;;10.;0.;0.;;456
+Node;102;;20.;0.;0.;;456
+Node;103;;30.;0.;0.;;456
+Node;104;;40.;0.;0.;;456
+Node;105;;50.;0.;0.;;456
+Node;106;;60.;0.;0.;;456
+Node;107;;70.;0.;0.;;456
+Node;108;;80.;0.;0.;;456
+Node;109;;90.;0.;0.;;456
+Node;110;;100.;0.;0.;;456
+Node;200;;0.;10.;0.;;456
+Node;201;;10.;10.;0.;;456
+Node;202;;20.;10.;0.;;456
+Node;203;;30.;10.;0.;;456
+Node;204;;40.;10.;0.;;456
+Node;205;;50.;10.;0.;;456
+Node;206;;60.;10.;0.;;456
+Node;207;;70.;10.;0.;;456
+Node;208;;80.;10.;0.;;456
+Node;209;;90.;10.;0.;;456
+Node;210;;100.;10.;0.;;456
+Node;300;;0.;0.;5.;;456
+Node;301;;10.;0.;5.;;456
+Node;302;;20.;0.;5.;;456
+Node;303;;30.;0.;5.;;456
+Node;304;;40.;0.;5.;;456
+Node;305;;50.;0.;5.;;456
+Node;306;;60.;0.;5.;;456
+Node;307;;70.;0.;5.;;456
+Node;308;;80.;0.;5.;;456
+Node;309;;90.;0.;5.;;456
+Node;310;;100.;0.;5.;;456
+Node;400;;0.;10.;5.;;456
+Node;401;;10.;10.;5.;;456
+Node;402;;20.;10.;5.;;456
+Node;403;;30.;10.;5.;;456
+Node;404;;40.;10.;5.;;456
+Node;405;;50.;10.;5.;;456
+Node;406;;60.;10.;5.;;456
+Node;407;;70.;10.;5.;;456
+Node;408;;80.;10.;5.;;456
+Node;409;;90.;10.;5.;;456
+Node;410;;100.;10.;5.;;456
+Node;500;;0.;0.;5.;;456
+Node;501;;10.;0.;5.;;456
+Node;502;;20.;0.;5.;;456
+Node;503;;30.;0.;5.;;456
+Node;504;;40.;0.;5.;;456
+Node;505;;50.;0.;5.;;456
+Node;506;;60.;0.;5.;;456
+Node;507;;70.;0.;5.;;456
+Node;508;;80.;0.;5.;;456
+Node;509;;90.;0.;5.;;456
+Node;510;;100.;0.;5.;;456
+Node;600;;0.;10.;5.;;456
+Node;601;;10.;10.;5.;;456
+Node;602;;20.;10.;5.;;456
+Node;603;;30.;10.;5.;;456
+Node;604;;40.;10.;5.;;456
+Node;605;;50.;10.;5.;;456
+Node;606;;60.;10.;5.;;456
+Node;607;;70.;10.;5.;;456
+Node;608;;80.;10.;5.;;456
+Node;609;;90.;10.;5.;;456
+Node;610;;100.;10.;5.;;456
+Node;700;;0.;0.;10.;;456
+Node;701;;10.;0.;10.;;456
+Node;702;;20.;0.;10.;;456
+Node;703;;30.;0.;10.;;456
+Node;704;;40.;0.;10.;;456
+Node;705;;50.;0.;10.;;456
+Node;706;;60.;0.;10.;;456
+Node;707;;70.;0.;10.;;456
+Node;708;;80.;0.;10.;;456
+Node;709;;90.;0.;10.;;456
+Node;710;;100.;0.;10.;;456
+Node;800;;0.;10.;10.;;456
+Node;801;;10.;10.;10.;;456
+Node;802;;20.;10.;10.;;456
+Node;803;;30.;10.;10.;;456
+Node;804;;40.;10.;10.;;456
+Node;805;;50.;10.;10.;;456
+Node;806;;60.;10.;10.;;456
+Node;807;;70.;10.;10.;;456
+Node;808;;80.;10.;10.;;456
+Node;809;;90.;10.;10.;;456
+Node;810;;100.;10.;10.;;456
+SolidHexa;1;1;100;101;201;200;300;301;401;400
+SolidHexa;2;1;101;102;202;201;301;302;402;401
+SolidHexa;3;1;102;103;203;202;302;303;403;402
+SolidHexa;4;1;103;104;204;203;303;304;404;403
+SolidHexa;5;1;104;105;205;204;304;305;405;404
+SolidHexa;6;1;105;106;206;205;305;306;406;405
+SolidHexa;7;1;106;107;207;206;306;307;407;406
+SolidHexa;8;1;107;108;208;207;307;308;408;407
+SolidHexa;9;1;108;109;209;208;308;309;409;408
+SolidHexa;10;1;109;110;210;209;309;310;410;409
+SolidHexa;11;2;500;501;601;600;700;701;801;800
+SolidHexa;12;2;501;502;602;601;701;702;802;801
+SolidHexa;13;2;502;503;603;602;702;703;803;802
+SolidHexa;14;2;503;504;604;603;703;704;804;803
+SolidHexa;15;2;504;505;605;604;704;705;805;804
+SolidHexa;16;2;505;506;606;605;705;706;806;805
+SolidHexa;17;2;506;507;607;606;706;707;807;806
+SolidHexa;18;2;507;508;608;607;707;708;808;807
+SolidHexa;19;2;508;509;609;608;708;709;809;808
+SolidHexa;20;2;509;510;610;609;709;710;810;809
+# Both arms clamped at x = 100, opened by 50 N at x = 0
+SinglePointConstrList;1;123;110;210;310;410
+SinglePointConstrList;1;123;510;610;710;810
+PointForceLoad;1;700;;25.;0.;0.;1.
+PointForceLoad;1;800;;25.;0.;0.;1.
+PointForceLoad;1;100;;25.;0.;0.;-1.
+PointForceLoad;1;200;;25.;0.;0.;-1.
+# Glued contact: upper arm (body 2) secondary, lower arm (body 1) primary
+ContactPropertyRegion;1;1
+ContactPropertyRegion;2;2
+ContactBody1;1;;ThreeDimensional;Deformable;1
+ContactBody1;2;;ThreeDimensional;Deformable;2
+ContactPairGeomParams;20;GlueOption;1;GlueSeparationOption;0
+ContactPair;10;20;;2;1
+ContactParams;0;NonlinearGlue;1
+# The pre-crack: the interface grid points of body 2 from x = 0 to 20 use
+# standard contact (selected with BCONTACT 10, same ID)
+ContactUnglueNodes;10;2;500;Through;502;600;Through;602
+# Crack 1: direct propagation by release of the glue, fixed increment,
+# maximum hoop stress direction, resistance 0.3 N/mm, no tables
+CrackClosureCrack;1;1;2;2;1;1;0.;0.3;;;0;;;;503;603
+NonlinearStepControl;1;1.;;AdaptiveStepping;0.1;1.E-4;0.25

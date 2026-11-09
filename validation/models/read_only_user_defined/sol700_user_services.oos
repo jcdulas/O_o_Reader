@@ -1,0 +1,94 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: user subroutines of the explicit solver (SOL 700, read-only)
+#
+# Covers:
+#   - cards: COMPUDS EOSUDS SHRUDS YLDUDS FAILUDS FLOWUDS PORUDS FORCUDS
+#     TABLUDS TICEUDS NLOUTUD
+#   - solution: SOL 700 (explicit transient: a slurry flows down an Euler
+#     channel onto a composite box held in it)
+#   - outputs: none (not run)
+# Run notes:
+#   - read-only: every entry of the list names a user routine (material,
+#     equation of state, shear, yield, failure, inflow, porosity, enforced
+#     velocity, time function, initial values, output) that must be built
+#     into a user defined service library with the SCA build tools and
+#     connected by the CONNECT SERVICE statements; none ships with the
+#     solver
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: SOL 700 user services (read-only)
+BulkEcho;None
+StepEndTime;0.001
+NonlinearTimeStepSelection;1
+DynamicLoadSelection;1
+[model]
+# Time: 100 steps of 1.0E-5 s (1 ms), output every 10 steps. Units: mm, N,
+# t, s.
+NonlinearTimeSteps;1;100;1.E-5;10
+# ---------------------------------------------------------------- structure
+# A closed box 100 mm wide (6 CQUAD4, one per face) centred at the origin,
+# a composite laminate whose ply material is a user failure model: four
+# faces on PSHELL1, one on a PSHELL and two on a PCOMP of two plies, all
+# naming the COMPUDS.
+UserCompositeFailureMat;1;excomp;EXCOMP;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9;0;60.;;;;1500.;1200.;50.;200.
+ShellPropNodal;1;1;BelytschkoLinTsay;Gauss;3;;;;1.5;1.5;1.5;1.5
+CompProp;2;;;;;;;;1;0.75;0.;Yes;1;0.75;90.;Yes
+ShellProp;3;1;1.5
+Node;1;;-50.;-50.;-50.
+Node;2;;50.;-50.;-50.
+Node;3;;50.;50.;-50.
+Node;4;;-50.;50.;-50.
+Node;5;;-50.;-50.;50.
+Node;6;;50.;-50.;50.
+Node;7;;50.;50.;50.
+Node;8;;-50.;50.;50.
+ShellQuad4;1001;1;1;4;3;2
+ShellQuad4;1002;1;5;6;7;8
+ShellQuad4;1003;3;1;2;6;5
+ShellQuad4;1004;1;3;4;8;7
+ShellQuad4;1005;2;1;5;8;4
+ShellQuad4;1006;2;2;3;7;6
+# ---------------------------------------------------------------- Euler mesh
+# A channel 400 x 200 x 200 mm along X of 50 mm cells around the box
+# (grid points and elements numbered from 50001), multi-material with
+# strength, filled with the slurry.
+EulerMeshGenerator;1;Box;50.;50.;50.;;;;-200.;-100.;-100.;;;;8;4;4;;50001;50001;Euler;10
+EulerRegionProp;10;MultiMaterialStrength;20
+EulerInitialRegions;20;21
+InitialConditionRegion;1;21;Sphere;31;12;41;0.
+SphereShape;31;0.;0.;0.;500.
+InitialConditionValues;41;;Density;1.5E-9
+# The slurry: every part of its constitutive model is a user routine.
+EulerMat;12;1.5E-9;2;2;2;2
+UserStateEquation;2;usrmat;ExternalStateEquation;0.01
+UserShearModel;2;usrmat;ExternalShear
+UserYield;2;usrmat;ExternalYield
+UserFailureModel;2;usrmat;ExternalFailure
+# The -X face of the channel: a user inflow boundary.
+EulerUserFlowBoundary;51;myflow;ExternalFlow;;1;NegativeXDirection
+# ---------------------------------------------------------------- coupling
+# The box is an obstacle (no Euler material inside it); its upstream face
+# is a porous screen whose leakage is a user porosity model.
+ContactPropertyRegion;101;1
+EulerLagrangeCoupling;1;101;Inside;On;On;1
+ContactElemSurface;201;1005
+GasBagLeakage;1;1;201;PorousUserBoundary;41;Constant;0.5
+PorousUserBoundary;41;myflow;ExternalPorosity
+# ---------------------------------------------------------------- loads
+# The downstream corners of the box move at a user velocity, its upstream
+# top corner carries a force following a user time function, and the box
+# starts with user initial velocities.
+UserEnforcedVelocity;61;extvel;ExternalVelocity;2;3;6;7
+TransientTableLoad1;1;51;;;4
+TransientTableLoad1;1;61;;;2
+PointForceLoad;71;8;0;100.;0.;0.;-1.
+TransientTableLoad1;1;71;;;0;81
+TableUserRoutine;81;myfunc;ExternalFunction
+IdListSet1;31;1;Through;8
+InitialValuesUserRoutine;30;initex;ExternalInitialValues;31;Node
+# User output of the box elements every 0.1 ms.
+NonlinearUserOutput;91;initex;ElemExplicitOutput;1.E-4;;BOXOUT;1001;1002;1003;1004;1005;1006

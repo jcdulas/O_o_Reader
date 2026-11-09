@@ -1,0 +1,49 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: complex section cuts and MONPNT3 (SOL 108)
+#
+# Validates:
+#   - complex grid point forces and MPC forces through the same connections,
+#     real/imaginary and magnitude/phase; the complex MONPNT3 resultants;
+#     damper rows in the grid point forces of a frequency response
+# Settles (library item: current status):
+#   - not validated against the solver: a complex cut (summed as complex numbers,
+#     both complex forms); not done: the dynamic forces of dampers in a cut
+#     of a frequency response
+# Run notes:
+#   - PARAM,MPTUNIT,40 with the ASSIGN writes the monitor tables to
+#     cuts_frequency_monitor.out2
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT2='cuts_frequency_monitor.out2';FileUnit=40;FileForm=Unformatted
+SolutionSequence;108
+[case]
+TitleText;section cuts and MONPNT3 (frequency response)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DynamicLoadSelection;21
+FreqSetSelection;41
+NodeForceOutput;All;PlotOnly
+MonitorPointOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;real and imaginary parts
+DisplacementOutput;All;PlotOnly;RealPart
+MultiPointConstrForceOutput;All;PlotOnly;RealPart
+SubcaseStart;2
+LabelText;magnitude and phase
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+MultiPointConstrForceOutput;All;PlotOnly;MagnitudePhase
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;MonitorPointUnit;40
+Parameter;UniformStructuralDamping;0.02
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+FreqLinearSteps1;41;10.;20.;10
+DamperDofInline;55;0.5;15;3;23;3
+Include;cuts_model.oos

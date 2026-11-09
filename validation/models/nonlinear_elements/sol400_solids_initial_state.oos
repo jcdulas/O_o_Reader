@@ -1,0 +1,108 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: advanced solids, initial stress and plastic strain
+#
+# Covers:
+#   - cards: PSLDN1, PLSOLID, ISTRESS, IPSTRAIN
+#   - solution: SOL 400 (nonlinear static, one load step, large displacements)
+#   - outputs: displacements, SPC forces, element stresses and strains
+# Run notes:
+#   - ISTRESS and IPSTRAIN name elements whose PSOLID has a PSLDN1 (they
+#     act on advanced elements only); the model holds no shell or beam, so
+#     their layer fields stay blank
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;advanced solids with an initial state (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;one load step, ten increments
+AnalysisKind;NonlinearStatics
+NonlinearStaticParamsSelection;10
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+StrainOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+NonlinearStaticParams;10;10
+# Units: mm, N, t. Steel (elastic), an aluminium with bilinear hardening and
+# a Mooney-Rivlin rubber.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+IsoMat;2;7.E+4;;0.33;2.7E-9
+IsoMatStressDependent;2;;Plastic;1.E+3;1;1;150.
+HyperelasticPolynomialMat;3;0.5;0.1;50.;1.1E-9
+# Region 1: two steel cubes held at both ends in x, with a uniform initial
+# axial stress of 20 MPa at the eight integration points (PSOLID with a
+# PSLDN1); the supports carry the initial stress
+SolidProp;1;1
+SolidPropNonlinear;1;1;;ImplicitStructural;EightNodeElems;Solid;Linear
+Node;101;;0.;0.;0.;;456
+Node;102;;10.;0.;0.;;456
+Node;103;;20.;0.;0.;;456
+Node;104;;0.;10.;0.;;456
+Node;105;;10.;10.;0.;;456
+Node;106;;20.;10.;0.;;456
+Node;107;;0.;0.;10.;;456
+Node;108;;10.;0.;10.;;456
+Node;109;;20.;0.;10.;;456
+Node;110;;0.;10.;10.;;456
+Node;111;;10.;10.;10.;;456
+Node;112;;20.;10.;10.;;456
+SolidHexa;101;1;101;102;105;104;107;108;111;110
+SolidHexa;102;1;102;103;106;105;108;109;112;111
+SinglePointConstrList;1;123;101;103;104;106;107;109
+SinglePointConstrList;1;123;110;112
+InitialStress;101;102;1;8;;;20.;0.;0.;0.;0.;0.
+# Region 2: two aluminium cubes pulled past yield, starting with an
+# equivalent plastic strain of 0.2 percent (PSLDN1 with the hardening
+# material)
+SolidProp;2;2
+SolidPropNonlinear;2;2;;ImplicitStructural;EightNodeElems;Solid;Linear
+Node;201;;0.;100.;0.;;456
+Node;202;;10.;100.;0.;;456
+Node;203;;20.;100.;0.;;456
+Node;204;;0.;110.;0.;;456
+Node;205;;10.;110.;0.;;456
+Node;206;;20.;110.;0.;;456
+Node;207;;0.;100.;10.;;456
+Node;208;;10.;100.;10.;;456
+Node;209;;20.;100.;10.;;456
+Node;210;;0.;110.;10.;;456
+Node;211;;10.;110.;10.;;456
+Node;212;;20.;110.;10.;;456
+SolidHexa;201;2;201;202;205;204;207;208;211;210
+SolidHexa;202;2;202;203;206;205;208;209;212;211
+SinglePointConstrList;1;123;201;204;207;210
+InitialPlasticStrain;201;202;1;8;;;0.002
+PointForceLoad;1;203;;4.E+3;1.;0.;0.
+PointForceLoad;1;206;;4.E+3;1.;0.;0.
+PointForceLoad;1;209;;4.E+3;1.;0.;0.
+PointForceLoad;1;212;;4.E+3;1.;0.;0.
+# Region 3: two hyperelastic rubber cubes stretched (PLSOLID, stresses at
+# the grid points)
+SolidPropHyperelastic;3;3;Node
+Node;301;;0.;200.;0.;;456
+Node;302;;10.;200.;0.;;456
+Node;303;;20.;200.;0.;;456
+Node;304;;0.;210.;0.;;456
+Node;305;;10.;210.;0.;;456
+Node;306;;20.;210.;0.;;456
+Node;307;;0.;200.;10.;;456
+Node;308;;10.;200.;10.;;456
+Node;309;;20.;200.;10.;;456
+Node;310;;0.;210.;10.;;456
+Node;311;;10.;210.;10.;;456
+Node;312;;20.;210.;10.;;456
+SolidHexa;301;3;301;302;305;304;307;308;311;310
+SolidHexa;302;3;302;303;306;305;308;309;312;311
+SinglePointConstrList;1;123;301;304;307;310
+PointForceLoad;1;303;;10.;1.;0.;0.
+PointForceLoad;1;306;;10.;1.;0.;0.
+PointForceLoad;1;309;;10.;1.;0.;0.
+PointForceLoad;1;312;;10.;1.;0.;0.

@@ -1,0 +1,92 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: frequency-dependent damper and fastener
+#
+# Covers:
+#   - cards: PDAMPT, PFASTT (with CDAMP1, PDAMP, CFAST, PFAST, CELAS2, CONM2,
+#     CQUAD4, TABLED1, RLOAD1, DAREA, FREQ1)
+#   - solution: SOL 108 (direct frequency response)
+#   - outputs: complex displacements, SPC forces and element forces,
+#     real/imaginary (OUTPUT2)
+# Run notes:
+#   - PDAMPT and PFASTT only act in frequency response: the damper coefficient
+#     and the fastener stiffnesses and damping follow their TABLED1 at each
+#     excitation frequency
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: frequency-dependent damper and fastener
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DynamicLoadSelection;40
+FreqSetSelection;31
+DisplacementOutput;All;PlotOnly;SortByPoint;RealPart
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint;RealPart
+ElemForceOutput;All;PlotOnly;SortByPoint;RealPart
+SubcaseStart;1
+LabelText;unit harmonic loads, 10 to 500 Hz
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Steel (MAT1 1).
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+FreqLinearSteps1;31;10.;10.;49
+# Region 1: a mass on grid 102 held by a spring (CELAS2) and a damper (CDAMP1)
+# to the clamped grid 101; PDAMPT 12 makes the damper coefficient of PDAMP 12
+# follow TABLED1 13.
+Node;101;;0.;0.;0.
+Node;102;;10.;0.;0.;;23456
+SpringDofInline;101;1.E+3;102;1;101;1
+DamperProp;12;0.5
+DamperPropFreq;12;13
+DamperDofProperty;102;12;102;1;101;1
+PointMassInertia;103;102;;0.001
+TableDynamic1;13;;;0.;0.5;100.;1.;1.E+3;2.;EndTable
+# Region 2: two 20 x 20 plates 2 mm apart (PSHELL 21 at z = 0, PSHELL 22 at z
+# = 2) joined by a CFAST (PROP form, piercing point grid 230); PFASTT 23 makes
+# the three translational stiffnesses and the damping of PFAST 23 follow
+# TABLED1 24, 25 and 26. The lower plate is clamped along x = 0.
+ShellProp;21;1;1.5;1
+ShellProp;22;1;1.5;1
+Node;201;;0.;200.;0.
+Node;202;;10.;200.;0.
+Node;203;;20.;200.;0.
+Node;204;;0.;210.;0.
+Node;205;;10.;210.;0.
+Node;206;;20.;210.;0.
+Node;207;;0.;220.;0.
+Node;208;;10.;220.;0.
+Node;209;;20.;220.;0.
+Node;211;;0.;200.;2.
+Node;212;;10.;200.;2.
+Node;213;;20.;200.;2.
+Node;214;;0.;210.;2.
+Node;215;;10.;210.;2.
+Node;216;;20.;210.;2.
+Node;217;;0.;220.;2.
+Node;218;;10.;220.;2.
+Node;219;;20.;220.;2.
+ShellQuad4;201;21;201;202;205;204
+ShellQuad4;202;21;202;203;206;205
+ShellQuad4;203;21;204;205;208;207
+ShellQuad4;204;21;205;206;209;208
+ShellQuad4;211;22;211;212;215;214
+ShellQuad4;212;22;212;213;216;215
+ShellQuad4;213;22;214;215;218;217
+ShellQuad4;214;22;215;216;219;218
+Node;230;;12.;205.;1.
+FastenerProp;23;3.;-1;;2.E+4;1.E+4;1.E+4;100.;100.;100.
+FastenerPropFreq;23;Stiffness;24;25;25;;;;StructuralDamping;26
+Fastener;231;23;Property;21;22;230
+TableDynamic1;24;;;0.;2.E+4;1.E+3;2.5E+4;EndTable
+TableDynamic1;25;;;0.;1.E+4;1.E+3;1.2E+4;EndTable
+TableDynamic1;26;;;0.;0.01;1.E+3;0.03;EndTable
+# Constraints and loads: SPC set 1 clamps grid 101 and the lower plate edge;
+# RLOAD1 40 applies the DAREA 41 unit forces (axial on grid 102, out of plane
+# on the upper plate tip) with the constant TABLED1 42.
+SinglePointConstrList;1;123456;101;201;204;207
+DynamicLoadScale;41;102;1;1.;213;3;1.
+DynamicLoadScale;41;219;3;1.
+FreqResponseLoad1;40;41;;;;;42
+TableDynamic1;42;;;0.;1.;1.E+3;1.;EndTable

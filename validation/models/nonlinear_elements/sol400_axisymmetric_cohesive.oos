@@ -1,0 +1,90 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric solids, cohesive interface and shell
+#
+# Covers:
+#   - cards: CQUADX, CTRIAX, CIFQDX, CAXISYM, PAXISYM (with PSHLN2, PCOHE,
+#     MCOHE, PLPLANE)
+#   - solution: SOL 400 (nonlinear static, one load step)
+#   - outputs: displacements, SPC forces, element stresses
+# Run notes:
+#   - axisymmetric model: x basic is the radius, y basic the axis; every
+#     grid point lies in the x-y plane with x > 0
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: axisymmetric elements (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;one load step, ten increments
+AnalysisKind;NonlinearStatics
+NonlinearStaticParamsSelection;10
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+NonlinearStaticParams;10;10
+# Units: mm, N, t. A Mooney-Rivlin rubber (the material a PLPLANE names)
+# and a steel.
+HyperelasticPolynomialMat;10;0.5;0.1;50.;1.1E-9
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# Region 1: two steel rings of two CQUADX each (PLPLANE with a PSHLN2,
+# axisymmetric solid, linear integration) bonded along y = 10 by two
+# zero-thickness CIFQDX (bilinear cohesive law), clamped at the bottom and
+# pulled along the axis at the top
+PlanePropNonlinear;1;10
+PlanePropNonlinearExt;1;1;;1.;ImplicitStructural;FourNodeElems;AxisymSolid;Linear
+CohesiveProp;5;5
+CohesiveMat;5;1;;0.5;0.002;0.02;1.
+Node;1;;50.;0.;0.;;3456
+Node;2;;60.;0.;0.;;3456
+Node;3;;70.;0.;0.;;3456
+Node;4;;50.;10.;0.;;3456
+Node;5;;60.;10.;0.;;3456
+Node;6;;70.;10.;0.;;3456
+Node;7;;50.;10.;0.;;3456
+Node;8;;60.;10.;0.;;3456
+Node;9;;70.;10.;0.;;3456
+Node;10;;50.;20.;0.;;3456
+Node;11;;60.;20.;0.;;3456
+Node;12;;70.;20.;0.;;3456
+AxisymQuad;1;1;1;2;5;4
+AxisymQuad;2;1;2;3;6;5
+CohesiveAxisymQuad;3;5;4;5;8;7
+CohesiveAxisymQuad;4;5;5;6;9;8
+AxisymQuad;5;1;7;8;11;10
+AxisymQuad;6;1;8;9;12;11
+SinglePointConstrList;1;12;1;2;3
+PointForceLoad;1;10;;100.;0.;1.;0.
+PointForceLoad;1;11;;200.;0.;1.;0.
+PointForceLoad;1;12;;100.;0.;1.;0.
+# Region 2: a hyperelastic rubber ring of two three-node CTRIAX on a
+# PLPLANE, clamped at the bottom and stretched along the axis
+PlanePropNonlinear;20;10
+Node;21;;100.;0.;0.;;3456
+Node;22;;110.;0.;0.;;3456
+Node;23;;110.;10.;0.;;3456
+Node;24;;100.;10.;0.;;3456
+AxisymTria;21;20;21;22;23
+AxisymTria;22;20;21;23;24
+SinglePointConstrList;1;12;21;22
+PointForceLoad;1;23;;1.;0.;1.;0.
+PointForceLoad;1;24;;1.;0.;1.;0.
+# Region 3: a thin steel cylinder of radius 200 (PAXISYM, 2 mm thick): a
+# two-node and a three-node CAXISYM, clamped at the bottom and pushed
+# outwards at the top
+AxisymShellProp;30;1;2.;;Structural
+Node;301;;200.;0.;0.;;345
+Node;302;;200.;20.;0.;;345
+Node;303;;200.;30.;0.;;345
+Node;304;;200.;40.;0.;;345
+ShellAxisym;31;30;301;302
+ShellAxisym;32;30;302;304;303
+SinglePointConstrList;1;126;301
+PointForceLoad;1;304;;10.;1.;0.;0.

@@ -1,0 +1,133 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: sizing optimisation with equation, material, connectivity and load relations (SOL 200)
+#
+# Covers:
+#   - cards: DVPREL2 DVMREL1 DVCREL1 DVLREL1 DTABLE DTABLE2 DLINK DCONADD DDVAL
+#     DSCREEN
+#   - solution: SOL 200 (static sizing optimisation, minimum weight)
+#   - outputs: displacements, CQUAD4 and CBAR stresses and forces of each
+#     design cycle, the design tables (DESTAB, HISADD, DBCOPT, R1TABRG,
+#     DSCMCOL)
+# Run notes:
+#   - DTABLE2 needs system cell 444 set to 1: the NASTRAN statement of the
+#     first line does it
+#   - the plate thickness factor is a discrete variable (DDVAL): the last
+#     cycle is a discrete design
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: sizing relations
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;10
+DesignObjectiveSelection;31;MinimumObjective
+AnalysisKind;Statics
+DesignSensitivityOutput;All;Formatted;Export
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip payload with a designed relief force
+SubcaseDesignConstrSelection;100
+[model]
+Parameter;PostprocessingFile;-1
+# A cantilever aluminium plate 200 x 100 mm (4 x 2 CQUAD4), the root half
+# PSHELL 1, the tip half PSHELL 2, with a CBAR stiffener (PBAR 3, its own
+# material 2) along the edge y = 0. Clamped at x = 0. Units: mm, N, t, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+IsoMat;2;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+ShellProp;2;1;1.6;1;;1
+BarProp;3;2;40.;800.;22.2;80.;;7.75;0.;-7.75;0.
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;150.;0.;0.
+Node;5;;200.;0.;0.
+Node;6;;0.;50.;0.
+Node;7;;50.;50.;0.
+Node;8;;100.;50.;0.
+Node;9;;150.;50.;0.
+Node;10;;200.;50.;0.
+Node;11;;0.;100.;0.
+Node;12;;50.;100.;0.
+Node;13;;100.;100.;0.
+Node;14;;150.;100.;0.
+Node;15;;200.;100.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;2;3;4;9;8
+ShellQuad4;4;2;4;5;10;9;0.;;0.
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;2;8;9;14;13
+ShellQuad4;8;2;9;10;15;14;0.;;0.
+Bar2;11;3;1;2;0.;;0.;1.
+Bar2;12;3;2;3;0.;;0.;1.
+Bar2;13;3;3;4;0.;;0.;1.
+Bar2;14;3;4;5;0.;;0.;1.
+SinglePointConstrList;1;123456;1;6;11
+# Load 10: the payload (set 1, fixed) plus a relief force at the tip middle
+# (set 2), whose magnitude is a design variable (DVLREL1).
+PointForceLoad;1;5;0;50.;0.;0.;1.
+PointForceLoad;1;15;0;50.;0.;0.;1.
+PointForceLoad;2;10;0;-20.;0.;0.;1.
+LoadCombination;10;1.;1.;1;1.;2
+# Design variables. FAC1 scales the root plate thickness and takes discrete
+# values (DDVAL 50); FAC2 scales the tip plate thickness and follows FAC1
+# (DLINK); BARA is the stiffener area; EBAR scales the stiffener modulus;
+# ZOFF is the offset of the tip column of plates; RELF is the relief force.
+DesignVar;1;FAC1;1.;0.5;2.;;50
+DesignVar;2;FAC2;0.8;0.4;1.6
+DesignVar;3;BARA;40.;10.;100.
+DesignVar;4;EBAR;1.;0.9;1.1
+DesignVar;5;ZOFF;0.5;-1.;1.
+DesignVar;6;RELF;-20.;-50.;0.
+DesignDiscreteValues;50;0.5;Through;2.;By;0.25
+DesignVarLink;7;2;0.;1.;1;0.8
+# Constants of the equations: fixed ratios (DTABLE) and the thicknesses of
+# the analysis model before any update (DTABLE2).
+DesignConstants;KI1;0.5;KI2;0.01389;RATIO;6.
+DesignFieldConstants;T1REF;ShellProp;1;thickness;T2REF;ShellProp;2;thickness
+DesignEquation;21;TH(F,T0) = F*T0
+DesignEquation;22;AREA(A) = A
+DesignEquation;23;INER(A,K) = K*A**2
+DesignEquation;24;HALFH(A,R) = 0.5*SQRT(R*A)
+DesignEquation;25;MHALFH(A,R) = -0.5*SQRT(R*A)
+# Plate thicknesses: a factor times the thickness of the input deck.
+DesignPropRelation2;101;ShellProp;1;thickness;0.5;;21;DesignVar;1;1;DesignConstants;1;T1REF
+DesignPropRelation2;102;ShellProp;2;thickness;0.4;;21;DesignVar;1;2;DesignConstants;1;T2REF
+# The stiffener is a rectangle of height/width RATIO: area, inertias and the
+# stress recovery points follow its area.
+DesignPropRelation2;103;BarProp;3;area;10.;100.;22;DesignVar;1;3
+DesignPropRelation2;104;BarProp;3;bendingInertia1;;;23;DesignVar;1;3;DesignConstants;1;KI1
+DesignPropRelation2;105;BarProp;3;bendingInertia2;;;23;DesignVar;1;3;DesignConstants;1;KI2
+DesignPropRelation2;106;BarProp;3;stressPointCy;;;24;DesignVar;1;3;DesignConstants;1;RATIO
+DesignPropRelation2;107;BarProp;3;stressPointDy;;;25;DesignVar;1;3;DesignConstants;1;RATIO
+# Stiffener modulus: the factor times the modulus of MAT1 2 (PVAL).
+DesignMatRelation1;201;IsoMat;2;youngsModulus;6.E+4;8.E+4;;4;PropertyValue
+# Offset of the tip column of plates.
+DesignElemRelation1;301;ShellQuad4;4;offset;-1.;1.;;5;1.
+DesignElemRelation1;302;ShellQuad4;8;offset;-1.;1.;;5;1.
+# Relief force: F of the FORCE of set 2 at grid point 10.
+DesignLoadRelation1;401;PointForceLoad;2;magnitude;;;;10;;;;;6;1.
+# Responses: weight (objective), tip deflections, plate von Mises stresses
+# (fibres Z1 and Z2) and the largest stiffener stress at end A.
+DesignResp1;31;WEIGHT;Weight
+DesignResp1;32;TIPZ;Displacement;;;3;;5;15
+DesignResp1;33;PLATEZ1;Stress;ShellProp;;9;;1;2
+DesignResp1;34;PLATEZ2;Stress;ShellProp;;17;;1;2
+DesignResp1;35;BARSA;Stress;BarProp;;7;;3
+# Two constraint sets combined by DCONADD 100 (selected by DESSUB).
+DesignConstr;41;32;-5.;;5.
+DesignConstr;42;33;;;200.
+DesignConstr;42;34;;;200.
+DesignConstr;42;35;-200.;;200.
+DesignConstrUnion;100;41;42
+# Constraint screening: keep few stress and displacement constraints.
+DesignConstrScreen;Stress;-0.6;3
+DesignConstrScreen;Displacement;-0.5;2
+DesignOptimParams;MaxDesignCycles;8

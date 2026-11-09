@@ -1,0 +1,485 @@
+{
+ "description": "Reviewed card layouts of the nodes family (src/model/cards/nodes).",
+ "cards": {
+  "AcousticSlotControl": {"fields": [
+    {"name": "defaultDensity", "slot": 1, "kind": "real"},
+    {"name": "defaultBulkModulus", "slot": 2, "kind": "real"},
+    {"name": "harmonic", "slot": 3, "kind": "integer"},
+    {"name": "defaultSlotWidth", "slot": 4, "kind": "real"},
+    {"name": "defaultSlotCount", "slot": 5, "kind": "integer"}
+  ]},
+  "AcousticSlotFluidPoint": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "radius", "slot": 2, "kind": "real"},
+    {"name": "zCoord", "slot": 3, "kind": "real"}
+  ]},
+  "AcousticSlotSurfacePoint": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "radius", "slot": 2, "kind": "real"},
+    {"name": "zCoord", "slot": 3, "kind": "real"},
+    {"name": "slotWidth", "slot": 4, "kind": "real"},
+    {"name": "fluidPointId", "slot": 5, "kind": "integer", "default": "0"}
+  ]},
+  "AdaptiveRefineControl": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "repeatCount", "slot": 4, "kind": "integer"},
+    {"name": "criterionId", "slot": 5, "kind": "integer"},
+    {"name": "regionMethod", "slot": 6, "kind": "text"},
+    {"name": "regionId", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "snapMethod", "slot": 8, "kind": "integer"},
+    {"name": "maximumLevel", "slot": 9, "kind": "integer", "default": "same as repeatCount"}
+  ]},
+  "AdaptiveRefineCriterion": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "kind", "slot": 2, "kind": "integer"},
+    {"name": "parameter1", "slot": 3, "kind": "real"},
+    {"name": "parameter2", "slot": 4, "kind": "real"},
+    {"name": "parameter3", "slot": 5, "kind": "real"},
+    {"name": "parameter4", "slot": 6, "kind": "real"},
+    {"name": "parameter5", "slot": 7, "kind": "real"},
+    {"name": "parameter6", "slot": 8, "kind": "real"}
+  ]},
+  "AssociativeNode": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "origNodeId", "slot": 2, "kind": "integer"},
+    {"name": "partitionName", "slot": 9, "kind": "text", "span": 8}
+  ]},
+  "AxisymConeControl": {"fields": [
+    {"name": "highestHarmonic", "slot": 1, "kind": "integer"}
+  ]},
+  "AxisymConePoint": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "ringId", "slot": 2, "kind": "integer"},
+    {"name": "phiAngle", "slot": 3, "kind": "real"}
+  ]},
+  "AxisymConeRing": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "radius", "slot": 3, "kind": "real"},
+    {"name": "zCoord", "slot": 4, "kind": "real"},
+    {"name": "permanentConstraints", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "AxisymFluidControl": {"fields": [
+    {"name": "frameId", "slot": 1, "kind": "integer"},
+    {"name": "gravity", "slot": 2, "kind": "real"},
+    {"name": "defaultDensity", "slot": 3, "kind": "real"},
+    {"name": "defaultBulkModulus", "slot": 4, "kind": "real"},
+    {"name": "nonsymmetric", "slot": 5, "kind": "text"},
+    {"name": "noHarmonicsFlag", "slot": 6, "kind": "text"}
+  ], "group": {"name": "harmonics", "firstSlot": 9, "period": 1, "fields": [
+    {"name": "harmonic", "offset": 0, "kind": "any"}
+  ]}},
+  "AxisymFluidFreePoint": {"fields": [], "forms": [
+    {"name": "pairsFromSlot3", "when": {"blankSlot": 2}, "fields": [
+      {"name": "fluidPointId", "slot": 1, "kind": "integer"}
+    ], "group": {"name": "points", "firstSlot": 3, "period": 2, "fields": [
+      {"name": "pointId", "offset": 0, "kind": "integer"},
+      {"name": "phiAngle", "offset": 1, "kind": "real"}
+    ]}},
+    {"name": "pairsFromSlot2", "fields": [
+      {"name": "fluidPointId", "slot": 1, "kind": "integer"}
+    ], "group": {"name": "points", "firstSlot": 2, "period": 2, "fields": [
+      {"name": "pointId", "offset": 0, "kind": "integer"},
+      {"name": "phiAngle", "offset": 1, "kind": "real"}
+    ]}}
+  ], "note": "at most three pairs"},
+  "AxisymFluidPressurePoint": {"fields": [], "forms": [
+    {"name": "pairsFromSlot3", "when": {"blankSlot": 2}, "fields": [
+      {"name": "fluidPointId", "slot": 1, "kind": "integer"}
+    ], "group": {"name": "points", "firstSlot": 3, "period": 2, "fields": [
+      {"name": "pointId", "offset": 0, "kind": "integer"},
+      {"name": "phiAngle", "offset": 1, "kind": "real"}
+    ]}},
+    {"name": "pairsFromSlot2", "fields": [
+      {"name": "fluidPointId", "slot": 1, "kind": "integer"}
+    ], "group": {"name": "points", "firstSlot": 2, "period": 2, "fields": [
+      {"name": "pointId", "offset": 0, "kind": "integer"},
+      {"name": "phiAngle", "offset": 1, "kind": "real"}
+    ]}}
+  ], "note": "at most three pairs"},
+  "AxisymFluidRing": {"fields": [
+    {"name": "firstId", "slot": 1, "kind": "integer"},
+    {"name": "firstPosition1", "slot": 2, "kind": "real"},
+    {"name": "firstPosition2", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "firstPosition3", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "secondId", "slot": 5, "kind": "integer"},
+    {"name": "secondPosition1", "slot": 6, "kind": "real"},
+    {"name": "secondPosition2", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "secondPosition3", "slot": 8, "kind": "real", "default": "0.0"}
+  ]},
+  "AxisymFluidRingNode": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "phiAngle", "slot": 4, "kind": "real"},
+    {"name": "displacementFrameId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "permanentConstraints", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "fluidPointId", "slot": 8, "kind": "integer"}
+  ]},
+  "ExtraPoint": {"fields": [], "group": {"name": "ids", "firstSlot": 1, "period": 1, "fields": [
+    {"name": "id", "offset": 0, "kind": "any"}
+  ]}},
+  "GeomPoint": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "position1", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "position2", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "position3", "slot": 5, "kind": "real", "default": "0.0"}
+  ]},
+  "ModuleBolt": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "controlNode", "slot": 2, "kind": "integer"},
+    {"name": "controlModuleId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "topModuleId", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "bottomModuleId", "slot": 5, "kind": "integer", "default": "0"}
+  ], "sections": {"name": "lists", "firstSlot": 9, "keyOffset": 0, "kinds": [
+    {"key": "Top", "name": "top", "fields": [], "list": {"name": "topNodes", "offset": 1, "period": 1, "perLine": 7, "fields": [
+      {"name": "topNode", "offset": 0, "kind": "integer"}
+    ]}},
+    {"key": "Bottom", "name": "bottom", "fields": [], "list": {"name": "bottomNodes", "offset": 1, "period": 1, "perLine": 7, "fields": [
+      {"name": "bottomNode", "offset": 0, "kind": "integer"}
+    ]}}
+  ]}},
+  "ModuleBoundaryNodes": {"fields": [
+    {"name": "moduleIdA", "slot": 1, "kind": "integer", "default": "0"},
+    {"name": "otherModule", "slot": 2, "kind": "any"}
+  ], "group": {"name": "nodes", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "nodeA", "offset": 0, "kind": "any"}
+  ]}},
+  "ModuleBrakeSystem": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "squealLoadFactor", "slot": 2, "kind": "real", "default": "0.0"},
+    {"name": "frictionVectorMethod", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "squealOnly", "slot": 4, "kind": "text"},
+    {"name": "contactMethod", "slot": 5, "kind": "integer", "default": "0"}
+  ], "group": {"name": "disks", "firstSlot": 9, "period": 8, "fields": [
+    {"name": "diskName", "offset": 0, "kind": "text"},
+    {"name": "moduleId1", "offset": 1, "kind": "integer"},
+    {"name": "body1Id", "offset": 2, "kind": "integer"},
+    {"name": "moduleId2", "offset": 3, "kind": "integer"},
+    {"name": "body2Id", "offset": 4, "kind": "integer"},
+    {"name": "motion1Id", "offset": 5, "kind": "integer"},
+    {"name": "motion2Id", "offset": 6, "kind": "integer"},
+    {"name": "brakeSystemId", "offset": 7, "kind": "integer"}
+  ]}},
+  "ModuleBulkOptions": {"fields": [
+    {"name": "id", "slot": 1, "kind": "any"},
+    {"name": "kind", "slot": 2, "kind": "text"},
+    {"name": "sourceModuleId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "method", "slot": 4, "kind": "text"},
+    {"name": "tolerance", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "unitNumber", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "ModuleBushing": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "position1", "slot": 5, "kind": "real"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "position2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "position3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "frameId", "slot": 8, "kind": "integer"},
+    {"name": "offsetFraction", "slot": 9, "kind": "real", "default": "0.5"},
+    {"name": "offsetFrameId", "slot": 10, "kind": "integer", "default": "-1"},
+    {"name": "offset1", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "offset2", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "offset3", "slot": 13, "kind": "real", "default": "0.0"},
+    {"name": "moduleIdA", "slot": 14, "kind": "integer", "default": "0"},
+    {"name": "moduleIdB", "slot": 15, "kind": "integer", "default": "0"},
+    {"name": "orientationModuleId", "slot": 16, "kind": "integer", "default": "0"}
+  ]},
+  "ModuleConnection": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "kind", "slot": 2, "kind": "text"},
+    {"name": "tolerance", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "xCoord", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "locationNode", "slot": 4, "kind": "integer"},
+    {"name": "yCoord", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "zCoord", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "moduleId", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 8, "kind": "integer", "default": "0"}
+  ], "group": {"name": "points", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "memberModuleId", "offset": 0, "kind": "integer"},
+    {"name": "memberNodeId", "offset": 1, "kind": "integer"}
+  ]}},
+  "ModuleContactCandidates": {"fields": [
+    {"name": "moduleSetId", "slot": 2, "kind": "integer", "default": "-1"}
+  ], "group": {"name": "pairs", "firstSlot": 9, "period": 4, "perLine": 2, "fields": [
+    {"name": "firstModuleId", "offset": 0, "kind": "integer"},
+    {"name": "secondModuleId", "offset": 1, "kind": "integer"}
+  ]}},
+  "ModuleContactDetectParams": {"fields": [], "group": {"name": "parameters", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "parameterName", "offset": 0, "kind": "text"},
+    {"name": "parameterValue", "offset": 1, "kind": "any"}
+  ]}},
+  "ModuleContactPair": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "geometricParamsId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "physicalParamsId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "secondaryModule", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "secondaryBodyId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "primaryModule", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "primaryBodyId", "slot": 7, "kind": "integer", "default": "0"}
+  ], "sections": {"name": "lists", "firstSlot": 9, "keyOffset": 0, "kinds": [
+    {"key": "Secondary", "name": "secondary", "fields": [], "list": {"name": "secondaryBodies", "offset": 1, "period": 2, "perLine": 3, "fields": [
+      {"name": "secondaryListModule", "offset": 0, "kind": "integer"},
+      {"name": "secondaryListBodyId", "offset": 1, "kind": "integer"}
+    ]}},
+    {"key": "Primary", "name": "primary", "fields": [], "list": {"name": "primaryBodies", "offset": 1, "period": 2, "perLine": 3, "fields": [
+      {"name": "primaryListModule", "offset": 0, "kind": "integer"},
+      {"name": "primaryListBodyId", "offset": 1, "kind": "integer"}
+    ]}}
+  ]}},
+  "ModuleContactTable": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "pairs", "firstSlot": 2, "period": 2, "fields": [
+    {"name": "module", "offset": 0, "kind": "integer"},
+    {"name": "contactPairId", "offset": 1, "kind": "integer"}
+  ]}},
+  "ModuleDirectMatrix": {"fields": [
+    {"name": "entryName", "slot": 1, "kind": "text"},
+    {"name": "columnModuleId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "matrixShapeOrNodeJ", "slot": 3, "kind": "integer"},
+    {"name": "inputTypeOrComponentsJ", "slot": 4, "kind": "integer"},
+    {"name": "outputType", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "polarFlag", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "columnCount", "slot": 8, "kind": "integer", "default": "0"}
+  ], "group": {"name": "terms", "firstSlot": 10, "period": 8, "fields": [
+    {"name": "moduleId", "offset": 0, "kind": "integer"},
+    {"name": "node", "offset": 1, "kind": "integer"},
+    {"name": "components", "offset": 2, "kind": "integer"},
+    {"name": "realValue", "offset": 3, "kind": "real"},
+    {"name": "imaginaryValue", "offset": 4, "kind": "real"}
+  ]}},
+  "ModuleEntryExclusion": {"fields": [], "group": {"name": "entries", "firstSlot": 1, "period": 1, "fields": [
+    {"name": "entry", "offset": 0, "kind": "text"}
+  ]}},
+  "ModuleExcludedNodes": {"fields": [
+    {"name": "moduleIdA", "slot": 1, "kind": "integer", "default": "0"},
+    {"name": "otherModule", "slot": 2, "kind": "any"}
+  ], "group": {"name": "nodes", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "nodeA", "offset": 0, "kind": "any"}
+  ]}},
+  "ModuleFastener": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "kind", "slot": 3, "kind": "text"},
+    {"name": "patchIdA", "slot": 4, "kind": "integer"},
+    {"name": "patchIdB", "slot": 5, "kind": "integer"},
+    {"name": "spotNode", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "nodeA", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "nodeB", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "xStation", "slot": 9, "kind": "real"},
+    {"name": "yStation", "slot": 10, "kind": "real"},
+    {"name": "zStation", "slot": 11, "kind": "real"},
+    {"name": "moduleIdA", "slot": 15, "kind": "integer", "default": "0"},
+    {"name": "moduleIdB", "slot": 16, "kind": "integer", "default": "0"}
+  ]},
+  "ModuleFluidSet": {"fields": [
+    {"name": "moduleId", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "ids", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "id", "offset": 0, "kind": "any"}
+  ]}},
+  "ModuleLabel": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer", "default": "0"},
+    {"name": "entryLabel", "slot": 2, "kind": "text", "span": 7}
+  ]},
+  "ModuleLocation": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "pointA1", "slot": 2, "kind": "integer"},
+    {"name": "pointA2", "slot": 3, "kind": "integer"},
+    {"name": "pointA3", "slot": 4, "kind": "integer"},
+    {"name": "pointB1", "slot": 5, "kind": "integer"},
+    {"name": "pointB2", "slot": 6, "kind": "integer"},
+    {"name": "pointB3", "slot": 7, "kind": "integer"}
+  ]},
+  "ModuleMirror1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "point1", "slot": 2, "kind": "integer"},
+    {"name": "point2", "slot": 3, "kind": "integer"},
+    {"name": "point3", "slot": 4, "kind": "integer"}
+  ]},
+  "ModuleMirror2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "frameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "referenceNode", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "axes", "slot": 4, "kind": "text"}
+  ]},
+  "ModuleMirrorPlane": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "point1", "slot": 2, "kind": "integer"},
+    {"name": "point2", "slot": 3, "kind": "integer"},
+    {"name": "point3", "slot": 4, "kind": "integer"}
+  ]},
+  "ModuleMoveSequence": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "moveIds", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "moveId", "offset": 0, "kind": "integer"}
+  ]}},
+  "ModuleMultiPointConstr": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "moduleId1", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "coefficient1", "slot": 5, "kind": "real"}
+  ], "group": {"name": "terms", "firstSlot": 9, "period": 4, "fields": [
+    {"name": "moduleId", "offset": 0, "kind": "integer"},
+    {"name": "node", "offset": 1, "kind": "integer"},
+    {"name": "components", "offset": 2, "kind": "integer"},
+    {"name": "coefficient", "offset": 3, "kind": "real"}
+  ]}},
+  "ModuleRigidBodyStar": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "independentModuleId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "independentNode", "slot": 3, "kind": "integer"},
+    {"name": "dependentComponents", "slot": 4, "kind": "integer"}
+  ], "group": {"name": "dependents", "firstSlot": 5, "period": 2, "fields": [
+    {"name": "dependentModule", "offset": 0, "kind": "number"},
+    {"name": "dependentNode", "offset": 1, "kind": "number"}
+  ]}},
+  "ModuleRigidInterpolation": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "referenceModuleId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "referenceNode", "slot": 3, "kind": "integer"},
+    {"name": "referenceComponents", "slot": 4, "kind": "integer"}
+  ], "group": {"name": "weightedGroups", "firstSlot": 5, "period": 1, "fields": [
+    {"name": "weightedGroupItem", "offset": 0, "kind": "number"}
+  ]}, "sections": {"name": "parts", "keyOffset": 0, "kinds": [
+    {"key": "DependentDofs", "name": "dependentPart", "fields": [], "list": {"name": "dependents", "offset": 1, "period": 3, "perLine": 2, "fields": [
+      {"name": "dependentModuleId", "offset": 0, "kind": "integer"},
+      {"name": "dependentNode", "offset": 1, "kind": "integer"},
+      {"name": "dependentComponents", "offset": 2, "kind": "integer"}
+    ]}},
+    {"key": "ThermalExpansion", "name": "thermalExpansion", "fields": [
+      {"name": "alphaCoefficient", "offset": 1, "kind": "real", "default": "0.0"},
+      {"name": "referenceTemperature", "offset": 2, "kind": "real", "default": "0.0"}
+    ]}
+  ]}},
+  "ModuleRigidJoint": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "moduleIdA", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "moduleIdB", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "nodeB", "slot": 5, "kind": "integer"},
+    {"name": "componentsB", "slot": 6, "kind": "integer"}
+  ]},
+  "ModuleRigidRod": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "moduleIdA", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "moduleIdB", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "nodeB", "slot": 5, "kind": "integer"},
+    {"name": "componentsAtA", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "componentsAtB", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "alphaCoefficient", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "referenceTemperature", "slot": 9, "kind": "real", "default": "0.0"}
+  ]},
+  "ModuleRotation1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "referenceNode", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "startNode", "slot": 3, "kind": "integer"},
+    {"name": "endNode", "slot": 4, "kind": "integer"},
+    {"name": "magnitude", "slot": 5, "kind": "real"}
+  ]},
+  "ModuleRotation2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "frameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "referenceNode", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "axis", "slot": 4, "kind": "text"},
+    {"name": "magnitude", "slot": 5, "kind": "real"}
+  ]},
+  "ModuleSeam": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "seamLineName", "slot": 3, "kind": "text"},
+    {"name": "patchKind", "slot": 4, "kind": "text"},
+    {"name": "startPatchIdA", "slot": 5, "kind": "integer"},
+    {"name": "startPatchIdB", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "endPatchIdA", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "endPatchIdB", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "startNode", "slot": 9, "kind": "integer"},
+    {"name": "xStation", "slot": 9, "kind": "real"},
+    {"name": "endNode", "slot": 10, "kind": "integer"},
+    {"name": "yStation", "slot": 10, "kind": "real"},
+    {"name": "zStation", "slot": 11, "kind": "real"},
+    {"name": "xEnd", "slot": 12, "kind": "real"},
+    {"name": "yEnd", "slot": 13, "kind": "real"},
+    {"name": "zEnd", "slot": 14, "kind": "real"},
+    {"name": "moduleIdA", "slot": 15, "kind": "integer", "default": "0"},
+    {"name": "moduleIdB", "slot": 16, "kind": "integer", "default": "0"}
+  ]},
+  "ModuleStructureSet": {"fields": [
+    {"name": "moduleId", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "ids", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "id", "offset": 0, "kind": "any"}
+  ]}},
+  "ModuleTranslation": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "startNode", "slot": 2, "kind": "integer"},
+    {"name": "endNode", "slot": 3, "kind": "integer"},
+    {"name": "magnitude", "slot": 4, "kind": "real", "default": "0.0"}
+  ]},
+  "ModuleWeld": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "spotNode", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "kind", "slot": 4, "kind": "text"},
+    {"name": "nodeA", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "nodeB", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "patchTypes", "slot": 7, "kind": "text"},
+    {"name": "matFrameId", "slot": 8, "kind": "integer"},
+    {"name": "patchIdA", "slot": 9, "kind": "integer"},
+    {"name": "patchIdB", "slot": 10, "kind": "integer"},
+    {"name": "spotModuleId", "slot": 11, "kind": "integer", "default": "0"},
+    {"name": "moduleIdA", "slot": 13, "kind": "integer", "default": "0"},
+    {"name": "moduleIdB", "slot": 14, "kind": "integer", "default": "0"},
+    {"name": "nodeA1", "slot": 17, "kind": "integer"},
+    {"name": "xStation", "slot": 17, "kind": "real"},
+    {"name": "nodeA2", "slot": 18, "kind": "integer"},
+    {"name": "yStation", "slot": 18, "kind": "real"},
+    {"name": "nodeA3", "slot": 19, "kind": "integer"},
+    {"name": "zStation", "slot": 19, "kind": "real"},
+    {"name": "nodeA4", "slot": 20, "kind": "integer"},
+    {"name": "nodeA5", "slot": 21, "kind": "integer"},
+    {"name": "nodeA6", "slot": 22, "kind": "integer"},
+    {"name": "nodeA7", "slot": 23, "kind": "integer"},
+    {"name": "nodeA8", "slot": 24, "kind": "integer"},
+    {"name": "nodeB1", "slot": 25, "kind": "integer"},
+    {"name": "nodeB2", "slot": 26, "kind": "integer"},
+    {"name": "nodeB3", "slot": 27, "kind": "integer"},
+    {"name": "nodeB4", "slot": 28, "kind": "integer"},
+    {"name": "nodeB5", "slot": 29, "kind": "integer"},
+    {"name": "nodeB6", "slot": 30, "kind": "integer"},
+    {"name": "nodeB7", "slot": 31, "kind": "integer"},
+    {"name": "nodeB8", "slot": 32, "kind": "integer"}
+  ]},
+  "Node": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "position1", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "position2", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "position3", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "displacementFrameId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "permanentConstraints", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "superelementId", "slot": 8, "kind": "integer", "default": "0"}
+  ]},
+  "NodeDefaults": {"fields": [
+    {"name": "positionFrameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "displacementFrameId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "permanentConstraints", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "superelementId", "slot": 8, "kind": "integer", "default": "0"}
+  ]},
+  "NodeSequence": {"fields": [], "group": {"name": "points", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "sequenceId", "offset": 1, "kind": "number"}
+  ]}},
+  "ScalarPoint": {"fields": [], "group": {"name": "ids", "firstSlot": 1, "period": 1, "fields": [
+    {"name": "id", "offset": 0, "kind": "any"}
+  ]}},
+  "ShellNormal": {"fields": [
+    {"name": "nodeId", "slot": 1, "kind": "integer"},
+    {"name": "frameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "directionX", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 5, "kind": "real", "default": "0.0"}
+  ]}
+ }
+}

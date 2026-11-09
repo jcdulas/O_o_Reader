@@ -1,0 +1,59 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: section cuts across rigid elements, MPC equations and springs; MONPNT3 (SOL 101)
+#
+# Validates:
+#   - the grid point forces (with multiPointConstrForce rows) and MPC forces at a cut
+#     crossed by an RBE2, an RBE3, MPC equations, a CELAS2 and a CBUSH1D, two
+#     connections at one grid point, a plate hung on an RBE2, the combinations
+#     of subcases (SUBCOM), the MONPNT3 resultants (ELEMSET, a blank ELEMSET,
+#     XFLAG S, AXES 35, a CD) and the order of the rows of their MP3F table
+# Settles (library item: current status):
+#   - not validated against the solver: a load path through
+#     an RBE2, an RBE3, an MPC equation, two connections at one grid point, an
+#     element of the side without grid point forces, a free body hung on a
+#     rigid element, the combinations, a MONPNT3 computed from the grid point
+#     forces, the order in which the solver names the rows of an MP3F of several
+#     MONPNT3
+# Run notes:
+#   - PARAM,MPTUNIT,40 with the ASSIGN writes the monitor tables to
+#     cuts_static_monitor.out2
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT2='cuts_static_monitor.out2';FileUnit=40;FileForm=Unformatted
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: section cuts and MONPNT3 (statics)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+AppliedLoadOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+MonitorPointOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip loads on B
+StaticLoadSelection;1
+SubcaseStart;2
+LabelText;load on the hung plate C
+StaticLoadSelection;2
+SubcaseStart;3
+LabelText;in-plane loads on B
+StaticLoadSelection;3
+SubcaseCombination;10
+LabelText;1.5 x subcase 1 + 1.0 x subcase 3
+SubcaseCombinationFactors;1.5,0.,1.
+SubcaseCombination;11
+LabelText;two factors for three subcases (QRG SUBSEQ remark 4)
+SubcaseCombinationFactors;-1.,1.
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;MonitorPointUnit;40
+Include;cuts_model.oos

@@ -1,0 +1,159 @@
+{
+ "description": "Reviewed card layouts of the rigid_elements family (src/model/cards/rigid_elements).",
+ "cards": {
+  "RigidAxisymConnection": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node3D", "slot": 2, "kind": "integer"},
+    {"name": "axisymNode", "slot": 3, "kind": "integer"}
+  ]},
+  "RigidBar": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeA", "slot": 2, "kind": "integer"},
+    {"name": "nodeB", "slot": 3, "kind": "integer"},
+    {"name": "independentComponentsA", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "independentComponentsB", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "componentsAtA", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "componentsAtB", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "alphaCoefficient", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "referenceTemperature", "slot": 9, "kind": "real", "default": "0.0"}
+  ]},
+  "RigidBar1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeA", "slot": 2, "kind": "integer"},
+    {"name": "nodeB", "slot": 3, "kind": "integer"},
+    {"name": "componentsB", "slot": 4, "kind": "integer", "default": "123456"},
+    {"name": "alphaCoefficient", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "referenceTemperature", "slot": 6, "kind": "real", "default": "0.0"}
+  ]},
+  "RigidBodyMulti": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "independents", "firstSlot": 2, "period": 2, "perLine": 3, "fields": [
+    {"name": "independentNode", "offset": 0, "kind": "integer"},
+    {"name": "independentComponents", "offset": 1, "kind": "integer"}
+  ]}, "sections": {"name": "dependentLines", "keyOffset": 0, "kinds": [
+    {"key": "DependentDofs", "name": "dependents", "fields": [], "list": {"name": "dependents", "offset": 1, "period": 2, "perLine": 3, "fields": [
+      {"name": "dependentNode", "offset": 0, "kind": "number"},
+      {"name": "dependentComponents", "offset": 1, "kind": "number"}
+    ]}}
+  ]}},
+  "RigidBodySearched": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "spotNode", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "kind", "slot": 3, "kind": "text"},
+    {"name": "referenceTemperature", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "radius", "slot": 6, "kind": "real"},
+    {"name": "dependentComponents", "slot": 7, "kind": "integer", "default": "123456"},
+    {"name": "alphaCoefficient", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "xStation", "slot": 9, "kind": "real"},
+    {"name": "yStation", "slot": 10, "kind": "real"},
+    {"name": "zStation", "slot": 11, "kind": "real"}
+  ], "group": {"name": "independentList", "firstSlot": 12, "period": 1, "fields": [
+    {"name": "independentNodes", "offset": 0, "kind": "any"}
+  ]}, "nextGroups": [
+    {"name": "dependentList", "period": 1, "marker": "EndList", "fields": [
+      {"name": "dependentNodes", "offset": 0, "kind": "any"}
+    ]}
+  ], "note": "a list of nodes may hold THRU between two nodes (a range)"},
+  "RigidBodyStar": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "independentNode", "slot": 2, "kind": "integer"},
+    {"name": "dependentComponents", "slot": 3, "kind": "integer"}
+  ], "group": {"name": "dependentNodes", "firstSlot": 4, "period": 1, "fields": [
+    {"name": "dependentNode", "offset": 0, "kind": "number"}
+  ]}},
+  "RigidInterpolation": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "referenceNode", "slot": 3, "kind": "integer"},
+    {"name": "referenceComponents", "slot": 4, "kind": "integer"}
+  ], "group": {"name": "terms", "firstSlot": 5, "period": 2, "list": {"name": "nodes", "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"}
+  ]}, "fields": [
+    {"name": "weight", "offset": 0, "kind": "real"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}, "sections": {"name": "parts", "keyOffset": 0, "kinds": [
+    {"key": "DependentDofs", "name": "dependents", "list": {"name": "dependents", "offset": 1, "period": 2, "fields": [
+      {"name": "dependentNode", "offset": 0, "kind": "integer"},
+      {"name": "dependentComponents", "offset": 1, "kind": "integer"}
+    ]}},
+    {"key": "ThermalExpansion", "name": "thermalExpansion", "fields": [
+      {"name": "alphaCoefficient", "offset": 1, "kind": "real"},
+      {"name": "referenceTemperature", "offset": 2, "kind": "real"}
+    ]}
+  ]}},
+  "RigidInterpolationOverride": {"fields": [], "group": {"name": "elements", "firstSlot": 1, "period": 8, "fields": [
+    {"name": "elemId", "offset": 0, "kind": "integer"},
+    {"name": "perturbationX", "offset": 1, "kind": "real"},
+    {"name": "perturbationY", "offset": 2, "kind": "real"},
+    {"name": "perturbationZ", "offset": 3, "kind": "real"},
+    {"name": "toleranceAdjustment", "offset": 4, "kind": "real"}
+  ]}},
+  "RigidJoint": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeA", "slot": 2, "kind": "integer"},
+    {"name": "nodeB", "slot": 3, "kind": "integer"},
+    {"name": "componentsB", "slot": 4, "kind": "integer", "default": "123456"}
+  ]},
+  "RigidMeshConnection": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "secondaryType", "slot": 2, "kind": "text"},
+    {"name": "primaryType", "slot": 3, "kind": "text"},
+    {"name": "secondaryId", "slot": 4, "kind": "integer"},
+    {"name": "primaryId", "slot": 5, "kind": "integer"},
+    {"name": "option", "slot": 6, "kind": "text"},
+    {"name": "closeGaps", "slot": 17, "kind": "text"},
+    {"name": "gapMeasure", "slot": 18, "kind": "text"},
+    {"name": "gapValue", "slot": 19, "kind": "real"}
+  ]},
+  "RigidRod": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeA", "slot": 2, "kind": "integer"},
+    {"name": "nodeB", "slot": 3, "kind": "integer"},
+    {"name": "componentsAtA", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "componentsAtB", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "alphaCoefficient", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "referenceTemperature", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "RigidShellSolidConnection": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "kind", "slot": 2, "kind": "text"},
+    {"name": "shellId1", "slot": 3, "kind": "integer"},
+    {"name": "solidIdA1", "slot": 4, "kind": "integer"},
+    {"name": "solidIdB1", "slot": 5, "kind": "integer"},
+    {"name": "shellId2", "slot": 6, "kind": "integer"},
+    {"name": "solidIdA2", "slot": 7, "kind": "integer"},
+    {"name": "solidIdB2", "slot": 8, "kind": "integer"}
+  ]},
+  "RigidSpline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "diameterRatio", "slot": 2, "kind": "real", "default": "0.1"},
+    {"name": "node1", "slot": 3, "kind": "integer"}
+  ], "group": {"name": "points", "firstSlot": 4, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "RigidTriaPlate": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeA", "slot": 2, "kind": "integer"},
+    {"name": "nodeB", "slot": 3, "kind": "integer"},
+    {"name": "nodeC", "slot": 4, "kind": "integer"},
+    {"name": "independentComponentsA", "slot": 5, "kind": "integer"},
+    {"name": "independentComponentsB", "slot": 6, "kind": "integer"},
+    {"name": "independentComponentsC", "slot": 7, "kind": "integer"},
+    {"name": "componentsAtA", "slot": 9, "kind": "integer"},
+    {"name": "componentsAtB", "slot": 10, "kind": "integer"},
+    {"name": "componentsAtC", "slot": 11, "kind": "integer"},
+    {"name": "alphaCoefficient", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "referenceTemperature", "slot": 13, "kind": "real", "default": "0.0"}
+  ]},
+  "RigidTriaPlate1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeA", "slot": 2, "kind": "integer"},
+    {"name": "nodeB", "slot": 3, "kind": "integer"},
+    {"name": "nodeC", "slot": 4, "kind": "integer"},
+    {"name": "componentsAtB", "slot": 5, "kind": "integer", "default": "123456"},
+    {"name": "componentsAtC", "slot": 6, "kind": "integer", "default": "123456"},
+    {"name": "alphaCoefficient", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "referenceTemperature", "slot": 8, "kind": "real", "default": "0.0"}
+  ]}
+ }
+}

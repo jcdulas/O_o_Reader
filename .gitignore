@@ -1,0 +1,16 @@
+# build folders
+build/
+dist/
+node_modules/
+
+# editors and tools
+.vscode/
+.idea/
+*.swp
+__pycache__/
+.venv/
+
+# documentation of other software, never part of the repository (LEGAL.md)
+*.pdf
+
+.venv-docs/

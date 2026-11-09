@@ -1,0 +1,226 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: topology, topometry and topography in one run (SOL 200)
+#
+# Covers:
+#   - cards: TOPVAR TOMVAR BEADVAR
+#   - solution: SOL 200 (static compliance minimisation, mass constraints)
+#   - outputs: displacements of each design cycle, the design history
+#     (HISADD)
+# Run notes:
+#   - the run stops after DESMAX cycles whether or not it has converged; the
+#     optimised densities, thicknesses and grid moves are in the listing and
+#     the .pch (PARAM,DESPCH)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: topology, topometry, topography
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DesignObjectiveSelection;31;MinimumObjective
+AnalysisKind;Statics
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip edge load
+SubcaseDesignConstrSelection;40
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;DesignPunchOutput;1
+# A cantilever aluminium plate 120 x 60 mm, 12 x 6 CQUAD4 of 10 mm, clamped
+# at x = 0 and loaded out of plane along the free edge x = 120. Root third:
+# PSHELL 2 (topometry); middle third: PSHELL 1 (topology); tip third:
+# PSHELL 3 (topography, beads). Units: mm, N, t, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+ShellProp;2;1;2.;1;;1
+ShellProp;3;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;50.;0.;0.
+Node;7;;60.;0.;0.
+Node;8;;70.;0.;0.
+Node;9;;80.;0.;0.
+Node;10;;90.;0.;0.
+Node;11;;100.;0.;0.
+Node;12;;110.;0.;0.
+Node;13;;120.;0.;0.
+Node;14;;0.;10.;0.
+Node;15;;10.;10.;0.
+Node;16;;20.;10.;0.
+Node;17;;30.;10.;0.
+Node;18;;40.;10.;0.
+Node;19;;50.;10.;0.
+Node;20;;60.;10.;0.
+Node;21;;70.;10.;0.
+Node;22;;80.;10.;0.
+Node;23;;90.;10.;0.
+Node;24;;100.;10.;0.
+Node;25;;110.;10.;0.
+Node;26;;120.;10.;0.
+Node;27;;0.;20.;0.
+Node;28;;10.;20.;0.
+Node;29;;20.;20.;0.
+Node;30;;30.;20.;0.
+Node;31;;40.;20.;0.
+Node;32;;50.;20.;0.
+Node;33;;60.;20.;0.
+Node;34;;70.;20.;0.
+Node;35;;80.;20.;0.
+Node;36;;90.;20.;0.
+Node;37;;100.;20.;0.
+Node;38;;110.;20.;0.
+Node;39;;120.;20.;0.
+Node;40;;0.;30.;0.
+Node;41;;10.;30.;0.
+Node;42;;20.;30.;0.
+Node;43;;30.;30.;0.
+Node;44;;40.;30.;0.
+Node;45;;50.;30.;0.
+Node;46;;60.;30.;0.
+Node;47;;70.;30.;0.
+Node;48;;80.;30.;0.
+Node;49;;90.;30.;0.
+Node;50;;100.;30.;0.
+Node;51;;110.;30.;0.
+Node;52;;120.;30.;0.
+Node;53;;0.;40.;0.
+Node;54;;10.;40.;0.
+Node;55;;20.;40.;0.
+Node;56;;30.;40.;0.
+Node;57;;40.;40.;0.
+Node;58;;50.;40.;0.
+Node;59;;60.;40.;0.
+Node;60;;70.;40.;0.
+Node;61;;80.;40.;0.
+Node;62;;90.;40.;0.
+Node;63;;100.;40.;0.
+Node;64;;110.;40.;0.
+Node;65;;120.;40.;0.
+Node;66;;0.;50.;0.
+Node;67;;10.;50.;0.
+Node;68;;20.;50.;0.
+Node;69;;30.;50.;0.
+Node;70;;40.;50.;0.
+Node;71;;50.;50.;0.
+Node;72;;60.;50.;0.
+Node;73;;70.;50.;0.
+Node;74;;80.;50.;0.
+Node;75;;90.;50.;0.
+Node;76;;100.;50.;0.
+Node;77;;110.;50.;0.
+Node;78;;120.;50.;0.
+Node;79;;0.;60.;0.
+Node;80;;10.;60.;0.
+Node;81;;20.;60.;0.
+Node;82;;30.;60.;0.
+Node;83;;40.;60.;0.
+Node;84;;50.;60.;0.
+Node;85;;60.;60.;0.
+Node;86;;70.;60.;0.
+Node;87;;80.;60.;0.
+Node;88;;90.;60.;0.
+Node;89;;100.;60.;0.
+Node;90;;110.;60.;0.
+Node;91;;120.;60.;0.
+ShellQuad4;1;2;1;2;15;14
+ShellQuad4;2;2;2;3;16;15
+ShellQuad4;3;2;3;4;17;16
+ShellQuad4;4;2;4;5;18;17
+ShellQuad4;5;1;5;6;19;18
+ShellQuad4;6;1;6;7;20;19
+ShellQuad4;7;1;7;8;21;20
+ShellQuad4;8;1;8;9;22;21
+ShellQuad4;9;3;9;10;23;22
+ShellQuad4;10;3;10;11;24;23
+ShellQuad4;11;3;11;12;25;24
+ShellQuad4;12;3;12;13;26;25
+ShellQuad4;13;2;14;15;28;27
+ShellQuad4;14;2;15;16;29;28
+ShellQuad4;15;2;16;17;30;29
+ShellQuad4;16;2;17;18;31;30
+ShellQuad4;17;1;18;19;32;31
+ShellQuad4;18;1;19;20;33;32
+ShellQuad4;19;1;20;21;34;33
+ShellQuad4;20;1;21;22;35;34
+ShellQuad4;21;3;22;23;36;35
+ShellQuad4;22;3;23;24;37;36
+ShellQuad4;23;3;24;25;38;37
+ShellQuad4;24;3;25;26;39;38
+ShellQuad4;25;2;27;28;41;40
+ShellQuad4;26;2;28;29;42;41
+ShellQuad4;27;2;29;30;43;42
+ShellQuad4;28;2;30;31;44;43
+ShellQuad4;29;1;31;32;45;44
+ShellQuad4;30;1;32;33;46;45
+ShellQuad4;31;1;33;34;47;46
+ShellQuad4;32;1;34;35;48;47
+ShellQuad4;33;3;35;36;49;48
+ShellQuad4;34;3;36;37;50;49
+ShellQuad4;35;3;37;38;51;50
+ShellQuad4;36;3;38;39;52;51
+ShellQuad4;37;2;40;41;54;53
+ShellQuad4;38;2;41;42;55;54
+ShellQuad4;39;2;42;43;56;55
+ShellQuad4;40;2;43;44;57;56
+ShellQuad4;41;1;44;45;58;57
+ShellQuad4;42;1;45;46;59;58
+ShellQuad4;43;1;46;47;60;59
+ShellQuad4;44;1;47;48;61;60
+ShellQuad4;45;3;48;49;62;61
+ShellQuad4;46;3;49;50;63;62
+ShellQuad4;47;3;50;51;64;63
+ShellQuad4;48;3;51;52;65;64
+ShellQuad4;49;2;53;54;67;66
+ShellQuad4;50;2;54;55;68;67
+ShellQuad4;51;2;55;56;69;68
+ShellQuad4;52;2;56;57;70;69
+ShellQuad4;53;1;57;58;71;70
+ShellQuad4;54;1;58;59;72;71
+ShellQuad4;55;1;59;60;73;72
+ShellQuad4;56;1;60;61;74;73
+ShellQuad4;57;3;61;62;75;74
+ShellQuad4;58;3;62;63;76;75
+ShellQuad4;59;3;63;64;77;76
+ShellQuad4;60;3;64;65;78;77
+ShellQuad4;61;2;66;67;80;79
+ShellQuad4;62;2;67;68;81;80
+ShellQuad4;63;2;68;69;82;81
+ShellQuad4;64;2;69;70;83;82
+ShellQuad4;65;1;70;71;84;83
+ShellQuad4;66;1;71;72;85;84
+ShellQuad4;67;1;72;73;86;85
+ShellQuad4;68;1;73;74;87;86
+ShellQuad4;69;3;74;75;88;87
+ShellQuad4;70;3;75;76;89;88
+ShellQuad4;71;3;76;77;90;89
+ShellQuad4;72;3;77;78;91;90
+SinglePointConstrList;1;123456;1;14;27;40;53;66
+PointForceLoad;1;13;0;5.;0.;0.;1.
+PointForceLoad;1;26;0;10.;0.;0.;1.
+PointForceLoad;1;39;0;10.;0.;0.;1.
+PointForceLoad;1;52;0;10.;0.;0.;1.
+PointForceLoad;1;65;0;10.;0.;0.;1.
+PointForceLoad;1;78;0;10.;0.;0.;1.
+PointForceLoad;1;91;0;5.;0.;0.;1.
+# Topology region: the density of each element of PSHELL 1 (penalty 3).
+DesignTopologyRegion;1;MIDDLE;ShellProp;0.5;0.001;;;1
+# Topometry region: the thickness of each element of PSHELL 2, from 1 to 4
+# mm.
+DesignTopometryRegion;2;ShellProp;2;thickness;2.;1.;4.
+# Topography region: beads of PSHELL 3 along the element normals, 20 mm wide
+# at least, 4 mm high at most, 60 degrees of draw angle, both sides allowed.
+DesignBeadRegion;3;ShellProp;3;20.;4.;60.;;;DesignVar;ElementNormals;;;;-1.;1.
+# Responses: compliance (objective), mass fraction of the topology region
+# and the total weight (constraints).
+DesignResp1;31;COMPL;TotalCompliance
+DesignResp1;32;FRMASS;FractionalMass;ShellProp;;;;1
+DesignResp1;33;WEIGHT;Weight
+DesignConstr;40;32;;;0.5
+DesignConstr;40;33;;;4.5E-5
+DesignOptimParams;MaxDesignCycles;12

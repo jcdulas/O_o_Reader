@@ -1,0 +1,102 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: plane strain block between rigid NURBS curves (SOL 400)
+#
+# Covers:
+#   - cards: BCNURB2 (grid and coordinate forms), BCSURF (FACE, GRID and
+#     RIGID forms), BCGRID
+#   - solution: SOL 400 (nonlinear static, 2D contact in the x-y plane)
+#   - outputs: displacements, SPC forces, nonlinear stresses, contact forces
+#     and tractions
+# Run notes:
+#   - a rigid half-cylinder (quadratic rational NURBS through grid points)
+#     moves down onto the top edge (BCSURF FACE form on its left half, GRID
+#     form in 2D on its right half); a rigid straight line
+#     (NURBS by coordinates, used through a BCSURF RIGID form) is moved 0.01 mm
+#     into the side grid points of the block (BCGRID)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: 2D rigid NURBS contact (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SlidelineContactOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;cylinder pressed on the top edge, wall pushed on the side
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;1
+ContactSelection;1
+[model]
+Parameter;PostprocessingFile;-1
+# The block: 20 x 10 mm in the x-y plane, 4 x 2 CQUAD4 in plane strain
+# (PLPLANE with its PSHLN2 extension, which gives the aluminium MAT1; the
+# MATHP is the one a PLPLANE must name), clamped along its bottom edge.
+# Units: mm, N, t.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+HyperelasticPolynomialMat;3;1.E+4;3150.;34300.;2.7E-9
+PlanePropNonlinear;1;3
+PlanePropNonlinearExt;1;1;;1.;ImplicitStructural;FourNodeElems;PlaneStrain;Linear
+Node;1;;0.;0.;0.;;3456
+Node;2;;5.;0.;0.;;3456
+Node;3;;10.;0.;0.;;3456
+Node;4;;15.;0.;0.;;3456
+Node;5;;20.;0.;0.;;3456
+Node;6;;0.;5.;0.;;3456
+Node;7;;5.;5.;0.;;3456
+Node;8;;10.;5.;0.;;3456
+Node;9;;15.;5.;0.;;3456
+Node;10;;20.;5.;0.;;3456
+Node;11;;0.;10.;0.;;3456
+Node;12;;5.;10.;0.;;3456
+Node;13;;10.;10.;0.;;3456
+Node;14;;15.;10.;0.;;3456
+Node;15;;20.;10.;0.;;3456
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;12;1;Through;5
+# Contact region 1: the top edges of elements 5 and 6 (edge E3, from corner
+# 3 to corner 4; BCSURF FACE form, 2D)
+ContactFaceRegion;1;;TwoDimensional;;;;5;E3;Elements;;6;E3;Elements
+# Contact region 5: the top edges of elements 7 and 8 by their two corner
+# grid points (BCSURF GRID form, 2D: G3 blank, format reference BCSURF remark 5)
+ContactFaceRegion;5;;TwoDimensional;Node;;;7;14;13;;8;15;14
+# Body 2: the rigid half-cylinder of radius 10 centred at (10, 20): five
+# control points, order 3, weights 1 and 0.7071 (two quarter circles); it
+# runs from (0, 20) through (10, 10) to (20, 20), so its inside is above
+# the block. Velocity control: 0.02 mm per unit time downwards
+Node;9101;;0.;20.;0.
+Node;9102;;0.;10.;0.
+Node;9103;;10.;10.;0.
+Node;9104;;20.;10.;0.
+Node;9105;;20.;20.;0.
+SinglePointConstrList;1;123456;9101;Through;9105
+Node;9110;;10.;20.;0.;;123456
+ContactNurbsCurve;70;5;3;20;Node;5;9101;9102;9103;9104;9105;HomogeneousCoordinates;5;1.;0.7071;1.;0.7071;1.;KnotVector;8;0.;0.;0.;0.5;0.5;1.;1.;1.
+ContactRigidMotion;20;9110;0;;0.;0.;0.;1.;0.;-0.02
+ContactBody1;2;;TwoDimensional;Rigid;70;20
+# Contact region 3: the free grid points of the side x = 20
+ContactNodeRegion;3;;TwoDimensional;10;15
+# Contact region 4: a rigid straight line x = 20 given by coordinates,
+# running downwards (inside towards +x), position control: reference
+# point 9120 ends at x = 19.99
+ContactNurbsCurve;80;-2;2;1;Coordinates;4;20.;12.;20.;-2.;HomogeneousCoordinates;2;1.;1.;KnotVector;4;0.;0.;1.;1.
+Node;9120;;20.;5.;0.;;123456
+ContactRigidMotion;30;9120;-1;;0.;0.;0.;1.;19.99;5.;0.
+ContactFaceRegion;4;;TwoDimensional;Rigid;;;80;30
+# The pairs: edges against the cylinder, side grid points against the line
+ContactPair;11;;;1;2
+ContactPair;12;;;3;4
+ContactPair;13;;;5;2
+ContactTable1;1;11;12;13
+NonlinearStepControl;1;1.;;FixedStepping;10

@@ -1,0 +1,52 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: contact with occupant ellipsoids (read-only)
+#
+# Covers:
+#   - cards: BCELIPS
+#   - solution: SOL 700 (explicit nonlinear transient)
+#   - outputs: none (not run)
+# Run notes:
+#   - READ-ONLY: the ellipsoids that BCELIPS names (HEAD, CHEST) belong to an
+#     ATB occupant model that SOL 700 reads from an ATB input file at run
+#     time; that file is not part of a deck, so the run would stop.
+#     O_o_Reader reads, checks and writes the deck; it is not run
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: contact with ATB ellipsoids (read-only)
+BulkEcho;None
+SinglePointConstrSelection;1
+NonlinearTimeStepSelection;1
+ContactSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;occupant ellipsoids against a plate
+[model]
+# A clamped steel plate (2 x 2 CQUAD4, 2 mm) the occupant's head and chest
+# may hit. Units: mm, N, t, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;100.;0.
+Node;5;;100.;100.;0.
+Node;6;;200.;100.;0.
+Node;7;;0.;200.;0.
+Node;8;;100.;200.;0.
+Node;9;;200.;200.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;2;3;7;8;9
+# Body 1: the plate (BCPROP 1); body 2: the ellipsoids named HEAD and CHEST
+ContactPropertyRegion;1;1
+ContactBody1;1;;;;1
+ContactEllipsoidList;2;HEAD;CHEST
+ContactBody1;2;;;;2
+ContactTable;1;;;1;;;Secondary;2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;1
+NonlinearTimeSteps;1;20;0.001

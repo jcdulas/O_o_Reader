@@ -1,0 +1,63 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: external superelement creation with an access point
+#
+# Covers:
+#   - cards: ACCSSPT, BNDFIX, BNDFIX1, BNDFREE, BNDFRE1 (with ASET1, QSET1,
+#     SPOINT, EIGRL and the Case Control EXTSEOUT)
+#   - solution: SOL 103 (component modes of the part to export, reduction to
+#     its boundary and generalized coordinates)
+#   - outputs: eigenvalues, eigenvectors
+# Run notes:
+#   - the reduced matrices go to se_ext_access.op4
+#     (unit 27); bring back the .op4, the .asm and the .pch as well
+#   - grid point 5 is an access point: its motion is kept for the assembly
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT4='se_ext_access.op4';FileUnit=27;FileForm=Unformatted
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: external superelement creation
+BulkEcho;None
+EigenMethodSelection;1
+ExternalSuperelementOutput;;Stiffness;Mass;Loads;AssemblyBulk;ExternalBulk;EXTID=200;MATOP4=27
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;reduction of the part
+StaticLoadSelection;1
+[model]
+Parameter;PostprocessingFile;-1
+# The part to export: a plate of 2 x 2 CQUAD4 at x 0 to 20, y 0 to 20. Its
+# boundary is the edge x = 0 (ASET1). Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+AnalysisDofSet1;123456;1;4;7
+# Fixity of the boundary during the component modes: points 1 and 7 fixed,
+# point 4 free in translation and fixed in rotation.
+FixedBoundaryDofs;1;123456
+FixedBoundaryDofs1;123456;7
+FreeBoundaryDofs;4;12
+FreeBoundaryDofs1;3;4
+FixedBoundaryDofs1;456;4
+# Generalized coordinates of the component modes.
+ScalarPoint;9001;Through;9004
+GeneralizedDofSet1;0;9001;Through;9004
+LanczosEigenMethod;1;;;4
+# The centre point is kept for the assembly as an access point.
+SuperelementAccessPoints;5
+# A load on the free corner, exported as a column of the load matrix.
+PointForceLoad;1;9;;10.;0.;0.;1.

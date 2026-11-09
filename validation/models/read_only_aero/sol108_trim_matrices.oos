@@ -1,0 +1,39 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: trimmed material matrices of an acoustic program (read only, SOL 108)
+#
+# Covers:
+#   - cards: ACTRIM
+#   - solution: SOL 108 (direct frequency response of a plate-driven fluid
+#     cavity with a trimmed material of an acoustic program added to the coupling)
+#   - outputs: none (read and written by the library, not run)
+# Run notes:
+#   - READ ONLY: the ACTRIM matrices come from two files exported by an acoustic program
+#     (the mapped data on unit 31, the property matrices on unit 32); the
+#     project has no such program and cannot write those files, so the solver
+#     cannot run this deck as it stands
+#   - the cavity is the model of results_dynamics/acoustic_model.inc
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;INPUTT2='trim_floor.f70';FileUnit=31
+FileAssignment;INPUTT4='trim_floor.op4';FileUnit=32
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: trimmed material matrices
+BulkEcho;None
+TrimmedMaterialSelection;Floor
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;plate-driven cavity with a trimmed floor
+[model]
+Parameter;PostprocessingFile;-1
+# The trimmed material FLOOR, scaled by the complex factor 1.0 + 0.1 i.
+TrimmedMaterialMatrices;FLOOR;31;32;1.;0.1
+FreqResponseLoad1;21;1;;;;;61
+TableDynamic1;61;;;0.;1.;5.E+3;1.;EndTable
+FreqLinearSteps1;41;100.;100.;20
+Include;../results_dynamics/acoustic_model.oos

@@ -1,0 +1,96 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: CFAST piercing points near a fold between non-coplanar shells (SOL 101)
+#
+# Validates:
+#   - which element a CFAST located near the fold between two shells that are
+#     not coplanar pierces: the generated grid points (GEOM1), the PRTSW print
+# Settles (library item: current status):
+#   - the element pierced near an edge between two elements that are not
+#     coplanar
+# Run notes:
+#   - SWLDPRM PRTSW 1 prints the projected points
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: fastener piercing points near a fold
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load on the upper sheet
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Two sheets each folded 20 degrees along the line x = 20 (lower PSHELL 51, z
+# = 0 then rising; upper PSHELL 52, 2 mm above along the normal), 4 x 2 CQUAD4
+# each, and CFAST (D = 4) located less than 1.8 mm from the fold line.
+# Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;51;1;1.5;1;;1
+ShellProp;52;1;1.5;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;29.39693;0.;3.4202
+Node;5;;38.79385;0.;6.8404
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;29.39693;10.;3.4202
+Node;10;;38.79385;10.;6.8404
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;29.39693;20.;3.4202
+Node;15;;38.79385;20.;6.8404
+ShellQuad4;1;51;1;2;7;6
+ShellQuad4;2;51;2;3;8;7
+ShellQuad4;3;51;3;4;9;8
+ShellQuad4;4;51;4;5;10;9
+ShellQuad4;5;51;6;7;12;11
+ShellQuad4;6;51;7;8;13;12
+ShellQuad4;7;51;8;9;14;13
+ShellQuad4;8;51;9;10;15;14
+Node;101;;0.;0.;2.
+Node;102;;10.;0.;2.
+Node;103;;20.;0.;2.
+Node;104;;28.71289;0.;5.29959
+Node;105;;38.10981;0.;8.71979
+Node;106;;0.;10.;2.
+Node;107;;10.;10.;2.
+Node;108;;20.;10.;2.
+Node;109;;28.71289;10.;5.29959
+Node;110;;38.10981;10.;8.71979
+Node;111;;0.;20.;2.
+Node;112;;10.;20.;2.
+Node;113;;20.;20.;2.
+Node;114;;28.71289;20.;5.29959
+Node;115;;38.10981;20.;8.71979
+ShellQuad4;101;52;101;102;107;106
+ShellQuad4;102;52;102;103;108;107
+ShellQuad4;103;52;103;104;109;108
+ShellQuad4;104;52;104;105;110;109
+ShellQuad4;105;52;106;107;112;111
+ShellQuad4;106;52;107;108;113;112
+ShellQuad4;107;52;108;109;114;113
+ShellQuad4;108;52;109;110;115;114
+SinglePointConstrList;1;123456;1;6;11
+PointForceLoad;1;105;;10.;1.;0.;1.
+PointForceLoad;1;110;;10.;1.;0.;1.
+PointForceLoad;1;115;;10.;1.;0.;1.
+FastenerProp;1;4.;-1;;2.E+4;1.E+4;1.E+4;100.;100.;100.
+Fastener;4001;1;Property;51;52;;;;18.3;2.;1.
+Fastener;4002;1;Property;51;52;;;;18.25;5.5;1.
+Fastener;4003;1;Property;51;52;;;;18.2;9.;1.
+Fastener;4004;1;Property;51;52;;;;18.1;12.5;1.
+Fastener;4005;1;Property;51;52;;;;17.8;16.;1.
+Fastener;4006;1;Elements;6;106;;;;18.2;15.;1.
+ConnectorSearchParams;1;GeneratedDataPrint;1

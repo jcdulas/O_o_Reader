@@ -1,0 +1,65 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rotational cyclic symmetry, modes of a free hub disk
+#
+# Covers:
+#   - cards: CYSUP, CYSYM (ROT), CYJOIN, CYAX (with CORD2C, CBAR, CQUAD4,
+#     EIGRL)
+#   - solution: SOL 115 (cyclic symmetry normal modes, all harmonics)
+#   - outputs: eigenvalues, eigenvectors of the segments
+# Run notes:
+#   - the segment of cyclic_rot_static_sol114.bdf, left free but for the
+#     axial motion of the hub point; the rigid body modes of harmonics 0
+#     and 1 are defined by the fictitious supports of CYSUP
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;115
+[case]
+TitleText;O_o_Reader test model: cyclic symmetry modes
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+HarmonicsSelection;All
+CyclicSegmentOutput;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;modes of the free disk
+[model]
+Parameter;PostprocessingFile;-1
+# Six segments of 60 degrees about the z axis of the basic system.
+CyclicSymmetry;6;Rotational
+# The segment: an annular steel plate of 2 x 2 CQUAD4, r 50 to 100, theta 0
+# to 60, given and displaced in the cylindrical system 1 (z along the axis).
+# Units: mm, N, tonne, s.
+CylindricalFrame2;1;0;0.;0.;0.;0.;0.;1.;1.;0.;0.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;1;50.;0.;0.;1
+Node;2;1;75.;0.;0.;1
+Node;3;1;100.;0.;0.;1
+Node;4;1;50.;30.;0.;1
+Node;5;1;75.;30.;0.;1
+Node;6;1;100.;30.;0.;1
+Node;7;1;50.;60.;0.;1
+Node;8;1;75.;60.;0.;1
+Node;9;1;100.;60.;0.;1
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+# Side 1 (theta = 0) is joined to side 2 (theta = 60) of the next segment.
+CyclicBoundaryJoin;1;;1;2;3
+CyclicBoundaryJoin;2;;7;8;9
+# The hub point on the axis (basic system, z along the axis) and the spoke
+# that joins it to the inner edge in the middle of the segment.
+Node;100;;0.;0.;0.
+CyclicAxisNodes;100
+BarProp;2;1;28.3;63.6;63.6;127.
+Bar2;11;2;100;4;0.;;0.;1.
+# The hub point keeps no axial motion; the other rigid body motions of the
+# disk (rotation about the axis, translations and tilts across it) are
+# supported fictitiously at point 5 (cylindrical displacement system).
+SinglePointConstrList;1;3;100
+CyclicSupport;5;1245
+LanczosEigenMethod;1;;;4

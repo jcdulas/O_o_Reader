@@ -1,0 +1,550 @@
+{
+ "description": "Reviewed card layouts of the aero family (src/model/cards/aero).",
+ "cards": {
+  "AeroBeamSpline2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer"},
+    {"name": "firstBox", "slot": 3, "kind": "integer"},
+    {"name": "lastBox", "slot": 4, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 5, "kind": "integer"},
+    {"name": "linearFlexibility", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "bendingTorsionRatio", "slot": 7, "kind": "real", "default": "1.0"},
+    {"name": "frameId", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "rotationFlexibilityX", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "rotationFlexibilityY", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "usage", "slot": 12, "kind": "text"}
+  ]},
+  "AeroBeamSpline5": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer"},
+    {"name": "aeroBoxListId", "slot": 3, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 5, "kind": "integer"},
+    {"name": "linearFlexibility", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "bendingTorsionRatio", "slot": 7, "kind": "real", "default": "1.0"},
+    {"name": "frameId", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "rotationFlexibilityX", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "rotationFlexibilityY", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "usage", "slot": 12, "kind": "text"},
+    {"name": "method", "slot": 13, "kind": "text"},
+    {"name": "functionKind", "slot": 15, "kind": "text"},
+    {"name": "coreRadius", "slot": 16, "kind": "real"}
+  ]},
+  "AeroBody2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "slenderElemCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "interferenceElemCount", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "slenderListId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "interferenceListId", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "interferenceGroupId", "slot": 8, "kind": "integer"},
+    {"name": "xCoord1", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "yCoord1", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "zCoord1", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "length", "slot": 12, "kind": "real"}
+  ]},
+  "AeroBodyProp2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "orientation", "slot": 2, "kind": "text"},
+    {"name": "width", "slot": 3, "kind": "real"},
+    {"name": "aspectRatio", "slot": 4, "kind": "real"},
+    {"name": "slenderHalfWidthListId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "interferenceHalfWidthListId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "angleListId1", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "angleListId2", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "angleList1FirstElem", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "angleList1LastElem", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "angleList2FirstElem", "slot": 11, "kind": "integer", "default": "0"},
+    {"name": "angleList2LastElem", "slot": 12, "kind": "integer", "default": "0"}
+  ]},
+  "AeroBoxList": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "entries", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "entry", "offset": 0, "kind": "any"}
+  ]}},
+  "AeroComponent": {"fields": [
+    {"name": "name", "slot": 1, "kind": "text"},
+    {"name": "listKind", "slot": 2, "kind": "text"}
+  ], "group": {"name": "lists", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "listId", "offset": 0, "kind": "integer"}
+  ]}},
+  "AeroComponentUnion": {"fields": [
+    {"name": "name", "slot": 1, "kind": "text"}
+  ], "group": {"name": "labels", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "label", "offset": 0, "kind": "text"}
+  ]}},
+  "AeroControlSchedule": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "controlSurfaceId", "slot": 2, "kind": "integer"},
+    {"name": "angleOfAttackListId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "machListId", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "scheduleListId", "slot": 5, "kind": "integer"}
+  ]},
+  "AeroControlSurface": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "label", "slot": 2, "kind": "text"},
+    {"name": "frameId1", "slot": 3, "kind": "integer"},
+    {"name": "boxListId1", "slot": 4, "kind": "integer"},
+    {"name": "frameId2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "boxListId2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "effectiveness", "slot": 7, "kind": "real", "default": "1.0"},
+    {"name": "linearDownwash", "slot": 8, "kind": "text"},
+    {"name": "referenceChord", "slot": 9, "kind": "real", "default": "1.0"},
+    {"name": "referenceArea", "slot": 10, "kind": "real", "default": "1.0"},
+    {"name": "deflectionLowerLimit", "slot": 11, "kind": "real"},
+    {"name": "deflectionUpperLimit", "slot": 12, "kind": "real"},
+    {"name": "hingeMomentLowerLimit", "slot": 13, "kind": "real"},
+    {"name": "hingeMomentUpperLimit", "slot": 14, "kind": "real"},
+    {"name": "lowerLimitTableId", "slot": 15, "kind": "integer", "default": "0"},
+    {"name": "upperLimitTableId", "slot": 16, "kind": "integer", "default": "0"}
+  ]},
+  "AeroControlSurfaceNodes": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "label", "slot": 2, "kind": "text"},
+    {"name": "nodeSetId1", "slot": 4, "kind": "integer"},
+    {"name": "nodeSetId2", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "AeroControlVector": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "variables", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "label", "offset": 0, "kind": "text"},
+    {"name": "controlValue", "offset": 1, "kind": "real"}
+  ]}},
+  "AeroController": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "label", "slot": 2, "kind": "text"},
+    {"name": "units", "slot": 3, "kind": "text"}
+  ]},
+  "AeroDivergence": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "rootCount", "slot": 2, "kind": "integer", "default": "1"}
+  ], "group": {"name": "machNumbers", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "machNumber", "offset": 0, "kind": "real"}
+  ]}},
+  "AeroDownwash": {"fields": [
+    {"name": "machNumber", "slot": 1, "kind": "real"},
+    {"name": "symmetricXz", "slot": 2, "kind": "text"},
+    {"name": "symmetricXy", "slot": 3, "kind": "text"},
+    {"name": "controlVectorId", "slot": 4, "kind": "integer"},
+    {"name": "matrixName", "slot": 5, "kind": "text"},
+    {"name": "interpolationMatrixName", "slot": 6, "kind": "text"}
+  ]},
+  "AeroFactorList": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "factors", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "factor", "offset": 0, "kind": "real"}
+  ]}},
+  "AeroFiniteBeamSpline7": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "aeroBoxListId", "slot": 3, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 5, "kind": "integer"},
+    {"name": "linearFlexibility", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "bendingTorsionRatio", "slot": 7, "kind": "real", "default": "1.0"},
+    {"name": "frameId", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "usage", "slot": 12, "kind": "text"},
+    {"name": "method", "slot": 13, "kind": "text"},
+    {"name": "rotationFlexibility", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "bendingExtensionRatio", "slot": 15, "kind": "real", "default": "1.0"},
+    {"name": "minBeamLengthRatio", "slot": 16, "kind": "real", "default": "0.01"}
+  ]},
+  "AeroFiniteSurfaceSpline6": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "aeroBoxListId", "slot": 3, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 5, "kind": "integer"},
+    {"name": "linearFlexibility", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "method", "slot": 7, "kind": "text"},
+    {"name": "usage", "slot": 8, "kind": "text"},
+    {"name": "surfaceKind", "slot": 9, "kind": "text"},
+    {"name": "surfaceElemListId", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "independentPointCount", "slot": 11, "kind": "integer", "default": "3"},
+    {"name": "dependentPointCount", "slot": 12, "kind": "integer", "default": "3"},
+    {"name": "surfaceMethod", "slot": 13, "kind": "text"},
+    {"name": "rotationFlexibility", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "connectionMethod", "slot": 15, "kind": "text"},
+    {"name": "nodeCount", "slot": 16, "kind": "integer", "default": "1"},
+    {"name": "projectionTolerance", "slot": 17, "kind": "real", "default": "100.0"},
+    {"name": "cycleCount", "slot": 18, "kind": "integer", "default": "3"},
+    {"name": "augmentationWeight", "slot": 19, "kind": "real", "default": "0.0"}
+  ]},
+  "AeroFlutter": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "method", "slot": 2, "kind": "text"},
+    {"name": "densityFactorsId", "slot": 3, "kind": "integer"},
+    {"name": "machFactorsId", "slot": 4, "kind": "integer"},
+    {"name": "reducedFreqFactorsId", "slot": 5, "kind": "integer"},
+    {"name": "interpolationMethod", "slot": 6, "kind": "text"},
+    {"name": "eigenvalueCount", "slot": 7, "kind": "integer"},
+    {"name": "maxFrequency", "slot": 7, "kind": "real"},
+    {"name": "epsilon", "slot": 8, "kind": "real"}
+  ]},
+  "AeroFlutterFactors": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "factors", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "factor", "offset": 0, "kind": "any"}
+  ]}},
+  "AeroForceVector": {"fields": [
+    {"name": "machNumber", "slot": 1, "kind": "real"},
+    {"name": "symmetricXz", "slot": 2, "kind": "text"},
+    {"name": "symmetricXy", "slot": 3, "kind": "text"},
+    {"name": "controlVectorId", "slot": 4, "kind": "integer"},
+    {"name": "mesh", "slot": 5, "kind": "text"},
+    {"name": "loadSetId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "matrixName", "slot": 7, "kind": "text"},
+    {"name": "perUnitPressure", "slot": 8, "kind": "text"}
+  ]},
+  "AeroGust": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "dynamicLoadId", "slot": 2, "kind": "integer"},
+    {"name": "gustScale", "slot": 3, "kind": "real"},
+    {"name": "gustOriginX", "slot": 4, "kind": "real"},
+    {"name": "velocity", "slot": 5, "kind": "real"}
+  ]},
+  "AeroLabelList": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "names", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "label", "offset": 0, "kind": "text"}
+  ]}},
+  "AeroLiftingPanel1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "spanBoxCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "chordBoxCount", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "spanDivisionListId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "chordDivisionListId", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "interferenceGroupId", "slot": 8, "kind": "integer"},
+    {"name": "xCoord1", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "yCoord1", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "zCoord1", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "rootChord", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "xCoord4", "slot": 13, "kind": "real", "default": "0.0"},
+    {"name": "yCoord4", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "zCoord4", "slot": 15, "kind": "real", "default": "0.0"},
+    {"name": "tipChord", "slot": 16, "kind": "real", "default": "0.0"}
+  ]},
+  "AeroLiftingPanelProp1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "body1", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "body2", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "body3", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "body4", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "body5", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "body6", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "AeroMachBoxPanel3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "wingPointListId", "slot": 4, "kind": "integer"},
+    {"name": "controlPointListId1", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "controlPointListId2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "xCoord1", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "yCoord1", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "zCoord1", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "rootChord", "slot": 12, "kind": "real"},
+    {"name": "xCoord4", "slot": 13, "kind": "real", "default": "0.0"},
+    {"name": "yCoord4", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "zCoord4", "slot": 15, "kind": "real", "default": "0.0"},
+    {"name": "tipChord", "slot": 16, "kind": "real", "default": "0.0"}
+  ]},
+  "AeroMachBoxProp3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "boxCount", "slot": 2, "kind": "integer"},
+    {"name": "controlSurfaceCount", "slot": 3, "kind": "integer"},
+    {"name": "pointX5", "slot": 5, "kind": "real"},
+    {"name": "pointY5", "slot": 6, "kind": "real"},
+    {"name": "pointX6", "slot": 7, "kind": "real"},
+    {"name": "pointY6", "slot": 8, "kind": "real"},
+    {"name": "pointX7", "slot": 9, "kind": "real"},
+    {"name": "pointY7", "slot": 10, "kind": "real"},
+    {"name": "pointX8", "slot": 11, "kind": "real"},
+    {"name": "pointY8", "slot": 12, "kind": "real"},
+    {"name": "pointX9", "slot": 13, "kind": "real"},
+    {"name": "pointY9", "slot": 14, "kind": "real"},
+    {"name": "pointX10", "slot": 15, "kind": "real"},
+    {"name": "pointY10", "slot": 16, "kind": "real"},
+    {"name": "pointX11", "slot": 17, "kind": "real"},
+    {"name": "pointY11", "slot": 18, "kind": "real"},
+    {"name": "pointX12", "slot": 19, "kind": "real"},
+    {"name": "pointY12", "slot": 20, "kind": "real"}
+  ]},
+  "AeroMachFreqPairs2": {"fields": [
+    {"name": "machNumber1", "slot": 1, "kind": "real"},
+    {"name": "reducedFreq1", "slot": 2, "kind": "real"},
+    {"name": "machNumber2", "slot": 3, "kind": "real"},
+    {"name": "reducedFreq2", "slot": 4, "kind": "real"},
+    {"name": "machNumber3", "slot": 5, "kind": "real"},
+    {"name": "reducedFreq3", "slot": 6, "kind": "real"},
+    {"name": "machNumber4", "slot": 7, "kind": "real"},
+    {"name": "reducedFreq4", "slot": 8, "kind": "real"}
+  ]},
+  "AeroMachFreqTable1": {"fields": [
+    {"name": "machNumber1", "slot": 1, "kind": "real"},
+    {"name": "machNumber2", "slot": 2, "kind": "real"},
+    {"name": "machNumber3", "slot": 3, "kind": "real"},
+    {"name": "machNumber4", "slot": 4, "kind": "real"},
+    {"name": "machNumber5", "slot": 5, "kind": "real"},
+    {"name": "machNumber6", "slot": 6, "kind": "real"},
+    {"name": "machNumber7", "slot": 7, "kind": "real"},
+    {"name": "machNumber8", "slot": 8, "kind": "real"},
+    {"name": "reducedFreq1", "slot": 9, "kind": "real"},
+    {"name": "reducedFreq2", "slot": 10, "kind": "real"},
+    {"name": "reducedFreq3", "slot": 11, "kind": "real"},
+    {"name": "reducedFreq4", "slot": 12, "kind": "real"},
+    {"name": "reducedFreq5", "slot": 13, "kind": "real"},
+    {"name": "reducedFreq6", "slot": 14, "kind": "real"},
+    {"name": "reducedFreq7", "slot": 15, "kind": "real"},
+    {"name": "reducedFreq8", "slot": 16, "kind": "real"}
+  ]},
+  "AeroNode": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "xCoord1", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "xCoord2", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "xCoord3", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "displacementFrameId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "scaleId", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "AeroNodeScale": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "referenceLength1", "slot": 2, "kind": "real", "default": "1.0"},
+    {"name": "referenceLength2", "slot": 3, "kind": "real", "default": "1.0"},
+    {"name": "referenceLength3", "slot": 4, "kind": "real", "default": "1.0"}
+  ]},
+  "AeroPistonPanel5": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "spanBoxCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "spanDivisionListId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "theory", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "thicknessIntegralListId", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "xCoord1", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "yCoord1", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "zCoord1", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "rootChord", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "xCoord4", "slot": 13, "kind": "real", "default": "0.0"},
+    {"name": "yCoord4", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "zCoord4", "slot": 15, "kind": "real", "default": "0.0"},
+    {"name": "tipChord", "slot": 16, "kind": "real", "default": "0.0"}
+  ]},
+  "AeroPistonProp5": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "angleOfAttackCount", "slot": 2, "kind": "integer"},
+    {"name": "angleOfAttackListId", "slot": 3, "kind": "integer"},
+    {"name": "chordCoordCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "chordCoordListId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "thicknessRatioCount", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "thicknessRatioListId", "slot": 7, "kind": "integer", "default": "0"}
+  ], "group": {"name": "controlChordRatios", "firstSlot": 9, "period": 1, "fields": [
+    {"name": "controlChordRatio", "offset": 0, "kind": "real"}
+  ]}},
+  "AeroPressureVector": {"fields": [
+    {"name": "machNumber", "slot": 1, "kind": "real"},
+    {"name": "symmetricXz", "slot": 2, "kind": "text"},
+    {"name": "symmetricXy", "slot": 3, "kind": "text"},
+    {"name": "controlVectorId", "slot": 4, "kind": "integer"},
+    {"name": "matrixName", "slot": 5, "kind": "text"},
+    {"name": "interpolationMatrixName", "slot": 6, "kind": "text"}
+  ]},
+  "AeroQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "componentId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"}
+  ]},
+  "AeroRigidSpline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "aeroBoxListId", "slot": 3, "kind": "integer"},
+    {"name": "usage", "slot": 4, "kind": "text"},
+    {"name": "node1", "slot": 5, "kind": "integer"},
+    {"name": "components1", "slot": 6, "kind": "integer"},
+    {"name": "node2", "slot": 7, "kind": "integer"},
+    {"name": "components2", "slot": 8, "kind": "integer"},
+    {"name": "node3", "slot": 9, "kind": "integer"},
+    {"name": "components3", "slot": 10, "kind": "integer"},
+    {"name": "node4", "slot": 11, "kind": "integer"},
+    {"name": "components4", "slot": 12, "kind": "integer"},
+    {"name": "node5", "slot": 13, "kind": "integer"},
+    {"name": "components5", "slot": 14, "kind": "integer"},
+    {"name": "node6", "slot": 15, "kind": "integer"},
+    {"name": "components6", "slot": 16, "kind": "integer"}
+  ]},
+  "AeroRigidTrimVariable": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "label", "slot": 2, "kind": "text"}
+  ]},
+  "AeroSplineCurveBlend": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "splineId1", "slot": 2, "kind": "integer"},
+    {"name": "splineId2", "slot": 3, "kind": "integer"},
+    {"name": "option", "slot": 4, "kind": "text"},
+    {"name": "aeroBoxListId", "slot": 5, "kind": "integer"},
+    {"name": "depth1", "slot": 6, "kind": "real"},
+    {"name": "depth2", "slot": 7, "kind": "real"}
+  ]},
+  "AeroSplineEquation3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer"},
+    {"name": "boxId", "slot": 3, "kind": "integer"},
+    {"name": "component", "slot": 4, "kind": "integer"},
+    {"name": "node1", "slot": 5, "kind": "integer"},
+    {"name": "components1", "slot": 6, "kind": "integer"},
+    {"name": "coefficient1", "slot": 7, "kind": "real"},
+    {"name": "usage", "slot": 8, "kind": "text"}
+  ], "group": {"name": "points", "firstSlot": 9, "period": 4, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "nodeComponent", "offset": 1, "kind": "integer"},
+    {"name": "coefficient", "offset": 2, "kind": "real"}
+  ]}},
+  "AeroSplineRelaxation": {"fields": [
+    {"name": "splineId1", "slot": 1, "kind": "integer"},
+    {"name": "splineId2", "slot": 2, "kind": "integer"},
+    {"name": "curvePointListId", "slot": 3, "kind": "integer"},
+    {"name": "referenceDistance", "slot": 4, "kind": "real"},
+    {"name": "relaxedPointListId", "slot": 5, "kind": "integer", "default": "0"}
+  ]},
+  "AeroSplineStripBlend": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "splineId1", "slot": 2, "kind": "integer"},
+    {"name": "splineId2", "slot": 3, "kind": "integer"},
+    {"name": "option", "slot": 4, "kind": "text"},
+    {"name": "weight1", "slot": 5, "kind": "real"},
+    {"name": "nodeId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "depth1", "slot": 7, "kind": "real"},
+    {"name": "depth2", "slot": 8, "kind": "real"},
+    {"name": "directionX", "slot": 9, "kind": "real"},
+    {"name": "directionY", "slot": 10, "kind": "real"},
+    {"name": "directionZ", "slot": 11, "kind": "real"},
+    {"name": "frameId", "slot": 12, "kind": "integer", "default": "0"}
+  ]},
+  "AeroStaticParams": {"fields": [
+    {"name": "aeroFrameId", "slot": 1, "kind": "integer", "default": "0"},
+    {"name": "referenceFrameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "referenceChord", "slot": 3, "kind": "real"},
+    {"name": "referenceSpan", "slot": 4, "kind": "real"},
+    {"name": "referenceArea", "slot": 5, "kind": "real"},
+    {"name": "symmetricXz", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "symmetricXy", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "AeroStripPanel4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "positionFrameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "spanBoxCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "spanDivisionListId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "xCoord1", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "yCoord1", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "zCoord1", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "rootChord", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "xCoord4", "slot": 13, "kind": "real", "default": "0.0"},
+    {"name": "yCoord4", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "zCoord4", "slot": 15, "kind": "real", "default": "0.0"},
+    {"name": "tipChord", "slot": 16, "kind": "real", "default": "0.0"}
+  ]},
+  "AeroStripProp4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "liftSlopeOption", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "liftSlopeListId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "circulationOption", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "circulationListId", "slot": 5, "kind": "integer", "default": "0"}
+  ], "group": {"name": "strips", "firstSlot": 6, "period": 3, "fields": [
+    {"name": "hingeOffsetRatio", "offset": 0, "kind": "real"},
+    {"name": "controlChordRatio", "offset": 1, "kind": "real"},
+    {"name": "gapRatio", "offset": 2, "kind": "real"}
+  ]}},
+  "AeroSurfaceSpline1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer"},
+    {"name": "firstBox", "slot": 3, "kind": "integer"},
+    {"name": "lastBox", "slot": 4, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 5, "kind": "integer"},
+    {"name": "linearFlexibility", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "method", "slot": 7, "kind": "text"},
+    {"name": "usage", "slot": 8, "kind": "text"},
+    {"name": "elemCountX", "slot": 9, "kind": "integer"},
+    {"name": "elemCountY", "slot": 10, "kind": "integer"}
+  ]},
+  "AeroSurfaceSpline4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer"},
+    {"name": "aeroBoxListId", "slot": 3, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 5, "kind": "integer"},
+    {"name": "linearFlexibility", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "method", "slot": 7, "kind": "text"},
+    {"name": "usage", "slot": 8, "kind": "text"},
+    {"name": "elemCountX", "slot": 9, "kind": "integer"},
+    {"name": "elemCountY", "slot": 10, "kind": "integer"},
+    {"name": "functionKind", "slot": 11, "kind": "text"},
+    {"name": "coreRadius", "slot": 12, "kind": "real"}
+  ]},
+  "AeroTria3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "componentId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"}
+  ]},
+  "AeroTrim": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "machNumber", "slot": 2, "kind": "real"},
+    {"name": "dynamicPressure", "slot": 3, "kind": "real"},
+    {"name": "label1", "slot": 4, "kind": "text"},
+    {"name": "trimValue1", "slot": 5, "kind": "real"},
+    {"name": "label2", "slot": 6, "kind": "text"},
+    {"name": "trimValue2", "slot": 7, "kind": "real"},
+    {"name": "equivalentAspectRatio", "slot": 8, "kind": "real", "default": "1.0"}
+  ], "group": {"name": "variables", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "label", "offset": 0, "kind": "text"},
+    {"name": "trimValue", "offset": 1, "kind": "real"}
+  ]}},
+  "AeroTrim2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "machNumber", "slot": 2, "kind": "real"},
+    {"name": "dynamicPressure", "slot": 3, "kind": "real"},
+    {"name": "equivalentAspectRatio", "slot": 8, "kind": "real", "default": "1.0"}
+  ], "group": {"name": "variables", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "label", "offset": 0, "kind": "text"},
+    {"name": "trimValue", "offset": 1, "kind": "any"}
+  ]}},
+  "AeroTrimLink": {"fields": [
+    {"name": "id", "slot": 1, "kind": "any"},
+    {"name": "dependentLabel", "slot": 2, "kind": "text"}
+  ], "group": {"name": "terms", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "independentLabel", "offset": 0, "kind": "text"},
+    {"name": "coefficient", "offset": 1, "kind": "real"}
+  ]}},
+  "AeroUnsteadyParams": {"fields": [
+    {"name": "aeroFrameId", "slot": 1, "kind": "integer", "default": "0"},
+    {"name": "velocity", "slot": 2, "kind": "real"},
+    {"name": "referenceChord", "slot": 3, "kind": "real"},
+    {"name": "referenceDensity", "slot": 4, "kind": "real"},
+    {"name": "symmetricXz", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "symmetricXy", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "AeroUserSpline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "groupName", "slot": 2, "kind": "text"},
+    {"name": "dependentNodeComponent", "slot": 3, "kind": "text"},
+    {"name": "independentNodeComponent", "slot": 4, "kind": "text"},
+    {"name": "dependentElemComponent", "slot": 5, "kind": "text"},
+    {"name": "independentElemComponent", "slot": 6, "kind": "text"},
+    {"name": "usage", "slot": 8, "kind": "text"},
+    {"name": "aeroBoxListId", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "factorListId", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "labelListId", "slot": 11, "kind": "integer", "default": "0"}
+  ]},
+  "TrimmedMaterialMatrices": {"fields": [
+    {"name": "name", "slot": 1, "kind": "text"},
+    {"name": "mappedDataUnit", "slot": 2, "kind": "integer"},
+    {"name": "propertyMatrixUnit", "slot": 3, "kind": "integer"},
+    {"name": "scaleReal", "slot": 4, "kind": "real"},
+    {"name": "scaleImaginary", "slot": 5, "kind": "real"}
+  ]}
+ }
+}

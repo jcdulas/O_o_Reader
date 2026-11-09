@@ -1,0 +1,53 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: fluid-structure coupling control (SOL 400, read-only)
+#
+# Covers:
+#   - cards: FSICTRL
+#   - solution: SOL 400 (nonlinear transient of a panel loaded by an
+#     external fluid code through a coupling service)
+#   - outputs: none (not run)
+# Run notes:
+#   - read-only: the coupling service fsisvc (CONNECT SERVICE) is a shared
+#     library of the fluid code vendor that computes the wetted surface
+#     loads; the solver does not ship one
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: coupling control (read-only)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;panel under the loads of the fluid code
+AnalysisKind;NonlinearTransient
+NonlinearStepSelection;10
+DynamicLoadSelection;20
+DisplacementOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+NonlinearStepControl;10;0.02;;FixedStepping;20
+# Implicit coupling: forces and displacements exchanged twice per step,
+# through the coupling interface of the service.
+FluidStructureControl;fsisvc;ImplicitSolver;2;Displacement
+# A steel panel 100 x 50 mm, 2 mm thick, 2 x 1 CQUAD4, clamped on its
+# short edges. Units: mm, N, t, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;0.;50.;0.
+Node;5;;50.;50.;0.
+Node;6;;100.;50.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+SinglePointConstrList;1;123456;1;4;3;6
+# The wetted surface: the top side of both elements, loaded by the service.
+WettedElemSide;101;1;1
+WettedElemSide;102;2;1
+WettedSurface;1;panel;101;102
+WettedSurfaceLoad;30;1;fsisvc
+TransientTableLoad1;20;30;;;;40
+TableDynamic1;40;;;0.;1.;1.;1.;EndTable

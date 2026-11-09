@@ -1,0 +1,90 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: CONCTL override and iterative solver (SOL 101)
+#
+# Covers:
+#   - cards: CONCTL, ITER
+#   - solution: SOL 101 (linear static, matrix-based iterative solver
+#     selected by SMETHOD)
+#   - outputs: displacements, SPC forces, element forces
+# Run notes:
+#   - CONCTL overrides the SWLDPRM search values for the two CFAST of its
+#     SET3 only; the third CFAST uses the SWLDPRM values
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: CONCTL and ITER (SOL 101)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+IterativeSolverSelection;50
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;lap joint pulled along x
+[model]
+Parameter;PostprocessingFile;-1
+# A lap joint: plate 41 (x 0 to 30, clamped at x = 0) under plate 42 (x 20 to
+# 50, 1.5 mm higher), 3 x 2 CQUAD4 each, joined in the overlap by three CFAST.
+# Units: mm, N, t.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;41;1;1.5;1;;1
+ShellProp;42;1;1.5;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;0.;10.;0.
+Node;6;;10.;10.;0.
+Node;7;;20.;10.;0.
+Node;8;;30.;10.;0.
+Node;9;;0.;20.;0.
+Node;10;;10.;20.;0.
+Node;11;;20.;20.;0.
+Node;12;;30.;20.;0.
+ShellQuad4;1;41;1;2;6;5
+ShellQuad4;2;41;2;3;7;6
+ShellQuad4;3;41;3;4;8;7
+ShellQuad4;4;41;5;6;10;9
+ShellQuad4;5;41;6;7;11;10
+ShellQuad4;6;41;7;8;12;11
+Node;101;;20.;0.;1.5
+Node;102;;30.;0.;1.5
+Node;103;;40.;0.;1.5
+Node;104;;50.;0.;1.5
+Node;105;;20.;10.;1.5
+Node;106;;30.;10.;1.5
+Node;107;;40.;10.;1.5
+Node;108;;50.;10.;1.5
+Node;109;;20.;20.;1.5
+Node;110;;30.;20.;1.5
+Node;111;;40.;20.;1.5
+Node;112;;50.;20.;1.5
+ShellQuad4;101;42;101;102;106;105
+ShellQuad4;102;42;102;103;107;106
+ShellQuad4;103;42;103;104;108;107
+ShellQuad4;104;42;105;106;110;109
+ShellQuad4;105;42;106;107;111;110
+ShellQuad4;106;42;107;108;112;111
+SinglePointConstrList;1;123456;1;5;9
+PointForceLoad;1;104;;100.;1.;0.;0.
+PointForceLoad;1;108;;200.;1.;0.;0.
+PointForceLoad;1;112;;100.;1.;0.;0.
+# Three fasteners in the overlap, located by GS points half way between the
+# plates; the global search values, then the override for fasteners 3001
+# and 3002 (SET3 71)
+FastenerProp;1;4.;-1;;2.E+4;1.E+4;1.E+4;100.;100.;100.
+Node;951;;25.;5.;0.75
+Node;952;;25.;15.;0.75
+Node;953;;25.;10.;0.75
+Fastener;3001;1;Property;41;42;951
+Fastener;3002;1;Property;41;42;952
+Fastener;3003;1;Property;41;42;953
+ConnectorSearchParams;3;MaxShellNormalAngle;20.;ProjectionTolerance;0.02;MaxEndPointMoves;2
+TypedListSet3;71;Elements;3001;3002
+ConnectorSearchControl;71;ProjectionTolerance;0.05;MaxEndPointMoves;3;GeneratedDataPrint;1
+# Matrix-based iterative solver: block incomplete Cholesky, tight tolerance
+IterativeSolverOptions;50;PreconditionerKind=BlockIncompleteCholesky;IterationTolerance=1.0E-8;IterationMessages=Yes

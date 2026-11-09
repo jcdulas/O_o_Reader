@@ -1,0 +1,61 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: bar and beam orientation vectors in curvilinear displacement systems (SOL 101)
+#
+# Validates:
+#   - the element frame of a CBAR and a CBEAM whose orientation vector is
+#     given in the cylindrical or spherical displacement system of end A: the
+#     plane 1 and plane 2 forces (FORCE) of a known tip load and the element
+#     geometry of the OUTPUT2 file
+# Settles (library item: current status):
+#   - the CBAR and CBEAM frames (the vector taken in the CD of GA at its
+#     position: confirmed against an independent computation only)
+#   - oneDimensionalForce (no file stores a bar force in two frames)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;orientation vectors in curvilinear systems
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip loads
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# CBAR and CBEAM whose end A is a grid point with a cylindrical (CORD2C 1) or
+# spherical (CORD2S 2) displacement system: the orientation vector X1 X2 X3 is
+# given in that system. Each element is a cantilever clamped at end A with a
+# tip load in the basic system. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+CylindricalFrame2;1;;0.;0.;0.;0.;0.;1.;1.;0.;0.
+SphericalFrame2;2;;0.;0.;0.;0.;0.;1.;1.;0.;0.
+BarProp;1;1;20.;40.;30.;50.
+BeamProp;2;1;20.;40.;30.;0.;50.
+Node;11;;50.;100.;10.;1
+Node;12;;150.;100.;10.
+Bar2;1;1;11;12;0.;;1.;0.
+SinglePointConstrList;1;123456;11
+PointForceLoad;1;12;;10.;0.;1.;1.
+Node;21;;50.;200.;10.;1
+Node;22;;150.;200.;10.
+Beam2;2;2;21;22;0.;;1.;0.
+SinglePointConstrList;1;123456;21
+PointForceLoad;1;22;;10.;0.;1.;1.
+Node;31;;50.;300.;10.;2
+Node;32;;150.;300.;10.
+Bar2;3;1;31;32;0.;;1.;0.
+SinglePointConstrList;1;123456;31
+PointForceLoad;1;32;;10.;0.;1.;1.
+Node;41;;50.;400.;10.;2
+Node;42;;150.;400.;10.
+Beam2;4;2;41;42;0.;;1.;0.
+SinglePointConstrList;1;123456;41
+PointForceLoad;1;42;;10.;0.;1.;1.

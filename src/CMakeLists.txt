@@ -1,0 +1,8 @@
+add_subdirectory(base)
+add_subdirectory(io)
+add_subdirectory(deck)
+add_subdirectory(model)
+add_subdirectory(results)
+add_subdirectory(analysis)
+add_subdirectory(query)
+add_subdirectory(api)

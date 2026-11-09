@@ -1,0 +1,522 @@
+{
+  "description": "Semantic kinds of neutral text fields: literal identifiers and labels, card type names, reserved role names, routine defaults and key=value options. Numbered fields match their base name.",
+  "formatVersion": 1,
+  "cards": {
+    "AcousticInfiniteParams": {
+      "parameterName": "Literal"
+    },
+    "AeroComponent": {
+      "name": "Literal"
+    },
+    "AeroComponentUnion": {
+      "name": "Literal",
+      "label": "Literal"
+    },
+    "AeroControlSurface": {
+      "label": "Literal"
+    },
+    "AeroControlSurfaceNodes": {
+      "label": "Literal"
+    },
+    "AeroControlVector": {
+      "label": "AeroLabel"
+    },
+    "AeroController": {
+      "label": "Literal"
+    },
+    "AeroDownwash": {
+      "matrixName": "MatrixName",
+      "interpolationMatrixName": "MatrixName"
+    },
+    "AeroForceVector": {
+      "matrixName": "MatrixName"
+    },
+    "AeroLabelList": {
+      "label": "Literal"
+    },
+    "AeroPressureVector": {
+      "matrixName": "MatrixName",
+      "interpolationMatrixName": "MatrixName"
+    },
+    "AeroRigidTrimVariable": {
+      "label": "AeroLabel"
+    },
+    "AeroTrim": {
+      "label": "AeroLabel"
+    },
+    "AeroTrim2": {
+      "label": "AeroLabel"
+    },
+    "AeroTrimLink": {
+      "dependentLabel": "AeroLabel",
+      "independentLabel": "AeroLabel"
+    },
+    "AeroUserSpline": {
+      "groupName": "Literal"
+    },
+    "AssociativeNode": {
+      "partitionName": "Literal"
+    },
+    "BarArbitrarySectionProp": {
+      "sectionLine": "Literal"
+    },
+    "BeamArbitrarySectionProp": {
+      "sectionLine": "Literal"
+    },
+    "BrakeProp": {
+      "parameterName": "Word"
+    },
+    "BrakeSystem": {
+      "diskName": "Literal"
+    },
+    "ConnectorSearchControl": {
+      "parameterName": "Literal"
+    },
+    "ConnectorSearchParams": {
+      "parameterName": "Literal",
+      "sectionParameterName": "Literal"
+    },
+    "ContactAutoParams": {
+      "parameterName": "Literal"
+    },
+    "ContactBody": {
+      "rigidBodyName": "Literal"
+    },
+    "ContactBodyParams": {
+      "parameterName": "Literal"
+    },
+    "ContactControlParams": {
+      "parameterName": "Literal"
+    },
+    "ContactEllipsoidList": {
+      "ellipsoidName": "Literal"
+    },
+    "ContactPairGeomParams": {
+      "parameterName": "Literal"
+    },
+    "ContactPairPhysicalParams": {
+      "parameterName": "Literal"
+    },
+    "ContactParams": {
+      "parameterName": "Literal"
+    },
+    "ContactSurfaceParams": {
+      "parameterName": "Literal"
+    },
+    "ContactUserService": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine",
+      "textValue": "Literal",
+      "bodyKind": "CardType"
+    },
+    "CosimulationService": {
+      "serviceName": "Literal"
+    },
+    "DesignBeadRegion": {
+      "propType": "CardType"
+    },
+    "DesignConstants": {
+      "label": "Literal"
+    },
+    "DesignControlSurface": {
+      "controlSurfaceLabel": "Literal"
+    },
+    "DesignElemRelation1": {
+      "kind": "CardType"
+    },
+    "DesignElemRelation2": {
+      "constantLabel": "Literal",
+      "kind": "CardType"
+    },
+    "DesignFieldConstants": {
+      "label": "Literal",
+      "targetCard": "CardType"
+    },
+    "DesignLoadRelation1": {
+      "kind": "CardType"
+    },
+    "DesignMatRelation1": {
+      "kind": "CardType"
+    },
+    "DesignMatRelation2": {
+      "constantLabel": "Literal",
+      "kind": "CardType"
+    },
+    "DesignOptimParams": {
+      "parameterName": "Literal"
+    },
+    "DesignPropRelation1": {
+      "kind": "CardType"
+    },
+    "DesignPropRelation2": {
+      "constantLabel": "Literal",
+      "kind": "CardType"
+    },
+    "DesignResp1": {
+      "entryLabel": "Literal",
+      "ownerKind": "CardType"
+    },
+    "DesignResp2": {
+      "entryLabel": "Literal",
+      "constantLabel": "Literal"
+    },
+    "DesignResp3": {
+      "entryLabel": "Literal",
+      "groupName": "Literal",
+      "constantLabel": "Literal",
+      "userText": "Literal"
+    },
+    "DesignTopologyRegion": {
+      "entryLabel": "Literal",
+      "propType": "CardType"
+    },
+    "DesignTopometryRegion": {
+      "kind": "CardType"
+    },
+    "DesignVar": {
+      "entryLabel": "Literal"
+    },
+    "DirectMatrix": {
+      "entryName": "MatrixName"
+    },
+    "DirectMatrixAeroJ": {
+      "entryName": "MatrixName"
+    },
+    "DirectMatrixAeroJInterference": {
+      "entryName": "MatrixName"
+    },
+    "DirectMatrixAeroK": {
+      "entryName": "MatrixName"
+    },
+    "DirectMatrixAxisym": {
+      "entryName": "MatrixName"
+    },
+    "DirectMatrixNodal": {
+      "entryName": "MatrixName"
+    },
+    "DirectTable": {
+      "entryName": "Literal",
+      "recordValue": "Literal"
+    },
+    "DofSetRenames": {
+      "oldName": "Literal",
+      "newName": "Literal"
+    },
+    "EulerUserFlowBoundary": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "FatigueEvent": {
+      "eventName": "Literal"
+    },
+    "FatigueLoad": {
+      "equivalentUnitName": "Literal"
+    },
+    "FatigueSequence": {
+      "equivalentUnitName": "Literal"
+    },
+    "FluidStructureControl": {
+      "serviceName": "Literal"
+    },
+    "FluidStructurePanels": {
+      "panelName": "Literal"
+    },
+    "FreeBodyLoad": {
+      "name": "Literal",
+      "subsystemName": "Literal",
+      "label": "Literal"
+    },
+    "FreeBodyLoadSubcase": {
+      "names": "Literal",
+      "label": "Literal"
+    },
+    "FrfComponent": {
+      "componentName": "Literal"
+    },
+    "FrfExcitationDof": {
+      "entryLabel": "Literal"
+    },
+    "InitialValuesUserRoutine": {
+      "routineName": "Routine"
+    },
+    "IterativeSolverOptions": {
+      "option": "KeywordValue"
+    },
+    "LanczosEigenMethod": {
+      "option": "KeywordValue"
+    },
+    "LineInterface": {
+      "boundaryList": "Literal"
+    },
+    "LoadCaseIdLabel": {
+      "partName": "Literal"
+    },
+    "LoadCaseNameLabel": {
+      "loadName": "Literal",
+      "partName": "Literal"
+    },
+    "LoadCaseSubcaseLabel": {
+      "partName": "Literal"
+    },
+    "MetadataBooleanPairs": {
+      "entryName": "Literal"
+    },
+    "MetadataGroup": {
+      "metadataGroupName": "Literal",
+      "entityName": "CardType"
+    },
+    "MetadataIntegerPairs": {
+      "entryName": "Literal"
+    },
+    "MetadataRealPairs": {
+      "entryName": "Literal"
+    },
+    "MetadataTextPairs": {
+      "entryName": "Literal",
+      "entryValue": "Literal"
+    },
+    "ModelParams": {
+      "parameterName": "Literal"
+    },
+    "ModuleBrakeSystem": {
+      "diskName": "Literal"
+    },
+    "ModuleContactDetectParams": {
+      "parameterName": "Literal"
+    },
+    "ModuleDirectMatrix": {
+      "entryName": "Literal"
+    },
+    "ModuleEntryExclusion": {
+      "entry": "CardType"
+    },
+    "ModuleLabel": {
+      "entryLabel": "Literal"
+    },
+    "ModuleResultFileParams": {
+      "parameterName": "Literal"
+    },
+    "ModuleSeam": {
+      "seamLineName": "Literal"
+    },
+    "MonitorChordNormalCoeffs": {
+      "entryName": "Literal",
+      "label": "Literal"
+    },
+    "MonitorDisplacement": {
+      "entryName": "Literal",
+      "label": "Literal"
+    },
+    "MonitorElemLoad2": {
+      "entryName": "Literal",
+      "label": "Literal",
+      "kind": "CardType"
+    },
+    "MonitorGroup": {
+      "groupName": "Literal",
+      "label": "Literal",
+      "memberName": "Literal",
+      "textAttribute": "Literal"
+    },
+    "MonitorIntegratedLoad1": {
+      "entryName": "Literal",
+      "label": "Literal"
+    },
+    "MonitorNodeForceSum3": {
+      "entryName": "Literal",
+      "label": "Literal"
+    },
+    "MonitorSum": {
+      "entryName": "Literal",
+      "label": "Literal",
+      "termNames": "Literal",
+      "secondTermNames": "Literal"
+    },
+    "MonitorSumLocated": {
+      "entryName": "Literal",
+      "label": "Literal",
+      "termNames": "Literal",
+      "secondTermNames": "Literal"
+    },
+    "MonitorSumTotal": {
+      "entryName": "Literal",
+      "label": "Literal",
+      "memberName": "Literal"
+    },
+    "NonStructMass": {
+      "type": "CardType"
+    },
+    "NonStructMass1": {
+      "type": "CardType"
+    },
+    "NonStructMassLumped": {
+      "type": "CardType"
+    },
+    "NonStructMassLumped1": {
+      "type": "CardType"
+    },
+    "NonlinearHarmonicSolverParams": {
+      "parameterName": "Literal"
+    },
+    "NonlinearStaticParams": {
+      "convergenceFlags": "Literal"
+    },
+    "NonlinearTimeSteps": {
+      "convergenceFlags": "Literal"
+    },
+    "NonlinearUserOutput": {
+      "groupName": "Literal",
+      "outputName": "Literal"
+    },
+    "OccupantAccelField": {
+      "segmentName": "Literal"
+    },
+    "OccupantJoint": {
+      "jointName": "Literal"
+    },
+    "OccupantSegment": {
+      "segmentName": "Literal"
+    },
+    "Parameter": {
+      "parameterName": "Literal"
+    },
+    "PorousUserBoundary": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "PropDistribution": {
+      "type": "CardType"
+    },
+    "RadiatedPowerPanelSet": {
+      "panelName": "Literal"
+    },
+    "ResultFileParams": {
+      "parameterName": "Literal"
+    },
+    "ResultMetadata": {
+      "metadataName": "Literal",
+      "metadataInfo": "Literal"
+    },
+    "RigidEllipsoidExternal": {
+      "ellipsoidName": "Literal",
+      "programName": "Literal"
+    },
+    "SuperelementDesignResp2": {
+      "entryLabel": "Literal",
+      "constantLabel": "Literal"
+    },
+    "SuperelementDesignResp3": {
+      "entryLabel": "Literal",
+      "groupName": "Literal",
+      "constantLabel": "Literal",
+      "userData": "Literal"
+    },
+    "SuperelementLabel": {
+      "entryLabel": "Literal"
+    },
+    "SuperelementLoadScale": {
+      "labelledId": "Literal"
+    },
+    "SuperelementUserDofSet": {
+      "setName": "Literal"
+    },
+    "SuperelementUserDofSet1": {
+      "setName": "Literal"
+    },
+    "TableUserRoutine": {
+      "groupName": "Literal",
+      "routineName": "Routine"
+    },
+    "TiltingPadBearingProp": {
+      "title1": "Literal",
+      "title2": "Literal"
+    },
+    "TireSelection": {
+      "tireName": "Literal"
+    },
+    "TrimmedMaterialMatrices": {
+      "name": "Literal"
+    },
+    "UserCompositeFailureMat": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "UserDofSet": {
+      "setName": "Literal"
+    },
+    "UserDofSet1": {
+      "setName": "Literal"
+    },
+    "UserDefined1Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined2Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined3Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined4Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined5Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined6Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined7Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined8Attributes": {
+      "elementName": "CardType"
+    },
+    "UserDefined9Attributes": {
+      "elementName": "CardType"
+    },
+    "UserElemService": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine",
+      "textData": "Literal"
+    },
+    "UserEnforcedVelocity": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "UserFailureModel": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "UserFileName": {
+      "entryName": "Literal"
+    },
+    "UserMatService": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine",
+      "textData": "Literal",
+      "materialCardType": "CardType"
+    },
+    "UserServiceData": {
+      "textData": "Literal"
+    },
+    "UserShearModel": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "UserStateEquation": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "UserStateVariables": {
+      "variableName": "Literal",
+      "variableLabel": "Literal"
+    },
+    "UserYield": {
+      "groupName": "Literal",
+      "userRoutineName": "Routine"
+    },
+    "WettedSurfaceLoad": {
+      "serviceName": "Literal"
+    }
+  }
+}

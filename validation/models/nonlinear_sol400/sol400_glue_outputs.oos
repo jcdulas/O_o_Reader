@@ -1,0 +1,106 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: glued contact outputs of SOL 400
+#
+# Covers:
+#   - cards: BCPROP, BCBODY1, BCONECT, BCONPRG (IGLUE 1), BCPARA (NLGLUE 1:
+#     general glued contact rather than the permanent glue of the first
+#     step)
+#   - solution: SOL 400 (non-linear statics), one step
+#   - outputs: the contact check of the start (BCONCHK: initial and final
+#     separation distances), the glue forces and the glue slide distances
+#     (BOUTPUT), the contact forces, the non-linear load vector (NLLOAD)
+# Run notes:
+#   - an upper block glued on a clamped lower block (separate grid points on
+#     the interface), sheared and pulled on its top face
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: SOL 400 glued contact outputs
+BulkEcho;None
+SinglePointConstrSelection;1
+ContactSelection;21
+ContactCheck;Run;PlotOnly
+SubcaseStart;1
+LabelText;shear and pull on the glued block
+AnalysisKind;NonlinearStatics
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;10
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+SlidelineContactOutput;All;PlotOnly
+NonlinearLoadOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+NonlinearStaticParams;10;4
+IsoMat;1;7.E+4;;0.33;2.7E-9
+SolidProp;1;1
+SolidProp;2;1
+# Lower block: 2 x 2 x 1 CHEXA, clamped at z = 0
+Node;101;;0.;0.;0.;;456
+Node;102;;10.;0.;0.;;456
+Node;103;;20.;0.;0.;;456
+Node;104;;0.;10.;0.;;456
+Node;105;;10.;10.;0.;;456
+Node;106;;20.;10.;0.;;456
+Node;107;;0.;20.;0.;;456
+Node;108;;10.;20.;0.;;456
+Node;109;;20.;20.;0.;;456
+Node;110;;0.;0.;10.;;456
+Node;111;;10.;0.;10.;;456
+Node;112;;20.;0.;10.;;456
+Node;113;;0.;10.;10.;;456
+Node;114;;10.;10.;10.;;456
+Node;115;;20.;10.;10.;;456
+Node;116;;0.;20.;10.;;456
+Node;117;;10.;20.;10.;;456
+Node;118;;20.;20.;10.;;456
+SolidHexa;101;1;101;102;105;104;110;111;114;113
+SolidHexa;102;1;102;103;106;105;111;112;115;114
+SolidHexa;103;1;104;105;108;107;113;114;117;116
+SolidHexa;104;1;105;106;109;108;114;115;118;117
+SinglePointConstrList;1;123;101;102;103;104;105;106;107;108;109
+# Upper block: 2 x 2 x 1 CHEXA on its own grid points at z = 10 to 20
+Node;201;;0.;0.;10.;;456
+Node;202;;10.;0.;10.;;456
+Node;203;;20.;0.;10.;;456
+Node;204;;0.;10.;10.;;456
+Node;205;;10.;10.;10.;;456
+Node;206;;20.;10.;10.;;456
+Node;207;;0.;20.;10.;;456
+Node;208;;10.;20.;10.;;456
+Node;209;;20.;20.;10.;;456
+Node;210;;0.;0.;20.;;456
+Node;211;;10.;0.;20.;;456
+Node;212;;20.;0.;20.;;456
+Node;213;;0.;10.;20.;;456
+Node;214;;10.;10.;20.;;456
+Node;215;;20.;10.;20.;;456
+Node;216;;0.;20.;20.;;456
+Node;217;;10.;20.;20.;;456
+Node;218;;20.;20.;20.;;456
+SolidHexa;201;2;201;202;205;204;210;211;214;213
+SolidHexa;202;2;202;203;206;205;211;212;215;214
+SolidHexa;203;2;204;205;208;207;213;214;217;216
+SolidHexa;204;2;205;206;209;208;214;215;218;217
+# Load set 1: a shear in x and a pull in z on the top face of the upper block
+PointForceLoad;1;210;;100.;1.;0.;0.5
+PointForceLoad;1;211;;100.;1.;0.;0.5
+PointForceLoad;1;212;;100.;1.;0.;0.5
+PointForceLoad;1;213;;100.;1.;0.;0.5
+PointForceLoad;1;214;;100.;1.;0.;0.5
+PointForceLoad;1;215;;100.;1.;0.;0.5
+PointForceLoad;1;216;;100.;1.;0.;0.5
+PointForceLoad;1;217;;100.;1.;0.;0.5
+PointForceLoad;1;218;;100.;1.;0.;0.5
+# The two blocks as deformable contact bodies, glued (general glue)
+ContactPropertyRegion;11;1
+ContactPropertyRegion;12;2
+ContactBody1;1;;ThreeDimensional;Deformable;11
+ContactBody1;2;;ThreeDimensional;Deformable;12
+ContactPairGeomParams;31;GlueOption;1
+ContactPair;21;31;;2;1
+ContactParams;0;NonlinearGlue;1

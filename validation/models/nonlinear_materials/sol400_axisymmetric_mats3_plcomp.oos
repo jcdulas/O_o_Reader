@@ -1,0 +1,71 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric orthotropic and laminated rings (SOL 400)
+#
+# Covers:
+#   - cards: MATS3 PLCOMP (with MAT3 MAT1 TABL3D0 PLPLANE PSHLN2 CQUADX
+#     NLSTEP)
+#   - solution: SOL 400 (nonlinear static, one step)
+#   - outputs: displacements, SPC forces
+# Run notes:
+#   - two rings of CQUADX elements (X is the radius, Y the axis), each held
+#     axially on its lower edge and pulled axially on its upper edge
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;axisymmetric orthotropic and laminated rings
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;axial tension of the rings
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;10
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, MPa.
+#
+# Ring 1: an orthotropic axisymmetric material (MAT3 named by a PLPLANE with
+# its PSHLN2 extension, axisymmetric solid behaviour) whose radial modulus
+# depends on the local strain (MATS3 names a TABL3D0 of type 73).
+AxisymOrthoMat;31;1.E+4;1.2E+4;1.1E+4;0.3;0.25;0.27;1.5E-9;4.E+3
+AxisymOrthoMatStressDependent;31;301
+TableMultiVariable0;301;73;;;;;-0.01;9500.;0.;1.E+4;0.01;10500.
+PlanePropNonlinear;31;31
+PlanePropNonlinearExt;31;31;;;ImplicitStructural;FourNodeElems;AxisymSolid;Linear
+Node;101;;50.;0.;0.;;3456
+Node;102;;55.;0.;0.;;3456
+Node;103;;60.;0.;0.;;3456
+Node;104;;50.;10.;0.;;3456
+Node;105;;55.;10.;0.;;3456
+Node;106;;60.;10.;0.;;3456
+AxisymQuad;101;31;101;102;105;104
+AxisymQuad;102;31;102;103;106;105
+SinglePointConstrList;1;2;101;102;103
+PointForceLoad;1;104;;100.;0.;1.;0.
+PointForceLoad;1;105;;100.;0.;1.;0.
+PointForceLoad;1;106;;100.;0.;1.;0.
+# Ring 2: an axisymmetric laminate of two isotropic plies stacked along the
+# axis (PLCOMP, axisymmetric composite behaviour on the four-node CQUADX).
+IsoMat;33;7.E+4;;0.33;2.7E-9
+IsoMat;34;2.1E+5;;0.3;7.85E-9
+PlaneCompProp;32;1;;;ImplicitStructural;FourNodeElems;AxisymComposite;Linear;;;;3201;33;0.5;0.;;3202;34;0.5;0.
+Node;201;;50.;20.;0.;;3456
+Node;202;;55.;20.;0.;;3456
+Node;203;;60.;20.;0.;;3456
+Node;204;;50.;30.;0.;;3456
+Node;205;;55.;30.;0.;;3456
+Node;206;;60.;30.;0.;;3456
+AxisymQuad;201;32;201;202;205;204
+AxisymQuad;202;32;202;203;206;205
+SinglePointConstrList;1;2;201;202;203
+PointForceLoad;1;204;;100.;0.;1.;0.
+PointForceLoad;1;205;;100.;0.;1.;0.
+PointForceLoad;1;206;;100.;0.;1.;0.
+# One step in 5 fixed increments.
+NonlinearStepControl;10;1.;;FixedStepping;5

@@ -1,0 +1,7 @@
+{
+ "description": "The kind of each alternative field the code reads under a name 'a/b', for tools/oos_layouts/generate_layouts.py. The reviewed layouts are in review/, one file per card family.",
+ "kinds": {
+  "materialAngle": "real",
+  "matFrameId": "integer"
+ }
+}

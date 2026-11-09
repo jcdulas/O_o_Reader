@@ -1,0 +1,71 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rotational cyclic symmetry, statics of a hub disk
+#
+# Covers:
+#   - cards: CYSYM (ROT), CYJOIN, CYAX, LOADCYN, LOADCYH (with CORD2C, CBAR,
+#     CQUAD4)
+#   - solution: SOL 114 (cyclic symmetry statics, all harmonics)
+#   - outputs: displacements of the segments
+# Run notes:
+#   - one 60 degree segment of six: an annular plate clamped on its outer
+#     edge, joined to a hub point on the axis by one spoke per segment
+#   - subcase 1 loads segment 1 only (LOADCYN), subcase 2 the cosine term
+#     of harmonic 1 (LOADCYH)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;114
+[case]
+TitleText;O_o_Reader test model: cyclic symmetry statics
+BulkEcho;None
+SinglePointConstrSelection;1
+HarmonicsSelection;All
+CyclicSegmentOutput;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;a load on segment 1
+StaticLoadSelection;10
+SubcaseStart;2
+LabelText;harmonic 1 cosine load
+StaticLoadSelection;20
+[model]
+Parameter;PostprocessingFile;-1
+# Six segments of 60 degrees about the z axis of the basic system.
+CyclicSymmetry;6;Rotational
+# The segment: an annular steel plate of 2 x 2 CQUAD4, r 50 to 100, theta 0
+# to 60, given and displaced in the cylindrical system 1 (z along the axis).
+# Units: mm, N, tonne, s.
+CylindricalFrame2;1;0;0.;0.;0.;0.;0.;1.;1.;0.;0.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;1;50.;0.;0.;1
+Node;2;1;75.;0.;0.;1
+Node;3;1;100.;0.;0.;1
+Node;4;1;50.;30.;0.;1
+Node;5;1;75.;30.;0.;1
+Node;6;1;100.;30.;0.;1
+Node;7;1;50.;60.;0.;1
+Node;8;1;75.;60.;0.;1
+Node;9;1;100.;60.;0.;1
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+# Side 1 (theta = 0) is joined to side 2 (theta = 60) of the next segment.
+CyclicBoundaryJoin;1;;1;2;3
+CyclicBoundaryJoin;2;;7;8;9
+# The hub point on the axis (basic system, z along the axis) and the spoke
+# that joins it to the inner edge in the middle of the segment.
+Node;100;;0.;0.;0.
+CyclicAxisNodes;100
+BarProp;2;1;28.3;63.6;63.6;127.
+Bar2;11;2;100;4;0.;;0.;1.
+# The outer edge is clamped.
+SinglePointConstrList;1;123456;3;6;9
+# Subcase 1: an axial force on segment 1 only.
+PointForceLoad;11;5;1;100.;0.;0.;1.
+CyclicSegmentLoad;10;1.;1;;1.;11
+# Subcase 2: the cosine term of harmonic 1 of an axial force.
+PointForceLoad;21;5;1;100.;0.;0.;1.
+CyclicHarmonicLoad;20;1.;1;Cosine;1.;21

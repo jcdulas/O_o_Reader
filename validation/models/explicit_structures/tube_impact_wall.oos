@@ -1,0 +1,207 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: SOL 700 crash tube on a rigid wall
+#
+# Covers:
+#   - cards: PSHELL1 PCOMPA HGSUPPR WALL BJOIN BCMATL TODYNA ENDDYNA DYPARAM
+#     (with CQUAD4, CHEXA, MAT1, MAT8, PCOMP, PSOLID, BCGRID, BCPROP, BCBODY,
+#     BCTABLE, TIC3, TSTEPNL)
+#   - solution: SOL 700,129 (explicit nonlinear transient: a steel block at
+#     10 m/s hits the composite cap of a square tube standing on a rigid
+#     wall)
+#   - outputs: none that the library decodes (the archive and time-history
+#     files)
+# Run notes:
+#   - needs the explicit solver of SOL 700 in the installation (the solver
+#     spawns it; see the SOL 700 Executive Control statement)
+#   - SOL 700 has no OUTPUT2 output: the explicit solver writes its own archive
+#     and time-history files (ARC, THS) and its output file next to the listing;
+#     bring back the listing
+#   - the $S700 lines of the Case Control ask for a time history of two grid
+#     points; the default archive holds the elements
+#   - TODYNA passes one MAT1 of the explicit solver that nothing uses; BCGRID 21 gives its
+#     grid points as a THRU range (SOL 700 form)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;129
+[case]
+TitleText;O_o_Reader test model: SOL 700 crash tube on a rigid wall
+BulkEcho;None
+InitialConditionSelection;1
+ContactSelection;1
+NonlinearTimeStepSelection;1
+StepEndTime;0.001
+# Time history of the cap centre and a block corner (passed to the solver)
+#S700 TYPE(gridhist) = TIMEHIS
+#S700 GRIDS(gridhist) = 901
+#S700 SET 901 = 1500 2001
+#S700 GPOUT(gridhist) = XVEL,YVEL,ZVEL
+#S700 TIMES(gridhist) = 0,THRU,END,BY,1.E-5
+#S700 SAVE(gridhist) = 10000
+[model]
+# Units: mm, N, tonne, s. End time 1 ms (TSTEPNL: 100 x 1.E-5 and ENDTIME);
+# the solver chooses its own stable time step, starting from INISTEP.
+NonlinearTimeSteps;1;100;1.E-5
+ExplicitParam;InitialStep;1.E-7
+ExplicitParam;MinStepSize;1.E-9
+# Direct text of the explicit solver: SOL 700 passes the entries between TODYNA and ENDDYNA
+# to that solver as they are (here its own MAT1, MID E G NU RHO, that no
+# property uses); O_o_Reader keeps them as text.
+ExplicitTextStart
+MAT1;99;210000.;;0.3;7.85E-9
+ExplicitTextEnd
+# Materials: steel tube (1), steel block (2), carbon ply of the cap (3).
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+IsoMat;2;2.1E+5;;0.3;7.85E-9
+OrthoMat2D;3;1.4E+5;1.E+4;0.3;5.E+3;5.E+3;4.E+3;1.6E-9
+# Tube: two steel channels of PSHELL1 (variable-thickness shell properties of
+# SOL 700), channel A Belytschko-Lin-Tsay 1.0 mm, channel B Hughes-Liu 1.2 mm
+# with Lobatto points.
+ShellPropNodal;10;1;BelytschkoLinTsay;Gauss;3;0.83333;MidSurface;No;1.;1.;1.;1.
+ShellPropNodal;11;1;HughesLiu;LobattoPoints;5;;MidSurface;No;1.2;1.2;1.2;1.2
+# Cap: a four-ply laminate (PCOMP 30) with its SOL 700 data (PCOMPA 30).
+CompProp;30;;;;;;;;3;0.5;0.;;3;0.5;90.;;3;0.5;90.;;3;0.5;0.
+CompPropExplicit;30;BelytschkoLinTsay;0.83333;MidSurface;Fiber;No;Yes;0;No
+# Block: solid elements.
+SolidProp;20;2
+# Hourglass control of each property: viscous (FBV) and DYNA for the shells
+# and the laminate, stiffness (FBS) for the solids.
+HourglassSuppression;1;Shell;10;FlanaganBelytschkoViscous;0.1;0.1;0.1
+HourglassSuppression;2;Shell;11;ExternalExplicitProgram;0.05;0.05;0.05;;Yes;10000
+HourglassSuppression;3;Composite;30;FlanaganBelytschkoViscous;0.1;0.1;0.1
+HourglassSuppression;4;Solid;20;FlanaganBelytschkoStiffness;;;;0.1
+# Tube grid points: five rings at z = 1 to 41 (ring k numbered 1000 + 100 k +
+# j). Points 1-5 belong to channel A, 6-10 to channel B; A1/B10 and A5/B6 are
+# coincident pairs at the two welded corners (0,0) and (20,20).
+Node;1001;;0.;0.;1.
+Node;1002;;10.;0.;1.
+Node;1003;;20.;0.;1.
+Node;1004;;20.;10.;1.
+Node;1005;;20.;20.;1.
+Node;1006;;20.;20.;1.
+Node;1007;;10.;20.;1.
+Node;1008;;0.;20.;1.
+Node;1009;;0.;10.;1.
+Node;1010;;0.;0.;1.
+Node;1101;;0.;0.;11.
+Node;1102;;10.;0.;11.
+Node;1103;;20.;0.;11.
+Node;1104;;20.;10.;11.
+Node;1105;;20.;20.;11.
+Node;1106;;20.;20.;11.
+Node;1107;;10.;20.;11.
+Node;1108;;0.;20.;11.
+Node;1109;;0.;10.;11.
+Node;1110;;0.;0.;11.
+Node;1201;;0.;0.;21.
+Node;1202;;10.;0.;21.
+Node;1203;;20.;0.;21.
+Node;1204;;20.;10.;21.
+Node;1205;;20.;20.;21.
+Node;1206;;20.;20.;21.
+Node;1207;;10.;20.;21.
+Node;1208;;0.;20.;21.
+Node;1209;;0.;10.;21.
+Node;1210;;0.;0.;21.
+Node;1301;;0.;0.;31.
+Node;1302;;10.;0.;31.
+Node;1303;;20.;0.;31.
+Node;1304;;20.;10.;31.
+Node;1305;;20.;20.;31.
+Node;1306;;20.;20.;31.
+Node;1307;;10.;20.;31.
+Node;1308;;0.;20.;31.
+Node;1309;;0.;10.;31.
+Node;1310;;0.;0.;31.
+Node;1401;;0.;0.;41.
+Node;1402;;10.;0.;41.
+Node;1403;;20.;0.;41.
+Node;1404;;20.;10.;41.
+Node;1405;;20.;20.;41.
+Node;1406;;20.;20.;41.
+Node;1407;;10.;20.;41.
+Node;1408;;0.;20.;41.
+Node;1409;;0.;10.;41.
+Node;1410;;0.;0.;41.
+Node;1500;;10.;10.;41.
+# Tube shells: channel A on PSHELL1 10, channel B on PSHELL1 11.
+ShellQuad4;1001;10;1001;1002;1102;1101
+ShellQuad4;1002;10;1002;1003;1103;1102
+ShellQuad4;1003;10;1003;1004;1104;1103
+ShellQuad4;1004;10;1004;1005;1105;1104
+ShellQuad4;1006;11;1006;1007;1107;1106
+ShellQuad4;1007;11;1007;1008;1108;1107
+ShellQuad4;1008;11;1008;1009;1109;1108
+ShellQuad4;1009;11;1009;1010;1110;1109
+ShellQuad4;1101;10;1101;1102;1202;1201
+ShellQuad4;1102;10;1102;1103;1203;1202
+ShellQuad4;1103;10;1103;1104;1204;1203
+ShellQuad4;1104;10;1104;1105;1205;1204
+ShellQuad4;1106;11;1106;1107;1207;1206
+ShellQuad4;1107;11;1107;1108;1208;1207
+ShellQuad4;1108;11;1108;1109;1209;1208
+ShellQuad4;1109;11;1109;1110;1210;1209
+ShellQuad4;1201;10;1201;1202;1302;1301
+ShellQuad4;1202;10;1202;1203;1303;1302
+ShellQuad4;1203;10;1203;1204;1304;1303
+ShellQuad4;1204;10;1204;1205;1305;1304
+ShellQuad4;1206;11;1206;1207;1307;1306
+ShellQuad4;1207;11;1207;1208;1308;1307
+ShellQuad4;1208;11;1208;1209;1309;1308
+ShellQuad4;1209;11;1209;1210;1310;1309
+ShellQuad4;1301;10;1301;1302;1402;1401
+ShellQuad4;1302;10;1302;1303;1403;1402
+ShellQuad4;1303;10;1303;1304;1404;1403
+ShellQuad4;1304;10;1304;1305;1405;1404
+ShellQuad4;1306;11;1306;1307;1407;1406
+ShellQuad4;1307;11;1307;1308;1408;1407
+ShellQuad4;1308;11;1308;1309;1409;1408
+ShellQuad4;1309;11;1309;1310;1410;1409
+# Composite cap on the top ring (uses the channel A point at each welded
+# corner).
+ShellQuad4;1501;30;1401;1402;1500;1409
+ShellQuad4;1502;30;1402;1403;1404;1500
+ShellQuad4;1503;30;1500;1404;1405;1407
+ShellQuad4;1504;30;1409;1500;1407;1408
+# Spot welds: BJOIN 1 joins the coincident pairs listed in BCGRID 22 (pairs
+# in sequence), breaking at 5 kN in tension or 3 kN in shear.
+ContactNodeRegion;22;1001;1010;1005;1006;1101;1110;1105;1106;1201;1210;1205;1206;1301;1310;1305;1306;1401;1410;1405;1406
+SpotweldJoinPairs;1;22;;SpotWeld;5.E+3;3.E+3
+# Rigid wall z = 0 (normal +z, towards the tube) that the bottom ring cannot
+# pass, penalty method with friction.
+ContactNodeRegion;21;1001;Through;1010
+RigidWall;1;0.;0.;0.;0.;0.;1.;21;PenaltyMethod;0.2;0.1
+# Impactor: a 2 x 2 x 1 steel block 1 mm above the cap, grid points 2001-2009
+# (bottom) and 2011-2019 (top).
+Node;2001;;0.;0.;42.
+Node;2002;;10.;0.;42.
+Node;2003;;20.;0.;42.
+Node;2004;;0.;10.;42.
+Node;2005;;10.;10.;42.
+Node;2006;;20.;10.;42.
+Node;2007;;0.;20.;42.
+Node;2008;;10.;20.;42.
+Node;2009;;20.;20.;42.
+Node;2011;;0.;0.;62.
+Node;2012;;10.;0.;62.
+Node;2013;;20.;0.;62.
+Node;2014;;0.;10.;62.
+Node;2015;;10.;10.;62.
+Node;2016;;20.;10.;62.
+Node;2017;;0.;20.;62.
+Node;2018;;10.;20.;62.
+Node;2019;;20.;20.;62.
+SolidHexa;2101;20;2001;2002;2005;2004;2011;2012;2015;2014
+SolidHexa;2102;20;2002;2003;2006;2005;2012;2013;2016;2015
+SolidHexa;2103;20;2004;2005;2008;2007;2014;2015;2018;2017
+SolidHexa;2104;20;2005;2006;2009;2008;2015;2016;2019;2018
+# Initial velocity of the block: -10 m/s along z (IC = 1).
+InitialVelocityField;1;2005;1.;0.;0.;-1.E+4;;;;2001;Through;2009;2011;Through;2019
+# Contact: the block (BCMATL 11, every element of material 2) touches the cap
+# (BCPROP 12, the laminate: a composite region cannot be given by BCMATL).
+ContactMaterialRegion;11;2
+ContactPropertyRegion;12;30
+ContactBody;1;ThreeDimensional;Deformable;11
+ContactBody;2;ThreeDimensional;Deformable;12
+ContactTable;1;;;1;;;Secondary;1;;;0.1;;;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;2

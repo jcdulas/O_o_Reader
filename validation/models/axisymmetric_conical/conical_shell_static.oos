@@ -1,0 +1,89 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric conical shell, static
+#
+# Covers:
+#   - cards: AXIC, RINGAX, CCONEAX, PCONEAX, POINTAX, SECTAX, FORCEAX, MOMAX,
+#     PRESAX, TEMPAX, SPCAX, MPCAX, OMITAX (with MAT1, FORCE, MOMENT)
+#   - solution: SOL 101 (linear static: harmonic loads, then a temperature
+#     field)
+#   - outputs: displacements of the ring harmonics and of the points and
+#     sectors, SPC and MPC forces (OUTPUT2); CCONEAX stresses and forces (listing,
+#     OUTPUT2)
+# Run notes:
+#   - HARMONICS = ALL asks the output of every harmonic (only harmonic 0 is
+#     printed without it); ring results carry the identifier ring + 1000000 *
+#     (harmonic + 1)
+#   - the HID fields hold the harmonic number (0 to 2)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: axisymmetric conical shell, static
+BulkEcho;Sorted
+HarmonicsSelection;All
+SinglePointConstrSelection;1
+MultiPointConstrSelection;2
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;ring forces and moments, pressures, point loads
+StaticLoadSelection;10
+SubcaseStart;2
+LabelText;temperature field
+TemperatureSelection;20;TemperatureLoadPart
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, degrees C. Steel (MAT1 1, with an expansion
+# coefficient and TREF 20 C). AXIC 2: harmonics 0, 1 and 2.
+AxisymConeControl;2
+IsoMat;1;2.1E+5;;0.3;7.85E-9;1.2E-5;20.
+# A truncated cone 100 mm high, radius 100 at z = 0 to 60 at z = 100: five
+# RINGAX, four CCONEAX on PCONEAX 1 (2 mm: membrane, bending and transverse
+# shear, stresses at 0 and 90 degrees). Ring 1 is clamped for every harmonic
+# by its PS field.
+AxisymConeRing;1;100.;0.;123456
+AxisymConeRing;2;90.;25.
+AxisymConeRing;3;80.;50.
+AxisymConeRing;4;70.;75.
+AxisymConeRing;5;60.;100.
+ConicalShellProp;1;1;2.;1;0.6667;1;1.6667;;1.;-1.;0.;90.
+ShellConical2;1;1;1;2
+ShellConical2;2;1;2;3
+ShellConical2;3;1;3;4
+ShellConical2;4;1;4;5
+# Output and load points: POINTAX 51 on ring 5 at 0 degrees (loaded by a FORCE
+# and a MOMENT), SECTAX 52 on ring 4 from 80 to 100 degrees (output only).
+AxisymConePoint;51;5;0.
+AxisymConeSector;52;4;70.;80.;100.
+# Constraints: SPCAX 1 holds the radial component of harmonic 2 at ring 5;
+# MPCAX 2 ties the axial component of harmonic 1 at ring 4 (dependent) to the
+# one at ring 5; OMITAX removes two components of harmonic 2 from the analysis
+# set.
+SinglePointConstrAxisym;1;5;2;1;0.
+MultiPointConstrAxisym;2;4;1;3;1.;5;1;3;-1.
+AxisymOmittedDofSet;3;2;2;2;2;4
+# Load set 10: an axial compression (harmonic 0) and a lateral force (harmonic
+# 1) on ring 5, a bending moment (harmonic 1) on ring 5, an internal pressure
+# over the full circle on the two lower elements and over 0 to 60 degrees on
+# the two upper ones, a force and a moment on POINTAX 51.
+AxisymRingForceLoad;10;5;0;1.;0.;0.;-500.
+AxisymRingForceLoad;10;5;1;1.;100.;0.;0.
+AxisymRingMomentLoad;10;5;1;1.;0.;2.E+3;0.
+AxisymConePressureLoad;10;0.1;1;2;0.;360.
+AxisymConePressureLoad;10;0.1;2;3;0.;360.
+AxisymConePressureLoad;10;0.2;3;4;0.;60.
+AxisymConePressureLoad;10;0.2;4;5;0.;60.
+PointForceLoad;10;51;;50.;0.;1.;0.
+PointMomentLoad;10;51;;200.;1.;0.;0.
+# Temperature set 20: 120 C at 0 degrees and 80 C at 180 degrees on every
+# ring.
+AxisymConeTemperatureLoad;20;1;0.;120.;20;1;180.;80.
+AxisymConeTemperatureLoad;20;2;0.;120.;20;2;180.;80.
+AxisymConeTemperatureLoad;20;3;0.;120.;20;3;180.;80.
+AxisymConeTemperatureLoad;20;4;0.;120.;20;4;180.;80.
+AxisymConeTemperatureLoad;20;5;0.;120.;20;5;180.;80.

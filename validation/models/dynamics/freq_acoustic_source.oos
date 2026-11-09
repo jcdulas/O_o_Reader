@@ -1,0 +1,38 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: acoustic source in a cavity (ACSRCE)
+#
+# Covers:
+#   - cards: ACSRCE
+#   - solution: SOL 108 (direct frequency response, coupled fluid and
+#               structure)
+#   - outputs: displacements (fluid pressures at the fluid points): complex
+#              magnitude/phase, SORT1
+# Run notes:
+#   - the fluid cavity and its plate floor are the shared acoustic model of
+#     results_dynamics/ (INCLUDEd)
+#   - the source is the fluid point 114 at the centre of the cavity lid
+#     (SLOAD), with a constant delay and phase and a power table
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: acoustic source in a cavity
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;30
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+SubcaseStart;1
+LabelText;point source at fluid point 114
+[model]
+Parameter;PostprocessingFile;-1
+FreqLinearSteps1;41;100.;100.;20
+# ACSRCE 30: SLOAD 31 at fluid point 114, delay 0.2 ms, phase 10 degrees,
+# power from TABLED1 34, fluid density and bulk modulus of the MAT10 of the
+# cavity (air).
+AcousticSourceLoad;30;31;;2.E-4;;10.;34;;1.2E-12;0.142
+ScalarPointLoad;31;114;1.
+TableDynamic1;34;;;0.;1.E+3;5.E+3;1.E+3;EndTable
+Include;../results_dynamics/acoustic_model.oos

@@ -1,0 +1,62 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric cyclic model under an azimuth table load
+#
+# Covers:
+#   - cards: LOADCYT, CYSYM (AXI), CYJOIN (with the T2 normal) (with CORD2C,
+#     CQUAD4, TABLED1)
+#   - solution: SOL 114 (cyclic symmetry statics, all harmonics)
+#   - outputs: displacements of the segments
+# Run notes:
+#   - a 10 degree segment of 36 of an annular plate, all its points on side
+#     1 or side 2; the axial force on side 1 is scaled by a table of the
+#     azimuth (1 at 0 and 360 degrees, 0 at 180 degrees)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;114
+[case]
+TitleText;O_o_Reader test model: axisymmetric cyclic table load
+BulkEcho;None
+SinglePointConstrSelection;1
+HarmonicsSelection;All
+CyclicSegmentOutput;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;axial force varying with the azimuth
+StaticLoadSelection;10
+[model]
+Parameter;PostprocessingFile;-1
+# Thirty-six segments of 10 degrees about the z axis of the basic system.
+CyclicSymmetry;36;Axisymmetric
+# The segment: an annular steel plate of 4 CQUAD4, r 50 to 100, theta 0 to
+# 10, given and displaced in the cylindrical system 1. Units: mm, N, tonne, s.
+CylindricalFrame2;1;0;0.;0.;0.;0.;0.;1.;1.;0.;0.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;1;50.;0.;0.;1
+Node;2;1;62.5;0.;0.;1
+Node;3;1;75.;0.;0.;1
+Node;4;1;87.5;0.;0.;1
+Node;5;1;100.;0.;0.;1
+Node;6;1;50.;10.;0.;1
+Node;7;1;62.5;10.;0.;1
+Node;8;1;75.;10.;0.;1
+Node;9;1;87.5;10.;0.;1
+Node;10;1;100.;10.;0.;1
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+# Side 1 and side 2; the motion normal to the sides is T2 (tangential).
+CyclicBoundaryJoin;1;Translation2;1;Through;5
+CyclicBoundaryJoin;2;Translation2;6;Through;10
+# The outer edge is clamped.
+SinglePointConstrList;1;123456;5;10
+# An axial force on side 1, scaled point by point with the azimuth (method
+# 1, as for a load on grid points).
+PointForceLoad;31;2;1;10.;0.;0.;1.
+PointForceLoad;31;3;1;10.;0.;0.;1.
+PointForceLoad;31;4;1;10.;0.;0.;1.
+TableDynamic1;19;;;0.;1.;180.;0.;360.;1.;EndTable
+CyclicAzimuthTableLoad;10;19;31;1

@@ -1,0 +1,104 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: shells glued edge to edge (SOL 101)
+#
+# Validates:
+#   - the grid points the solver glues between two coplanar plates side by side, each
+#     on its own grid points along the common edge (the MPC equations of the
+#     glue, punched by NLOPRM MPCPCH, and the contact status printed in the
+#     listing), and the gap of each
+#   - the thickness of side by side shells in the contact distance: the two
+#     plates are 2 and 3 mm thick, their skins are level; the solver's automatic
+#     ERROR is the thinnest shell over 4 (0.5)
+# Settles (library item: current status):
+#   - the shells glued edge to edge: the library takes no thickness in the gap
+#     of a grid point whose shells are coplanar with the face it meets at the
+#     boundary of the face (contactNodePairs(rule="solver") ties grid points
+#     5, 10 and 15 of body 1 at gap 0, searched first: ISEARCH 0), not
+#     validated against the solver
+# Run notes:
+#   - NLOPRM MPCPCH punches the glue equations (format reference BCTABLE remark 18): bring
+#     the .pch back with the listing and the OUTPUT2 file
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;shells glued edge to edge
+BulkEcho;Sorted
+NonlinearOutputParams;PunchGlueEquations
+ContactSelection;1
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tension and bending across the glued edge
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Body 1: a 40 x 20 plate of 4 x 2 CQUAD4 at z = 0, x 0 to 40, 2 mm thick, grid
+# points 1 to 15. Body 2: a 40 x 20 plate of 4 x 2 CQUAD4 at z = 0, x 40 to 80,
+# 3 mm thick, grid points 101 to 115: grid points 101, 106 and 111 are at the
+# place of 5, 10 and 15 (the common edge, not merged). Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+ShellProp;2;1;3.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+Node;101;;40.;0.;0.
+Node;102;;50.;0.;0.
+Node;103;;60.;0.;0.
+Node;104;;70.;0.;0.
+Node;105;;80.;0.;0.
+Node;106;;40.;10.;0.
+Node;107;;50.;10.;0.
+Node;108;;60.;10.;0.
+Node;109;;70.;10.;0.
+Node;110;;80.;10.;0.
+Node;111;;40.;20.;0.
+Node;112;;50.;20.;0.
+Node;113;;60.;20.;0.
+Node;114;;70.;20.;0.
+Node;115;;80.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+ShellQuad4;101;2;101;102;107;106
+ShellQuad4;102;2;102;103;108;107
+ShellQuad4;103;2;103;104;109;108
+ShellQuad4;104;2;104;105;110;109
+ShellQuad4;105;2;106;107;112;111
+ShellQuad4;106;2;107;108;113;112
+ShellQuad4;107;2;108;109;114;113
+ShellQuad4;108;2;109;110;115;114
+ContactElemSurface;1;1;Through;8
+ContactElemSurface;2;101;Through;108
+ContactBody;1;ThreeDimensional;Deformable;1
+ContactBody;2;ThreeDimensional;Deformable;2
+ContactTable;1;;;;;;Secondary;2;;;;;3;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;1
+SinglePointConstrList;1;123456;1;6;11
+PointForceLoad;1;105;;10.;1.;0.;0.1
+PointForceLoad;1;110;;10.;1.;0.;0.1
+PointForceLoad;1;115;;10.;1.;0.;0.1

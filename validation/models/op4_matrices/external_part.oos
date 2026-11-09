@@ -1,0 +1,20 @@
+# External superelement 100: a plate of 2 x 2 CQUAD4 at x 40 to 60, y 0 to 20;
+# its boundary is the edge x = 40 (ASET1), where the assembly residual of
+# superelements/se_external_assemble_auto.bdf has coincident grid points.
+# Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1001;;40.;0.;0.
+Node;1002;;50.;0.;0.
+Node;1003;;60.;0.;0.
+Node;1004;;40.;10.;0.
+Node;1005;;50.;10.;0.
+Node;1006;;60.;10.;0.
+Node;1007;;40.;20.;0.
+Node;1008;;50.;20.;0.
+Node;1009;;60.;20.;0.
+ShellQuad4;1001;1;1001;1002;1005;1004
+ShellQuad4;1002;1;1002;1003;1006;1005
+ShellQuad4;1003;1;1004;1005;1008;1007
+ShellQuad4;1004;1;1005;1006;1009;1008
+AnalysisDofSet1;123456;1001;1004;1007

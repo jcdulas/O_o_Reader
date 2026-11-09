@@ -1,0 +1,82 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: legacy surface contact sets (read-only)
+#
+# Covers:
+#   - cards: BCTSET, BCTPARM, BCTPARA, BCTADD
+#   - solution: SOL 101 (linear static with surface contact, as the decks
+#     that carry these entries use it)
+#   - outputs: none (not run)
+# Run notes:
+#   - READ-ONLY: the four entries are not in the format
+#     reference (they are entries of another implementation, with the BCSET
+#     case command); the solver would stop on them. O_o_Reader
+#     reads, checks and writes them; this deck is not run
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: legacy surface contact sets (read-only)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+ContactSetSelection;200
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;two plates pressed on a base plate
+[model]
+Parameter;PostprocessingFile;-1
+# A base plate (PSHELL 1, 2 x 2 CQUAD4, clamped edges) and two small plates
+# resting on it (PSHELL 2 and 3, one CQUAD4 each), 1 mm thick, their mid
+# planes 1 mm apart. Units: mm, N, t.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;1.;1;;1
+ShellProp;2;1;1.;1;;1
+ShellProp;3;1;1.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;2;3;7;8;9
+Node;11;;1.;6.;1.
+Node;12;;9.;6.;1.
+Node;13;;9.;14.;1.
+Node;14;;1.;14.;1.
+ShellQuad4;11;2;11;12;13;14
+SinglePointConstrList;1;12456;11;Through;14
+PointForceLoad;1;11;;10.;0.;0.;-1.
+PointForceLoad;1;12;;10.;0.;0.;-1.
+PointForceLoad;1;13;;10.;0.;0.;-1.
+PointForceLoad;1;14;;10.;0.;0.;-1.
+Node;21;;11.;6.;1.
+Node;22;;19.;6.;1.
+Node;23;;19.;14.;1.
+Node;24;;11.;14.;1.
+ShellQuad4;21;3;21;22;23;24
+SinglePointConstrList;1;12456;21;Through;24
+PointForceLoad;1;21;;10.;0.;0.;-1.
+PointForceLoad;1;22;;10.;0.;0.;-1.
+PointForceLoad;1;23;;10.;0.;0.;-1.
+PointForceLoad;1;24;;10.;0.;0.;-1.
+# The regions (BSURF), the two contact sets (source region on target
+# region, friction, search distances) and their union BCTADD 200
+ContactElemSurface;1;1;2;3;4
+ContactElemSurface;2;11
+ContactElemSurface;3;21
+ContactSet;101;2;1;0.1;0.;1.5
+ContactSet;102;3;1;0.1;0.;1.5
+ContactSetUnion;200;101;102
+# Parameters of the union (penalty type, initial penetration) and the
+# advanced parameters of set 101
+ContactControlParams;200;PENTYP;1;INIPENE;0
+ContactSurfaceParams;101;ContactKind;0;SideCount;2;OffsetDistance;0.

@@ -1,0 +1,62 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric acoustic cavity with radial slots
+#
+# Covers:
+#   - cards: AXSLOT, GRIDF, GRIDS, CAXIF2, CAXIF3, CAXIF4, CSLOT3, CSLOT4,
+#     SLBDY
+#   - solution: SOL 103 (acoustic modes of the cavity, harmonic 0)
+#   - outputs: eigenvalues, eigenvectors (pressures)
+# Run notes:
+#   - an air cavity, radius 50 mm, length 100 mm (r, z in the basic x, y),
+#     opening at r = 50 on six radial slots 5 mm wide that reach r = 80;
+#     the slot points on the interface (r = 50) name the fluid points 11,
+#     12 and 13 (GRIDF, same place) of the central cavity elements next to
+#     it
+#   - units: mm, N, t, s
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: cavity with slots (SOL 103)
+BulkEcho;None
+EigenMethodSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;acoustic modes, harmonic 0
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;1;;;6
+# Air (density, bulk modulus), harmonic 0, six slots 5 mm wide.
+AcousticSlotControl;1.2E-12;0.142;0;5.;6
+# Central cavity: fluid points at r = 25 and the interface points at r = 50.
+AcousticSlotFluidPoint;1;25.;0.
+AcousticSlotFluidPoint;2;25.;50.
+AcousticSlotFluidPoint;3;25.;100.
+AcousticSlotFluidPoint;11;50.;0.
+AcousticSlotFluidPoint;12;50.;50.
+AcousticSlotFluidPoint;13;50.;100.
+AcousticAxisymFluid2;101;1;2
+AcousticAxisymFluid2;102;2;3
+AcousticAxisymFluid4;103;1;11;12;2
+AcousticAxisymFluid3;104;2;12;13
+AcousticAxisymFluid3;105;2;13;3
+# Slots: points at r = 50 (on the interface), 65 and 80.
+AcousticSlotSurfacePoint;21;50.;0.;;11
+AcousticSlotSurfacePoint;22;50.;50.;;12
+AcousticSlotSurfacePoint;23;50.;100.;;13
+AcousticSlotSurfacePoint;31;65.;0.
+AcousticSlotSurfacePoint;32;65.;50.
+AcousticSlotSurfacePoint;33;65.;100.
+AcousticSlotSurfacePoint;41;80.;0.
+AcousticSlotSurfacePoint;42;80.;50.
+AcousticSlotSurfacePoint;43;80.;100.
+AcousticSlot4;201;21;31;32;22
+AcousticSlot4;202;31;41;42;32
+AcousticSlot3;203;22;32;33
+AcousticSlot3;204;22;33;23
+AcousticSlot3;205;32;42;43
+AcousticSlot3;206;32;43;33
+# Boundary between the slots and the central cavity.
+AcousticSlotBoundary;;;21;22;23

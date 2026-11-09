@@ -1,0 +1,95 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: part superelements, mirror image and mass combinations
+#
+# Covers:
+#   - cards: SEMPLN, SELABEL, SENQSET, MASSSET (with SEBULK MIRROR, POINT,
+#     BEGIN SUPER, BEGIN MASSID, CONM2, EIGRL)
+#   - solution: SOL 103 (normal modes with component mode reduction of the
+#     parts, base mass and a mass combination)
+#   - outputs: eigenvalues, eigenvectors of the residual structure
+# Run notes:
+#   - part 20 is the mirror image of part 10 in the plane y = 20; both are
+#     reduced with 4 generated generalized coordinates each (SENQSET ALL)
+#   - subcase 2 adds the mass increment 101 (a CONM2 of the residual
+#     structure, BEGIN MASSID=101, and one of part 10, BEGIN BULK SUPER=10
+#     MASSID=101) to the base mass
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: part superelements, mirror and mass sets
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;base mass
+SubcaseStart;2
+LabelText;base mass plus increment 101
+MassCombinationSelection;11
+[model]
+Parameter;PostprocessingFile;-1
+# Residual structure: a plate of 2 x 4 CQUAD4 at x 0 to 20, y 0 to 40,
+# clamped at x = 0. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+Node;10;;0.;30.;0.
+Node;11;;10.;30.;0.
+Node;12;;20.;30.;0.
+Node;13;;0.;40.;0.
+Node;14;;10.;40.;0.
+Node;15;;20.;40.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+ShellQuad4;7;1;10;11;14;13
+ShellQuad4;8;1;11;12;15;14
+SinglePointConstrList;1;123456;1;4;7;10;13
+LanczosEigenMethod;1;;;6
+# Part 10 (x 20 to 40, y 30 to 40) is found on residual points 12 and 15;
+# part 20 is its mirror image in the plane y = 20 (three POINTs of the main
+# Bulk Data), found on residual points 6 and 3.
+SuperelementBulkOptions;10;Primary;;Automatic
+SuperelementBulkOptions;20;Mirror;10;Automatic
+GeomPoint;901;;0.;20.;0.
+GeomPoint;902;;10.;20.;0.
+GeomPoint;903;;0.;20.;10.
+SuperelementMirrorPlane;20;Plane;901;902;903
+SuperelementGeneralizedPointCount;All;4
+SuperelementLabel;10;Upper panel
+SuperelementLabel;20;Mirrored lower panel
+# Mass combination 11: the base mass plus mass increment 101.
+MassCaseCombination;11;1.;1.;0;1.;101
+[model;SuperelementPart;10]
+# Part 10: a plate of 2 x 1 CQUAD4.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1001;;20.;30.;0.
+Node;1002;;30.;30.;0.
+Node;1003;;40.;30.;0.
+Node;1004;;20.;40.;0.
+Node;1005;;30.;40.;0.
+Node;1006;;40.;40.;0.
+ShellQuad4;1001;1;1001;1002;1005;1004
+ShellQuad4;1002;1;1002;1003;1006;1005
+[model;MassModel;101]
+# Mass increment 101: a concentrated mass of 10 g on residual point 8, a grid
+# point of the base Bulk Data.
+PointMassInertia;9001;8;;1.E-5
+[model;SuperelementPart;10;massId=101]
+# The same increment in part 10: 5 g on its point 1005.
+PointMassInertia;9002;1005;;5.E-6

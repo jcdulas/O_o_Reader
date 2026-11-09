@@ -1,0 +1,149 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: modules found, connected, copied, moved and mirrored
+#
+# Covers:
+#   - cards: MDBULK, MDBNDRY, MDEXCLD, MDCONCT, MDLABEL, MDLOC, MDMPLN,
+#     MDMOVE, MDTRAN, MDROT1, MDROT2, MDMIR1, MDMIR2, MDDMIG, EXCLUDE (with
+#     BEGIN MODULE, ENDMODULE, POINT and the Case Control K2GG)
+#   - solution: SOL 101 (statics of eight modules)
+#   - outputs: displacements
+# Run notes:
+#   - module 0 is a plate of 20 x 20 clamped at its centre; module 1 is a
+#     panel on its edge x = 20; modules 3 to 7 are copies of module 1 placed
+#     around (a mirror, two rotations, a mirror and a translation twice);
+#     module 2 is placed by MDLOC and joined by hand (MDCONCT) to module 4
+#   - module 1 carries a load at its corner 109, which its copies inherit;
+#     the section of module 3 leaves it out (EXCLUDE FORCE, format reference EXCLUDE
+#     remark 1)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: module search and positioning
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DirectInputStiffnessMatrix;KSPR
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;loads on modules 0, 1 (and its copies but 3) and 2
+[model]
+Parameter;PostprocessingFile;-1
+# Module 0: a plate of 2 x 2 CQUAD4 at x 0 to 20, y 0 to 20, clamped at its
+# centre point 5. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;5
+PointForceLoad;1;9;;10.;0.;0.;1.
+# Module 1 (primary): searched only at 101, 104 and 107 against module 0,
+# and 104 is excluded, so that it hangs on 101 and 107.
+ModuleBulkOptions;1;;;Automatic
+ModuleBoundaryNodes;1;0;101;104;107
+ModuleExcludedNodes;1;0;104
+ModuleLabel;1;Primary panel
+# Module 3: a copy of module 1 mirrored in the plane x = 10 (left side).
+ModuleBulkOptions;3;Repeat;1;Automatic
+GeomPoint;911;;10.;0.;0.
+GeomPoint;912;;10.;20.;0.
+GeomPoint;913;;10.;0.;10.
+ModuleMirrorPlane;3;911;912;913
+# Module 4: a copy of module 1 turned by 90 degrees about the z axis through
+# (10, 10) (top side).
+ModuleBulkOptions;4;Move;1;Automatic
+GeomPoint;920;;10.;10.;0.
+GeomPoint;921;;10.;10.;10.
+ModuleRotation1;41;;920;921;90.
+ModuleMoveSequence;4;41
+# Module 5: a copy turned by -90 degrees about the z axis of the basic
+# system through point 920 (bottom side).
+ModuleBulkOptions;5;Move;1;Automatic
+ModuleRotation2;51;;920;ZAxis;-90.
+ModuleMoveSequence;5;51
+# Module 6: a copy mirrored in the plane x = 30, then moved by 20 along x:
+# it continues module 1 from x = 40 to 60.
+ModuleBulkOptions;6;Move;1;Automatic
+GeomPoint;931;;30.;0.;0.
+GeomPoint;932;;30.;20.;0.
+GeomPoint;933;;30.;0.;10.
+ModuleMirror1;61;931;932;933
+GeomPoint;941;;0.;0.;0.
+GeomPoint;942;;20.;0.;0.
+ModuleTranslation;62;941;942
+ModuleMoveSequence;6;61;62
+# Module 7: a copy mirrored in the y-z plane through point 920, then moved
+# by -20 along x: it continues module 3 from x = -20 to -40.
+ModuleBulkOptions;7;Move;1;Automatic
+ModuleMirror2;71;;920;PlaneYz
+ModuleTranslation;72;942;941
+ModuleMoveSequence;7;71;72
+# Module 2: given at x 0 to 20, y 0 to 20, placed by MDLOC at y 40 to 60
+# above module 4, and joined to it by hand at three points.
+ModuleBulkOptions;2;;;Manual
+ModuleLabel;2;Located panel
+GeomPoint;951;;0.;40.;0.
+GeomPoint;952;;20.;40.;0.
+GeomPoint;953;;0.;60.;0.
+ModuleLocation;2;201;203;207;951;952;953
+ModuleConnection;21;Rigid;0.001;0.;;40.;0.;;;2;201;4;109
+ModuleConnection;22;Rigid;0.001;10.;;40.;0.;;;2;202;4;106
+ModuleConnection;23;Rigid;0.001;20.;;40.;0.;;;2;203;4;103
+# A spring of 100 N/mm between the out-of-plane motions of point 108 of
+# module 1 and point 205 of module 2, as a symmetric direct matrix (K2GG).
+ModuleDirectMatrix;KSPR;0;6;1
+ModuleDirectMatrix;KSPR;1;108;3;;;;1;108;3;100.;;2;205;3;-100.
+ModuleDirectMatrix;KSPR;2;205;3;;;;2;205;3;100.
+[model;ModuleSection;1]
+# Module 1: a plate of 2 x 2 CQUAD4 at x 20 to 40, y 0 to 20.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;101;;20.;0.;0.
+Node;102;;30.;0.;0.
+Node;103;;40.;0.;0.
+Node;104;;20.;10.;0.
+Node;105;;30.;10.;0.
+Node;106;;40.;10.;0.
+Node;107;;20.;20.;0.
+Node;108;;30.;20.;0.
+Node;109;;40.;20.;0.
+ShellQuad4;101;1;101;102;105;104
+ShellQuad4;102;1;102;103;106;105
+ShellQuad4;103;1;104;105;108;107
+ShellQuad4;104;1;105;106;109;108
+PointForceLoad;1;109;;5.;0.;0.;1.
+[model;ModuleSection;3]
+# Module 3, the mirrored copy of module 1: everything but its FORCE.
+ModuleEntryExclusion;PointForceLoad
+[model;ModuleSection;2]
+# Module 2: a plate of 2 x 2 CQUAD4 at x 0 to 20, y 0 to 20 before MDLOC,
+# loaded at its far corner.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;201;;0.;0.;0.
+Node;202;;10.;0.;0.
+Node;203;;20.;0.;0.
+Node;204;;0.;10.;0.
+Node;205;;10.;10.;0.
+Node;206;;20.;10.;0.
+Node;207;;0.;20.;0.
+Node;208;;10.;20.;0.
+Node;209;;20.;20.;0.
+ShellQuad4;201;1;201;202;205;204
+ShellQuad4;202;1;202;203;206;205
+ShellQuad4;203;1;204;205;208;207
+ShellQuad4;204;1;205;206;209;208
+PointForceLoad;1;209;;10.;0.;0.;1.

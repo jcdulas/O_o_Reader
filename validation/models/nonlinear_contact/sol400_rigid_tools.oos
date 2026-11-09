@@ -1,0 +1,156 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rigid tools pressing a block (SOL 400)
+#
+# Covers:
+#   - cards: BCRIGID, BCRGSRF, BCPATCH, BCBZIER, BCNURBS, BCTRIM, BCBDPRP,
+#     BCONPRG, BCONPRP, BCTABL1, BCPARA, BCHANGE, BCMOVE, NLSTEP (ADAPT with
+#     user criteria), TABSCTL, NLOUT, DEACTEL
+#   - solution: SOL 400 (nonlinear static, two steps, 3D contact with rigid
+#     surfaces)
+#   - outputs: displacements, SPC forces, nonlinear stresses (NLSTRESS with
+#     the NLOUT quantities), contact forces and tractions
+# Run notes:
+#   - step 1: a rigid punch (a BCPATCH and a BCBZIER under one BCRGSRF) moves
+#     down at 0.02 mm per unit time, a rigid side wall (trimmed BCNURBS) is
+#     moved 0.01 mm into the block by position control; step 2 releases the
+#     punch (BCMOVE RELEASE)
+#   - element 9 is deactivated from the start (DEACTEL)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: rigid tools pressing a block (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+DeactivatedElemsSelection;7
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+NonlinearStressOutput;All;PlotOnly;NLOUT=9
+SlidelineContactOutput;All;PlotOnly
+SubcaseStart;1
+StepStart;1
+LabelText;punch down, side wall in
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;1
+ContactSelection;1
+ContactBodyChangeSelection;1
+StepStart;2
+LabelText;punch released
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;2
+ContactSelection;1
+ContactBodyMoveSelection;2
+[model]
+Parameter;PostprocessingFile;-1
+# The deformable block: 20 x 20 x 10 mm of aluminium, 2 x 2 x 2 CHEXA,
+# clamped on its bottom face. Advanced nonlinear solid (PSLDN1); the solid
+# grid points have no rotations (PS 456). Units: mm, N, t.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+SolidProp;1;1
+SolidPropNonlinear;1;1;;ImplicitStructural
+Node;1;;0.;0.;0.;;456
+Node;2;;10.;0.;0.;;456
+Node;3;;20.;0.;0.;;456
+Node;4;;0.;10.;0.;;456
+Node;5;;10.;10.;0.;;456
+Node;6;;20.;10.;0.;;456
+Node;7;;0.;20.;0.;;456
+Node;8;;10.;20.;0.;;456
+Node;9;;20.;20.;0.;;456
+Node;10;;0.;0.;5.;;456
+Node;11;;10.;0.;5.;;456
+Node;12;;20.;0.;5.;;456
+Node;13;;0.;10.;5.;;456
+Node;14;;10.;10.;5.;;456
+Node;15;;20.;10.;5.;;456
+Node;16;;0.;20.;5.;;456
+Node;17;;10.;20.;5.;;456
+Node;18;;20.;20.;5.;;456
+Node;19;;0.;0.;10.;;456
+Node;20;;10.;0.;10.;;456
+Node;21;;20.;0.;10.;;456
+Node;22;;0.;10.;10.;;456
+Node;23;;10.;10.;10.;;456
+Node;24;;20.;10.;10.;;456
+Node;25;;0.;20.;10.;;456
+Node;26;;10.;20.;10.;;456
+Node;27;;20.;20.;10.;;456
+SolidHexa;1;1;1;2;5;4;10;11;14;13
+SolidHexa;2;1;2;3;6;5;11;12;15;14
+SolidHexa;3;1;4;5;8;7;13;14;17;16
+SolidHexa;4;1;5;6;9;8;14;15;18;17
+SolidHexa;5;1;10;11;14;13;19;20;23;22
+SolidHexa;6;1;11;12;15;14;20;21;24;23
+SolidHexa;7;1;13;14;17;16;22;23;26;25
+SolidHexa;8;1;14;15;18;17;23;24;27;26
+SinglePointConstrList;1;123;1;Through;9
+# A spare element on the x = 0 face, outside the contact bodies, switched off
+# for the whole run by DEACTEL 7 (SET3 8); its outer grid points are fixed
+SolidProp;2;1
+SolidPropNonlinear;2;1;;ImplicitStructural
+Node;101;;-10.;0.;0.;;456
+Node;102;;-10.;10.;0.;;456
+Node;103;;-10.;10.;5.;;456
+Node;104;;-10.;0.;5.;;456
+SolidHexa;9;2;101;1;4;102;104;10;13;103
+SinglePointConstrList;1;123;101;Through;104
+TypedListSet3;8;Elements;9
+DeactivatedElems;7;8
+# Body 1: the block (BCPROP 1), friction 0.1 on its own (BCBDPRP 5)
+ContactPropertyRegion;1;1
+ContactBodyParams;5;FrictionCoefficient;0.1;InterfaceSubtype;0
+ContactBody1;1;5;ThreeDimensional;Deformable;1
+# Body 2: the punch, a flat quadrilateral patch and a flat 2 x 2 Bezier
+# surface side by side at z = 10 (normals up: the block is below, outside
+# the rigid body), listed by BCRGSRF 50; velocity control (BCRIGID 20) at
+# reference point 9010 (a position only: no element, all components
+# fixed, like the control points of the surfaces)
+Node;9001;;-2.;-2.;10.
+Node;9002;;10.;-2.;10.
+Node;9003;;10.;22.;10.
+Node;9004;;-2.;22.;10.
+Node;9005;;22.;-2.;10.
+Node;9006;;22.;22.;10.
+SinglePointConstrList;1;123456;9001;Through;9006
+Node;9010;;10.;10.;10.;;123456
+ContactPatchSurface;51;1;9001;9002;9003;9004
+ContactBezierSurface;52;2;2;4;4;9002;9005;9003;9006
+ContactRigidSurfaceList;50;51;52
+ContactRigidMotion;20;9010;0;;0.;0.;0.;1.;0.;0.;-0.02
+ContactBody1;2;;ThreeDimensional;Rigid;50;20
+# Body 3: the side wall, a bilinear NURBS surface given by coordinates in
+# the plane x = 20 (u along y, v along z: normal along +x, the block on the
+# other side), trimmed along its parameter boundary (BCTRIM 61); position
+# control: reference point 9020 ends at x = 19.99
+ContactNurbsSurface;60;-2;2;2;2;4;4;Coordinates;12;20.;-2.;-2.;20.;22.;-2.;20.;-2.;12.;20.;22.;12.;HomogeneousCoordinates;4;1.;1.;1.;1.;KnotVector;8;0.;0.;1.;1.;0.;0.;1.;1.;Trimming;1;61
+ContactTrimCurve;61;5;2;10;Coordinates;10;0.;0.;1.;0.;1.;1.;0.;1.;0.;0.;HomogeneousCoordinates;5;1.;1.;1.;1.;1.;KnotVector;7;0.;0.;0.25;0.5;0.75;1.;1.
+Node;9020;;20.;10.;5.;;123456
+ContactRigidMotion;30;9020;-1;;0.;0.;0.;1.;19.99;10.;5.
+ContactBody1;3;;ThreeDimensional;Rigid;60;30
+# Contact pairs (block secondary, tools primary) with their geometric and
+# physical parameters, the table of both, the global parameters
+ContactPairGeomParams;21;ContactDistanceTolerance;0.005;ContactToleranceBias;0.9
+ContactPairGeomParams;22;ContactDistanceTolerance;0.005;ContactSearchOrder;1
+ContactPairPhysicalParams;31;FrictionCoefficient;0.15
+ContactPairPhysicalParams;32;FrictionCoefficient;0.05
+ContactPair;11;21;31;1;2
+ContactPair;12;22;32;1;3
+ContactTable1;1;11;12
+ContactParams;0;FrictionKind;6
+# Step 1: only the top and the x = 20 grid points of the block are
+# checked for contact; step 2: the punch is released
+ContactBodyChange;1;Node;1;19;27;1;1;3;27;3
+ContactBodyMove;2;Release;2
+# Step 1: adaptive increments limited by the displacement increment of the
+# top grid points (SET3 41) and by the strain increment of all elements
+# (TABSCTL 40); step 2: four fixed increments
+NonlinearStepControl;1;1.;;General;20;2;5;;AdaptiveStepping;0.1;1.E-4;0.5;4;1.2;0;200;0;;40;-1;0;0.1;10.;;;;;MechanicalAnalysis;PV;;0.01;0.01
+NonlinearStepControl;2;1.;;FixedStepping;4
+StepControlCriteria;40;DisplacementIncrement;41;0.005;;;;;;;;StrainIncrement;All;0.001
+TypedListSet3;41;Node;19;Through;27
+# Additional nonlinear output: von Mises stress, elastic strain, strain
+# energy density
+NonlinearOutputItems;9;EquivalentVonMisesStress;EquivalentElasticStrain;TTSTRNED

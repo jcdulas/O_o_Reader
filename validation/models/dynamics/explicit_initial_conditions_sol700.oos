@@ -1,0 +1,57 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: explicit initial conditions: TIC3 and TICEL
+#
+# Covers:
+#   - cards: TIC3, TICEL
+#   - solution: SOL 700 (explicit nonlinear transient)
+#   - outputs: none decoded by the library (the explicit solver's own result
+#              files)
+# Run notes:
+#   - IC = 81 selects both: TIC3 gives the steel block (one CHEXA) a velocity
+#     of 10 m/s along x; TICEL sets the density and specific internal energy
+#     of the left Euler element of a gas box (two CHEXA that MESH generates on
+#     PEULER, ideal gas EOSGAM): about 1 MPa against the ambient 0.1 MPa of
+#     the right element
+#   - end time 0.1 ms (TSTEPNL 1: 100 steps of 1 microsecond); bring back the
+#     listing and the result files the explicit solver writes
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: explicit initial conditions
+BulkEcho;None
+NonlinearTimeStepSelection;1
+InitialConditionSelection;81
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;moving block and pressurised gas
+[model]
+NonlinearTimeSteps;1;100;1.E-6
+# Lagrangian steel block, 10 mm cube. Units: mm, N, tonne, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+SolidProp;1;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;10.;10.;0.
+Node;4;;0.;10.;0.
+Node;5;;0.;0.;10.
+Node;6;;10.;0.;10.
+Node;7;;10.;10.;10.
+Node;8;;0.;10.;10.
+SolidHexa;1;1;1;2;3;4;5;6;7;8
+InitialVelocityField;81;1;1.;1.E+4;0.;0.;0.;0.;0.;1;Through;8
+# Euler box filled with air (ideal gas, gamma 1.4): MESH 10 generates two 20
+# mm CHEXA on PEULER 2 (x 100 to 140, y and z 0 to 20), grid points and
+# elements numbered from 10001 along x.
+EulerMeshGenerator;10;Box;;;;;;;100.;0.;0.;40.;20.;20.;2;1;1;;10001;10001;Euler;2
+EulerProp;2;3;Hydrodynamic
+EulerMat;3;1.2E-12;4
+GammaLawStateEquation;4;1.4
+# Initial state: specific internal energy 2.08E11 mm2/s2, density ten times
+# the ambient one in the first (left) Euler element.
+IdListSet1;5;10001
+IdListSet1;6;10002
+InitialElemValues;81;5;Density;1.2E-11;SpecificInternalEnergy;2.08E+11
+InitialElemValues;81;6;Density;1.2E-12;SpecificInternalEnergy;2.08E+11

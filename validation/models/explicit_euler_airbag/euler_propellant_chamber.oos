@@ -1,0 +1,48 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: deflagration in a closed propellant chamber (SOL 700)
+#
+# Covers:
+#   - cards: PEULER EOSDEF MATDEUL MESH
+#   - solution: SOL 700 (explicit transient: the hot gas of a burning
+#     propellant in a closed single-material Euler chamber)
+#   - outputs: none that O_o_Reader decodes (the explicit solver writes its
+#     own result files)
+# Run notes:
+#   - needs the explicit solver of SOL 700 in the installation (SOL 700 spawns
+#     it; a sol700.pth file or the default path must locate it)
+#   - SI units (m, kg, s, Pa, K)
+#   - MESH numbers the 40 Euler elements from 1001 (NSTEL), so that TICEL can
+#     name them all; every element can burn (DEFMAT = 1) and starts at the
+#     flame temperature (SIE = E / R x CV), which ignites the propellant at
+#     once; the Euler faces are walls
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;deflagration in a propellant chamber (SOL 700)
+BulkEcho;None
+StepEndTime;0.002
+NonlinearTimeStepSelection;1
+InitialConditionSelection;1
+[model]
+# Time: 200 steps of 1.0E-5 s (2 ms), output every 20 steps
+NonlinearTimeSteps;1;200;1.E-5;20
+# ---------------------------------------------------------------- Euler mesh
+# A 0.1 x 0.02 x 0.02 m chamber of 10 x 2 x 2 hexahedra of 10 mm, grids from
+# 1, elements from 1001, with the single-material property PEULER 10
+EulerMeshGenerator;1;Box;;;;;;;0.;0.;0.;0.1;0.02;0.02;10;2;2;;1;1001;Euler;10
+EulerProp;10;11;Hydrodynamic
+# ---------------------------------------------------------------- material
+# The hot gas of the propellant: Noble-Abel products (gamma 1.25, co-volume
+# 1.0E-3 m3/kg, R 300 J/(kg K)), chemical energy 1.2E6 J/kg, propellant
+# density 1600 kg/m3 at a loading fraction of 0.5, burning rate 4.0E-8
+# m/s/Pa**0.85, 6000 1/m surface over volume, form function 1.0 and 0.1
+EulerMat;11;1.14;1
+DeflagrationStateEquation;1;1.25;0.001;300.;;;1.2E+6;1600.;0.5;4.E-8;0.85;6.E+3;1.;0.1
+# ---------------------------------------------------------------- initial state
+# All elements: gas density 1.14 kg/m3, flame temperature 4000 K (SIE =
+# 4000 x 1200 J/kg), burnable
+InitialElemValues;1;1;Density;1.14;SpecificInternalEnergy;4.8E+6;DEFMAT;1.
+IdListSet1;1;1001;Through;1040

@@ -1,0 +1,82 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: direct frequency response, RLOAD2 forms, TF, damping
+#
+# Covers:
+#   - cards: FREQ, FREQ2, DLOAD, RLOAD2, DELAY, DPHASE, TABLED2, TABLED3,
+#            TABLED4, TABLED5 (through MAT1F), TF (on EPOINTs), DAMPING,
+#            HYBDAMP
+#   - solution: SOL 108 (direct frequency response)
+#   - outputs: displacements (with the extra points), accelerations, SPC
+#              forces, CQUAD4 stresses: complex magnitude/phase, SORT1
+# Run notes:
+#   - the two RLOAD2 of DLOAD 20 load the free corners: one with DELAY/DPHASE
+#     entries and TABLED2/TABLED3 tables, one with constant delay and phase
+#     and a TABLED4 polynomial
+#   - extra point 901 follows the z displacement of grid point 15 (TF), 902 is
+#     901 through a first-order low-pass filter
+#   - RSDAMP selects DAMPING 70: structural damping plus hybrid modal damping
+#     (HYBDAMP); the material damping GE varies with frequency and temperature
+#     (MAT1F, TABLED5, TEMPERATURE(INITIAL) = 80)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: direct frequency response, RLOAD2 forms
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;20
+FreqSetSelection;40
+TransferFunctionSelection;60
+RotorDampingSelection;70
+TemperatureSelection;80;InitialTemperature
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+AccelOutput;All;PlotOnly;MagnitudePhase
+SinglePointConstrForceOutput;All;PlotOnly;MagnitudePhase
+StressOutput;All;PlotOnly;MagnitudePhase
+SubcaseStart;1
+LabelText;two RLOAD2 loads on the free corners
+[model]
+Parameter;PostprocessingFile;-1
+# Excitation frequencies: a list (FREQ) and a logarithmic range (FREQ2), one
+# set.
+FreqList;40;5.;10.;20.;38.;40.;42.;80.;120.;250.
+FreqLogSteps2;40;2.;400.;24
+# DLOAD 20 = RLOAD2 21 + 0.5 x RLOAD2 26.
+DynamicLoadCombination;20;1.;1.;21;0.5;26
+# RLOAD2 21: load set 1 (corner 15, z) with the time delay of DELAY 22, the
+# phase lead of DPHASE 23, the amplitude B(f) of TABLED2 24 and the phase of
+# TABLED3 25 (x = (f - 200) / 100).
+FreqResponseLoad2;21;1;22;;23;;24;;25;;Load
+DynamicLoadDelay;22;15;3;5.E-4
+DynamicLoadPhase;23;15;3;30.
+TableDynamic2;24;0.;0.;1.;500.;0.5;EndTable
+TableDynamic3;25;200.;100.;-2.;-45.;3.;90.;EndTable
+# RLOAD2 26: DAREA 27 (corner 5, z) with a constant delay and phase and the
+# amplitude of the TABLED4 polynomial 1 + 0.5 x - 0.1 x**2, x = f / 100 kept
+# in 0 to 5.
+FreqResponseLoad2;26;27;;0.001;;15.;28
+DynamicLoadScale;27;5;3;1.
+TableDynamic4;28;0.;100.;0.;500.;1.;0.5;-0.1;EndTable
+# Transfer functions (TFL = 60) on two extra points: u901 = u15(z), and u902 +
+# 0.001 du902/dt = u901.
+ExtraPoint;901;902
+TransferFunction;60;901;;1.;;;15;3;-1.
+TransferFunction;60;902;;1.;0.001;;901;;-1.
+# Damping of the residual structure (RSDAMP = 70): G = 0.01 and hybrid damping
+# of 2 percent of critical on the first 6 modes, entered as structural damping
+# (KDAMP = YES).
+HybridDampingRotorOptions;70;0.01;;;71
+HybridDamping;71;72;73;Yes
+LanczosEigenMethod;72;;;6
+TableModalDamping1;73;CriticalDamping;0.;0.02;1.E+3;0.02;EndTable
+# Frequency-dependent material damping: MAT1F gives GE of MAT1 1 as TABLED5
+# 90, a function of the element temperature (TEMPD 80: 20 degrees) that picks
+# between two TABLED1 functions of frequency.
+IsoMatFreq;1;;;;90
+TableDynamic5;90;0.;91;100.;92;EndTable
+TableDynamic1;91;;;0.;0.02;1.E+3;0.02;EndTable
+TableDynamic1;92;;;0.;0.03;1.E+3;0.04;EndTable
+DefaultTemperatureLoad;80;20.
+Include;plate_model.oos

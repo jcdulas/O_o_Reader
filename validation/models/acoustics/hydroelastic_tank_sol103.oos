@@ -1,0 +1,82 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: hydroelastic axisymmetric fluid in a tank
+#
+# Covers:
+#   - cards: AXIF, RINGFL, CFLUID2, CFLUID3, CFLUID4, FSLIST, BDYLIST,
+#     FREEPT, PRESPT, FLSYM, DMIAX (and GRIDB for the wall)
+#   - solution: SOL 103 (normal modes of the coupled fluid and wall)
+#   - outputs: eigenvalues, eigenvectors
+# Run notes:
+#   - water in a cylindrical tank of radius 100 mm, depth 100 mm, free
+#     surface at z = 100 under gravity, rigid bottom; the wall is a quarter
+#     of the cylinder (CQUAD4 on GRIDB points at 0, 45 and 90 degrees,
+#     symmetric on both cut planes, FLSYM), clamped at its base; fluid
+#     harmonics 0 and 2
+#   - a radial spring at the top of the wall comes from a DMIAX matrix
+#     (K2PP)
+#   - units: mm, N, t, s
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: hydroelastic tank (SOL 103)
+BulkEcho;None
+AxisymmetricBoundary;Fluid
+HarmonicsSelection;All
+EigenMethodSelection;1
+DirectInputStiffnessMatrixP;KTOP
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;sloshing and wall modes
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;1;;;8
+# Fluid coordinate system (cylindrical, axis z), gravity 9810 mm/s2 along
+# -z, water density and bulk modulus, cosine harmonics 0 and 2.
+CylindricalFrame2;1;;0.;0.;0.;0.;0.;1.;1.;0.;0.
+AxisymFluidControl;1;9810.;1.E-9;2200.;No;;0;2
+# The structure is a quarter of the circumference, symmetric on both
+# planes.
+AxisymFluidSymmetry;4;Symmetric;Symmetric
+# Fluid rings (r, z): 1 (50, 0), 2 (100, 0), 3 (50, 50), 4 (100, 50),
+# 5 (50, 100), 6 (100, 100).
+AxisymFluidRing;1;50.;;0.;2;100.;;0.
+AxisymFluidRing;3;50.;;50.;4;100.;;50.
+AxisymFluidRing;5;50.;;100.;6;100.;;100.
+# Fluid elements: two disks on the axis, a quadrilateral ring, two
+# triangular rings (density and bulk modulus from AXIF).
+AxisymFluid2;101;1;3
+AxisymFluid2;102;3;5
+AxisymFluid4;103;1;2;4;3
+AxisymFluid3;104;3;4;6
+AxisymFluid3;105;3;6;5
+# Free surface from the axis outward; wall boundary from the top down
+# (fluid on the right of the direction of travel).
+AxisymFluidFreeSurface;;Axis;5;6
+AxisymFluidBoundaryList;;6;4;2
+# Free surface displacement points and pressure points.
+AxisymFluidFreePoint;5;501;0.;502;45.
+AxisymFluidPressurePoint;3;301;0.;302;45.
+# Wall: steel, 2 mm thick, GRIDB points on rings 2, 4 and 6 (displacements
+# in the cylindrical system 1), clamped at the base, symmetric (2, 4, 6)
+# on the planes at 0 and 90 degrees.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+AxisymFluidRingNode;201;0.;1;123456;2
+AxisymFluidRingNode;202;45.;1;123456;2
+AxisymFluidRingNode;203;90.;1;123456;2
+AxisymFluidRingNode;401;0.;1;246;4
+AxisymFluidRingNode;402;45.;1;;4
+AxisymFluidRingNode;403;90.;1;246;4
+AxisymFluidRingNode;601;0.;1;246;6
+AxisymFluidRingNode;602;45.;1;;6
+AxisymFluidRingNode;603;90.;1;246;6
+ShellQuad4;1;1;201;202;402;401
+ShellQuad4;2;1;202;203;403;402
+ShellQuad4;3;1;401;402;602;601
+ShellQuad4;4;1;402;403;603;602
+# Radial spring of 100 N/mm at the top of the wall (symmetric matrix).
+DirectMatrixAxisym;KTOP;0;6;1;2
+DirectMatrixAxisym;KTOP;602;1;;602;1;;100.

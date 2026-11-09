@@ -1,0 +1,2376 @@
+{
+  "description": "Reviewed card layouts of the thermal family (src/model/cards/thermal).",
+  "cards": {
+    "AcousticAbsorberHexa": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "propId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "node3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "node4",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "node5",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "node6",
+          "slot": 8,
+          "kind": "integer"
+        },
+        {
+          "name": "node7",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "node8",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "node9",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "node10",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "node11",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "node12",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "node17",
+          "slot": 19,
+          "kind": "integer"
+        },
+        {
+          "name": "node18",
+          "slot": 20,
+          "kind": "integer"
+        },
+        {
+          "name": "node19",
+          "slot": 21,
+          "kind": "integer"
+        },
+        {
+          "name": "node20",
+          "slot": 22,
+          "kind": "integer"
+        }
+      ]
+    },
+    "AcousticAbsorberBrickProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "synthesize",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "resistanceTableId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "reactanceTableId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "weightingTableId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "reservedValue",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "cutoffFrequency",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "damping",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "stiffness",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "mass",
+          "slot": 10,
+          "kind": "real"
+        }
+      ]
+    },
+    "AcousticAbsorber": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "propId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "same as id"
+        },
+        {
+          "name": "node1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node4",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "AcousticBarrierHexa": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "propId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "node3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "node4",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "node5",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "node6",
+          "slot": 8,
+          "kind": "integer"
+        },
+        {
+          "name": "node7",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "node8",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "node9",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "node10",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "node11",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "node12",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "node17",
+          "slot": 19,
+          "kind": "integer"
+        },
+        {
+          "name": "node18",
+          "slot": 20,
+          "kind": "integer"
+        },
+        {
+          "name": "node19",
+          "slot": 21,
+          "kind": "integer"
+        },
+        {
+          "name": "node20",
+          "slot": 22,
+          "kind": "integer"
+        }
+      ]
+    },
+    "AcousticBarrierProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "backingMass",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "septumMass",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "resonanceFrequency",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "resonanceStiffness",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "AcousticSlotBoundary": {
+      "fields": [
+        {
+          "name": "density",
+          "slot": 1,
+          "kind": "real"
+        },
+        {
+          "name": "slotCount",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "slotPoints",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "slotPoint",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "AxisymFluidBoundaryList": {
+      "fields": [
+        {
+          "name": "density",
+          "slot": 1,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "fluidPoints",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "fluidPointId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "AxisymFluid2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "density",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "bulkModulus",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "AxisymFluid3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId3",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "density",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "bulkModulus",
+          "slot": 6,
+          "kind": "real"
+        }
+      ]
+    },
+    "AxisymFluid4": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId3",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "fluidPointId4",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "density",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "bulkModulus",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "AxisymFluidFreeSurface": {
+      "fields": [
+        {
+          "name": "density",
+          "slot": 1,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "fluidPoints",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "fluidPointId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "AxisymFluidSymmetry": {
+      "fields": [
+        {
+          "name": "sectionCount",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "planeSymmetry1",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "planeSymmetry2",
+          "slot": 3,
+          "kind": "text"
+        }
+      ]
+    },
+    "FluidMassElemList": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "FluidStructureInterface": {
+      "fields": [
+        {
+          "name": "interfaceKind",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "interfaceInput",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "fluidSetId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "structureSetId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "normalTolerance",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "methodName",
+          "slot": 6,
+          "kind": "text",
+          "default": "SurfaceCoupling"
+        },
+        {
+          "name": "skinTolerance",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.5"
+        },
+        {
+          "name": "skinToleranceIncrement",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.75"
+        },
+        {
+          "name": "interfaceTolerance",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.5"
+        },
+        {
+          "name": "wholeStructureSet",
+          "slot": 10,
+          "kind": "text"
+        },
+        {
+          "name": "searchUnit",
+          "slot": 11,
+          "kind": "text"
+        }
+      ]
+    },
+    "FluidStructurePanels": {
+      "fields": [],
+      "group": {
+        "name": "panels",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "panelName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "panelSetId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "FluidVirtualMass": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frameId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "freeSurfaceZ",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "density",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "oneSideElemListId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "bothSidesElemListId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "planeSymmetry1",
+          "slot": 7,
+          "kind": "text"
+        },
+        {
+          "name": "planeSymmetry2",
+          "slot": 8,
+          "kind": "text"
+        },
+        {
+          "name": "characteristicLength",
+          "slot": 9,
+          "kind": "real",
+          "default": "1.0e10"
+        },
+        {
+          "name": "exactIntegrationRatio",
+          "slot": 10,
+          "kind": "real",
+          "default": "1.0e-15"
+        }
+      ]
+    },
+    "ForcedConvection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "convectionPropId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "filmNode",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massFlowNode",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "ambientNode1",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "ambientNode2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "massFlowFactor",
+          "slot": 7,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ]
+    },
+    "ForcedConvectionProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "matrixForm",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massFlowConvection",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "coefficient",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "reynoldsExponent",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "prandtlExponentInner",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "prandtlExponentOuter",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "FreeConvection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "convectionPropId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "filmNode",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "controlNode",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "ambientNode1",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "ambientNode2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "ambientNode3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "ambientNode4",
+          "slot": 8,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "ambientNode5",
+          "slot": 9,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "ambientNode6",
+          "slot": 10,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "ambientNode7",
+          "slot": 11,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        },
+        {
+          "name": "ambientNode8",
+          "slot": 12,
+          "kind": "integer",
+          "default": "same as ambientNode1"
+        }
+      ]
+    },
+    "FreeConvectionProp": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "coefficients",
+          "when": {
+            "field": "formulaKind",
+            "values": [
+              "3"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "matrixForm",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "convectionExponent",
+              "slot": 4,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "formulaKind",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "convectionCoefficient1",
+              "slot": 6,
+              "kind": "real"
+            },
+            {
+              "name": "convectionCoefficient2",
+              "slot": 7,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            },
+            {
+              "name": "convectionCoefficient3",
+              "slot": 8,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            },
+            {
+              "name": "convectionCoefficient4",
+              "slot": 9,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            },
+            {
+              "name": "convectionCoefficient5",
+              "slot": 10,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            },
+            {
+              "name": "convectionCoefficient6",
+              "slot": 11,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            },
+            {
+              "name": "convectionCoefficient7",
+              "slot": 12,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            },
+            {
+              "name": "convectionCoefficient8",
+              "slot": 13,
+              "kind": "real",
+              "default": "same as convectionCoefficient1"
+            }
+          ]
+        },
+        {
+          "name": "standard",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "matId",
+              "slot": 2,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "matrixForm",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "convectionExponent",
+              "slot": 4,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "formulaKind",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "tableId",
+              "slot": 6,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "characteristicLength",
+              "slot": 9,
+              "kind": "real"
+            },
+            {
+              "name": "inletNode",
+              "slot": 10,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "directionFrameId",
+              "slot": 11,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "direction1",
+              "slot": 12,
+              "kind": "real"
+            },
+            {
+              "name": "direction2",
+              "slot": 13,
+              "kind": "real"
+            },
+            {
+              "name": "direction3",
+              "slot": 14,
+              "kind": "real"
+            }
+          ]
+        }
+      ]
+    },
+    "HeatAnisoMat": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "conductivityXx",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "conductivityXy",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "conductivityXz",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "conductivityYy",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "conductivityYz",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "conductivityZz",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "specificHeat",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "density",
+          "slot": 9,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "heatGenerationFactor",
+          "slot": 10,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ]
+    },
+    "HeatController": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "sensorNode",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "sensorForm",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "controllerKind",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "lowerLimit",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "upperLimit",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "controlLaw",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "initialState",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "timeStep",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "delayTime",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "timeConstant",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "HeatFluxBoundaryLoad3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "heatFlux",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "controlNode",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "HeatFluxNodalLoad2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "elemId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "heatFlux1",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux2",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux3",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux4",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux5",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux6",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux7",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "heatFlux8",
+          "slot": 10,
+          "kind": "real"
+        }
+      ]
+    },
+    "HeatFluxNodeSetLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "faceKind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "heatFlux",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "area",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "node1",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node4",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node5",
+          "slot": 9,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node6",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node7",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node8",
+          "slot": 12,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "HeatFluxSurfaceLoad1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "heatFlux",
+          "slot": 2,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "HeatFluxVectorLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "heatFlux",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "sourceTemperature",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "directionFrameId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "direction1",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "tableId1",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "direction2",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "tableId2",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "direction3",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "tableId3",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "controlNode",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "HeatIsoMat": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "conductivity",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "specificHeat",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "density",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "convectionCoefficient",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "viscosity",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "heatGenerationFactor",
+          "slot": 7,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "referenceEnthalpy",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "phaseChangeTemperature",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "phaseChangeRange",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "latentHeat",
+          "slot": 11,
+          "kind": "real"
+        }
+      ]
+    },
+    "HeatSurfaceDefaults": {
+      "fields": [
+        {
+          "name": "kind",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "frontViewId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backViewId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frontRadiationPropId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backRadiationPropId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "propId",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "orientationNode",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "directionFrameId",
+          "slot": 9,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "direction1",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "direction2",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "direction3",
+          "slot": 12,
+          "kind": "real"
+        }
+      ]
+    },
+    "HeatSurfaceNodes": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "frontViewId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backViewId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frontRadiationPropId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backRadiationPropId",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node1",
+          "slot": 9,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node4",
+          "slot": 12,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node5",
+          "slot": 13,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node6",
+          "slot": 14,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node7",
+          "slot": 15,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node8",
+          "slot": 16,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "HeatSurfaceProperty": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "propId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "frontViewId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backViewId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node1",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "node2",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "orientationNode",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frontRadiationPropId",
+          "slot": 9,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backRadiationPropId",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "midsideNode",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "directionFrameId",
+          "slot": 12,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "direction1",
+          "slot": 13,
+          "kind": "real"
+        },
+        {
+          "name": "direction2",
+          "slot": 14,
+          "kind": "real"
+        },
+        {
+          "name": "direction3",
+          "slot": 15,
+          "kind": "real"
+        }
+      ]
+    },
+    "HeatSurfaceSide": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "conductionElemId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "sideCode",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "frontViewId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backViewId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frontRadiationPropId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "backRadiationPropId",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "HeatSurfaceProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "area",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "diameter1",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "diameter2",
+          "slot": 4,
+          "kind": "real"
+        }
+      ]
+    },
+    "HeatVolumeSourceLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "heatGeneration",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "controlNode",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "RadiationBands": {
+      "fields": [
+        {
+          "name": "bandCount",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "planckSecondConstant",
+          "slot": 2,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "wavelengths",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "bandWavelength",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "RadiationCavity": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "ambientElemId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "shadowing",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "viewFactorOutput",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "viewFactorMethod",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "subdivisionAreaRatio",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.1"
+        },
+        {
+          "name": "componentCount",
+          "slot": 8,
+          "kind": "integer",
+          "default": "32"
+        }
+      ],
+      "group": {
+        "name": "pairSets",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "pairSetId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "RadiationCavityList": {
+      "fields": [
+        {
+          "name": "cavityId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "matrixKind",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "RadiationCavitySet": {
+      "fields": [],
+      "group": {
+        "name": "cavities",
+        "firstSlot": 1,
+        "period": 1,
+        "fields": [
+          {
+            "name": "cavityId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "RadiationExchangeMatrix": {
+      "fields": [
+        {
+          "name": "cavityId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "columnIndex",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "exchangeFactors",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "exchangeFactor",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "RadiationProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "absorptivity",
+          "slot": 2,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "emissivities",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "emissivity",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "RadiationPropTemperature": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "absorptivityTableId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "emissivityTables",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "emissivityTableId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "RadiationToSpace": {
+      "fields": [
+        {
+          "name": "ambientNode",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "ambientViewFactor",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "controlNode",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "elemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "TemperatureBoundary": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text",
+          "default": "Static"
+        }
+      ],
+      "group": {
+        "name": "temperatureGroups",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "temperatureEntry",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "TrimComponentCoupling": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "gluedSetId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "slidingSetId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "openSetId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "imperviousSetId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "outOfCoreBlockCount",
+          "slot": 6,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "singlePrecisionFlag",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "airGapSetId",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedTranslationXSetId",
+          "slot": 9,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedTranslationYSetId",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedTranslationZSetId",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedRotationXSetId",
+          "slot": 12,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedRotationYSetId",
+          "slot": 13,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedRotationZSetId",
+          "slot": 14,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "fixedPressureSetId",
+          "slot": 15,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "regionId",
+          "slot": 16,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "structureCompressionRatio",
+          "slot": 17,
+          "kind": "real"
+        },
+        {
+          "name": "cavityCompressionRatio",
+          "slot": 18,
+          "kind": "real"
+        }
+      ]
+    },
+    "TrimComponentCoupling1D": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "gluedSetId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "slidingSetId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "openSetId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "imperviousSetId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "regionId",
+          "slot": 16,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "methodName",
+          "slot": 17,
+          "kind": "text"
+        }
+      ]
+    },
+    "TrimCouplingTolerances": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "couplingKind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "relativeTolerance",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "gapTolerance1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "gapTolerance2",
+          "slot": 5,
+          "kind": "real",
+          "default": "same as gapTolerance1"
+        },
+        {
+          "name": "gapTolerance3",
+          "slot": 6,
+          "kind": "real",
+          "default": "same as gapTolerance2"
+        },
+        {
+          "name": "gapTolerance4",
+          "slot": 7,
+          "kind": "real",
+          "default": "same as gapTolerance3"
+        },
+        {
+          "name": "regionId",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "TrimLayeredComponent": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "layers",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "globalPlyId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "plyMatId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "plyThickness",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "plyScaleFactor",
+            "offset": 3,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "ViewFactorFace": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "cavityId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "shading",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "betaSubdivisions",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "gammaSubdivisions",
+          "slot": 5,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "surfaceOffset",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "ViewFactorIntegration": {
+      "fields": [
+        {
+          "name": "cavityId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "blockingIntegrationOrder",
+          "slot": 2,
+          "kind": "integer",
+          "default": "4"
+        },
+        {
+          "name": "shadowingIntegrationOrder",
+          "slot": 3,
+          "kind": "integer",
+          "default": "4"
+        },
+        {
+          "name": "contourIntegrationLevel",
+          "slot": 4,
+          "kind": "integer",
+          "default": "4"
+        },
+        {
+          "name": "errorTolerance",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.1"
+        },
+        {
+          "name": "zeroTolerance",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e-10"
+        },
+        {
+          "name": "warpTolerance",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.01"
+        },
+        {
+          "name": "radiationCheck",
+          "slot": 8,
+          "kind": "integer",
+          "default": "3"
+        }
+      ]
+    }
+  }
+}

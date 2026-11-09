@@ -1,0 +1,62 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rotational cyclic symmetry, frequency response
+#
+# Covers:
+#   - cards: LOADCYN (dynamic load), CYSYM (ROT), CYJOIN (with CORD2C,
+#     CQUAD4, DAREA, RLOAD1, TABLED1, FREQ1)
+#   - solution: SOL 118 (cyclic symmetry direct frequency response)
+#   - outputs: complex displacements of the segments
+# Run notes:
+#   - the segment of cyclic_rot_static_sol114.bdf without the hub, its outer
+#     edge clamped; a unit axial force on segment 1 at 100 to 400 Hz
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;118
+[case]
+TitleText;O_o_Reader test model: cyclic symmetry frequency response
+BulkEcho;None
+SinglePointConstrSelection;1
+HarmonicsSelection;All
+CyclicSegmentOutput;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;axial force on segment 1
+DynamicLoadSelection;40
+FreqSetSelection;50
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;UniformStructuralDamping;0.02
+# Six segments of 60 degrees about the z axis of the basic system.
+CyclicSymmetry;6;Rotational
+# The segment: an annular steel plate of 2 x 2 CQUAD4, r 50 to 100, theta 0
+# to 60, given and displaced in the cylindrical system 1 (z along the axis).
+# Units: mm, N, tonne, s.
+CylindricalFrame2;1;0;0.;0.;0.;0.;0.;1.;1.;0.;0.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;1;50.;0.;0.;1
+Node;2;1;75.;0.;0.;1
+Node;3;1;100.;0.;0.;1
+Node;4;1;50.;30.;0.;1
+Node;5;1;75.;30.;0.;1
+Node;6;1;100.;30.;0.;1
+Node;7;1;50.;60.;0.;1
+Node;8;1;75.;60.;0.;1
+Node;9;1;100.;60.;0.;1
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+# Side 1 (theta = 0) is joined to side 2 (theta = 60) of the next segment.
+CyclicBoundaryJoin;1;;1;2;3
+CyclicBoundaryJoin;2;;7;8;9
+# The outer edge is clamped.
+SinglePointConstrList;1;123456;3;6;9
+# A unit axial force on point 5 of segment 1, constant over the band.
+DynamicLoadScale;31;5;3;1.
+CyclicSegmentLoad;30;1.;1;;1.;31
+FreqResponseLoad1;40;30;;;;;41
+TableDynamic1;41;;;0.;1.;1.E+3;1.;EndTable
+FreqLinearSteps1;50;100.;100.;3

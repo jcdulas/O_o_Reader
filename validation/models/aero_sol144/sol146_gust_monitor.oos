@@ -1,0 +1,51 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: transient gust response with monitor points (SOL 146)
+#
+# Validates:
+#   - the transient monitor point loads (MONITOR, AEMONPT, the TOL steps, the
+#     load matrices) of a run with a deck and a listing
+# Settles (library item: current status):
+#   - the transient form of monitor_point_loads (not_validated), the hinge
+#     moment rows (AESURF, class HM: an inference)
+# Run notes:
+#   - PARAM,MPTUNIT,40 with the ASSIGN writes the monitor tables to
+#     sol146_monitor.out2
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT2='sol146_monitor.out2';FileUnit=40;FileForm=Unformatted
+SolutionSequence;146
+[case]
+TitleText;O_o_Reader validation: transient gust, monitor points
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ModalDampingSelection;72
+GustSelection;91
+DynamicLoadSelection;92
+TimeStepSelection;61
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+MonitorPointOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;one-minus-cosine gust
+[model]
+# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
+# deflate filter).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;MonitorPointUnit;40
+Parameter;LowestModesCount;6
+Parameter;GustAeroOption;-1
+AeroUnsteadyParams;;1.E+5;200.;1.2E-12
+LanczosEigenMethod;71;;;6
+TableModalDamping1;72;CriticalDamping;0.;0.02;1.E+3;0.02;EndTable
+AeroMachFreqTable1;0.5;;;;;;;;0.001;0.05;0.1;0.3;0.6;1.
+AeroGust;91;92;0.01;0.;1.E+5
+TransientTableLoad1;92;93;;;;94
+DynamicLoadScale;93;15;3;0.
+TableDynamic1;94;;;0.;0.;0.01;1.;0.02;0.;1.;0.;EndTable
+TransientTimeSteps;61;200;5.E-4;2
+FreqLinearSteps1;41;0.;2.;100
+Include;aero_model.oos

@@ -1,0 +1,33 @@
+# Structural model shared by the decks of aero_models/ (INCLUDEd): a flat
+# aluminium plate wing, chord 200 mm along x, span 1000 mm along y, 4 x 2
+# CQUAD4, root clamped (SPC set 1), two tip masses. Grid points 1 to 15 are
+# numbered chordwise (x = 0, 100, 200) then spanwise (y = 0 to 1000 by 250).
+# Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;250.;0.
+Node;5;;100.;250.;0.
+Node;6;;200.;250.;0.
+Node;7;;0.;500.;0.
+Node;8;;100.;500.;0.
+Node;9;;200.;500.;0.
+Node;10;;0.;750.;0.
+Node;11;;100.;750.;0.
+Node;12;;200.;750.;0.
+Node;13;;0.;1.E+3;0.
+Node;14;;100.;1.E+3;0.
+Node;15;;200.;1.E+3;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+ShellQuad4;7;1;10;11;14;13
+ShellQuad4;8;1;11;12;15;14
+PointMassInertia;101;8;;0.001
+PointMassInertia;102;14;;0.001
+SinglePointConstrList;1;123456;1;2;3

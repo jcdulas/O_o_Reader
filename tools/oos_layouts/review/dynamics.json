@@ -1,0 +1,2086 @@
+{
+  "description": "Reviewed card layouts of the dynamics family (src/model/cards/dynamics).",
+  "cards": {
+    "AcousticSourceLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "excitationId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "delayId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "delay",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "phaseId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "phase",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "powerTableId",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "power",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "density",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "bulkModulus",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "BucklingEigenMethod": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "method",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "lowerEigenvalue",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "upperEigenvalue",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "estimatedModeCount",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "desiredPositiveModeCount",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "desiredNegativeModeCount",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "norm",
+          "slot": 9,
+          "kind": "text"
+        },
+        {
+          "name": "normNode",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "normComponent",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "ComplexEigenMethod": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "methodName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "norm",
+          "slot": 3,
+          "kind": "text",
+          "default": "Maximum"
+        },
+        {
+          "name": "normNode",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "normComponent",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "convergenceTolerance",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "desiredModeCount0",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "regions",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "alphaA",
+            "offset": 0,
+            "kind": "real"
+          },
+          {
+            "name": "omegaA",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "alphaB",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "omegaB",
+            "offset": 3,
+            "kind": "real"
+          },
+          {
+            "name": "regionWidth",
+            "offset": 4,
+            "kind": "real"
+          },
+          {
+            "name": "estimatedModeCount",
+            "offset": 5,
+            "kind": "integer"
+          },
+          {
+            "name": "desiredModeCount",
+            "offset": 6,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ComplexEigenPoles": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "realPart1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "imaginaryPart1",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "multiplicity1",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "realPart2",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "imaginaryPart2",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "multiplicity2",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ]
+    },
+    "DynamicLoadCombination": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 2,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "termScaleFactor",
+            "offset": 0,
+            "kind": "real"
+          },
+          {
+            "name": "loadSetId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "DynamicLoadDelay": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "point1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "delay1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "point2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "delay2",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "DynamicLoadPhase": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "point1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "phaseAngle1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "point2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "phaseAngle2",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "DynamicLoadScale": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "point1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "point2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor2",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "FreqBetweenModes3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frequency1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "frequency2",
+          "slot": 3,
+          "kind": "real",
+          "default": "same as frequency1"
+        },
+        {
+          "name": "kind",
+          "slot": 4,
+          "kind": "text",
+          "default": "Linear"
+        },
+        {
+          "name": "frequencyCount",
+          "slot": 5,
+          "kind": "integer",
+          "default": "10"
+        },
+        {
+          "name": "clustering",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ]
+    },
+    "FreqLinearSteps1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frequency1",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "frequencyIncrement",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "incrementCount",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        }
+      ]
+    },
+    "FreqList": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "frequencies",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "frequency",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "FreqLogSteps2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frequency1",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "frequency2",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "intervalCount",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        }
+      ]
+    },
+    "FreqModeFractions5": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frequency1",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "frequency2",
+          "slot": 3,
+          "kind": "real",
+          "default": "1.0E20"
+        }
+      ],
+      "group": {
+        "name": "fractions",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "fraction",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "FreqResponseLoad1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "excitationId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "delayId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "delay",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "phaseId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "phase",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "realTableId",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "realValue",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "imaginaryTableId",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "imaginaryValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "kind",
+          "slot": 7,
+          "kind": "any",
+          "default": "Load"
+        }
+      ]
+    },
+    "FreqResponseLoad2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "excitationId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "delayId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "delay",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "phaseId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "phase",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "amplitudeTableId",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "amplitude",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "phaseTableId",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "phaseAngle",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "kind",
+          "slot": 7,
+          "kind": "any",
+          "default": "Load"
+        }
+      ]
+    },
+    "FreqSpreadAroundModes4": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frequency1",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "frequency2",
+          "slot": 3,
+          "kind": "real",
+          "default": "1.0E20"
+        },
+        {
+          "name": "frequencySpread",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.10"
+        },
+        {
+          "name": "frequencyCount",
+          "slot": 5,
+          "kind": "integer",
+          "default": "3"
+        }
+      ]
+    },
+    "FrfAssemblyLoadDelay": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent",
+          "slot": 2,
+          "kind": "any"
+        },
+        {
+          "name": "pointId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "delay",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "FrfAssemblyLoadPhase": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent",
+          "slot": 2,
+          "kind": "any"
+        },
+        {
+          "name": "pointId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "phase",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "FrfAssemblyLoadScale": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent",
+          "slot": 2,
+          "kind": "any"
+        },
+        {
+          "name": "pointId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "FrfComponent": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "componentName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "medium",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "unitNumber",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "lengthScaleFactor",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "forceScaleFactor",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ]
+    },
+    "FrfConnection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent1",
+          "slot": 2,
+          "kind": "any"
+        },
+        {
+          "name": "point1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent2",
+          "slot": 4,
+          "kind": "any"
+        },
+        {
+          "name": "point2",
+          "slot": 5,
+          "kind": "integer"
+        }
+      ]
+    },
+    "FrfExcitationDof": {
+      "fields": [
+        {
+          "name": "pointId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 3,
+          "kind": "text",
+          "span": 6
+        }
+      ]
+    },
+    "FrfExcitationDofList": {
+      "fields": [
+        {
+          "name": "components",
+          "slot": 1,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pointIds",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "pointId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "FrfFlexibleConnection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frfComponent1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "point1",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent2",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "point2",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffnessTableId",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "stiffness",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "dampingTableId",
+          "slot": 8,
+          "kind": "integer"
+        },
+        {
+          "name": "damping",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "structuralDampingTableId",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 9,
+          "kind": "real"
+        }
+      ]
+    },
+    "FrfReleasedDofs": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "node1",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent2",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "node2",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent3",
+          "slot": 7,
+          "kind": "any"
+        },
+        {
+          "name": "node3",
+          "slot": 8,
+          "kind": "integer"
+        }
+      ]
+    },
+    "FrfSinglePointConstr": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frfComponent1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "point1",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent2",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "point2",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "frfComponent3",
+          "slot": 7,
+          "kind": "any"
+        },
+        {
+          "name": "point3",
+          "slot": 8,
+          "kind": "integer"
+        }
+      ]
+    },
+    "HeatShellNodalLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "heatFlux1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "node2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "heatFlux2",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "HybridDamping": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "methodId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "modalDampingTableId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "dampingInStiffness",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "printEigenvalues",
+          "slot": 5,
+          "kind": "text"
+        }
+      ]
+    },
+    "HybridDampingRotorOptions": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "structuralDamping",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "alphaCoefficient1",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "alphaCoefficient2",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "hybridDampingId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "structuralDampingFactor",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "rotorSeparation",
+          "slot": 7,
+          "kind": "text"
+        },
+        {
+          "name": "structuralDampingFrequency",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "materialDampingFrequency",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "hybridDampingFrequency",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "InitialElemValues": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "elementSetId",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "variables",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "variableName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "variableValue",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "InitialValuesUserRoutine": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "group",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "routineName",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "elementSetId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "target",
+          "slot": 5,
+          "kind": "text"
+        }
+      ]
+    },
+    "InitialVelocityField": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "xVelocity",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yVelocity",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zVelocity",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "xRotation",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yRotation",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zRotation",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "initializedNodes",
+        "firstSlot": 17,
+        "period": 1,
+        "fields": [
+          {
+            "name": "initializedNode",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "LanczosEigenMethod": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "lowerFrequency",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "upperFrequency",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "desiredModeCount",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "messageLevel",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "maximumSet",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "shiftScale",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "norm",
+          "slot": 8,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "options",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "option",
+            "offset": 0,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "NonlinearNegativePowerLoad4": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeI",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsI",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "nodeJ",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsJ",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "exponent",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "NonlinearPositivePowerLoad3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeI",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsI",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "nodeJ",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsJ",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "exponent",
+          "slot": 7,
+          "kind": "real"
+        }
+      ]
+    },
+    "NonlinearProductLoad2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeI",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsI",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "nodeJ",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsJ",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "nodeK",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsK",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "NonlinearTableLoad1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeI",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsI",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "nodeJ",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsJ",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "tableId",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ]
+    },
+    "RandomSpectralDensity": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "subcaseJ",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "subcaseK",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "realPart",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "imaginaryPart",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "tableId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "RandomTimeLags": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "count",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "startTime",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "maximumTime",
+          "slot": 4,
+          "kind": "real"
+        }
+      ]
+    },
+    "RealEigenMethod": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "method",
+          "slot": 2,
+          "kind": "text",
+          "default": "Lanczos"
+        },
+        {
+          "name": "frequency1",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "frequency2",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "estimatedModeCount",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "desiredModeCount",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "normalization",
+          "slot": 9,
+          "kind": "text",
+          "default": "Mass"
+        },
+        {
+          "name": "normNode",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "normComponent",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "RotorHybridDamping": {
+      "fields": [],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "rotorId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "hybridDampingId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "RotorUnbalanceLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "massTableId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "mass",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "nodeId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "directionX",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "directionY",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "directionZ",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "radialOffsetTableId",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "radialOffset",
+          "slot": 9,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "angularPosition",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "axialOffsetTableId",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "axialOffset",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "startTimeOrFrequency",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stopTimeOrFrequency",
+          "slot": 13,
+          "kind": "real",
+          "default": "999999.0"
+        },
+        {
+          "name": "correctionFlag",
+          "slot": 14,
+          "kind": "text",
+          "default": "None"
+        },
+        {
+          "name": "forcePointT1",
+          "slot": 17,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "forcePointT2",
+          "slot": 18,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "forcePointT3",
+          "slot": 19,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "forcePointR1",
+          "slot": 20,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "forcePointR2",
+          "slot": 21,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "forcePointR3",
+          "slot": 22,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massCorrectionPointT1",
+          "slot": 25,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massCorrectionPointT2",
+          "slot": 26,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massCorrectionPointT3",
+          "slot": 27,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massCorrectionPointR1",
+          "slot": 28,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massCorrectionPointR2",
+          "slot": 29,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "massCorrectionPointR3",
+          "slot": 30,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "speedCorrectionPoint1",
+          "slot": 33,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "speedCorrectionPoint2",
+          "slot": 34,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "speedCorrectionPoint3",
+          "slot": 35,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "TransferFunction": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeD",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "componentsD",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "coefficientB0",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "coefficientB1",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "coefficientB2",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "termNode",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "termComponents",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficientA0",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "coefficientA1",
+            "offset": 3,
+            "kind": "real"
+          },
+          {
+            "name": "coefficientA2",
+            "offset": 4,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TransientFormulaLoad2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "excitationId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "delayId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "delay",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "kind",
+          "slot": 4,
+          "kind": "any",
+          "default": "Load"
+        },
+        {
+          "name": "time1",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "time2",
+          "slot": 6,
+          "kind": "real",
+          "default": "same as time1"
+        },
+        {
+          "name": "frequency",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "phase",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "coefficientC",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "exponentB",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "initialDisplacementFactor",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "initialVelocityFactor",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "TransientInitialCondition": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "initialDisplacement",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "initialVelocity",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "TransientTableLoad1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "excitationId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "delayId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "delay",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "kind",
+          "slot": 4,
+          "kind": "any",
+          "default": "Load"
+        },
+        {
+          "name": "tableId",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "functionValue",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "initialDisplacementFactor",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "initialVelocityFactor",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    }
+  }
+}

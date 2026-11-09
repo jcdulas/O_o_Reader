@@ -1,0 +1,57 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: initial top and bottom temperatures of heat shells,
+# TEMPN1 (SOL 400)
+#
+# Covers:
+#   - cards: TEMPN1 (TEMP(INIT) of the thick heat shells of a PSHLN1, top
+#     and bottom layers), with TEMPD, MAT4, PSHLN1 (ANAL = IH)
+#   - solution: SOL 400 (ANALYSIS = HSTAT, steady-state heat transfer)
+#   - outputs: temperatures
+# Run notes:
+#   - the heat shells (BEH4H = DCT, INT4H = L) have a linear temperature
+#     through the thickness: the solver generates the bottom layer points
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: TEMPN1 on heat shells
+BulkEcho;Sorted
+SubcaseStart;1
+LabelText;steady conduction between the two ends of a strip
+AnalysisKind;SteadyHeatTransfer
+SinglePointConstrSelection;1
+NonlinearStaticParamsSelection;1
+TemperatureSelection;10;InitialTemperature
+ThermalOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+NonlinearStaticParams;1
+# Strip 200 x 20, 2 mm thick, 4 CQUAD4 heat shells (conductivity in the
+# mm, N, t, s system: N/(s K)).
+HeatIsoMat;1;50.
+ShellProp;1;1;2.
+ShellPropNonlinear;1;;;ImplicitHeat;FourNodeElems;;;ThickShell;Linear
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;150.;0.;0.
+Node;5;;200.;0.;0.
+Node;11;;0.;20.;0.
+Node;12;;50.;20.;0.
+Node;13;;100.;20.;0.
+Node;14;;150.;20.;0.
+Node;15;;200.;20.;0.
+ShellQuad4;1;1;1;2;12;11
+ShellQuad4;2;1;2;3;13;12
+ShellQuad4;3;1;3;4;14;13
+ShellQuad4;4;1;4;5;15;14
+# Fixed temperatures: 100 at x = 0, 20 at x = 200.
+SinglePointConstr;1;1;1;100.;11;1;100.
+SinglePointConstr;1;5;1;20.;15;1;20.
+# Starting temperatures of the iteration: 20 everywhere, the top and bottom
+# layers of the hot end at 100 and of the middle at 60.
+DefaultTemperatureLoad;10;20.
+HeatShellInitialTemperature;10;1;12;100.;11;12;100.
+HeatShellInitialTemperature;10;3;12;60.;13;12;60.

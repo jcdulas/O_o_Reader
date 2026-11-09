@@ -1,0 +1,156 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: anisotropic and temperature-dependent materials
+#
+# Covers:
+#   - cards: MAT2, MAT3, MAT9, MATT1, MATT2, MATT3, MATT8, MATT9, TABLEM1,
+#     TABLEM2, TABLEM3, TABLEM4 (with MAT1, MAT8, PSHELL, PCOMP, PSOLID,
+#     CQUAD4, CHEXA, CTRIAX6, TEMPD, TEMP)
+#   - solution: SOL 101 (linear static: a mechanical subcase and a thermal
+#     subcase)
+#   - outputs: displacements, SPC forces, element stresses and forces, ply
+#     stresses of the laminate (OUTPUT2)
+# Run notes:
+#   - TEMPERATURE(MATERIAL) = 10 (120 C everywhere) sets the temperature at
+#     which every MATTi table is read; the thermal load of subcase 2 is
+#     TEMPERATURE(LOAD) = 20 against the TREF (20 C) of the materials
+#   - TABLEM1 gives absolute values; TABLEM2, TABLEM3 and TABLEM4 give factors
+#     on the value of the MATi entry
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;anisotropic and temperature-dependent materials
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+TemperatureSelection;10;MaterialTemperature
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;mechanical loads
+StaticLoadSelection;1
+SubcaseStart;2
+LabelText;thermal load
+TemperatureSelection;20;TemperatureLoadPart
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, degrees C. Temperatures: set 10 (material
+# temperature) is 120 C everywhere; set 20 (thermal load) is 120 C everywhere
+# except the top of the solid (150 C).
+DefaultTemperatureLoad;10;120.
+DefaultTemperatureLoad;20;120.
+# Material tables. TABLEM1 101 and 102: E and G of steel (absolute values);
+# TABLEM2 103: a factor on NU; TABLEM4 104: a factor on the expansion
+# coefficient (power series in (T - 20) / 100); TABLEM2 201: a stiffness
+# factor; TABLEM3 202: an expansion factor in (T - 20) / 100; TABLEM4 301: a
+# factor on E1 of the ply; TABLEM1 302: E2 of the ply; TABLEM3 401: a
+# stiffness factor in (T - 20) / 100.
+TableMaterial1;101;;;20.;2.1E+5;220.;1.95E+5;420.;1.75E+5;EndTable
+TableMaterial1;102;;;20.;80769.;220.;7.5E+4;420.;67300.;EndTable
+TableMaterial2;103;0.;20.;1.;420.;1.02;EndTable
+TableMaterial4;104;20.;100.;0.;500.;1.;0.05;EndTable
+TableMaterial2;201;0.;20.;1.;220.;0.93;420.;0.85;EndTable
+TableMaterial3;202;20.;100.;0.;1.;2.;1.1;4.;1.2;EndTable
+TableMaterial4;301;20.;100.;0.;500.;1.;-0.04;EndTable
+TableMaterial1;302;;;20.;9.E+3;220.;8.E+3;420.;6500.;EndTable
+TableMaterial3;401;20.;100.;0.;1.;2.;0.9;4.;0.8;EndTable
+# Region 1: steel MAT1 1 with MATT1 (E, G, NU and the expansion coefficient),
+# two CQUAD4 on PSHELL 11.
+IsoMat;1;2.1E+5;80769.;0.3;7.85E-9;1.2E-5;20.
+IsoMatTemperature;1;101;102;103;;104
+ShellProp;11;1;2.;1
+Node;101;;0.;100.;0.
+Node;102;;10.;100.;0.
+Node;103;;20.;100.;0.
+Node;104;;0.;110.;0.
+Node;105;;10.;110.;0.
+Node;106;;20.;110.;0.
+ShellQuad4;101;11;101;102;105;104
+ShellQuad4;102;11;102;103;106;105
+# Region 2: an anisotropic shell material MAT2 2 (membrane and bending, a
+# small in-plane shear coupling) with MATT2 (the four stiffness terms and two
+# expansion coefficients), two CQUAD4 on PSHELL 21.
+AnisoMat2D;2;230769.;69231.;5.E+3;230769.;5.E+3;80769.;7.85E-9;1.2E-5;1.2E-5;0.;20.
+AnisoMat2DTemperature;2;201;201;;201;;201;;202;202
+ShellProp;21;2;2.;2
+Node;201;;0.;200.;0.
+Node;202;;10.;200.;0.
+Node;203;;20.;200.;0.
+Node;204;;0.;210.;0.
+Node;205;;10.;210.;0.
+Node;206;;20.;210.;0.
+ShellQuad4;201;21;201;202;205;204
+ShellQuad4;202;21;202;203;206;205
+# Region 3: a carbon ply MAT8 3 with MATT8 (E1, E2 and G12), a four-ply
+# laminate PCOMP 31 (0/90/90/0), two CQUAD4.
+OrthoMat2D;3;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9;-3.E-7;2.8E-5;20.
+OrthoMat2DTemperature;3;301;302;;201
+CompProp;31;;;;;20.;;;3;0.5;0.;Yes;3;0.5;90.;Yes;3;0.5;90.;Yes;3;0.5;0.;Yes
+Node;301;;0.;300.;0.
+Node;302;;10.;300.;0.
+Node;303;;20.;300.;0.
+Node;304;;0.;310.;0.
+Node;305;;10.;310.;0.
+Node;306;;20.;310.;0.
+ShellQuad4;301;31;301;302;305;304
+ShellQuad4;302;31;302;303;306;305
+# Region 4: an anisotropic solid material MAT9 4 (a slightly anisotropic
+# steel) with MATT9 (the nonzero stiffness terms), one CHEXA 10 x 10 x 10 on
+# PSOLID 41, its base z = 0 held in translation.
+AnisoMat3D;4;282692.;121154.;1.1E+5;0.;0.;0.;2.5E+5;1.05E+5;0.;0.;0.;2.3E+5;0.;0.;0.;80769.;0.;0.;7.5E+4;0.;7.E+4;7.85E-9;1.2E-5;1.2E-5;1.2E-5;0.;0.;0.;20.
+AnisoMat3DTemperature;4;401;401;401;;;;401;401;;;;401;;;;401;;;401;;401
+SolidProp;41;4
+Node;401;;0.;400.;0.;;456
+Node;402;;10.;400.;0.;;456
+Node;403;;10.;410.;0.;;456
+Node;404;;0.;410.;0.;;456
+Node;405;;0.;400.;10.;;456
+Node;406;;10.;400.;10.;;456
+Node;407;;10.;410.;10.;;456
+Node;408;;0.;410.;10.;;456
+SolidHexa;401;41;401;402;403;404;405;406;407;408
+# Region 5: an orthotropic axisymmetric material MAT3 5 with MATT3 (the three
+# moduli, the shear modulus and the radial expansion), two CTRIAX6 forming a
+# 10 x 10 ring section (r from 50 to 60) in the basic XZ plane; the ring is
+# held axially at z = 0.
+AxisymOrthoMat;5;2.E+5;2.1E+5;1.9E+5;0.3;0.28;0.29;7.85E-9;7.8E+4;1.2E-5;1.2E-5;1.2E-5;20.
+AxisymOrthoMatTemperature;5;401;401;401;;;;;401;104
+Node;501;;50.;0.;0.;;2456
+Node;502;;55.;0.;0.;;2456
+Node;503;;60.;0.;0.;;2456
+Node;504;;60.;0.;5.;;2456
+Node;505;;60.;0.;10.;;2456
+Node;506;;55.;0.;10.;;2456
+Node;507;;50.;0.;10.;;2456
+Node;508;;50.;0.;5.;;2456
+Node;509;;55.;0.;5.;;2456
+AxisymTria6;501;5;501;502;503;504;505;509
+AxisymTria6;502;5;501;509;505;506;507;508
+# Constraints: SPC set 1 clamps the plates along x = 0, holds the base of the
+# solid and the bottom of the ring section.
+SinglePointConstrList;1;123456;101;104;201;204;301;304
+SinglePointConstrList;1;123;401;402;403;404
+SinglePointConstrList;1;3;501;502;503
+# Load set 1: tip forces on the plates, a shear force on the top of the solid,
+# an outward radial force on the outer face of the ring (the CTRIAX6 remarks
+# say how a point force is spread around the ring).
+PointForceLoad;1;103;;10.;0.;0.5;-1.
+PointForceLoad;1;106;;10.;0.;0.5;-1.
+PointForceLoad;1;203;;10.;0.;0.5;-1.
+PointForceLoad;1;206;;10.;0.;0.5;-1.
+PointForceLoad;1;303;;10.;0.;0.5;-1.
+PointForceLoad;1;306;;10.;0.;0.5;-1.
+PointForceLoad;1;405;;100.;1.;0.;-0.5
+PointForceLoad;1;406;;100.;1.;0.;-0.5
+PointForceLoad;1;407;;100.;1.;0.;-0.5
+PointForceLoad;1;408;;100.;1.;0.;-0.5
+PointForceLoad;1;503;;100.;1.;0.;0.
+PointForceLoad;1;504;;400.;1.;0.;0.
+PointForceLoad;1;505;;100.;1.;0.;0.
+# Thermal load set 20: the top grids of the solid at 150 C (TEMPD 20 gives the
+# others).
+NodeTemperatureLoad;20;405;150.;406;150.;407;150.
+NodeTemperatureLoad;20;408;150.

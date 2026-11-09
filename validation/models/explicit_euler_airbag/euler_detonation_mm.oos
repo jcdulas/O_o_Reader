@@ -1,0 +1,78 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: detonation of explosives in air (SOL 700)
+#
+# Covers:
+#   - cards: EOSJWL DETSPH EOSIG EOSMG PMINC EOSNA EOSGAM FLOWDEF MESH PEULER1
+#     MATDEUL TICEUL1 TICREG SPHERE CYLINDR
+#   - solution: SOL 700 (explicit transient: a TNT charge detonates in a
+#     multi-material Euler mesh, its blast reaches an LX-17 charge, a copper
+#     plate and a pocket of propellant gas)
+#   - outputs: none that O_o_Reader decodes (the explicit solver writes its
+#     own result files)
+# Run notes:
+#   - needs the explicit solver of SOL 700 in the installation (SOL 700 spawns
+#     it; a sol700.pth file or the default path must locate it)
+#   - SI units (m, kg, s, Pa): the explosive database of EOSIG converts its
+#     data to SI, CGS-microsecond, metric, imperial or mm-mg-microsecond units
+#     only, not to mm-t-s
+#   - the LX-17 data come from the EOSIG database (it also sets the MATDEUL
+#     density)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: detonation of explosives in air (SOL 700)
+BulkEcho;None
+StepEndTime;5.E-5
+NonlinearTimeStepSelection;1
+[model]
+# Time: 50 steps of 1.0E-6 s (50 microseconds), output every 5 steps
+NonlinearTimeSteps;1;50;1.E-6;5
+# ---------------------------------------------------------------- Euler mesh
+# A 0.12 x 0.06 x 0.06 m box of 10 mm cells
+EulerMeshGenerator;1;Box;;;;;;;0.;0.;0.;0.12;0.06;0.06;12;6;6;;;;Euler;10
+EulerRegionProp;10;MultiMaterialHydrodynamic;20
+# Every free face of the mesh lets the blast out (outflow only)
+EulerDefaultFlowBoundary;1;MultiMaterialHydrodynamic;Flow;Out
+# ---------------------------------------------------------------- materials
+# Air: ideal gas
+EulerMat;11;1.2;1
+GammaLawStateEquation;1;1.4;287.
+# TNT: JWL products, initial pressure equal to the air pressure
+EulerMat;12;1630.;2
+JonesWilkinsLeeStateEquation;2;3.712E+11;3.231E+9;4.15;0.95;0.3;1.E+5
+# The TNT detonates from its centre at t = 0, at 6930 m/s
+SphericalDetonation;1;12;0.02;0.03;0.03;6930.;0.
+# LX-17: ignition and growth model, parameters from the database, in SI
+EulerMat;13;1903.;3
+IgnitionGrowthStateEquation;3;;InsensitiveExplosive17;SiUnits
+# Copper: Mie-Gruneisen, hydrodynamic, spalls below -1 GPa
+EulerMat;14;8930.;4;;;;1
+MieGruneisenStateEquation;4;3940.;1.49;2.;2.5E+4
+ConstantSpallation;1;-1.E+9
+# Propellant gas: Noble-Abel, co-volume 1.0E-3 m3/kg
+EulerMat;15;100.;5
+NobleAbelStateEquation;5;1.25;0.001;300.
+# ---------------------------------------------------------------- regions
+# Air everywhere (level 0), the TNT sphere, the LX-17 cylinder along X, the
+# copper plate across the box, the gas pocket
+EulerInitialRegions;20;21
+InitialConditionRegion;1;21;Sphere;31;11;81;0.
+InitialConditionRegion;2;21;Sphere;32;12;82;1.
+InitialConditionRegion;3;21;Cylinder;33;13;83;2.
+InitialConditionRegion;4;21;Box;34;14;84;3.
+InitialConditionRegion;5;21;Sphere;35;15;85;4.
+SphereShape;31;0.06;0.03;0.03;0.5
+SphereShape;32;0.02;0.03;0.03;0.012
+CylinderShape;33;0.038;0.03;0.03;0.058;0.03;0.03;0.012
+ContactBoxRegion;34;;Coordinates;0;;0.07;;0.;;0.;;0.08;;0.;;0.;;0.08;0.06;0.;0.07;0.06;0.;0.07;0.;0.06;0.08;0.;0.06;0.08;0.06;0.06;0.07;0.06;0.06
+SphereShape;35;0.1;0.03;0.03;0.012
+# Air at 1.0E5 Pa; TNT with its detonation energy; the solids at rest, zero
+# energy; the gas pocket at about 28 MPa
+InitialConditionValues;81;;Density;1.2;SpecificInternalEnergy;208330.
+InitialConditionValues;82;;Density;1630.;SpecificInternalEnergy;4.29E+6
+InitialConditionValues;83;;Density;1903.;SpecificInternalEnergy;0.
+InitialConditionValues;84;;Density;8930.;SpecificInternalEnergy;0.
+InitialConditionValues;85;;Density;100.;SpecificInternalEnergy;1.E+6

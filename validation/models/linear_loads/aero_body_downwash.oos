@@ -1,0 +1,55 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: user downwash on a wing and on the interference
+# elements of a body, DMIJ DMIJI (SOL 144)
+#
+# Covers:
+#   - cards: DMIJI (downwash of the CAERO2 interference elements), DMIJ
+#     (downwash of the CAERO1 boxes), with AEDW and UXVEC; a CAERO2 pod
+#     (PAERO2, AEFACT) splined to the wing by a SPLINE2
+#   - solution: SOL 144 (static aeroelastic trim, restrained wing)
+#   - outputs: displacements, SPC forces
+# Run notes:
+#   - the wing model is the shared one of aero_sol144 (INCLUDEd, read only);
+#     the pod is added here in the same interference group (IGID 1)
+#   - the pod CAERO2 3001 has 4 slender body elements (3001 to 3004) and 2
+#     interference elements, numbered after them (3005, 3006); the DMIJI rows
+#     are those interference elements, component 3
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;O_o_Reader test model: DMIJ and DMIJI downwash with a body
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+TrimSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+AeroForceOutput;All;PlotOnly
+AeroPressureOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim with a user downwash on the wing and the pod
+[model]
+Parameter;PostprocessingFile;-1
+AeroStaticParams;;;200.;2.E+3;4.E+5
+AeroTrim;1;0.5;0.02;AngleOfAttack;0.05;ELEV;0.
+# Pod under the wing at mid span: 300 long, half-width 25, 100 below the
+# wing plane, slender body and interference elements in group 1.
+AeroBody2;3001;3000;;4;2;;;1;-50.;500.;-100.;300.
+AeroBodyProp2;3000;PlaneZy;25.;1.;3010;;3011;;1;2
+AeroFactorList;3010;0.;20.;25.;25.;15.
+AeroFactorList;3011;22.5;67.5;112.5;157.5;202.5;247.5;292.5;337.5
+# Beam spline of the slender body elements on the wing grid points of the
+# mid-span row.
+IdListSet1;3100;7;8;9
+AeroBeamSpline2;3101;3001;3001;3004;3100;0.;1.;;0.;0.
+# AEDW at the intercept: a downwash on the root boxes (DMIJ) and on the two
+# interference elements of the pod (DMIJI).
+AeroControlVector;20;Intercept;1.
+AeroDownwash;0.5;Asymmetric;Asymmetric;20;DWJ;DWJI
+DirectMatrixAeroJ;DWJ;0;9;1;0;;1
+DirectMatrixAeroJ;DWJ;1;1;1001;3;0.005;;1002;3;0.005;;1003;3;0.005;;1004;3;0.005
+DirectMatrixAeroJInterference;DWJI;0;9;1;0;;1
+DirectMatrixAeroJInterference;DWJI;1;1;3005;3;0.002;;3006;3;0.002
+Include;../aero_sol144/aero_model.oos

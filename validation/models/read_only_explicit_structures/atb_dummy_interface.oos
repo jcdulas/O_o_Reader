@@ -1,0 +1,66 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: SOL 700 ATB dummy interface (read-only)
+#
+# Covers:
+#   - cards: ATBSEG ATBJNT ATBACC RELEX DYPARAM (ATBAOUT, ATBHOUT, ATBTOUT)
+#     (with GRID, TLOAD1, TABLED1, TSTEPNL)
+#   - solution: SOL 700,129 (explicit nonlinear transient coupled with the
+#     Articulated Total Body program)
+#   - outputs: none (read-only deck, not run)
+# Run notes:
+#   - read-only: the segments, joints and ellipsoids named here (HEAD, NECK,
+#     HN) are defined in an external ATB input file in the ATB program's own
+#     format, given to the solver through the atb option of sol700.pth; the
+#     project has no such file and the format reference does not
+#     describe its format
+#   - needs the explicit solver of SOL 700 in the installation (the solver
+#     spawns it; see the SOL 700 Executive Control statement)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;129
+[case]
+TitleText;O_o_Reader test model: SOL 700 ATB dummy interface (read-only)
+BulkEcho;None
+NonlinearTimeStepSelection;1
+StepEndTime;0.1
+DynamicLoadSelection;5
+[model]
+# Units: mm, N, tonne, s. A 0.1 s sled pulse on a two-segment dummy.
+NonlinearTimeSteps;1;100;0.001
+ExplicitParam;InitialStep;1.E-6
+# Output intervals of the ATB files.
+ExplicitParam;OccupantAccelerationOutput;0.005
+ExplicitParam;OccupantHistoryOutput;Yes
+ExplicitParam;OccupantTimeOutput;0.001
+# Position and orientation of the segments HEAD and NECK: origin, x, y and z
+# points.
+Node;1001;;0.;0.;800.
+Node;1002;;100.;0.;800.
+Node;1003;;0.;100.;800.
+Node;1004;;0.;0.;900.
+Node;1011;;0.;0.;700.
+Node;1012;;100.;0.;700.
+Node;1013;;0.;100.;700.
+Node;1014;;0.;0.;800.
+Node;1021;;0.;0.;750.
+Node;1022;;100.;0.;750.
+Node;1023;;0.;100.;750.
+Node;1024;;0.;0.;850.
+Node;1031;;0.;0.;750.
+Node;1032;;100.;0.;750.
+Node;1033;;0.;100.;750.
+Node;1034;;0.;0.;850.
+OccupantSegment;1;HEAD;;;;;;;1001;1002;1003;1004
+OccupantSegment;2;NECK;;;;;;;1011;1012;1013;1014
+# The head-neck joint HN: the joint frames on the neck (1021-1024) and on the
+# head (1031-1034).
+OccupantJoint;1;HN;1021;1022;1023;1024;;;;1031;1032;1033;1034
+# The head ellipsoid is defined by ATB.
+RigidEllipsoidExternal;HEAD;ATB
+# Sled pulse on both segments: ATBACC 5 (excitation of TLOAD1 5, load type)
+# along -x, scaled by the table 6 (20 g peak, in mm/s2).
+OccupantAccelField;5;1.96E+5;-1.;0.;0.;HEAD;NECK
+TransientTableLoad1;5;5;;;0;6
+TableDynamic1;6;;;0.;0.;0.05;1.;0.1;0.;EndTable

@@ -1,0 +1,67 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: co-simulation with a flow solver (SOL 400, read-only)
+#
+# Covers:
+#   - cards: COSMSEL COSMSRV COSMGRP COSMINP COSMOUT
+#   - solution: SOL 400 (nonlinear transient of a block whose top face is
+#     loaded by a co-simulation partner)
+#   - outputs: none (not run)
+# Run notes:
+#   - read-only: the run exchanges forces and motions with a flow solver
+#     (scFLOW through the the solver co-simulation engine) at every increment; it
+#     cannot run on its own, and the project has no partner model
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: co-simulation (read-only)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+CosimulationServiceSelection;21
+SubcaseStart;1
+LabelText;block under the fluid pressure of the partner
+AnalysisKind;NonlinearTransient
+NonlinearStepSelection;10
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+# 20 steps of 0.5 ms.
+NonlinearStepControl;10;0.01;;FixedStepping;20
+# An aluminium block 20 x 20 x 10 mm, 2 x 2 x 1 CHEXA, fixed at its base.
+# Units: mm, N, t, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+SolidProp;1;1
+Node;1;;0.;0.;0.;;456
+Node;2;;10.;0.;0.;;456
+Node;3;;20.;0.;0.;;456
+Node;4;;0.;10.;0.;;456
+Node;5;;10.;10.;0.;;456
+Node;6;;20.;10.;0.;;456
+Node;7;;0.;20.;0.;;456
+Node;8;;10.;20.;0.;;456
+Node;9;;20.;20.;0.;;456
+Node;10;;0.;0.;10.;;456
+Node;11;;10.;0.;10.;;456
+Node;12;;20.;0.;10.;;456
+Node;13;;0.;10.;10.;;456
+Node;14;;10.;10.;10.;;456
+Node;15;;20.;10.;10.;;456
+Node;16;;0.;20.;10.;;456
+Node;17;;10.;20.;10.;;456
+Node;18;;20.;20.;10.;;456
+SolidHexa;1;1;1;2;5;4;10;11;14;13
+SolidHexa;2;1;2;3;6;5;11;12;15;14
+SolidHexa;3;1;4;5;8;7;13;14;17;16
+SolidHexa;4;1;5;6;9;8;14;15;18;17
+SinglePointConstrList;1;123;1;Through;9
+# The coupled area: the top faces (G5-G6-G7-G8, face 6) of the four
+# elements. The partner sends forces to it (follower forces) and receives
+# its displacements and velocities.
+CosimulationArea;31;Surface;1;6;2;6;3;6;4;6
+CosimulationInputs;41;Force
+CosimulationOutputs;51;Displacement;Velocity
+CosimulationService;61;scFLOW;Follower;31;41;31;51
+CosimulationSelection;21;61

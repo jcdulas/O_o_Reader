@@ -1,0 +1,1460 @@
+{
+ "description": "Reviewed card layouts of the elements family (src/model/cards/elements).",
+ "cards": {
+  "AcousticAbsorberProp": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "resistanceTableId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "reactanceTableId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "impedanceScale", "slot": 4, "kind": "real", "default": "1.0"},
+    {"name": "area", "slot": 5, "kind": "real", "default": "1.0"},
+    {"name": "damping", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "stiffness", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "characteristicImpedance", "slot": 8, "kind": "real", "default": "1.0"}
+  ]},
+  "AcousticAxisymFluid2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "fluidPointId1", "slot": 2, "kind": "integer"},
+    {"name": "fluidPointId2", "slot": 3, "kind": "integer"},
+    {"name": "density", "slot": 6, "kind": "real"},
+    {"name": "bulkModulus", "slot": 7, "kind": "real"}
+  ]},
+  "AcousticAxisymFluid3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "fluidPointId1", "slot": 2, "kind": "integer"},
+    {"name": "fluidPointId2", "slot": 3, "kind": "integer"},
+    {"name": "fluidPointId3", "slot": 4, "kind": "integer"},
+    {"name": "density", "slot": 6, "kind": "real"},
+    {"name": "bulkModulus", "slot": 7, "kind": "real"}
+  ]},
+  "AcousticAxisymFluid4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "fluidPointId1", "slot": 2, "kind": "integer"},
+    {"name": "fluidPointId2", "slot": 3, "kind": "integer"},
+    {"name": "fluidPointId3", "slot": 4, "kind": "integer"},
+    {"name": "fluidPointId4", "slot": 5, "kind": "integer"},
+    {"name": "density", "slot": 6, "kind": "real"},
+    {"name": "bulkModulus", "slot": 7, "kind": "real"}
+  ]},
+  "AcousticInfiniteTria3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"}
+  ]},
+  "AcousticInfiniteQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"}
+  ]},
+  "AcousticInfiniteProp": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"},
+    {"name": "radialOrder", "slot": 3, "kind": "integer"},
+    {"name": "poleX", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "poleY", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "poleZ", "slot": 6, "kind": "real", "default": "0.0"}
+  ]},
+  "AcousticSlot3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "slotPoint1", "slot": 2, "kind": "integer"},
+    {"name": "slotPoint2", "slot": 3, "kind": "integer"},
+    {"name": "slotPoint3", "slot": 4, "kind": "integer"},
+    {"name": "density", "slot": 6, "kind": "real"},
+    {"name": "bulkModulus", "slot": 7, "kind": "real"},
+    {"name": "slotCount", "slot": 8, "kind": "integer"}
+  ]},
+  "AcousticSlot4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "slotPoint1", "slot": 2, "kind": "integer"},
+    {"name": "slotPoint2", "slot": 3, "kind": "integer"},
+    {"name": "slotPoint3", "slot": 4, "kind": "integer"},
+    {"name": "slotPoint4", "slot": 5, "kind": "integer"},
+    {"name": "density", "slot": 6, "kind": "real"},
+    {"name": "bulkModulus", "slot": 7, "kind": "real"},
+    {"name": "slotCount", "slot": 8, "kind": "integer"}
+  ]},
+  "AxisymQuad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "materialAngle", "slot": 12, "kind": "real"},
+    {"name": "matFrameId", "slot": 12, "kind": "integer"}
+  ]},
+  "AxisymQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "materialAngle", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "AxisymQuad8": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "materialAngle", "slot": 11, "kind": "real", "default": "0.0"}
+  ]},
+  "ShellAxisym": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "offset", "slot": 6, "kind": "real"}
+  ]},
+  "AxisymTria": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "materialAngle", "slot": 9, "kind": "real"},
+    {"name": "matFrameId", "slot": 9, "kind": "integer"}
+  ]},
+  "AxisymTria6": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "materialAngle", "slot": 9, "kind": "real", "default": "0.0"}
+  ]},
+  "Bar2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "offsetKind", "slot": 8, "kind": "text"},
+    {"name": "pinFlagsA", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "pinFlagsB", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "offset1A", "slot": 11, "kind": "real"},
+    {"name": "offset2A", "slot": 12, "kind": "real"},
+    {"name": "offset3A", "slot": 13, "kind": "real"},
+    {"name": "offset1B", "slot": 14, "kind": "real"},
+    {"name": "offset2B", "slot": 15, "kind": "real"},
+    {"name": "offset3B", "slot": 16, "kind": "real"}
+  ]},
+  "Bar2Defaults": {"fields": [
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "offsetKind", "slot": 8, "kind": "text"}
+  ]},
+  "Bar2Stations": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "stationScale", "slot": 2, "kind": "text"},
+    {"name": "station1", "slot": 3, "kind": "real"},
+    {"name": "stationCount", "slot": 3, "kind": "integer"},
+    {"name": "station2", "slot": 4, "kind": "real"},
+    {"name": "station3", "slot": 5, "kind": "real"},
+    {"name": "station4", "slot": 6, "kind": "real"},
+    {"name": "station5", "slot": 7, "kind": "real"},
+    {"name": "station6", "slot": 8, "kind": "real"}
+  ]},
+  "Beam2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "offsetKind", "slot": 8, "kind": "text"},
+    {"name": "pinFlagsA", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "pinFlagsB", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "offset1A", "slot": 11, "kind": "real"},
+    {"name": "offset2A", "slot": 12, "kind": "real"},
+    {"name": "offset3A", "slot": 13, "kind": "real"},
+    {"name": "offset1B", "slot": 14, "kind": "real"},
+    {"name": "offset2B", "slot": 15, "kind": "real"},
+    {"name": "offset3B", "slot": 16, "kind": "real"},
+    {"name": "warpingPointA", "slot": 17, "kind": "integer", "default": "0"},
+    {"name": "warpingPointB", "slot": 18, "kind": "integer", "default": "0"}
+  ]},
+  "Beam3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer"},
+    {"name": "nodeC", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "orientationNode", "slot": 6, "kind": "integer"},
+    {"name": "orientation1", "slot": 6, "kind": "real"},
+    {"name": "orientation2", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "offset1A", "slot": 9, "kind": "real"},
+    {"name": "offset2A", "slot": 10, "kind": "real"},
+    {"name": "offset3A", "slot": 11, "kind": "real"},
+    {"name": "offset1B", "slot": 12, "kind": "real"},
+    {"name": "offset2B", "slot": 13, "kind": "real"},
+    {"name": "offset3B", "slot": 14, "kind": "real"},
+    {"name": "offset1C", "slot": 15, "kind": "real"},
+    {"name": "offset2C", "slot": 16, "kind": "real"},
+    {"name": "offset3C", "slot": 17, "kind": "real"},
+    {"name": "twistA", "slot": 18, "kind": "real"},
+    {"name": "twistB", "slot": 19, "kind": "real"},
+    {"name": "twistC", "slot": 20, "kind": "real"},
+    {"name": "warpingPointA", "slot": 21, "kind": "integer", "default": "0"},
+    {"name": "warpingPointB", "slot": 22, "kind": "integer", "default": "0"},
+    {"name": "warpingPointC", "slot": 23, "kind": "integer", "default": "0"}
+  ]},
+  "Beam2Defaults": {"fields": [
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "offsetKind", "slot": 8, "kind": "text"}
+  ]},
+  "BeamPropNonlinear": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "sectionIntegration", "slot": 4, "kind": "text"}
+  ], "sections": {"name": "behaviorLines", "firstSlot": 9, "keyOffset": 0, "kinds": [
+    {"key": "TwoNodeElems", "name": "twoEndElements", "fields": [
+      {"name": "behavior2", "offset": 1, "kind": "text"},
+      {"name": "integration2", "offset": 2, "kind": "text"}
+    ]}
+  ]}},
+  "Bushing": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "frameId", "slot": 8, "kind": "integer"},
+    {"name": "offsetFraction", "slot": 9, "kind": "real"},
+    {"name": "offsetFrameId", "slot": 10, "kind": "integer"},
+    {"name": "offset1", "slot": 11, "kind": "real"},
+    {"name": "offset2", "slot": 12, "kind": "real"},
+    {"name": "offset3", "slot": 13, "kind": "real"}
+  ]},
+  "Bushing1D": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 5, "kind": "integer"}
+  ]},
+  "Bushing2D": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer"},
+    {"name": "frameId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "plane", "slot": 6, "kind": "text"}
+  ]},
+  "CohesiveAxisymQuad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"}
+  ]},
+  "CohesiveHexa": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"},
+    {"name": "node14", "slot": 16, "kind": "integer"},
+    {"name": "node15", "slot": 17, "kind": "integer"},
+    {"name": "node16", "slot": 18, "kind": "integer"},
+    {"name": "node17", "slot": 19, "kind": "integer"},
+    {"name": "node18", "slot": 20, "kind": "integer"},
+    {"name": "node19", "slot": 21, "kind": "integer"},
+    {"name": "node20", "slot": 22, "kind": "integer"}
+  ]},
+  "CohesiveMat": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "cohesiveModel", "slot": 2, "kind": "integer"},
+    {"name": "tableId", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "cohesiveEnergy", "slot": 9, "kind": "real"},
+    {"name": "criticalOpening", "slot": 10, "kind": "real"},
+    {"name": "maxOpening", "slot": 11, "kind": "real"},
+    {"name": "shearNormalStressRatio", "slot": 12, "kind": "real", "default": "1.0"},
+    {"name": "exponent", "slot": 13, "kind": "real", "default": "1.0"},
+    {"name": "viscousDissipation", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "referenceDisplacementRate", "slot": 15, "kind": "real", "default": "0.0"},
+    {"name": "compressionStiffening", "slot": 16, "kind": "real", "default": "1.0"},
+    {"name": "shearNormalEnergyRatio", "slot": 17, "kind": "real", "default": "1.0"},
+    {"name": "inPlaneStiffness", "slot": 19, "kind": "real", "default": "0.0"},
+    {"name": "normalStiffness", "slot": 20, "kind": "real", "default": "0.0"}
+  ]},
+  "CohesivePenta": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"},
+    {"name": "node14", "slot": 16, "kind": "integer"},
+    {"name": "node15", "slot": 17, "kind": "integer"}
+  ]},
+  "CohesiveProp": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"},
+    {"name": "integration", "slot": 3, "kind": "integer"},
+    {"name": "thickness", "slot": 4, "kind": "real", "default": "1.0"},
+    {"name": "output", "slot": 5, "kind": "text"},
+    {"name": "tangentStiffness", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "CohesiveQuad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"}
+  ]},
+  "ShellConical2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "ringIdA", "slot": 3, "kind": "integer"},
+    {"name": "ringIdB", "slot": 4, "kind": "integer"}
+  ]},
+  "ConicalShellProp": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId1", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "thickness1", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "matId2", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "inertia", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "matId3", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "thickness2", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "nonStructMass", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "fiberDistance1", "slot": 9, "kind": "real"},
+    {"name": "fiberDistance2", "slot": 10, "kind": "real"}
+  ], "group": {"name": "phiAngles", "firstSlot": 11, "period": 1, "fields": [
+    {"name": "phiAngle", "offset": 0, "kind": "real"}
+  ]}},
+  "ConnectorSearchControl": {"fields": [
+    {"name": "elementSetId", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "parameters", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "parameterName", "offset": 0, "kind": "text"},
+    {"name": "parameterValue", "offset": 1, "kind": "number"}
+  ]}},
+  "ConnectorSearchParams": {"fields": [], "group": {"name": "globalParameters", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "parameterName", "offset": 0, "kind": "text"},
+    {"name": "parameterValue", "offset": 1, "kind": "number"}
+  ]}, "sections": {"name": "connectorSections", "packed": true, "kinds": [
+    {"key": "Fastener", "name": "fastenerParameters", "list": {"name": "parameters", "offset": 1, "period": 2, "fields": [
+      {"name": "sectionParameterName", "offset": 0, "kind": "text"},
+      {"name": "sectionParameterValue", "offset": 1, "kind": "number"}
+    ]}},
+    {"key": "Weld", "name": "weldParameters", "list": {"name": "parameters", "offset": 1, "period": 2, "fields": [
+      {"name": "sectionParameterName", "offset": 0, "kind": "text"},
+      {"name": "sectionParameterValue", "offset": 1, "kind": "number"}
+    ]}},
+    {"key": "Seam", "name": "seamParameters", "list": {"name": "parameters", "offset": 1, "period": 2, "fields": [
+      {"name": "sectionParameterName", "offset": 0, "kind": "text"},
+      {"name": "sectionParameterValue", "offset": 1, "kind": "number"}
+    ]}}
+  ]}},
+  "CrackTip2D": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"},
+    {"name": "node14", "slot": 16, "kind": "integer"},
+    {"name": "node15", "slot": 17, "kind": "integer"},
+    {"name": "node16", "slot": 18, "kind": "integer"},
+    {"name": "node17", "slot": 19, "kind": "integer"},
+    {"name": "node18", "slot": 20, "kind": "integer"}
+  ]},
+  "CrackTip3D": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"},
+    {"name": "node14", "slot": 16, "kind": "integer"},
+    {"name": "node15", "slot": 17, "kind": "integer"},
+    {"name": "node16", "slot": 18, "kind": "integer"},
+    {"name": "node17", "slot": 19, "kind": "integer"},
+    {"name": "node18", "slot": 20, "kind": "integer"},
+    {"name": "node19", "slot": 21, "kind": "integer"},
+    {"name": "node20", "slot": 22, "kind": "integer"},
+    {"name": "node21", "slot": 23, "kind": "integer"},
+    {"name": "node22", "slot": 24, "kind": "integer"},
+    {"name": "node23", "slot": 25, "kind": "integer"},
+    {"name": "node24", "slot": 26, "kind": "integer"},
+    {"name": "node25", "slot": 27, "kind": "integer"},
+    {"name": "node26", "slot": 28, "kind": "integer"},
+    {"name": "node27", "slot": 29, "kind": "integer"},
+    {"name": "node28", "slot": 30, "kind": "integer"},
+    {"name": "node29", "slot": 31, "kind": "integer"},
+    {"name": "node30", "slot": 32, "kind": "integer"},
+    {"name": "node31", "slot": 33, "kind": "integer"},
+    {"name": "node32", "slot": 34, "kind": "integer"},
+    {"name": "node33", "slot": 35, "kind": "integer"},
+    {"name": "node34", "slot": 36, "kind": "integer"},
+    {"name": "node35", "slot": 37, "kind": "integer"},
+    {"name": "node36", "slot": 38, "kind": "integer"},
+    {"name": "node37", "slot": 39, "kind": "integer"},
+    {"name": "node38", "slot": 40, "kind": "integer"},
+    {"name": "node39", "slot": 41, "kind": "integer"},
+    {"name": "node40", "slot": 42, "kind": "integer"},
+    {"name": "node41", "slot": 43, "kind": "integer"},
+    {"name": "node42", "slot": 44, "kind": "integer"},
+    {"name": "node43", "slot": 45, "kind": "integer"},
+    {"name": "node44", "slot": 46, "kind": "integer"},
+    {"name": "node45", "slot": 47, "kind": "integer"},
+    {"name": "node46", "slot": 48, "kind": "integer"},
+    {"name": "node47", "slot": 49, "kind": "integer"},
+    {"name": "node48", "slot": 50, "kind": "integer"},
+    {"name": "node49", "slot": 51, "kind": "integer"},
+    {"name": "node50", "slot": 52, "kind": "integer"},
+    {"name": "node51", "slot": 53, "kind": "integer"},
+    {"name": "node52", "slot": 54, "kind": "integer"},
+    {"name": "node53", "slot": 55, "kind": "integer"},
+    {"name": "node54", "slot": 56, "kind": "integer"},
+    {"name": "node55", "slot": 57, "kind": "integer"},
+    {"name": "node56", "slot": 58, "kind": "integer"},
+    {"name": "node57", "slot": 59, "kind": "integer"},
+    {"name": "node58", "slot": 60, "kind": "integer"},
+    {"name": "node59", "slot": 61, "kind": "integer"},
+    {"name": "node60", "slot": 62, "kind": "integer"},
+    {"name": "node61", "slot": 63, "kind": "integer"},
+    {"name": "node62", "slot": 64, "kind": "integer"},
+    {"name": "node63", "slot": 65, "kind": "integer"},
+    {"name": "node64", "slot": 66, "kind": "integer"}
+  ]},
+  "CrackTipProp2D": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"},
+    {"name": "thickness", "slot": 3, "kind": "real"},
+    {"name": "planeCondition", "slot": 4, "kind": "integer"},
+    {"name": "nonStructMass", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "gammaCoefficient", "slot": 6, "kind": "real"},
+    {"name": "phiAngle", "slot": 7, "kind": "real"}
+  ]},
+  "CrackTipProp3D": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"},
+    {"name": "gammaCoefficient", "slot": 3, "kind": "real"},
+    {"name": "phiAngle", "slot": 4, "kind": "real"}
+  ]},
+  "CurvedBeam2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "geometryOption", "slot": 8, "kind": "integer"}
+  ]},
+  "DamperDofProperty": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "DamperDofPropertyExplicit": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "follow", "slot": 10, "kind": "text"}
+  ]},
+  "DamperDofInline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "damping", "slot": 2, "kind": "real"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "DamperDofInlineExplicit": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "damping", "slot": 2, "kind": "real"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "follow", "slot": 10, "kind": "text"}
+  ]},
+  "DamperScalarProperty": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "scalarPoint1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint2", "slot": 4, "kind": "integer", "default": "0"}
+  ]},
+  "DamperScalarInline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "damping", "slot": 2, "kind": "real"},
+    {"name": "scalarPoint1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint2", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "id2", "slot": 5, "kind": "integer"},
+    {"name": "damping2", "slot": 6, "kind": "real"},
+    {"name": "scalarPoint3", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint4", "slot": 8, "kind": "integer", "default": "0"}
+  ]},
+  "ElemGeneration": {"fields": [
+    {"name": "kind", "slot": 1, "kind": "text"},
+    {"name": "firstElemId", "slot": 2, "kind": "integer"},
+    {"name": "propId", "slot": 3, "kind": "integer"},
+    {"name": "gridFieldId", "slot": 4, "kind": "integer"},
+    {"name": "direction", "slot": 5, "kind": "any"},
+    {"name": "thicknessOption", "slot": 6, "kind": "any"},
+    {"name": "lowElemId", "slot": 7, "kind": "any"},
+    {"name": "highElemId", "slot": 8, "kind": "any"},
+    {"name": "valueA", "slot": 9, "kind": "any"},
+    {"name": "valueB", "slot": 10, "kind": "any"},
+    {"name": "valueC", "slot": 11, "kind": "any"},
+    {"name": "valueD", "slot": 12, "kind": "any"}
+  ]},
+  "Fastener": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "kind", "slot": 3, "kind": "text"},
+    {"name": "patchIdA", "slot": 4, "kind": "integer"},
+    {"name": "patchIdB", "slot": 5, "kind": "integer"},
+    {"name": "spotNode", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "nodeA", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "nodeB", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "locationX", "slot": 9, "kind": "real"},
+    {"name": "locationY", "slot": 10, "kind": "real"},
+    {"name": "locationZ", "slot": 11, "kind": "real"}
+  ]},
+  "Gap2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "nodeA", "slot": 3, "kind": "integer"},
+    {"name": "nodeB", "slot": 4, "kind": "integer"},
+    {"name": "orientationNode", "slot": 5, "kind": "integer"},
+    {"name": "orientation1", "slot": 5, "kind": "real"},
+    {"name": "orientation2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "orientation3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "frameId", "slot": 8, "kind": "integer"}
+  ]},
+  "GeneralMatrix": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "independentDofs", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "independentPoint", "offset": 0, "kind": "integer"},
+    {"name": "independentComponent", "offset": 1, "kind": "integer"}
+  ]}, "sections": {"name": "parts", "keyOffset": 0, "kinds": [
+    {"key": "DependentDofs", "name": "dependentDofs", "list": {"name": "dependentDofs", "offset": 2, "period": 2, "fields": [
+      {"name": "dependentPoint", "offset": 0, "kind": "integer"},
+      {"name": "dependentComponent", "offset": 1, "kind": "integer"}
+    ]}},
+    {"key": "Stiffness", "name": "stiffnessMatrix", "list": {"name": "stiffnessMatrix", "offset": 1, "period": 1, "fields": [
+      {"name": "stiffness", "offset": 0, "kind": "real"}
+    ]}},
+    {"key": "Flexibility", "name": "flexibilityMatrix", "list": {"name": "flexibilityMatrix", "offset": 1, "period": 1, "fields": [
+      {"name": "stiffness", "offset": 0, "kind": "real"}
+    ]}},
+    {"key": "Dependency", "name": "dependencyMatrix", "list": {"name": "dependencyMatrix", "offset": 1, "period": 1, "fields": [
+      {"name": "dependencyMatrix", "offset": 0, "kind": "real"}
+    ]}}
+  ]}},
+  "HeatCapacity2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 4, "kind": "integer", "default": "0"}
+  ]},
+  "SolidHexa": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"},
+    {"name": "node14", "slot": 16, "kind": "integer"},
+    {"name": "node15", "slot": 17, "kind": "integer"},
+    {"name": "node16", "slot": 18, "kind": "integer"},
+    {"name": "node17", "slot": 19, "kind": "integer"},
+    {"name": "node18", "slot": 20, "kind": "integer"},
+    {"name": "node19", "slot": 21, "kind": "integer"},
+    {"name": "node20", "slot": 22, "kind": "integer"}
+  ]},
+  "LineInterface": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "kind", "slot": 2, "kind": "text"},
+    {"name": "boundaryList", "slot": 9, "kind": "text", "span": 0}
+  ]},
+  "MassDofProperty": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "MassDofInline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "mass", "slot": 2, "kind": "real"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "MassScalarProperty": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "scalarPoint1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint2", "slot": 4, "kind": "integer", "default": "0"}
+  ]},
+  "MassScalarInline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "mass", "slot": 2, "kind": "real"},
+    {"name": "scalarPoint1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint2", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "id2", "slot": 5, "kind": "integer"},
+    {"name": "mass2", "slot": 6, "kind": "real"},
+    {"name": "scalarPoint3", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint4", "slot": 8, "kind": "integer", "default": "0"}
+  ]},
+  "SolidPenta": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"},
+    {"name": "node14", "slot": 16, "kind": "integer"},
+    {"name": "node15", "slot": 17, "kind": "integer"}
+  ]},
+  "PlaneStrainTria3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "materialAngle", "slot": 6, "kind": "real", "default": "0.0"}
+  ]},
+  "PlaneStrainQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "materialAngle", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "PlaneStrainTria6": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "materialAngle", "slot": 9, "kind": "real", "default": "0.0"}
+  ]},
+  "PlaneStrainQuad8": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "materialAngle", "slot": 15, "kind": "real", "default": "0.0"}
+  ]},
+  "PlaneStressTria3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "materialAngle", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "thickness1", "slot": 11, "kind": "real"},
+    {"name": "thickness2", "slot": 12, "kind": "real"},
+    {"name": "thickness3", "slot": 13, "kind": "real"}
+  ]},
+  "PlaneStressQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "materialAngle", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 12, "kind": "integer", "default": "0"},
+    {"name": "thickness1", "slot": 13, "kind": "real"},
+    {"name": "thickness2", "slot": 14, "kind": "real"},
+    {"name": "thickness3", "slot": 15, "kind": "real"},
+    {"name": "thickness4", "slot": 16, "kind": "real"}
+  ]},
+  "PlaneStressTria6": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "materialAngle", "slot": 9, "kind": "real", "default": "0.0"}
+  ]},
+  "PlaneStressQuad8": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "materialAngle", "slot": 15, "kind": "real", "default": "0.0"}
+  ]},
+  "PlotLine2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "node2", "slot": 3, "kind": "integer"},
+    {"name": "id2", "slot": 5, "kind": "integer"},
+    {"name": "node3", "slot": 6, "kind": "integer"},
+    {"name": "node4", "slot": 7, "kind": "integer"}
+  ]},
+  "PlotQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "node2", "slot": 3, "kind": "integer"},
+    {"name": "node3", "slot": 4, "kind": "integer"},
+    {"name": "node4", "slot": 5, "kind": "integer"}
+  ]},
+  "PlotSurface": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeId1", "slot": 2, "kind": "integer"},
+    {"name": "nodeId2", "slot": 3, "kind": "integer"},
+    {"name": "nodeId3", "slot": 4, "kind": "integer"},
+    {"name": "nodeId4", "slot": 5, "kind": "integer"},
+    {"name": "nodeId5", "slot": 6, "kind": "integer"},
+    {"name": "nodeId6", "slot": 7, "kind": "integer"},
+    {"name": "nodeId7", "slot": 8, "kind": "integer"},
+    {"name": "nodeId8", "slot": 9, "kind": "integer"}
+  ]},
+  "PlotTria3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "node2", "slot": 3, "kind": "integer"},
+    {"name": "node3", "slot": 4, "kind": "integer"}
+  ]},
+  "PointMassMatrix": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "frameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "massTerm11", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "massTerm21", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "massTerm22", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "massTerm31", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "massTerm32", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "massTerm33", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "massTerm41", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "massTerm42", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "massTerm43", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "massTerm44", "slot": 13, "kind": "real", "default": "0.0"},
+    {"name": "massTerm51", "slot": 14, "kind": "real", "default": "0.0"},
+    {"name": "massTerm52", "slot": 15, "kind": "real", "default": "0.0"},
+    {"name": "massTerm53", "slot": 16, "kind": "real", "default": "0.0"},
+    {"name": "massTerm54", "slot": 17, "kind": "real", "default": "0.0"},
+    {"name": "massTerm55", "slot": 18, "kind": "real", "default": "0.0"},
+    {"name": "massTerm61", "slot": 19, "kind": "real", "default": "0.0"},
+    {"name": "massTerm62", "slot": 20, "kind": "real", "default": "0.0"},
+    {"name": "massTerm63", "slot": 21, "kind": "real", "default": "0.0"},
+    {"name": "massTerm64", "slot": 22, "kind": "real", "default": "0.0"},
+    {"name": "massTerm65", "slot": 23, "kind": "real", "default": "0.0"},
+    {"name": "massTerm66", "slot": 24, "kind": "real", "default": "0.0"}
+  ]},
+  "PointMassInertia": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "frameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "mass", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "offset1", "slot": 5, "kind": "real"},
+    {"name": "offset2", "slot": 6, "kind": "real"},
+    {"name": "offset3", "slot": 7, "kind": "real"},
+    {"name": "inertia11", "slot": 9, "kind": "real"},
+    {"name": "inertia21", "slot": 10, "kind": "real"},
+    {"name": "inertia22", "slot": 11, "kind": "real"},
+    {"name": "inertia31", "slot": 12, "kind": "real"},
+    {"name": "inertia32", "slot": 13, "kind": "real"},
+    {"name": "inertia33", "slot": 14, "kind": "real"}
+  ]},
+  "SolidPyramid": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"},
+    {"name": "node11", "slot": 13, "kind": "integer"},
+    {"name": "node12", "slot": 14, "kind": "integer"},
+    {"name": "node13", "slot": 15, "kind": "integer"}
+  ]},
+  "ShellQuad4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "materialAngle", "slot": 7, "kind": "real"},
+    {"name": "matFrameId", "slot": 7, "kind": "integer"},
+    {"name": "offset", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "cornerThickness1", "slot": 11, "kind": "real"},
+    {"name": "cornerThickness2", "slot": 12, "kind": "real"},
+    {"name": "cornerThickness3", "slot": 13, "kind": "real"},
+    {"name": "cornerThickness4", "slot": 14, "kind": "real"}
+  ]},
+  "ShellQuad8": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "cornerThickness1", "slot": 11, "kind": "real"},
+    {"name": "cornerThickness2", "slot": 12, "kind": "real"},
+    {"name": "cornerThickness3", "slot": 13, "kind": "real"},
+    {"name": "cornerThickness4", "slot": 14, "kind": "real"},
+    {"name": "materialAngle", "slot": 15, "kind": "real"},
+    {"name": "matFrameId", "slot": 15, "kind": "integer"},
+    {"name": "offset", "slot": 16, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 17, "kind": "integer", "default": "0"}
+  ]},
+  "ShellQuad4Drilling": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "materialAngle", "slot": 7, "kind": "real"},
+    {"name": "matFrameId", "slot": 7, "kind": "integer"},
+    {"name": "offset", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "cornerThickness1", "slot": 11, "kind": "real"},
+    {"name": "cornerThickness2", "slot": 12, "kind": "real"},
+    {"name": "cornerThickness3", "slot": 13, "kind": "real"},
+    {"name": "cornerThickness4", "slot": 14, "kind": "real"}
+  ]},
+  "PlaneStrainQuad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "materialAngle", "slot": 12, "kind": "real"},
+    {"name": "matFrameId", "slot": 12, "kind": "integer"}
+  ]},
+  "Rod2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"}
+  ]},
+  "Rod2InlineSection": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "node2", "slot": 3, "kind": "integer"},
+    {"name": "matId", "slot": 4, "kind": "integer"},
+    {"name": "area", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "torsionConstant", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "torsionStressCoefficient", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "nonStructMass", "slot": 8, "kind": "real", "default": "0.0"}
+  ]},
+  "Seam": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "seamLine", "slot": 3, "kind": "text"},
+    {"name": "patchKind", "slot": 4, "kind": "text"},
+    {"name": "patchAStart", "slot": 5, "kind": "integer"},
+    {"name": "patchBStart", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "patchAEnd", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "patchBEnd", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "startNode", "slot": 9, "kind": "integer"},
+    {"name": "startX", "slot": 9, "kind": "real"},
+    {"name": "endNode", "slot": 10, "kind": "integer"},
+    {"name": "startY", "slot": 10, "kind": "real"},
+    {"name": "startZ", "slot": 11, "kind": "real"},
+    {"name": "endX", "slot": 12, "kind": "real"},
+    {"name": "endY", "slot": 13, "kind": "real"},
+    {"name": "endZ", "slot": 14, "kind": "real"}
+  ]},
+  "SeamProp": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"},
+    {"name": "kind", "slot": 3, "kind": "text"},
+    {"name": "width", "slot": 4, "kind": "real"},
+    {"name": "thickness", "slot": 5, "kind": "real"},
+    {"name": "integration", "slot": 6, "kind": "integer"}
+  ]},
+  "ShearPanel4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"}
+  ]},
+  "SolidPropNonlinear": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "direction", "slot": 3, "kind": "integer", "default": "1"},
+    {"name": "analysisType", "slot": 5, "kind": "text"}
+  ], "sections": {"name": "behaviorLines", "firstSlot": 9, "keyOffset": 0, "kinds": [
+    {"key": "FourNodeElems", "name": "fourNodeElements", "fields": [
+      {"name": "behavior4", "offset": 1, "kind": "text"},
+      {"name": "integration4", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior4", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration4", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "FiveNodeElems", "name": "fiveNodeElements", "fields": [
+      {"name": "behavior5", "offset": 1, "kind": "text"},
+      {"name": "integration5", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior5", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration5", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "SixNodeElems", "name": "sixNodeElements", "fields": [
+      {"name": "behavior6", "offset": 1, "kind": "text"},
+      {"name": "integration6", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior6", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration6", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "EightNodeElems", "name": "eightNodeElements", "fields": [
+      {"name": "behavior8", "offset": 1, "kind": "text"},
+      {"name": "integration8", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior8", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration8", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "TenNodeElems", "name": "tenNodeElements", "fields": [
+      {"name": "behavior10", "offset": 1, "kind": "text"},
+      {"name": "integration10", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior10", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration10", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "ThirteenNodeElems", "name": "thirteenNodeElements", "fields": [
+      {"name": "behavior13", "offset": 1, "kind": "text"},
+      {"name": "integration13", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior13", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration13", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "FifteenNodeElems", "name": "fifteenNodeElements", "fields": [
+      {"name": "behavior15", "offset": 1, "kind": "text"},
+      {"name": "integration15", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior15", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration15", "offset": 4, "kind": "text"}
+    ]},
+    {"key": "TwentyNodeElems", "name": "twentyNodeElements", "fields": [
+      {"name": "behavior20", "offset": 1, "kind": "text"},
+      {"name": "integration20", "offset": 2, "kind": "text"},
+      {"name": "heatBehavior20", "offset": 3, "kind": "text"},
+      {"name": "heatIntegration20", "offset": 4, "kind": "text"}
+    ]}
+  ]}},
+  "SpringDofProperty": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "SpringDofPropertyExplicit": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "follow", "slot": 10, "kind": "text"}
+  ]},
+  "SpringDofInline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "stiffness", "slot": 2, "kind": "real"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "structuralDamping", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "stressCoefficient", "slot": 8, "kind": "real", "default": "0.0"}
+  ]},
+  "SpringDofInlineExplicit": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "stiffness", "slot": 2, "kind": "real"},
+    {"name": "node1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "components1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "follow", "slot": 10, "kind": "text"}
+  ]},
+  "SpringScalarProperty": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "scalarPoint1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint2", "slot": 4, "kind": "integer", "default": "0"}
+  ]},
+  "SpringScalarInline": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "stiffness", "slot": 2, "kind": "real"},
+    {"name": "scalarPoint1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint2", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "id2", "slot": 5, "kind": "integer"},
+    {"name": "stiffness2", "slot": 6, "kind": "real"},
+    {"name": "scalarPoint3", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "scalarPoint4", "slot": 8, "kind": "integer", "default": "0"}
+  ]},
+  "SpringOffsetExplicit": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"}
+  ]},
+  "SolidTetra": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "node7", "slot": 9, "kind": "integer"},
+    {"name": "node8", "slot": 10, "kind": "integer"},
+    {"name": "node9", "slot": 11, "kind": "integer"},
+    {"name": "node10", "slot": 12, "kind": "integer"}
+  ]},
+  "ShellTria3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "materialAngle", "slot": 6, "kind": "real"},
+    {"name": "matFrameId", "slot": 6, "kind": "integer"},
+    {"name": "offset", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "cornerThickness1", "slot": 11, "kind": "real"},
+    {"name": "cornerThickness2", "slot": 12, "kind": "real"},
+    {"name": "cornerThickness3", "slot": 13, "kind": "real"}
+  ]},
+  "ShellTria6": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer"},
+    {"name": "node5", "slot": 7, "kind": "integer"},
+    {"name": "node6", "slot": 8, "kind": "integer"},
+    {"name": "materialAngle", "slot": 9, "kind": "real"},
+    {"name": "matFrameId", "slot": 9, "kind": "integer"},
+    {"name": "offset", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "cornerThickness1", "slot": 11, "kind": "real"},
+    {"name": "cornerThickness2", "slot": 12, "kind": "real"},
+    {"name": "cornerThickness3", "slot": 13, "kind": "real"},
+    {"name": "thicknessFlag", "slot": 14, "kind": "integer", "default": "0"}
+  ]},
+  "ShellTria3Drilling": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "materialAngle", "slot": 6, "kind": "real"},
+    {"name": "matFrameId", "slot": 6, "kind": "integer"},
+    {"name": "offset", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "thicknessFlag", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "cornerThickness1", "slot": 11, "kind": "real"},
+    {"name": "cornerThickness2", "slot": 12, "kind": "real"},
+    {"name": "cornerThickness3", "slot": 13, "kind": "real"}
+  ]},
+  "Tube2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"}
+  ]},
+  "UserDefined1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined5": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined6": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined7": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined8": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined9": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "connectionFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "connectionField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined1Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined2Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined3Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined4Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined5Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined6Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined7Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined8Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined9Attributes": {"fields": [
+    {"name": "nodeCount", "slot": 1, "kind": "integer"},
+    {"name": "connectionFieldCount", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "propertyFieldCount", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "displacementComponentCount", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "elementName", "slot": 5, "kind": "text"}
+  ]},
+  "UserDefined1Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined2Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined3Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined4Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined5Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined6Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined7Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined8Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "UserDefined9Prop": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "matId", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "propertyFields", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "propertyField", "offset": 0, "kind": "number"}
+  ]}},
+  "ViscousDamper2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer", "default": "same as id"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"}
+  ]},
+  "Weld": {"fields": [], "forms": [
+    {"name": "partPattern", "when": {"field": "kind", "values": ["PartPatch"]}, "fields": [
+      {"name": "id", "slot": 1, "kind": "integer"},
+      {"name": "propId", "slot": 2, "kind": "integer"},
+      {"name": "spotNode", "slot": 3, "kind": "integer", "default": "0"},
+      {"name": "kind", "slot": 4, "kind": "text"},
+      {"name": "nodeA", "slot": 5, "kind": "integer", "default": "0"},
+      {"name": "nodeB", "slot": 6, "kind": "integer", "default": "0"},
+      {"name": "matFrameId", "slot": 8, "kind": "integer", "default": "-1"},
+      {"name": "propIdA", "slot": 9, "kind": "integer"},
+      {"name": "propIdB", "slot": 10, "kind": "integer"},
+      {"name": "locationX", "slot": 17, "kind": "real"},
+      {"name": "locationY", "slot": 18, "kind": "real"},
+      {"name": "locationZ", "slot": 19, "kind": "real"}
+    ]},
+    {"name": "elementPattern", "when": {"field": "kind", "values": ["ElemPatch"]}, "fields": [
+      {"name": "id", "slot": 1, "kind": "integer"},
+      {"name": "propId", "slot": 2, "kind": "integer"},
+      {"name": "spotNode", "slot": 3, "kind": "integer", "default": "0"},
+      {"name": "kind", "slot": 4, "kind": "text"},
+      {"name": "nodeA", "slot": 5, "kind": "integer", "default": "0"},
+      {"name": "nodeB", "slot": 6, "kind": "integer", "default": "0"},
+      {"name": "matFrameId", "slot": 8, "kind": "integer", "default": "-1"},
+      {"name": "shellIdA", "slot": 9, "kind": "integer"},
+      {"name": "shellIdB", "slot": 10, "kind": "integer"},
+      {"name": "locationX", "slot": 17, "kind": "real"},
+      {"name": "locationY", "slot": 18, "kind": "real"},
+      {"name": "locationZ", "slot": 19, "kind": "real"}
+    ]},
+    {"name": "elementIds", "when": {"field": "kind", "values": ["ElemIdPatch"]}, "fields": [
+      {"name": "id", "slot": 1, "kind": "integer"},
+      {"name": "propId", "slot": 2, "kind": "integer"},
+      {"name": "spotNode", "slot": 3, "kind": "integer", "default": "0"},
+      {"name": "kind", "slot": 4, "kind": "text"},
+      {"name": "nodeA", "slot": 5, "kind": "integer", "default": "0"},
+      {"name": "nodeB", "slot": 6, "kind": "integer", "default": "0"},
+      {"name": "matFrameId", "slot": 8, "kind": "integer", "default": "-1"},
+      {"name": "shellIdA", "slot": 9, "kind": "integer"},
+      {"name": "shellIdB", "slot": 10, "kind": "integer", "default": "0"}
+    ]},
+    {"name": "gridIds", "when": {"field": "kind", "values": ["NodeIdPatch"]}, "fields": [
+      {"name": "id", "slot": 1, "kind": "integer"},
+      {"name": "propId", "slot": 2, "kind": "integer"},
+      {"name": "spotNode", "slot": 3, "kind": "integer", "default": "0"},
+      {"name": "kind", "slot": 4, "kind": "text"},
+      {"name": "nodeA", "slot": 5, "kind": "integer", "default": "0"},
+      {"name": "nodeB", "slot": 6, "kind": "integer", "default": "0"},
+      {"name": "patchShapes", "slot": 7, "kind": "text"},
+      {"name": "matFrameId", "slot": 8, "kind": "integer", "default": "-1"},
+      {"name": "nodeA1", "slot": 9, "kind": "integer", "default": "0"},
+      {"name": "nodeA2", "slot": 10, "kind": "integer", "default": "0"},
+      {"name": "nodeA3", "slot": 11, "kind": "integer", "default": "0"},
+      {"name": "nodeA4", "slot": 12, "kind": "integer", "default": "0"},
+      {"name": "nodeA5", "slot": 13, "kind": "integer", "default": "0"},
+      {"name": "nodeA6", "slot": 14, "kind": "integer", "default": "0"},
+      {"name": "nodeA7", "slot": 15, "kind": "integer", "default": "0"},
+      {"name": "nodeA8", "slot": 16, "kind": "integer", "default": "0"},
+      {"name": "nodeB1", "slot": 17, "kind": "integer", "default": "0"},
+      {"name": "nodeB2", "slot": 18, "kind": "integer", "default": "0"},
+      {"name": "nodeB3", "slot": 19, "kind": "integer", "default": "0"},
+      {"name": "nodeB4", "slot": 20, "kind": "integer", "default": "0"},
+      {"name": "nodeB5", "slot": 21, "kind": "integer", "default": "0"},
+      {"name": "nodeB6", "slot": 22, "kind": "integer", "default": "0"},
+      {"name": "nodeB7", "slot": 23, "kind": "integer", "default": "0"},
+      {"name": "nodeB8", "slot": 24, "kind": "integer", "default": "0"}
+    ]},
+    {"name": "align", "fields": [
+      {"name": "id", "slot": 1, "kind": "integer"},
+      {"name": "propId", "slot": 2, "kind": "integer"},
+      {"name": "spotNode", "slot": 3, "kind": "integer", "default": "0"},
+      {"name": "kind", "slot": 4, "kind": "text"},
+      {"name": "nodeA", "slot": 5, "kind": "integer", "default": "0"},
+      {"name": "nodeB", "slot": 6, "kind": "integer", "default": "0"},
+      {"name": "matFrameId", "slot": 8, "kind": "integer", "default": "-1"}
+    ]}
+  ]}
+ }
+}

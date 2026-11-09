@@ -1,0 +1,44 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: shape basis vectors for DVSHAP (SOL 101)
+#
+# Covers:
+#   - cards: PLOAD2 FORCE SPC1, the auxiliary loads and supports whose
+#     displacements (UG, with GEOM1 and GEOM2 of this run) are the basis
+#     vectors that sol200_dvshap_basis_vectors.bdf reads from the database
+#   - solution: SOL 101 (two auxiliary static subcases: their displacements
+#     are the shape basis vectors 1 and 2)
+#   - outputs: displacements
+# Run notes:
+#   - run it first, with scr=no, in the folder where
+#     sol200_dvshap_basis_vectors.bdf runs: that deck attaches
+#     sol101_shape_basis.MASTER (ASSIGN and DBLOCATE)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: shape basis vectors
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;basis 1: simply supported plate under uniform pressure
+StaticLoadSelection;1
+SubcaseStart;2
+LabelText;basis 2: simply supported plate under a central load
+StaticLoadSelection;2
+[model]
+Parameter;PostprocessingFile;-1
+# The plate of the optimisation model, simply supported on its four edges
+# (z), in-plane rigid motion removed at two corners. The loads give a
+# deflection of about 1 mm: the shapes are scaled by the design variables.
+Include;shape_plate_mesh.oos
+SinglePointConstrList;1;3;1;Through;11
+SinglePointConstrList;1;3;56;Through;66
+SinglePointConstrList;1;3;12;23;34;45;22;33;44;55
+SinglePointConstrList;1;12;1
+SinglePointConstrList;1;2;11
+ShellPressureLoad;1;2.5;1;Through;50
+PointForceLoad;2;28;0;2.E+3;0.;0.;1.
+PointForceLoad;2;39;0;2.E+3;0.;0.;1.

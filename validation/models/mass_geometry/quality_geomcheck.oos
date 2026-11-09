@@ -1,0 +1,103 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: element geometry checks of distorted quadrilaterals (SOL 101)
+#
+# Validates:
+#   - the solver's taper and warping measures of CQUAD4, CQUADR, CQUAD8 and CSHEAR
+#     (GEOMCHECK with limits so low that every element is reported, as
+#     information)
+# Settles (library item: current status):
+#   - the taper and the warp of CQUAD4, CQUADR, CQUAD8 and CSHEAR (the
+#     library's definitions confirmed against an independent computation
+#     only)
+# Run notes:
+#   - the listing lists each element with its measured value: bring the listing back
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+GeometryCheck;QuadTaperLimit=0.001;QuadWarpLimit=0.0001;QuadSkewLimit=89.0;QuadMinAngle=89.0;QuadMaxAngle=91.0
+GeometryCheck;MessageKind=INFORM;MessageLimit=1000
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: geometry checks
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;distorted quadrilaterals
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Distorted quadrilaterals (CQUAD4, CQUADR, CQUAD8, CSHEAR): a tapered one and
+# a warped one of each, every test limit of GEOMCHECK set very low so that the
+# listing prints the solver's measure of each. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+ShearPanelProp;2;1;2.
+Node;101;;0.;20.;0.
+Node;102;;10.;20.;0.
+Node;103;;8.;26.;0.
+Node;104;;1.;30.;0.
+ShellQuad4;1;1;101;102;103;104
+SinglePointConstrList;1;123456;101;102
+PointForceLoad;1;103;;1.;0.;1.;1.
+Node;201;;0.;40.;0.
+Node;202;;10.;40.;0.8
+Node;203;;10.;50.;0.
+Node;204;;0.;50.;0.5
+ShellQuad4;2;1;201;202;203;204
+SinglePointConstrList;1;123456;201;202
+PointForceLoad;1;203;;1.;0.;1.;1.
+Node;301;;0.;60.;0.
+Node;302;;10.;60.;0.
+Node;303;;8.;66.;0.
+Node;304;;1.;70.;0.
+ShellQuad4Drilling;3;1;301;302;303;304
+SinglePointConstrList;1;123456;301;302
+PointForceLoad;1;303;;1.;0.;1.;1.
+Node;401;;0.;80.;0.
+Node;402;;10.;80.;0.8
+Node;403;;10.;90.;0.
+Node;404;;0.;90.;0.5
+ShellQuad4Drilling;4;1;401;402;403;404
+SinglePointConstrList;1;123456;401;402
+PointForceLoad;1;403;;1.;0.;1.;1.
+Node;501;;0.;100.;0.
+Node;502;;10.;100.;0.
+Node;503;;8.;106.;0.
+Node;504;;1.;110.;0.
+Node;505;;5.;100.;0.
+Node;506;;9.;103.;0.
+Node;507;;4.5;108.;0.
+Node;508;;0.5;105.;0.
+ShellQuad8;5;1;501;502;503;504;505;506;507;508
+SinglePointConstrList;1;123456;501;502
+PointForceLoad;1;503;;1.;0.;1.;1.
+Node;601;;0.;120.;0.
+Node;602;;10.;120.;0.8
+Node;603;;10.;130.;0.
+Node;604;;0.;130.;0.5
+Node;605;;5.;120.;0.4
+Node;606;;10.;125.;0.4
+Node;607;;5.;130.;0.25
+Node;608;;0.;125.;0.25
+ShellQuad8;6;1;601;602;603;604;605;606;607;608
+SinglePointConstrList;1;123456;601;602
+PointForceLoad;1;603;;1.;0.;1.;1.
+Node;701;;0.;140.;0.
+Node;702;;10.;140.;0.
+Node;703;;8.;146.;0.
+Node;704;;1.;150.;0.
+ShearPanel4;7;2;701;702;703;704
+SinglePointConstrList;1;123456;701;702
+PointForceLoad;1;703;;1.;0.;1.;1.
+Node;801;;0.;160.;0.
+Node;802;;10.;160.;0.8
+Node;803;;10.;170.;0.
+Node;804;;0.;170.;0.5
+ShearPanel4;8;2;801;802;803;804
+SinglePointConstrList;1;123456;801;802
+PointForceLoad;1;803;;1.;0.;1.;1.

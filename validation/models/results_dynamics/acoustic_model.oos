@@ -1,0 +1,55 @@
+# Shared acoustic model (INCLUDEd): a fluid cavity of 2 x 2 CHEXA (x 0 to 20,
+# y 0 to 20, z 0 to 10), a CPYRAM on the top of one of them, a CPENTA against
+# the face x = 20 and a CTETRA on a triangular face of the CPENTA, all on
+# PSOLID FCTN PFLUID (MAT10, fluid grid points CD = -1); its floor z = 0 is a
+# plate of 2 x 2 CQUAD4 on separate structural grid points, clamped on its
+# edges and loaded at its centre. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;1.;1;;1
+FluidMat;2;0.142;1.2E-12
+SolidProp;2;2;;;;;PressureFluid
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;4;7;2;8;3;6;9
+PointForceLoad;1;5;;1.;0.;0.;1.
+PointMassInertia;10;5;;1.E-5
+Node;101;;0.;0.;0.;-1
+Node;102;;10.;0.;0.;-1
+Node;103;;20.;0.;0.;-1
+Node;104;;0.;10.;0.;-1
+Node;105;;10.;10.;0.;-1
+Node;106;;20.;10.;0.;-1
+Node;107;;0.;20.;0.;-1
+Node;108;;10.;20.;0.;-1
+Node;109;;20.;20.;0.;-1
+Node;110;;0.;0.;10.;-1
+Node;111;;10.;0.;10.;-1
+Node;112;;20.;0.;10.;-1
+Node;113;;0.;10.;10.;-1
+Node;114;;10.;10.;10.;-1
+Node;115;;20.;10.;10.;-1
+Node;116;;0.;20.;10.;-1
+Node;117;;10.;20.;10.;-1
+Node;118;;20.;20.;10.;-1
+SolidHexa;101;2;101;102;105;104;110;111;114;113
+SolidHexa;102;2;102;103;106;105;111;112;115;114
+SolidHexa;103;2;104;105;108;107;113;114;117;116
+SolidHexa;104;2;105;106;109;108;114;115;118;117
+Node;201;;5.;5.;15.;-1
+SolidPyramid;111;2;110;111;114;113;201
+Node;202;;30.;0.;0.;-1
+Node;203;;30.;10.;0.;-1
+SolidPenta;112;2;103;202;112;106;203;115
+Node;204;;23.;15.;3.;-1
+SolidTetra;113;2;106;203;115;204

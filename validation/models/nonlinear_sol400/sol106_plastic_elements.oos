@@ -1,0 +1,115 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: non-linear element tables of SOL 106
+#
+# Covers:
+#   - cards: MAT1 with MATS1 (elastic-plastic, von Mises, isotropic
+#     hardening), MATHP with PLPLANE (hyperelastic plane strain), PGAP
+#   - solution: SOL 106 (non-linear statics), five load increments
+#   - outputs: the non-linear stress tables (OESNLXR) of CROD, CONROD, CTUBE,
+#     CBEAM, CGAP, CTRIA3, CTETRA and CPENTA (element types 89, 92, 87, 94,
+#     86, 88, 85, 91), and the hyperelastic stress and strain tables of a
+#     CQUAD4 on PLPLANE (element type 139)
+# Run notes:
+#   - each region is loaded past the yield stress of 250 MPa; the gap is
+#     closed and compressed; the hyperelastic plate is stretched by 10 %
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;106
+[case]
+TitleText;O_o_Reader test model: SOL 106 non-linear element tables
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;10
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+StrainOutput;All;PlotOnly
+NonlinearStressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;loads past yield
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+NonlinearStaticParams;10;5
+# Steel, elastic-plastic: yield 250 MPa, hardening slope 2000 MPa
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+IsoMatStressDependent;1;;Plastic;2.E+3;1;1;250.
+# Rubber for the hyperelastic plate (Mooney-Rivlin, nearly incompressible)
+HyperelasticPolynomialMat;3;0.5;0.1;1.E+3
+# Region 1: CROD, area 10 mm2, pulled by 3000 N
+RodProp;1;1;10.
+Node;1;;0.;0.;0.;;3456
+Node;2;;100.;0.;0.;;3456
+Rod2;1;1;1;2
+SinglePointConstrList;1;123;1
+SinglePointConstrList;1;23;2
+PointForceLoad;1;2;;3.E+3;1.;0.;0.
+# Region 2: CONROD, area 10 mm2, pulled by 3000 N
+Node;3;;0.;20.;0.;;3456
+Node;4;;100.;20.;0.;;3456
+Rod2InlineSection;2;3;4;1;10.;5.
+SinglePointConstrList;1;123;3
+SinglePointConstrList;1;23;4
+PointForceLoad;1;4;;3.E+3;1.;0.;0.
+# Region 3: CTUBE, 6 mm outer diameter, 1 mm wall, pulled by 5000 N
+TubeProp;3;1;6.;1.
+Node;5;;0.;40.;0.;;3456
+Node;6;;100.;40.;0.;;3456
+Tube2;3;3;5;6
+SinglePointConstrList;1;123;5
+SinglePointConstrList;1;23;6
+PointForceLoad;1;6;;5.E+3;1.;0.;0.
+# Region 4: CBEAM cantilever, 50 mm2, bent and pulled
+BeamProp;4;1;50.;400.;400.;;800.
+Node;7;;0.;60.;0.
+Node;8;;100.;60.;0.
+Beam2;4;4;7;8;0.;;0.;1.
+SinglePointConstrList;1;123456;7
+PointForceLoad;1;8;;1.4E+4;1.;0.;0.
+PointForceLoad;1;8;;40.;0.;1.;0.
+# Region 5: CGAP, closed at zero load, compressed by 1000 N
+GapProp;5;0.;0.;1.E+5;0.001;1.E+3
+Node;9;;0.;80.;0.;;456
+Node;10;;10.;80.;0.;;456
+Gap2;5;5;9;10;;0.;1.;0.
+SinglePointConstrList;1;123;9
+SinglePointConstrList;1;23;10
+PointForceLoad;1;10;;1.E+3;-1.;0.;0.
+# Region 6: two CTRIA3 in tension, 1 mm thick, clamped edge x = 0
+ShellProp;6;1;1.;1
+Node;11;;0.;100.;0.
+Node;12;;10.;100.;0.
+Node;13;;0.;110.;0.
+Node;14;;10.;110.;0.
+ShellTria3;61;6;11;12;14
+ShellTria3;62;6;11;14;13
+SinglePointConstrList;1;123456;11;13
+SinglePointConstrList;1;345;12;14
+PointForceLoad;1;12;;1500.;1.;0.;0.
+PointForceLoad;1;14;;1500.;1.;0.;0.
+# Region 7: a CPENTA prism with a CTETRA on its top face, clamped at its base
+SolidProp;7;1
+Node;21;;0.;150.;0.;;456
+Node;22;;10.;150.;0.;;456
+Node;23;;0.;160.;0.;;456
+Node;24;;0.;150.;10.;;456
+Node;25;;10.;150.;10.;;456
+Node;26;;0.;160.;10.;;456
+Node;27;;3.;153.;15.;;456
+SolidPenta;71;7;21;22;23;24;25;26
+SolidTetra;72;7;24;25;26;27
+SinglePointConstrList;1;123;21;22;23
+PointForceLoad;1;27;;1500.;0.;0.;1.
+# Region 8: a hyperelastic CQUAD4 on PLPLANE in the XY plane (plane strain)
+PlanePropNonlinear;8;3
+Node;31;;0.;200.;0.;;3456
+Node;32;;10.;200.;0.;;3456
+Node;33;;10.;210.;0.;;3456
+Node;34;;0.;210.;0.;;3456
+ShellQuad4;81;8;31;32;33;34
+SinglePointConstrList;1;12;31
+SinglePointConstrList;1;1;34
+PointForceLoad;1;32;;0.5;1.;0.;0.
+PointForceLoad;1;33;;0.5;1.;0.;0.

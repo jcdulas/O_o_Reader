@@ -1,0 +1,48 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: direct transient response (SOL 109), SORT2
+#
+# Validates:
+#   - the real SORT2 tables of a transient response: displacements,
+#     velocities, accelerations, SPC and MPC forces, applied loads, stresses,
+#     strains and forces of every family of the shared model
+#   - the HDF5 NODAL/VELOCITY, NODAL/ACCELERATION, NODAL/MPC_FORCE of the same
+#     run
+# Settles (library item: current status):
+#   - velocities, accelerations, spc_forces, mpc_forces,
+#     applied_loads, displacements real SORT2; stress/strain/forces real SORT2
+#     of 30 element types (not_validated -> validated)
+# Run notes:
+#   - the transient load is load set 1 times a ramp (TABLED1 52); 100 steps of
+#     1e-4 s, output every 5th
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;109
+[case]
+TitleText;O_o_Reader validation: transient response (SORT2)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DynamicLoadSelection;51
+TimeStepSelection;61
+DisplacementOutput;All;PlotOnly;SortByTime
+VelocityOutput;All;PlotOnly;SortByTime
+AccelOutput;All;PlotOnly;SortByTime
+SinglePointConstrForceOutput;All;PlotOnly;SortByTime
+MultiPointConstrForceOutput;All;PlotOnly;SortByTime
+AppliedLoadOutput;All;PlotOnly;SortByTime
+StressOutput;All;PlotOnly;SortByTime;CornerResults
+StrainOutput;All;PlotOnly;SortByTime;FiberDistance;CornerResults
+ElemForceOutput;All;PlotOnly;SortByTime;CornerResults
+SubcaseStart;1
+LabelText;ramped load set 1
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+TransientTableLoad1;51;1;;;;52
+TableDynamic1;52;;;0.;0.;0.002;1.;1.;1.;EndTable
+TransientTimeSteps;61;100;1.E-4;5
+Include;../common/elements_model.oos

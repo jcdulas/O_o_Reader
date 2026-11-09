@@ -1,0 +1,74 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: shell edge tied to a shell surface and a moving
+# coordinate system (SOL 700)
+#
+# Covers:
+#   - cards: RCONN (STYPE GRID, OPTION SHELL), CORD3R
+#   - solution: SOL 700 (explicit transient: a vertical plate tied by its
+#     lower edge to a horizontal plate, pushed sideways at its top)
+#   - outputs: none the library decodes (the explicit solver writes its own
+#     result files; bring back the listing)
+# Run notes:
+#   - no PARAM,POST: SOL 700 has no OUTPUT2 output; CORD3R 50 follows plate B
+#     (origin 201, z axis to 207, x-z plane through 203)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: RCONN shell edge tie and CORD3R (SOL 700)
+BulkEcho;None
+StepEndTime;0.001
+NonlinearTimeStepSelection;1
+SinglePointConstrSelection;1
+DynamicLoadSelection;1
+[model]
+# Units: mm, N, tonne, s. Steel plates 1 mm thick.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;1.
+# Plate A: horizontal (z = 0), 2 x 2 CQUAD4 over x 0 to 20, y 0 to 20,
+# clamped along x = 0 and x = 20.
+Node;101;;0.;0.;0.
+Node;102;;10.;0.;0.
+Node;103;;20.;0.;0.
+Node;104;;0.;10.;0.
+Node;105;;10.;10.;0.
+Node;106;;20.;10.;0.
+Node;107;;0.;20.;0.
+Node;108;;10.;20.;0.
+Node;109;;20.;20.;0.
+ShellQuad4;111;1;101;102;105;104
+ShellQuad4;112;1;102;103;106;105
+ShellQuad4;113;1;104;105;108;107
+ShellQuad4;114;1;105;106;109;108
+SinglePointConstrList;1;123456;101;104;107;103;106;109
+# Plate B: vertical (x = 5), 2 x 2 CQUAD4 over y 0 to 20, z 0 to 20; its
+# lower edge (z = 0) lies on plate A.
+Node;201;;5.;0.;0.
+Node;202;;5.;10.;0.
+Node;203;;5.;20.;0.
+Node;204;;5.;0.;10.
+Node;205;;5.;10.;10.
+Node;206;;5.;20.;10.
+Node;207;;5.;0.;20.
+Node;208;;5.;10.;20.
+Node;209;;5.;20.;20.
+ShellQuad4;211;1;201;202;205;204
+ShellQuad4;212;1;202;203;206;205
+ShellQuad4;213;1;204;205;208;207
+ShellQuad4;214;1;205;206;209;208
+# The tie: the lower edge grid points of B (SET1 5) on the surface of A
+# (BSURF 6).
+IdListSet1;5;201;202;203
+ContactElemSurface;6;111;112;113;114
+RigidMeshConnection;1;Node;Surface;5;6;Shell
+# A coordinate system that moves with plate B.
+RectFrame3;50;201;207;203
+# Load: 10 N in x on the top edge of B, ramped over 0.2 ms then held.
+PointForceLoad;2;207;0;10.;1.;0.;0.
+PointForceLoad;2;208;0;10.;1.;0.;0.
+PointForceLoad;2;209;0;10.;1.;0.;0.
+TransientTableLoad1;1;2;;;0;3
+TableDynamic1;3;;;0.;0.;2.E-4;1.;1.;1.;EndTable
+NonlinearTimeSteps;1;1000;1.E-6

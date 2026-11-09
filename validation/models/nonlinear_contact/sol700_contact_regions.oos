@@ -1,0 +1,112 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: contact regions by box, segments, nodes (SOL 700)
+#
+# Covers:
+#   - cards: BCBOX (coordinate form), BCSEG, BCGRID (SOL 700 form)
+#   - solution: SOL 700 (explicit nonlinear transient, two blocks dropped on
+#     a fixed block)
+#   - outputs: none read by O_o_Reader (SOL 700 writes its own result files)
+# Run notes:
+#   - block B is a contact body by the box around it (BCBOX), block C by the
+#     cloud of its bottom grid points (BCGRID); both hit the top segments of
+#     block A (BCSEG) after 0.5 ms at 1 m/s; 2 ms are computed
+#   - PARAM,POST is not used: bring back the listing and the explicit result
+#     files the run writes
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: SOL 700 contact regions
+BulkEcho;None
+SinglePointConstrSelection;1
+InitialConditionSelection;1
+NonlinearTimeStepSelection;1
+ContactSelection;1
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;two blocks dropped on block A
+[model]
+# Steel blocks. Units: mm, N, t, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+SolidProp;1;1
+SolidProp;2;1
+# Block A: 20 x 20 x 5, 2 x 2 x 1 CHEXA, its bottom fixed
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+Node;10;;0.;0.;5.
+Node;11;;10.;0.;5.
+Node;12;;20.;0.;5.
+Node;13;;0.;10.;5.
+Node;14;;10.;10.;5.
+Node;15;;20.;10.;5.
+Node;16;;0.;20.;5.
+Node;17;;10.;20.;5.
+Node;18;;20.;20.;5.
+SolidHexa;1;1;1;2;5;4;10;11;14;13
+SolidHexa;2;1;2;3;6;5;11;12;15;14
+SolidHexa;3;1;4;5;8;7;13;14;17;16
+SolidHexa;4;1;5;6;9;8;14;15;18;17
+SinglePointConstrList;1;123;1;Through;9
+# Block B: 8 x 8 x 5, one CHEXA, 0.5 mm above A, moving down at 1000 mm/s
+Node;101;;1.;6.;5.5
+Node;102;;9.;6.;5.5
+Node;103;;9.;14.;5.5
+Node;104;;1.;14.;5.5
+Node;105;;1.;6.;10.5
+Node;106;;9.;6.;10.5
+Node;107;;9.;14.;10.5
+Node;108;;1.;14.;10.5
+SolidHexa;11;2;101;102;103;104;105;106;107;108
+TransientInitialCondition;1;101;3;;-1.E+3
+TransientInitialCondition;1;102;3;;-1.E+3
+TransientInitialCondition;1;103;3;;-1.E+3
+TransientInitialCondition;1;104;3;;-1.E+3
+TransientInitialCondition;1;105;3;;-1.E+3
+TransientInitialCondition;1;106;3;;-1.E+3
+TransientInitialCondition;1;107;3;;-1.E+3
+TransientInitialCondition;1;108;3;;-1.E+3
+# Block C: 8 x 8 x 5, one CHEXA, 0.5 mm above A, moving down at 1000 mm/s
+Node;201;;11.;6.;5.5
+Node;202;;19.;6.;5.5
+Node;203;;19.;14.;5.5
+Node;204;;11.;14.;5.5
+Node;205;;11.;6.;10.5
+Node;206;;19.;6.;10.5
+Node;207;;19.;14.;10.5
+Node;208;;11.;14.;10.5
+SolidHexa;21;2;201;202;203;204;205;206;207;208
+TransientInitialCondition;1;201;3;;-1.E+3
+TransientInitialCondition;1;202;3;;-1.E+3
+TransientInitialCondition;1;203;3;;-1.E+3
+TransientInitialCondition;1;204;3;;-1.E+3
+TransientInitialCondition;1;205;3;;-1.E+3
+TransientInitialCondition;1;206;3;;-1.E+3
+TransientInitialCondition;1;207;3;;-1.E+3
+TransientInitialCondition;1;208;3;;-1.E+3
+# Body 1: the elements of block B, found inside a box given by its eight
+# corners (all their grid points inside, HOW 1)
+ContactBoxRegion;11;;Coordinates;1;;0.5;;5.5;;5.2;;9.5;;5.5;;5.2;;9.5;14.5;5.2;0.5;14.5;5.2;0.5;5.5;11.;9.5;5.5;11.;9.5;14.5;11.;0.5;14.5;11.
+ContactBody1;1;;;;11
+# Body 2: the top faces of block A, one BCSEG per face (surface 12)
+ContactSegment;1;12;10;11;14;13
+ContactSegment;2;12;11;12;15;14
+ContactSegment;3;12;13;14;17;16
+ContactSegment;4;12;14;15;18;17
+ContactBody1;2;;;;12
+# Body 3: the bottom grid points of block C (SOL 700 node cloud)
+ContactNodeRegion;13;201;202;203;204
+ContactBody1;3;;;;13
+# The contact table: bodies 1 and 3 (secondary) on body 2
+ContactTable;1;;;2;;;Secondary;1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;2;Secondary;3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;2
+# 2 ms, results every 0.1 ms
+NonlinearTimeSteps;1;20;1.E-4

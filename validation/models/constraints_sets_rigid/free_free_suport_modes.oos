@@ -1,0 +1,57 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: free-free beam with support degrees of freedom
+# (SOL 103)
+#
+# Covers:
+#   - cards: SUPORT, SUPORT1
+#   - solution: SOL 103 (normal modes of a free body, r-set at one end)
+#   - outputs: eigenvalues, eigenvectors
+# Run notes:
+#   - SUPORT holds the translations of grid point 1, SUPORT1 5 (selected
+#     by the SUPORT1 command) its rotations: six determinate r-set
+#     degrees of freedom; expect six rigid-body modes
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: free-free beam with SUPORT and SUPORT1
+BulkEcho;None
+EigenMethodSelection;1
+FreeBodySupportSelection;5
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;free-free modes
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Aluminium beam 200 mm long, 10 x 5 mm section,
+# 10 CBAR, no constraint.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+BarProp;1;1;50.;104.2;416.7;286.
+Node;1;;0.;0.;0.
+Node;2;;20.;0.;0.
+Node;3;;40.;0.;0.
+Node;4;;60.;0.;0.
+Node;5;;80.;0.;0.
+Node;6;;100.;0.;0.
+Node;7;;120.;0.;0.
+Node;8;;140.;0.;0.
+Node;9;;160.;0.;0.
+Node;10;;180.;0.;0.
+Node;11;;200.;0.;0.
+Bar2;1;1;1;2;0.;;0.;1.
+Bar2;2;1;2;3;0.;;0.;1.
+Bar2;3;1;3;4;0.;;0.;1.
+Bar2;4;1;4;5;0.;;0.;1.
+Bar2;5;1;5;6;0.;;0.;1.
+Bar2;6;1;6;7;0.;;0.;1.
+Bar2;7;1;7;8;0.;;0.;1.
+Bar2;8;1;8;9;0.;;0.;1.
+Bar2;9;1;9;10;0.;;0.;1.
+Bar2;10;1;10;11;0.;;0.;1.
+# Reference degrees of freedom of the free body.
+FreeBodySupport;1;123
+FreeBodySupportSet;5;1;456
+# The six rigid-body modes and the first six flexible ones.
+LanczosEigenMethod;1;;;12

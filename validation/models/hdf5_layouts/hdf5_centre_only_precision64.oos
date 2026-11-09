@@ -1,0 +1,44 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: HDF5 layout: double precision, deflate (SOL 101)
+#
+# Validates:
+#   - the CQUAD4 tables at the centre only (STRESS/STRAIN/FORCE(CENTER):
+#     element type 33 in the HDF5 file), the grid point weight, the MPC forces
+#     of an RBE2 and of MPC equations, in the double precision layout and in
+#     the OUTPUT2 file of the same run
+# Settles (library item: current status):
+#   - 'a CQUAD4 at its centre only (element type 33)' is not written by the
+#     HDF5 writer (no-observed-layout)
+#   - HDF5 NODAL/MPC_FORCE (not_validated); NODAL/GRID_WEIGHT (experimental)
+# Run notes:
+#   - bring back the .h5 and the OUTPUT2 file of the same run (the OUTPUT2 file twin proves the
+#     HDF5 tables)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: HDF5 layouts (double precision, deflate)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+AppliedLoadOutput;All;PlotOnly
+StressOutput;All;PlotOnly;CenterOnly
+StrainOutput;All;PlotOnly;CenterOnly
+ElemForceOutput;All;PlotOnly;CenterOnly
+ElemStrainEnergyOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1) and the HDF5 database in the form this
+# deck tests.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;WeightReferenceNode;0
+Include;hdf5_model.oos

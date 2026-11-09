@@ -1,0 +1,60 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: shell panel on axisymmetric fluid boundary points
+#
+# Covers:
+#   - cards: GRIDB (with AXIF, RINGFL, BDYLIST, CORD2C, CQUAD4, PSHELL, EIGRL)
+#   - solution: SOL 103 (real eigenvalues, Lanczos)
+#   - outputs: eigenvalues, eigenvectors (OUTPUT2)
+# Run notes:
+#   - AXIF asks for no harmonic (F = NONE): no fluid element and no fluid
+#     degree of freedom exist, the GRIDB points only take their radius and
+#     height from the RINGFL rings (GRIDB remark 4); the Case Control has no
+#     AXISYMMETRIC command (AXIF remark 7)
+#   - BDYLIST has a density of 0.0: the rings are on the boundary list as the
+#     GRIDB remarks ask, without fluid-structure coupling terms
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;shell panel on fluid boundary points (GRIDB)
+BulkEcho;Sorted
+EigenMethodSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;normal modes of a cylindrical panel
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Steel (MAT1 1), a 2 mm shell.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1
+LanczosEigenMethod;1;;;6
+# The fluid frame: CORD2C 2 (axis along basic z), AXIF with no harmonic, three
+# rings of radius 100 at z = 0, 50 and 100 on a boundary list.
+CylindricalFrame2;2;;0.;0.;0.;0.;0.;1.;1.;0.;0.
+AxisymFluidControl;2;0.;1.E-9;;No;None
+AxisymFluidRing;11;100.;0.;0.;12;100.;0.;50.
+AxisymFluidRing;13;100.;0.;100.
+AxisymFluidBoundaryList;0.;11;12;13
+# A 90 degree cylindrical panel: four GRIDB per ring at 0, 30, 60 and 90
+# degrees (grids 1101 to 1304), six CQUAD4. The ring z = 0 is clamped by the
+# PS field of its GRIDB.
+AxisymFluidRingNode;1101;0.;;123456;11
+AxisymFluidRingNode;1102;30.;;123456;11
+AxisymFluidRingNode;1103;60.;;123456;11
+AxisymFluidRingNode;1104;90.;;123456;11
+AxisymFluidRingNode;1201;0.;;;12
+AxisymFluidRingNode;1202;30.;;;12
+AxisymFluidRingNode;1203;60.;;;12
+AxisymFluidRingNode;1204;90.;;;12
+AxisymFluidRingNode;1301;0.;;;13
+AxisymFluidRingNode;1302;30.;;;13
+AxisymFluidRingNode;1303;60.;;;13
+AxisymFluidRingNode;1304;90.;;;13
+ShellQuad4;1;1;1101;1102;1202;1201
+ShellQuad4;2;1;1102;1103;1203;1202
+ShellQuad4;3;1;1103;1104;1204;1203
+ShellQuad4;4;1;1201;1202;1302;1301
+ShellQuad4;5;1;1202;1203;1303;1302
+ShellQuad4;6;1;1203;1204;1304;1303

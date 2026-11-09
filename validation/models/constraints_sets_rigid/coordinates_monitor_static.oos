@@ -1,0 +1,120 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: coordinate systems from grid points, grid defaults,
+# shell normals and monitor point sums (SOL 101)
+#
+# Covers:
+#   - cards: CORD1C, CORD1R, CORD1S (two systems on one entry), CORD3G (with
+#     DEQATN angles, as the material system of a MAT9 solid), GRDSET, SNORM,
+#     MONPNT2, MONSUM, MONSUM1, MONSUMT, MONGRP
+#   - solution: SOL 101 (linear statics)
+#   - outputs: displacements, SPC forces, element stresses, monitor points
+# Run notes:
+#   - the cylindrical panel grid points take CP and CD = 10 from GRDSET; the
+#     other grid points give 0 explicitly
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: coordinate systems and monitor point sums
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+MonitorPointOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;panel edge load and solid end load
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Steel.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# Grid defaults: location and displacement in the cylindrical system 10.
+NodeDefaults;10;10
+# Reference points in the basic system (CP and CD 0 given explicitly): the
+# origin, a point on the z axis and a point in the x-z plane.
+Node;1001;0;0.;0.;0.;0
+Node;1002;0;0.;0.;50.;0
+Node;1003;0;50.;0.;0.;0
+CylindricalFrame1;10;1001;1002;1003
+SphericalFrame1;30;1001;1002;1003;31;1001;1003;1002
+# Cylindrical panel: radius 100, theta 0 to 60 degrees, z 0 to 40; 3 x 2
+# CQUAD4, clamped along theta = 0, loaded along theta = 60.
+ShellProp;2;1;2.;1;;1
+Node;1101;;100.;0.;0.
+Node;1102;;100.;20.;0.
+Node;1103;;100.;40.;0.
+Node;1104;;100.;60.;0.
+Node;1111;;100.;0.;20.
+Node;1112;;100.;20.;20.
+Node;1113;;100.;40.;20.
+Node;1114;;100.;60.;20.
+Node;1121;;100.;0.;40.
+Node;1122;;100.;20.;40.
+Node;1123;;100.;40.;40.;31
+Node;1124;;100.;60.;40.;30
+ShellQuad4;1201;2;1101;1102;1112;1111
+ShellQuad4;1202;2;1102;1103;1113;1112
+ShellQuad4;1203;2;1103;1104;1114;1113
+ShellQuad4;1204;2;1111;1112;1122;1121
+ShellQuad4;1205;2;1112;1113;1123;1122
+ShellQuad4;1206;2;1113;1114;1124;1123
+# Radial normals of the middle row, given in the cylindrical system.
+ShellNormal;1111;10;1.;0.;0.
+ShellNormal;1112;10;1.;0.;0.
+ShellNormal;1113;10;1.;0.;0.
+ShellNormal;1114;10;1.;0.;0.
+# System 20: origin at 1104, z along the cylinder axis (to 1124), x towards
+# 1103; its y axis is close to the panel normal.
+RectFrame1;20;1104;1124;1103
+SinglePointConstrList;1;123456;1101;1111;1121
+PointForceLoad;1;1104;20;25.;0.;1.;0.
+PointForceLoad;1;1114;20;50.;0.;1.;0.
+PointForceLoad;1;1124;20;25.;0.;1.;0.
+# Solid block: 2 CHEXA (x 200 to 220) of an anisotropic MAT9 material whose
+# axes follow the CORD3G 40 (Euler 313 angles from three DEQATN), clamped at
+# x = 200.
+Node;1301;0;200.;0.;0.;0
+Node;1302;0;210.;0.;0.;0
+Node;1303;0;220.;0.;0.;0
+Node;1304;0;200.;10.;0.;0
+Node;1305;0;210.;10.;0.;0
+Node;1306;0;220.;10.;0.;0
+Node;1307;0;200.;0.;10.;0
+Node;1308;0;210.;0.;10.;0
+Node;1309;0;220.;0.;10.;0
+Node;1310;0;200.;10.;10.;0
+Node;1311;0;210.;10.;10.;0
+Node;1312;0;220.;10.;10.;0
+AnisoMat3D;9;3.E+5;121154.;121154.;0.;0.;0.;282692.;121154.;0.;0.;0.;282692.;0.;0.;0.;80769.;0.;0.;80769.;0.;80769.;7.85E-9
+SolidProp;3;9;40
+SolidHexa;1401;3;1301;1302;1305;1304;1307;1308;1311;1310
+SolidHexa;1402;3;1302;1303;1306;1305;1308;1309;1312;1311
+GeneralFrame3;40;EulerAngles313;EquationForm;110;111;112
+DesignEquation;110;TH1(X,Y,Z) = 0.01*X
+DesignEquation;111;TH2(X,Y,Z) = 0.002*Z
+DesignEquation;112;TH3(X,Y,Z) = 0.001*Y
+SinglePointConstrList;1;123;1301;1304;1307;1310
+PointForceLoad;1;1303;0;100.;0.;0.;1.
+PointForceLoad;1;1306;0;100.;0.;0.;1.
+PointForceLoad;1;1309;0;100.;0.;0.;1.
+PointForceLoad;1;1312;0;100.;0.;0.;1.
+# Monitor points. Two MONPNT3 cuts of the panel at theta = 20 and 40
+# degrees (location given in the cylindrical system 10, components in the
+# basic system), two MONPNT2 element items of the root element.
+IdListSet1;501;1102;1112;1122
+IdListSet1;502;1201;1204
+IdListSet1;503;1103;1113;1123
+IdListSet1;504;1201;1202;1204;1205
+MonitorNodeForceSum3;M3CUT20;panel cut at theta 20 degrees;123456;501;502;10;100.;20.;20.;;0
+MonitorNodeForceSum3;M3CUT40;panel cut at theta 40 degrees;123456;503;504;10;100.;40.;20.;;0
+MonitorElemLoad2;M2SX;membrane stress x of the root element;Stress;ShellQuad4;SX1;1201
+MonitorElemLoad2;M2BMX;bending moment x of the root element;Force;ShellQuad4;BMX;1201
+# The difference of the two cuts (the load between them, zero here), their
+# average at mid panel and their sum moved to mid panel.
+MonitorSum;M3DIFF;difference of the panel cuts;123;MonitorNodeForceSum3;M3CUT20;123;1.;M3CUT40;123;-1.
+MonitorSumLocated;M3AVG;average of the panel cuts at mid panel;10;100.;30.;20.;20;123456;MonitorNodeForceSum3;M3CUT20;123456;0.5;M3CUT40;123456;0.5
+MonitorSumTotal;M3MOVE;sum of the panel cuts moved to mid panel;123456;10;100.;30.;20.;0;MonitorNodeForceSum3;2;M3CUT20;M3CUT40
+MonitorGroup;PANEL;monitor points of the panel;M3CUT20;MonitorNodeForceSum3;20.;;CUT20;M3CUT40;MonitorNodeForceSum3;40.;;CUT40;M2SX;MonitorElemLoad2;;1201;ROOTSX;M2BMX;MonitorElemLoad2;;1201;ROOTBMX

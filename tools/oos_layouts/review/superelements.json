@@ -1,0 +1,1702 @@
+{
+  "description": "Reviewed card layouts of the superelements family (src/model/cards/superelements).",
+  "cards": {
+    "AxisymConeSector": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "ringId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "radius",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "phiAngle1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "phiAngle2",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "AxisymConeSupport": {
+      "fields": [],
+      "group": {
+        "name": "dofs",
+        "firstSlot": 1,
+        "period": 3,
+        "perLine": 2,
+        "fields": [
+          {
+            "name": "ringId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "harmonicId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 2,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "FixedBoundaryDofs": {
+      "fields": [],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "FixedBoundaryDofs1": {
+      "fields": [
+        {
+          "name": "components",
+          "slot": 1,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "FreeBoundaryDofs": {
+      "fields": [],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "FreeBoundaryDofs1": {
+      "fields": [
+        {
+          "name": "components",
+          "slot": 1,
+          "kind": "any",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "MassCaseCombination": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "overallScale",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "caseScale",
+            "offset": 0,
+            "kind": "real"
+          },
+          {
+            "name": "caseId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementAccessPoints": {
+      "fields": [],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 1,
+        "period": 1,
+        "fields": [
+          {
+            "name": "nodeId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementBoundarySearch": {
+      "fields": [
+        {
+          "name": "superelementIdA",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "superelementIdB",
+          "slot": 2,
+          "kind": "any"
+        }
+      ],
+      "group": {
+        "name": "boundaryNodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "boundaryNodeId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementBulkOptions": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "partType",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "referenceSuperelementId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "method",
+          "slot": 4,
+          "kind": "text",
+          "default": "Automatic"
+        },
+        {
+          "name": "tolerance",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "location",
+          "slot": 6,
+          "kind": "text",
+          "default": "Yes"
+        },
+        {
+          "name": "unitNumber",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "SuperelementConnection": {
+      "fields": [
+        {
+          "name": "superelementIdA",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "superelementIdB",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "tolerance",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "location",
+          "slot": 4,
+          "kind": "text",
+          "default": "Yes"
+        }
+      ],
+      "group": {
+        "name": "connections",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "connectionPoint",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementCopyPoints": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "primarySuperelementId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementCopySequence": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "primarySuperelementId",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementDesignLink": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "dependentSuperelementId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "dependentVarId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "constant0",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "multiplier",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 9,
+        "period": 3,
+        "perLine": 2,
+        "fields": [
+          {
+            "name": "independentSuperelementId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "independentVarId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficient",
+            "offset": 2,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "SuperelementDesignResp2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "equationId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "function",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "regionId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "methodName",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "constant1",
+          "slot": 6,
+          "kind": "real",
+          "default": "100.0"
+        },
+        {
+          "name": "constant2",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.005"
+        },
+        {
+          "name": "constant3",
+          "slot": 8,
+          "kind": "real",
+          "default": "10.0"
+        }
+      ],
+      "sections": {
+        "name": "groups",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "fields": [],
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "designVarId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "fields": [],
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "constantLabel",
+                  "offset": 1,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignResp1",
+            "name": "responses",
+            "fields": [],
+            "list": {
+              "name": "responses",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "responseId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignNodes",
+            "name": "designNodes",
+            "fields": [],
+            "list": {
+              "name": "designNodes",
+              "offset": 1,
+              "period": 3,
+              "perLine": 2,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeId",
+                  "offset": 1,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeComponents",
+                  "offset": 2,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation1",
+            "name": "propRelations",
+            "fields": [],
+            "list": {
+              "name": "propRelations",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "propRelationId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation1",
+            "name": "elemRelations",
+            "fields": [],
+            "list": {
+              "name": "elemRelations",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "elemRelationId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation1",
+            "name": "matRelations",
+            "fields": [],
+            "list": {
+              "name": "matRelations",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "matRelationId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation2",
+            "name": "propRelations2",
+            "fields": [],
+            "list": {
+              "name": "propRelations2",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "propRelation2Id",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation2",
+            "name": "elemRelations2",
+            "fields": [],
+            "list": {
+              "name": "elemRelations2",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "elemRelation2Id",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation2",
+            "name": "matRelations2",
+            "fields": [],
+            "list": {
+              "name": "matRelations2",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "matRelation2Id",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "SuperelementDesignResp3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "groupName",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "kind",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "regionId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "groups",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "fields": [],
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "designVarId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "fields": [],
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "constantLabel",
+                  "offset": 1,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignResp1",
+            "name": "responses",
+            "fields": [],
+            "list": {
+              "name": "responses",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "responseId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignNodes",
+            "name": "designNodes",
+            "fields": [],
+            "list": {
+              "name": "designNodes",
+              "offset": 1,
+              "period": 3,
+              "perLine": 2,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeId",
+                  "offset": 1,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeComponents",
+                  "offset": 2,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation1",
+            "name": "propRelations",
+            "fields": [],
+            "list": {
+              "name": "propRelations",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "propRelationId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation1",
+            "name": "elemRelations",
+            "fields": [],
+            "list": {
+              "name": "elemRelations",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "elemRelationId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation1",
+            "name": "matRelations",
+            "fields": [],
+            "list": {
+              "name": "matRelations",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "matRelationId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation2",
+            "name": "propRelations2",
+            "fields": [],
+            "list": {
+              "name": "propRelations2",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "propRelation2Id",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation2",
+            "name": "elemRelations2",
+            "fields": [],
+            "list": {
+              "name": "elemRelations2",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "elemRelation2Id",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation2",
+            "name": "matRelations2",
+            "fields": [],
+            "list": {
+              "name": "matRelations2",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "superelementId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "matRelation2Id",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "UserData",
+            "name": "userData",
+            "fields": [],
+            "list": {
+              "name": "userDataLines",
+              "offset": 1,
+              "period": 7,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "userData",
+                  "offset": 0,
+                  "kind": "text",
+                  "span": 7
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "SuperelementElemTransfer": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "element",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementExcludedNodes": {
+      "fields": [
+        {
+          "name": "superelementIdA",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "superelementIdB",
+          "slot": 2,
+          "kind": "any"
+        }
+      ],
+      "group": {
+        "name": "excludedNodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "excludedNodeId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementExteriorPoints": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementExternalBoundary": {
+      "fields": [],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "nodeId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementFixedDofSet": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "components3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementFixedDofSet1": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementFreeDofSet": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "components3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementFreeDofSet1": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "any",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementGeneralizedDofSet": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "components3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementGeneralizedDofSet1": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementGeneralizedPointCount": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "any"
+        },
+        {
+          "name": "count",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "SuperelementInteriorNodes": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementLabel": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        }
+      ]
+    },
+    "SuperelementLoadScale": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 2,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ],
+      "group": {
+        "name": "entries",
+        "firstSlot": 9,
+        "period": 16,
+        "fields": [
+          {
+            "name": "superelementId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "entryScaleFactor",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "labelKind",
+            "offset": 2,
+            "kind": "text"
+          },
+          {
+            "name": "labelledId",
+            "offset": 8,
+            "kind": "any",
+            "span": 8
+          }
+        ]
+      }
+    },
+    "SuperelementLocation": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "pointA1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "pointA2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "pointA3",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "pointB1",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "pointB2",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "pointB3",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ]
+    },
+    "SuperelementMirrorPlane": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "plane",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "point1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "point2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "point3",
+          "slot": 5,
+          "kind": "integer"
+        }
+      ]
+    },
+    "SuperelementReleasedDofs": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "components",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SuperelementSupport": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "components3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementTree": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "upstreamSuperelements",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "upstreamSuperelementId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementUserDofSet": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "setName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "node1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "components1",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "components2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node3",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "components3",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SuperelementUserDofSet1": {
+      "fields": [
+        {
+          "name": "superelementId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "setName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "components",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: bulk viscosity, woven fabric and rigid material
+# (SOL 700)
+#
+# Covers:
+#   - cards: MATBV MATFAB MATRIG (with MAT1 PSOLID PSHELL1 TLOAD1 DAREA
+#     TABLED1 TSTEPNL)
+#   - solution: SOL 700 (explicit nonlinear transient, 1 ms)
+#   - outputs: none that O_o_Reader decodes (the explicit solver writes its
+#     own result files)
+# Run notes:
+#   - a steel block with bulk viscosity pushed on its top face, a fabric
+#     membrane pulled at its centre and a rigid block thrown along X
+#   - SOL 700 needs the explicit solver of SOL 700 and its
+#     licence; the Case Control and Bulk Data use only the entries the format reference
+#     lists as available in SOL 700 (no PARAM, no output request)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: bulk viscosity, fabric and rigid material
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;1
+NonlinearTimeStepSelection;1
+[model]
+# Units: mm, N, tonne, s, MPa.
+#
+# Block 1: steel (MAT1) with the bulk viscosity of MATBV (DYNA type, the
+# quadratic and linear coefficients), clamped on its base and pushed down
+# on its top face.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BulkViscosityMat;1;ExternalExplicitProgram;1.5;0.06
+SolidProp;1;1
+Node;101;;0.;0.;0.
+Node;102;;10.;0.;0.
+Node;103;;10.;10.;0.
+Node;104;;0.;10.;0.
+Node;105;;0.;0.;10.
+Node;106;;10.;0.;10.
+Node;107;;10.;10.;10.
+Node;108;;0.;10.;10.
+SolidHexa;100;1;101;102;103;104;105;106;107;108
+SinglePointConstrList;1;123;101;102;103;104
+DynamicLoadScale;10;105;3;-2500.
+DynamicLoadScale;10;106;3;-2500.
+DynamicLoadScale;10;107;3;-2500.
+DynamicLoadScale;10;108;3;-2500.
+# Membrane 2: a 50 x 50 mm woven fabric (MATFAB, warp along X and weft along
+# Y, no coating) of four CQUAD4 with a 0.3 mm membrane PSHELL1, clamped on
+# its edges and pulled along Z at its centre.
+FabricMat;2;8.5E-10;;;;;;;216.;;;1.;0.;0.;216.;;;0.;1.;0.
+ShellPropNodal;2;2;Membrane;;;;;;0.3;0.3;0.3;0.3
+Node;201;;30.;0.;0.
+Node;202;;55.;0.;0.
+Node;203;;80.;0.;0.
+Node;204;;30.;25.;0.
+Node;205;;55.;25.;0.
+Node;206;;80.;25.;0.
+Node;207;;30.;50.;0.
+Node;208;;55.;50.;0.
+Node;209;;80.;50.;0.
+ShellQuad4;201;2;201;202;205;204
+ShellQuad4;202;2;202;203;206;205
+ShellQuad4;203;2;204;205;208;207
+ShellQuad4;204;2;205;206;209;208
+SinglePointConstrList;1;123456;201;202;203;204;206;207;208;;;;;;;;209
+DynamicLoadScale;10;205;3;5.
+# Block 3: a rigid steel block (PSOLID naming a MATRIG) with an initial
+# velocity of 1000 mm/s along X; mass, centre of gravity and inertia are
+# computed from the density and the mesh.
+RigidMat;3;7.85E-9;2.1E+5;0.3;;;;;;;;;;;;1.E+3;0.;0.;0.;0.;0.
+SolidProp;3;3
+Node;301;;100.;0.;0.
+Node;302;;110.;0.;0.
+Node;303;;110.;10.;0.
+Node;304;;100.;10.;0.
+Node;305;;100.;0.;10.
+Node;306;;110.;0.;10.
+Node;307;;110.;10.;10.
+Node;308;;100.;10.;10.
+SolidHexa;300;3;301;302;303;304;305;306;307;308
+# The forces of DAREA set 10 ramp up over 1 ms; 100 output steps of 10
+# microseconds.
+TransientTableLoad1;1;10;;;0;11
+TableDynamic1;11;;;0.;0.;0.001;1.;EndTable
+NonlinearTimeSteps;1;100;1.E-5

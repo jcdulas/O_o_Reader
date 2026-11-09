@@ -1,0 +1,43 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: HDF5 layout: the version's defaults (SOL 101)
+#
+# Validates:
+#   - the HDF5 file the owner's the solver version writes with MDLPRM,HDF5,1 and no
+#     HDF5OUT: its SCHEMA, its precision and its compression filter (LZ4 is
+#     the default of recent versions and needs a plugin to be read)
+# Settles (library item: current status):
+#   - HDF5_OBSERVED_SCHEMAS (20182, 20190, 20200): a newer
+#     schema is experimental until a file shows it; the filters the library's
+#     libhdf5 can decode
+# Run notes:
+#   - bring back the .h5 and the OUTPUT2 file of the same run (the OUTPUT2 file twin proves the
+#     HDF5 tables)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: HDF5 layouts (the version's defaults)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+AppliedLoadOutput;All;PlotOnly
+StressOutput;All;PlotOnly;CenterOnly
+StrainOutput;All;PlotOnly;CenterOnly
+ElemForceOutput;All;PlotOnly;CenterOnly
+ElemStrainEnergyOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1) and the HDF5 database in the form this
+# deck tests.
+Parameter;PostprocessingFile;-1
+ModelParams;HDF5;1
+Parameter;WeightReferenceNode;0
+Include;hdf5_model.oos

@@ -1,0 +1,73 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: load histories read from a channel data file (SOL 112, read-only)
+#
+# Covers:
+#   - cards: TABLRPC (with the UDNAME of its file)
+#   - solution: SOL 112 (modal transient response of a bracket to two
+#     measured load channels)
+#   - outputs: none (not run)
+# Run notes:
+#   - read-only: TABLRPC takes its points from an external channel file
+#     (format word RPC or DAC), a binary file of measured data; the project's test
+#     models are ASCII text written here and include no such file
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;112
+[case]
+TitleText;O_o_Reader test model: channel file loads (read-only)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+TimeStepSelection;1
+DynamicLoadSelection;1
+ModalDampingSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;measured road loads, channels 1 and 2
+[model]
+Parameter;PostprocessingFile;-1
+# A steel bracket plate 100 x 50 mm, 2 mm thick, 4 x 2 CQUAD4, clamped at
+# x = 0. Units: mm, N, t, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;25.;0.;0.
+Node;3;;50.;0.;0.
+Node;4;;75.;0.;0.
+Node;5;;100.;0.;0.
+Node;6;;0.;25.;0.
+Node;7;;25.;25.;0.
+Node;8;;50.;25.;0.
+Node;9;;75.;25.;0.
+Node;10;;100.;25.;0.
+Node;11;;0.;50.;0.
+Node;12;;25.;50.;0.
+Node;13;;50.;50.;0.
+Node;14;;75.;50.;0.
+Node;15;;100.;50.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+LanczosEigenMethod;1;;2.E+3
+TableModalDamping1;1;CriticalDamping;0.;0.02;5.E+3;0.02;EndTable
+# 2 s of response at 1 ms.
+TransientTimeSteps;1;2000;0.001;10
+# Two load channels of the file road-loads.rsp: channel 1 (vertical, at
+# grid point 5) over its first 2 s, channel 2 (lateral, at grid point 15)
+# less a spike between 0.8 and 0.9 s.
+UserFileName;1;road-loads.rsp
+TableTimeHistoryFile;11;;;1;LoadHistoryFile;1;;;0.;2.;EndTable
+TableTimeHistoryFile;12;;;-1;LoadHistoryFile;2;;;0.8;0.9;EndTable
+DynamicLoadScale;21;5;3;1.
+DynamicLoadScale;22;15;2;1.
+TransientTableLoad1;31;21;;;;11
+TransientTableLoad1;32;22;;;;12
+DynamicLoadCombination;1;1.;1.;31;1.;32

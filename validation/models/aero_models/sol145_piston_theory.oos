@@ -1,0 +1,56 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: piston theory flutter (SOL 145)
+#
+# Covers:
+#   - cards: CAERO5 PAERO5 MKAERO2 SPLINE6
+#   - solution: SOL 145 (PK flutter of the plate wing at Mach 2.5, piston
+#     theory strips)
+#   - outputs: flutter summary, real eigenvalues and eigenvectors of the
+#     structural modes (OUTPUT2)
+# Run notes:
+#   - the thickness integrals of the strips are given (AEFACT 7002): a
+#     symmetric biconvex section of 4 percent thickness; no control surface
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;145
+[case]
+TitleText;O_o_Reader test model: piston theory flutter
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+FlutterMethodSelection;81
+ModalDampingSelection;72
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;PK flutter at Mach 2.5
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LowestModesCount;6
+AeroUnsteadyParams;;8.5E+5;200.;1.2E-12
+LanczosEigenMethod;71;;;6
+TableModalDamping1;72;CriticalDamping;0.;0.02;1.E+3;0.02;EndTable
+Include;plate_wing.oos
+# Piston theory panel: 4 equal strips (IDs 7000 to 7003), piston theory
+# coefficients (NTHRY 0), thickness integrals I1 to I6 input on AEFACT 7002.
+# PAERO5: one angle of attack for all the strips at each Mach number
+# (AEFACT 7003: Mach, angle in degrees), no chord or thickness ratio lists,
+# no control surface on any strip.
+AeroPistonPanel5;7000;7001;0;4;;0;7002;0.;0.;0.;200.;0.;1.E+3;0.;200.
+AeroPistonProp5;7001;1;7003;0;0;0;0;0.;0.;0.;0.
+AeroFactorList;7002;0.;-0.01333;-0.01333;0.002133;0.001067;8.533E-4
+AeroFactorList;7003;2.5;0.
+# Finite surface spline from the strips to every plate grid point; the
+# virtual surface is the aero mesh of the panel (VSLIST left blank).
+IdListSet1;7102;1;Through;15
+AeroBoxList;7101;7000;Through;7003
+AeroFiniteSurfaceSpline6;7100;7000;7101;7102;0.;FiniteSurfaceSpline6;Both;AeroMesh
+# One Mach number, six reduced frequencies.
+AeroMachFreqPairs2;2.5;0.001;2.5;0.01;2.5;0.05;2.5;0.1
+AeroMachFreqPairs2;2.5;0.2;2.5;0.5
+# PK method: density ratio 1, Mach 2.5, velocities in mm/s.
+AeroFlutter;81;PkMethod;1;2;3;Linear;6
+AeroFlutterFactors;1;1.
+AeroFlutterFactors;2;2.5
+AeroFlutterFactors;3;6.E+5;8.5E+5;1.1E+6;1.35E+6;1.6E+6

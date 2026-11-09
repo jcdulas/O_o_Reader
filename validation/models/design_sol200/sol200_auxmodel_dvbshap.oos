@@ -1,0 +1,109 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: shape optimisation with an auxiliary model (SOL 200)
+#
+# Validates:
+#   - the AUXCASE and AUXMODEL sections the solver reads, the boundary shape of the
+#     auxiliary model and the shape design variable built from it (DVBSHAP)
+# Settles (library item: current status):
+#   - 'Not validated against the solver': auxiliary models
+#   - DVBSHAP is not applied (listed by not_applied())
+# Run notes:
+#   - PARAM,DESPCH,1 punches the final design
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader validation: auxiliary model for shape optimisation
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DesignObjectiveSelection;21;MinimumObjective
+SubcaseDesignConstrSelection;31
+AnalysisKind;Statics
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load
+StaticLoadSelection;1
+AuxiliaryCase
+AuxiliaryModelSelection;1
+SubcaseStart;10
+LabelText;boundary shape: clamped plate under pressure
+SinglePointConstrSelection;100
+StaticLoadSelection;101
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;DesignPunchOutput;1
+# A plate of 4 x 2 CQUAD4 clamped at x = 0 with a tip load. The auxiliary
+# model 1 (BEGIN BULK AUXMODEL=1) loads the same grid points to make a
+# boundary shape that DVBSHAP turns into a shape design variable. Units: mm,
+# N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+PointForceLoad;1;10;;10.;0.;0.;1.
+DesignVar;1;SHAPE;0.;-1.;1.
+DesignVar;2;T;2.;1.;4.
+DesignBoundaryShape;1;1;10;1.
+DesignPropRelation1;11;ShellProp;1;thickness;;;;2;1.
+DesignResp1;21;WEIGHT;Weight
+DesignResp1;22;TIPZ;Displacement;;;3;;10
+DesignConstr;31;22;-1.;;1.
+DesignOptimParams;MaxDesignCycles;3
+[model;AuxiliaryModel;1]
+# Auxiliary model 1: the same plate (its own grid points with the IDs of the
+# primary model, elements, property and material), clamped on its four edges
+# under a pressure: its deflection is the boundary shape.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;100;123456;1;6;11;2;12;3;13;4;14;5;10;15
+ShellPressureLoad;101;0.01;1;Through;8

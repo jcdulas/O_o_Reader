@@ -1,0 +1,1972 @@
+{
+  "description": "Reviewed card layouts of the optimisation family (src/model/cards/optimisation).",
+  "cards": {
+    "DesignBeadRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "propType",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "minWidth",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "maxHeight",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "angle",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "bufferZone",
+          "slot": 7,
+          "kind": "text",
+          "default": "Yes"
+        },
+        {
+          "name": "skippedNodes",
+          "slot": 8,
+          "kind": "text",
+          "default": "Both"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "design",
+            "fields": [
+              {
+                "name": "directionX",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "directionY",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "directionZ",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "frameId",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "lowerBound",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "upperBound",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "designVarMoveLimit",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Nodes",
+            "name": "nodeSets",
+            "fields": [
+              {
+                "name": "excludedNodeSetId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "addedNodeSetId",
+                "offset": 2,
+                "kind": "integer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "DesignBoundaryShape": {
+      "fields": [
+        {
+          "name": "designVarId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "auxiliaryModified",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "column1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor1",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "column2",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor2",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "column3",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor3",
+          "slot": 8,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ]
+    },
+    "DesignConstants": {
+      "fields": [],
+      "group": {
+        "name": "entries",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "label",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "constantValue",
+            "offset": 1,
+            "kind": "number"
+          }
+        ]
+      }
+    },
+    "DesignConstr": {
+      "fields": [
+        {
+          "name": "constraintSetId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "responseId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "lowerAllowable",
+          "slot": 3,
+          "kind": "real",
+          "default": "-1.0e20"
+        },
+        {
+          "name": "lowerAllowableTableId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "upperAllowable",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "upperAllowableTableId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "lowFrequency",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "highFrequency",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        }
+      ]
+    },
+    "DesignConstrScreen": {
+      "fields": [
+        {
+          "name": "responseKind",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "threshold",
+          "slot": 2,
+          "kind": "real",
+          "default": "-0.5"
+        },
+        {
+          "name": "maxRetained",
+          "slot": 3,
+          "kind": "integer",
+          "default": "20"
+        }
+      ]
+    },
+    "DesignConstrUnion": {
+      "fields": [
+        {
+          "name": "constraintSetId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "memberSets",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "memberSetId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "DesignControlSurface": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "controlSurfaceLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "trimId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "designVarId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "coefficient",
+          "slot": 5,
+          "kind": "real"
+        }
+      ]
+    },
+    "DesignDiscreteValues": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "discreteValues",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "discreteValue",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignElemRelation1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "elemId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "constant0",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "designVarId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficient",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignElemRelation2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "elemId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "equationId",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "variables",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "designVarId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "constantLabel",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DesignEquation": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "equation",
+          "slot": 2,
+          "kind": "text"
+        }
+      ]
+    },
+    "DesignFieldConstants": {
+      "fields": [],
+      "group": {
+        "name": "entries",
+        "firstSlot": 1,
+        "period": 4,
+        "fields": [
+          {
+            "name": "label",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "targetCard",
+            "offset": 1,
+            "kind": "text"
+          },
+          {
+            "name": "targetId",
+            "offset": 2,
+            "kind": "integer"
+          },
+          {
+            "name": "fieldName",
+            "offset": 3,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "DesignLoadRelation1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "setId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real",
+          "default": "-1.0e35"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "constant0",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "attribute1",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "attribute2",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "attribute3",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "attribute4",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "attribute5",
+          "slot": 13,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 17,
+        "period": 2,
+        "fields": [
+          {
+            "name": "designVarId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficient",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignMatRelation1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "matId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "constant0",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "designVarId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficient",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignMatRelation2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "matId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "equationId",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "variables",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "designVarId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "constantLabel",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DesignNodeMove": {
+      "fields": [
+        {
+          "name": "designVarId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "frameId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "coefficient",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "directionX",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "directionY",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "directionZ",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "DesignOptimParams": {
+      "fields": [],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignPropRelation1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "constant0",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "designVarId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficient",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignPropRelation2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "minValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maxValue",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0e20"
+        },
+        {
+          "name": "equationId",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "variables",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "designVarId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "constantLabel",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DesignResp1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "responseKind",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "ownerKind",
+          "slot": 4,
+          "kind": "any"
+        },
+        {
+          "name": "regionId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "attributeA",
+          "slot": 6,
+          "kind": "any"
+        },
+        {
+          "name": "attributeB",
+          "slot": 7,
+          "kind": "any"
+        }
+      ],
+      "group": {
+        "name": "attributes",
+        "firstSlot": 8,
+        "period": 1,
+        "fields": [
+          {
+            "name": "attribute",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "DesignResp2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "equationId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "function",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "regionId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "methodName",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "constant1",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "constant2",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.005"
+        },
+        {
+          "name": "constant3",
+          "slot": 8,
+          "kind": "real",
+          "default": "10.0"
+        }
+      ],
+      "sections": {
+        "name": "arguments",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "designVarId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "constantLabel",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignResp1",
+            "name": "responses",
+            "list": {
+              "name": "responses",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "responseId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignNodes",
+            "name": "nodeComponents",
+            "list": {
+              "name": "nodeComponents",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "nodeId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeComponent",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation1",
+            "name": "propRelations",
+            "list": {
+              "name": "propRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "propRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation1",
+            "name": "elemRelations",
+            "list": {
+              "name": "elemRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "elemRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation1",
+            "name": "matRelations",
+            "list": {
+              "name": "matRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "matRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation2",
+            "name": "propRelations2",
+            "list": {
+              "name": "propRelations2",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "propRelation2Id",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation2",
+            "name": "elemRelations2",
+            "list": {
+              "name": "elemRelations2",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "elemRelation2Id",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation2",
+            "name": "matRelations2",
+            "list": {
+              "name": "matRelations2",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "matRelation2Id",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignResp2",
+            "name": "combinedResponses",
+            "list": {
+              "name": "combinedResponses",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "combinedResponseId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignLoadRelation1",
+            "name": "loadRelations",
+            "list": {
+              "name": "loadRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "loadRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DesignResp3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "groupName",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "kind",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "regionId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "arguments",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVar",
+            "name": "designVariables",
+            "list": {
+              "name": "designVariables",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "designVarId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignConstants",
+            "name": "constants",
+            "list": {
+              "name": "constants",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "constantLabel",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignResp1",
+            "name": "responses",
+            "list": {
+              "name": "responses",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "responseId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignNodes",
+            "name": "nodeComponents",
+            "list": {
+              "name": "nodeComponents",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "nodeId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeComponent",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation1",
+            "name": "propRelations",
+            "list": {
+              "name": "propRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "propRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation1",
+            "name": "elemRelations",
+            "list": {
+              "name": "elemRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "elemRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation1",
+            "name": "matRelations",
+            "list": {
+              "name": "matRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "matRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignPropRelation2",
+            "name": "propRelations2",
+            "list": {
+              "name": "propRelations2",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "propRelation2Id",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignElemRelation2",
+            "name": "elemRelations2",
+            "list": {
+              "name": "elemRelations2",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "elemRelation2Id",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignMatRelation2",
+            "name": "matRelations2",
+            "list": {
+              "name": "matRelations2",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "matRelation2Id",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignResp2",
+            "name": "combinedResponses",
+            "list": {
+              "name": "combinedResponses",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "combinedResponseId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "DesignLoadRelation1",
+            "name": "loadRelations",
+            "list": {
+              "name": "loadRelations",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "loadRelationId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "UserData",
+            "name": "userData",
+            "list": {
+              "name": "userData",
+              "offset": 1,
+              "period": 7,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "userText",
+                  "offset": 0,
+                  "kind": "text",
+                  "span": 7
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DesignShapeBasis": {
+      "fields": [
+        {
+          "name": "designVarId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "column1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor1",
+          "slot": 3,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "column2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor2",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "column3",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "scaleFactor3",
+          "slot": 7,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ]
+    },
+    "DesignTopologyRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propType",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "initialValue",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "lowerBound",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.001"
+        },
+        {
+          "name": "designVarMoveLimit",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "penaltyPower",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "propId",
+          "slot": 8,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Symmetry",
+            "name": "symmetry",
+            "fields": [
+              {
+                "name": "frameId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "mirrorPlane1",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "mirrorPlane2",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "mirrorPlane3",
+                "offset": 4,
+                "kind": "text"
+              },
+              {
+                "name": "cyclicAxis",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "cyclicSegments",
+                "offset": 6,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Casting",
+            "name": "casting",
+            "fields": [
+              {
+                "name": "frameId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "castDirection",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "dieCount",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "alignment",
+                "offset": 4,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "Extrusion",
+            "name": "extrusion",
+            "fields": [
+              {
+                "name": "frameId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "extrusionDirection",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "alignment",
+                "offset": 3,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "Overhang",
+            "name": "overhang",
+            "fields": [
+              {
+                "name": "frameId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "overhangDirection",
+                "offset": 2,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "MemberSize",
+            "name": "memberSize",
+            "fields": [
+              {
+                "name": "minMemberSize",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "maxMemberSize",
+                "offset": 2,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Stress",
+            "name": "stress",
+            "fields": [
+              {
+                "name": "stressLimit",
+                "offset": 1,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "DesignTopometryRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "propId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "fieldName",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "initialValue",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "lowerBound",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "upperBound",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "designVarMoveLimit",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.5"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "DesignVarLink",
+            "name": "link",
+            "fields": [
+              {
+                "name": "tableId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "constant0",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "coefficient1",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "DesignDiscreteValues",
+            "name": "discreteValues",
+            "fields": [
+              {
+                "name": "discreteValuesId",
+                "offset": 1,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "Stress",
+            "name": "stress",
+            "fields": [
+              {
+                "name": "stressLimit",
+                "offset": 1,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Symmetry",
+            "name": "symmetry",
+            "fields": [
+              {
+                "name": "frameId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "mirrorPlane1",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "mirrorPlane2",
+                "offset": 3,
+                "kind": "text"
+              },
+              {
+                "name": "mirrorPlane3",
+                "offset": 4,
+                "kind": "text"
+              },
+              {
+                "name": "cyclicAxis",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "cyclicSegments",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "firstSymmetryPropId",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "",
+            "name": "moreSymmetryProps",
+            "list": {
+              "name": "symmetryProps",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "symmetryPropId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "DesignVar": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "entryLabel",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "initialValue",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "lowerBound",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "upperBound",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "designVarMoveLimit",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "discreteValuesId",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "DesignVarLink": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "dependentVarId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "constant0",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "multiplier",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ],
+      "group": {
+        "name": "terms",
+        "firstSlot": 5,
+        "period": 2,
+        "fields": [
+          {
+            "name": "independentId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "coefficient",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    }
+  }
+}

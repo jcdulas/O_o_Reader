@@ -1,0 +1,52 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: random gust response with a von Karman spectrum
+#
+# Covers:
+#   - cards: TABRNDG
+#   - solution: SOL 146 (aeroelastic frequency response with a random
+#               analysis)
+#   - outputs: displacements: random (PSD, cumulative RMS, RMS, zero
+#              crossings), SORT1 and SORT2
+# Run notes:
+#   - the wing is the shared aeroelastic model of aero_sol144/ (INCLUDEd); a
+#     unit gust (GUST 91) at 100 m/s, its response to the von Karman
+#     turbulence of TABRNDG 96 (scale 762 m, RMS gust velocity 1 m/s) through
+#     RANDPS 95
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;146
+[case]
+TitleText;O_o_Reader test model: random gust (TABRNDG)
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ModalDampingSelection;72
+GustSelection;91
+DynamicLoadSelection;92
+FreqSetSelection;41
+RandomAnalysisSelection;95
+DisplacementOutput;All;PlotOnly;SpectralDensityFunction;CumulativeRootMeanSquare;RandomPrint
+SubcaseStart;1
+LabelText;continuous turbulence
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LowestModesCount;6
+Parameter;GustAeroOption;-1
+AeroUnsteadyParams;;1.E+5;200.;1.2E-12
+AeroMachFreqTable1;0.5;;;;;;;;0.001;0.05;0.1;0.3;0.6;1.
+LanczosEigenMethod;71;;;6
+TableModalDamping1;72;CriticalDamping;0.;0.02;1.E+3;0.02;EndTable
+# Unit gust: GUST 91 with the gust angle 1/V, the frequency shape of RLOAD1 92
+# (flat).
+AeroGust;91;92;1.E-5;0.;1.E+5
+FreqResponseLoad1;92;93;;;;;94
+DynamicLoadScale;93;15;3;0.
+TableDynamic1;94;;;0.;1.;100.;1.;EndTable
+FreqLinearSteps1;41;0.5;0.5;60
+# Gust spectrum: von Karman (TYPE 1), L/U = 762000 / 100000 s, RMS gust
+# velocity 1000 mm/s.
+RandomSpectralDensity;95;1;1;1.;0.;96
+TableGustSpectrum;96;1;7.62;1.E+3
+Include;../aero_sol144/aero_model.oos

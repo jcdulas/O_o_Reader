@@ -1,0 +1,10 @@
+{
+ "description": "Reviewed card layouts of the parameters family (src/model/cards/parameters).",
+ "cards": {
+  "Parameter": {"fields": [
+    {"name": "parameterName", "slot": 1, "kind": "text"},
+    {"name": "parameterValue", "slot": 2, "kind": "any"},
+    {"name": "imaginaryValue", "slot": 3, "kind": "real"}
+  ]}
+ }
+}

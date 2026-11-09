@@ -1,0 +1,397 @@
+# Shared element model of results_static/ and results_dynamics/ (INCLUDEd by
+# their decks). Units: mm, N, tonne, s.  Each region is a small cantilever
+# clamped at x = 0 (SPC set 1), placed at y = 100 * region so that no two
+# regions touch.  Load set 1: tip loads; load set 2: pressures and gravity. No
+# region is a mechanism: the grid points that only carry one component have
+# the others in GRID PS.
+#
+# Materials: an aluminium (MAT1, with stress allowables for the margins) and a
+# carbon ply (MAT8, with strengths so that the failure indices and the
+# strength ratios are computed).
+IsoMat;1;7.E+4;;0.33;2.7E-9;2.3E-5;20.;0.02;300.;300.;200.
+OrthoMat2D;2;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9;-3.E-7;2.8E-5;20.;1500.;1200.;50.;200.;80.;0.01
+# Properties of the shells: PSHELL 1 (homogeneous) and PCOMP 2 (four plies,
+# Tsai-Wu, ply output on).
+ShellProp;1;1;2.;1;;1
+CompProp;2;;;60.;TsaiWu;20.;0.01;;2;0.25;0.;Yes;2;0.25;45.;Yes;2;0.25;-45.;Yes;2;0.25;90.;Yes
+# Region 1: CQUAD4 on PSHELL 1
+Node;101;;0.;100.;0.
+Node;102;;10.;100.;0.
+Node;103;;20.;100.;0.
+Node;104;;0.;110.;0.
+Node;105;;10.;110.;0.
+Node;106;;20.;110.;0.
+ShellQuad4;101;1;101;102;105;104
+ShellQuad4;102;1;102;103;106;105
+# Region 2: CQUADR on PSHELL 1
+Node;201;;0.;200.;0.
+Node;202;;10.;200.;0.
+Node;203;;20.;200.;0.
+Node;204;;0.;210.;0.
+Node;205;;10.;210.;0.
+Node;206;;20.;210.;0.
+ShellQuad4Drilling;201;1;201;202;205;204
+ShellQuad4Drilling;202;1;202;203;206;205
+# Region 3: CQUAD8 on PSHELL 1
+Node;301;;0.;300.;0.
+Node;302;;10.;300.;0.
+Node;303;;20.;300.;0.
+Node;304;;0.;310.;0.
+Node;305;;10.;310.;0.
+Node;306;;20.;310.;0.
+Node;307;;5.;300.;0.
+Node;308;;15.;300.;0.
+Node;309;;5.;310.;0.
+Node;310;;15.;310.;0.
+Node;311;;0.;305.;0.
+Node;312;;10.;305.;0.
+Node;313;;20.;305.;0.
+ShellQuad8;301;1;301;302;305;304;307;312;309;311
+ShellQuad8;302;1;302;303;306;305;308;313;310;312
+# Region 4: CTRIA3 on PSHELL 1
+Node;401;;0.;400.;0.
+Node;402;;10.;400.;0.
+Node;403;;20.;400.;0.
+Node;404;;0.;410.;0.
+Node;405;;10.;410.;0.
+Node;406;;20.;410.;0.
+ShellTria3;401;1;401;402;405
+ShellTria3;402;1;401;405;404
+ShellTria3;403;1;402;403;406
+ShellTria3;404;1;402;406;405
+# Region 5: CTRIAR on PSHELL 1
+Node;501;;0.;500.;0.
+Node;502;;10.;500.;0.
+Node;503;;20.;500.;0.
+Node;504;;0.;510.;0.
+Node;505;;10.;510.;0.
+Node;506;;20.;510.;0.
+ShellTria3Drilling;501;1;501;502;505
+ShellTria3Drilling;502;1;501;505;504
+ShellTria3Drilling;503;1;502;503;506
+ShellTria3Drilling;504;1;502;506;505
+# Region 6: CTRIA6 on PSHELL 1
+Node;601;;0.;600.;0.
+Node;602;;5.;600.;0.
+Node;603;;10.;600.;0.
+Node;604;;15.;600.;0.
+Node;605;;20.;600.;0.
+Node;606;;0.;605.;0.
+Node;607;;5.;605.;0.
+Node;608;;10.;605.;0.
+Node;609;;15.;605.;0.
+Node;610;;20.;605.;0.
+Node;611;;0.;610.;0.
+Node;612;;5.;610.;0.
+Node;613;;10.;610.;0.
+Node;614;;15.;610.;0.
+Node;615;;20.;610.;0.
+ShellTria6;601;1;601;603;613;602;608;607
+ShellTria6;602;1;601;613;611;607;612;606
+ShellTria6;603;1;603;605;615;604;610;609
+ShellTria6;604;1;603;615;613;609;614;608
+# Region 7: CQUAD4 on PCOMP 2 (laminate)
+Node;701;;0.;700.;0.
+Node;702;;10.;700.;0.
+Node;703;;20.;700.;0.
+Node;704;;0.;710.;0.
+Node;705;;10.;710.;0.
+Node;706;;20.;710.;0.
+ShellQuad4;701;2;701;702;705;704
+ShellQuad4;702;2;702;703;706;705
+# Region 8: CQUADR on PCOMP 2 (laminate)
+Node;801;;0.;800.;0.
+Node;802;;10.;800.;0.
+Node;803;;20.;800.;0.
+Node;804;;0.;810.;0.
+Node;805;;10.;810.;0.
+Node;806;;20.;810.;0.
+ShellQuad4Drilling;801;2;801;802;805;804
+ShellQuad4Drilling;802;2;802;803;806;805
+# Region 9: CQUAD8 on PCOMP 2 (laminate)
+Node;901;;0.;900.;0.
+Node;902;;10.;900.;0.
+Node;903;;20.;900.;0.
+Node;904;;0.;910.;0.
+Node;905;;10.;910.;0.
+Node;906;;20.;910.;0.
+Node;907;;5.;900.;0.
+Node;908;;15.;900.;0.
+Node;909;;5.;910.;0.
+Node;910;;15.;910.;0.
+Node;911;;0.;905.;0.
+Node;912;;10.;905.;0.
+Node;913;;20.;905.;0.
+ShellQuad8;901;2;901;902;905;904;907;912;909;911
+ShellQuad8;902;2;902;903;906;905;908;913;910;912
+# Region 10: CTRIA3 on PCOMP 2 (laminate)
+Node;1001;;0.;1.E+3;0.
+Node;1002;;10.;1.E+3;0.
+Node;1003;;20.;1.E+3;0.
+Node;1004;;0.;1010.;0.
+Node;1005;;10.;1010.;0.
+Node;1006;;20.;1010.;0.
+ShellTria3;1001;2;1001;1002;1005
+ShellTria3;1002;2;1001;1005;1004
+ShellTria3;1003;2;1002;1003;1006
+ShellTria3;1004;2;1002;1006;1005
+# Region 11: CTRIAR on PCOMP 2 (laminate)
+Node;1101;;0.;1100.;0.
+Node;1102;;10.;1100.;0.
+Node;1103;;20.;1100.;0.
+Node;1104;;0.;1110.;0.
+Node;1105;;10.;1110.;0.
+Node;1106;;20.;1110.;0.
+ShellTria3Drilling;1101;2;1101;1102;1105
+ShellTria3Drilling;1102;2;1101;1105;1104
+ShellTria3Drilling;1103;2;1102;1103;1106
+ShellTria3Drilling;1104;2;1102;1106;1105
+# Region 12: CTRIA6 on PCOMP 2 (laminate)
+Node;1201;;0.;1200.;0.
+Node;1202;;5.;1200.;0.
+Node;1203;;10.;1200.;0.
+Node;1204;;15.;1200.;0.
+Node;1205;;20.;1200.;0.
+Node;1206;;0.;1205.;0.
+Node;1207;;5.;1205.;0.
+Node;1208;;10.;1205.;0.
+Node;1209;;15.;1205.;0.
+Node;1210;;20.;1205.;0.
+Node;1211;;0.;1210.;0.
+Node;1212;;5.;1210.;0.
+Node;1213;;10.;1210.;0.
+Node;1214;;15.;1210.;0.
+Node;1215;;20.;1210.;0.
+ShellTria6;1201;2;1201;1203;1213;1202;1208;1207
+ShellTria6;1202;2;1201;1213;1211;1207;1212;1206
+ShellTria6;1203;2;1203;1205;1215;1204;1210;1209
+ShellTria6;1204;2;1203;1215;1213;1209;1214;1208
+# Region 13: a shear panel (CSHEAR) framed by two rods (CROD) along its free
+# edges
+Node;1301;;0.;1300.;0.;;3456
+Node;1302;;10.;1300.;0.;;3456
+Node;1303;;10.;1310.;0.;;3456
+Node;1304;;0.;1310.;0.;;3456
+ShearPanel4;1301;13;1301;1302;1303;1304
+ShearPanelProp;13;1;1.5
+Rod2;1302;1302;1301;1302
+Rod2;1303;1302;1304;1303
+RodProp;1302;1;20.;30.
+# Region 14: two CBAR (PBAR with stress points); CBARAO asks for three
+# intermediate stations of bar 1401 (element type 100, the BARS tables); the
+# PLOAD1 of load set 1 on bar 1401 is what the format reference asks for them.
+Node;1401;;0.;1400.;0.
+Node;1402;;10.;1400.;0.
+Node;1403;;20.;1400.;0.
+Bar2;1401;14;1401;1402;0.;;0.;1.
+Bar2;1402;14;1402;1403;0.;;0.;1.
+BarProp;14;1;20.;40.;30.;50.;;2.;2.5;2.;-2.5;-2.;-2.5;-2.;2.5
+Bar2Stations;1401;FractionalLength;0.25;;0.5;0.75
+# Region 15: two CBEAM (PBEAM) and an RBE2 that carries the tip load from grid
+# 1504 (MPC forces of a rigid element)
+Node;1501;;0.;1500.;0.
+Node;1502;;10.;1500.;0.
+Node;1503;;20.;1500.;0.
+Node;1504;;25.;1500.;0.
+Beam2;1501;15;1501;1502;0.;;0.;1.
+Beam2;1502;15;1502;1503;0.;;0.;1.
+BeamProp;15;1;20.;40.;30.;0.;50.;;2.;2.5;2.;-2.5;-2.;-2.5;-2.;2.5
+RigidBodyStar;1505;1503;123456;1504
+# Region 16: a CBEND, a quarter circle of radius 10 (GEOM 1: the centre of
+# curvature along the vector from GA)
+Node;1601;;0.;1600.;0.
+Node;1602;;10.;1610.;0.
+CurvedBeam2;1601;16;1601;1602;;0.;1.;0.;1
+CurvedBeamProp;16;1;20.;40.;30.;50.;;;2.;2.5;2.;-2.5;-2.;-2.5;-2.;2.5
+# Region 17: a CROD, a CONROD and a CTUBE, each from a clamped grid to a grid
+# loaded in tension and torsion
+Node;1701;;0.;1700.;0.
+Node;1702;;10.;1700.;0.;;2356
+Node;1703;;0.;1710.;0.
+Node;1704;;10.;1710.;0.;;2356
+Node;1705;;0.;1720.;0.
+Node;1706;;10.;1720.;0.;;2356
+Rod2;1701;1701;1701;1702
+RodProp;1701;1;20.;30.
+Rod2InlineSection;1702;1703;1704;1;20.;30.
+Tube2;1703;1703;1705;1706
+TubeProp;1703;1;6.;1.
+# Region 18: scalar springs and dampers on grid points 1801, 1802 (component 1
+# only) and scalar points 1803, 1804
+Node;1801;;0.;1800.;0.;;23456
+Node;1802;;10.;1800.;0.;;23456
+ScalarPoint;1803;1804
+SpringDofProperty;1801;181;1801;1
+SpringProp;181;1.E+3;0.01;2.;183;500.;0.01;3.
+SpringDofInline;1802;800.;1802;1;1801;1;0.01;4.
+SpringScalarProperty;1803;183;1803;1804
+SpringScalarInline;1804;300.;1804
+DamperDofProperty;1805;185;1801;1
+DamperProp;185;0.5;187;0.3
+DamperDofInline;1806;0.4;1802;1;1801;1
+DamperScalarProperty;1807;187;1803;1804
+DamperScalarInline;1808;0.2;1804
+ViscousDamper2;1809;189;1801;1802
+ViscousDamperProp;189;0.6;0.
+PointMassInertia;1810;1801;;0.001
+PointMassInertia;1811;1802;;0.001
+MassScalarInline;1812;0.001;1803
+MassScalarInline;1813;0.001;1804
+# Region 19: a CBUSH (six stiffnesses and dampings) from a clamped grid to a
+# free one
+Node;1901;;0.;1900.;0.
+Node;1902;;10.;1900.;0.
+Bushing;1901;19;1901;1902;;0.;1.;0.
+BushProp;19;Stiffness;1.E+5;2.E+4;2.E+4;1.E+6;1.E+6;1.E+6;Damping;1.;1.;1.;10.;10.;10.;Recovery;0.5;0.5;0.5;0.5
+PointMassInertia;1903;1902;;0.002;;;;0.001;0.;0.001;0.;0.;0.001
+# Region 20: a CBUSH1D, loaded through an MPC equation (set 50) from grid 2003
+Node;2001;;0.;2.E+3;0.
+Node;2002;;10.;2.E+3;0.;;23456
+Node;2003;;15.;2.E+3;0.;;23456
+Bushing1D;2001;20;2001;2002
+BushProp1D;20;5.E+4;2.;;0.5;2.
+MultiPointConstr;50;2003;1;1.;2002;1;-1.
+PointMassInertia;2004;2002;;0.001
+# Region 21: a CGAP held closed (KB = KA so that the linear solutions see one
+# stiffness)
+Node;2101;;0.;2100.;0.
+Node;2102;;10.;2100.;0.;;456
+Gap2;2101;21;2101;2102;;0.;1.;0.
+GapProp;21;0.;0.;1.E+5;1.E+5;1.E+4
+PointMassInertia;2103;2102;;0.001
+# Region 22: one CHEXA, one CPENTA, one CTETRA and one CPYRAM (PSOLID 22),
+# each clamped on its base z = 0
+Node;2201;;0.;2200.;0.;;456
+Node;2202;;10.;2200.;0.;;456
+Node;2203;;10.;2210.;0.;;456
+Node;2204;;0.;2210.;0.;;456
+Node;2205;;0.;2200.;10.;;456
+Node;2206;;10.;2200.;10.;;456
+Node;2207;;10.;2210.;10.;;456
+Node;2208;;0.;2210.;10.;;456
+SolidHexa;2201;22;2201;2202;2203;2204;2205;2206;2207;2208
+Node;2211;;20.;2200.;0.;;456
+Node;2212;;30.;2200.;0.;;456
+Node;2213;;20.;2210.;0.;;456
+Node;2214;;20.;2200.;10.;;456
+Node;2215;;30.;2200.;10.;;456
+Node;2216;;20.;2210.;10.;;456
+SolidPenta;2202;22;2211;2212;2213;2214;2215;2216
+Node;2221;;40.;2200.;0.;;456
+Node;2222;;50.;2200.;0.;;456
+Node;2223;;40.;2210.;0.;;456
+Node;2224;;43.;2203.;10.;;456
+SolidTetra;2203;22;2221;2222;2223;2224
+Node;2231;;60.;2200.;0.;;456
+Node;2232;;70.;2200.;0.;;456
+Node;2233;;70.;2210.;0.;;456
+Node;2234;;60.;2210.;0.;;456
+Node;2235;;65.;2205.;8.;;456
+SolidPyramid;2204;22;2231;2232;2233;2234;2235
+SolidProp;22;1
+# Region 23: two plates 2 mm apart joined by a CFAST (PROP form) and a CWELD
+# (ELPAT form); the lower one is clamped
+Node;2301;;0.;2300.;0.
+Node;2311;;0.;2300.;2.
+Node;2302;;10.;2300.;0.
+Node;2312;;10.;2300.;2.
+Node;2303;;20.;2300.;0.
+Node;2313;;20.;2300.;2.
+Node;2304;;0.;2310.;0.
+Node;2314;;0.;2310.;2.
+Node;2305;;10.;2310.;0.
+Node;2315;;10.;2310.;2.
+Node;2306;;20.;2310.;0.
+Node;2316;;20.;2310.;2.
+Node;2307;;0.;2320.;0.
+Node;2317;;0.;2320.;2.
+Node;2308;;10.;2320.;0.
+Node;2318;;10.;2320.;2.
+Node;2309;;20.;2320.;0.
+Node;2319;;20.;2320.;2.
+ShellQuad4;2301;231;2301;2302;2305;2304
+ShellQuad4;2311;232;2311;2312;2315;2314
+ShellQuad4;2302;231;2302;2303;2306;2305
+ShellQuad4;2312;232;2312;2313;2316;2315
+ShellQuad4;2303;231;2304;2305;2308;2307
+ShellQuad4;2313;232;2314;2315;2318;2317
+ShellQuad4;2304;231;2305;2306;2309;2308
+ShellQuad4;2314;232;2315;2316;2319;2318
+ShellProp;231;1;1.5;1;;1
+ShellProp;232;1;1.5;1;;1
+Node;2320;;12.;2305.;1.
+Fastener;2321;2321;Property;231;232;2320
+FastenerProp;2321;3.;-1;;2.E+4;1.E+4;1.E+4;100.;100.;100.
+Weld;2322;2322;;ElemPatch;;;;2304;2314;15.;2315.;1.
+WeldProp;2322;1;4.
+# Constraints: SPC set 1 clamps the root of every region and the base of the
+# solids
+SinglePointConstrList;1;123456;101;104;201;204;301;304;311;401;404;501;504;601;606;611;701;704;801;804;901;904;911;1001;1004;1101;1104;1201;1206;1211;1301;1304;1401;1501;1601;1701;1703;1705;1901;2001;2101;2301;2304;2307
+SinglePointConstrList;1;123;2201;2202;2203;2204;2211;2212;2213;2221;2222;2223;2231;2232;2233;2234
+# Load set 1: tip forces and moments on every region, a scalar load, a
+# distributed bar load (PLOAD1)
+PointForceLoad;1;103;;1.;10.;0.;1.
+PointForceLoad;1;106;;1.;10.;0.;1.
+PointForceLoad;1;203;;1.;10.;0.;1.
+PointForceLoad;1;206;;1.;10.;0.;1.
+PointForceLoad;1;303;;1.;10.;0.;1.
+PointForceLoad;1;306;;1.;10.;0.;1.
+PointForceLoad;1;313;;1.;10.;0.;1.
+PointForceLoad;1;403;;1.;10.;0.;1.
+PointForceLoad;1;406;;1.;10.;0.;1.
+PointForceLoad;1;503;;1.;10.;0.;1.
+PointForceLoad;1;506;;1.;10.;0.;1.
+PointForceLoad;1;605;;1.;10.;0.;1.
+PointForceLoad;1;610;;1.;10.;0.;1.
+PointForceLoad;1;615;;1.;10.;0.;1.
+PointForceLoad;1;703;;1.;10.;0.;1.
+PointForceLoad;1;706;;1.;10.;0.;1.
+PointForceLoad;1;803;;1.;10.;0.;1.
+PointForceLoad;1;806;;1.;10.;0.;1.
+PointForceLoad;1;903;;1.;10.;0.;1.
+PointForceLoad;1;906;;1.;10.;0.;1.
+PointForceLoad;1;913;;1.;10.;0.;1.
+PointForceLoad;1;1003;;1.;10.;0.;1.
+PointForceLoad;1;1006;;1.;10.;0.;1.
+PointForceLoad;1;1103;;1.;10.;0.;1.
+PointForceLoad;1;1106;;1.;10.;0.;1.
+PointForceLoad;1;1205;;1.;10.;0.;1.
+PointForceLoad;1;1210;;1.;10.;0.;1.
+PointForceLoad;1;1215;;1.;10.;0.;1.
+PointForceLoad;1;1302;;1.;0.;20.;0.
+PointForceLoad;1;1303;;1.;0.;20.;0.
+PointForceLoad;1;1403;;1.;0.;3.;5.
+BeamDistributedLoad;1;1401;ForceZ;FractionalLength;0.;0.2;1.;0.2
+PointForceLoad;1;1504;;1.;0.;3.;5.
+PointMomentLoad;1;1504;;1.;10.;0.;0.
+PointForceLoad;1;1602;;1.;0.;0.;5.
+PointForceLoad;1;1702;;100.;1.;0.;0.
+PointMomentLoad;1;1702;;50.;1.;0.;0.
+PointForceLoad;1;1704;;100.;1.;0.;0.
+PointMomentLoad;1;1704;;50.;1.;0.;0.
+PointForceLoad;1;1706;;100.;1.;0.;0.
+PointMomentLoad;1;1706;;50.;1.;0.;0.
+PointForceLoad;1;1802;;10.;1.;0.;0.
+ScalarPointLoad;1;1803;5.
+PointForceLoad;1;1902;;1.;10.;5.;5.
+PointMomentLoad;1;1902;;1.;20.;10.;10.
+PointForceLoad;1;2003;;50.;1.;0.;0.
+PointForceLoad;1;2102;;-20.;1.;0.1;0.1
+PointForceLoad;1;2205;;1.;5.;0.;-10.
+PointForceLoad;1;2206;;1.;5.;0.;-10.
+PointForceLoad;1;2207;;1.;5.;0.;-10.
+PointForceLoad;1;2208;;1.;5.;0.;-10.
+PointForceLoad;1;2214;;1.;5.;0.;-10.
+PointForceLoad;1;2215;;1.;5.;0.;-10.
+PointForceLoad;1;2216;;1.;5.;0.;-10.
+PointForceLoad;1;2224;;1.;5.;0.;-10.
+PointForceLoad;1;2235;;1.;5.;0.;-10.
+PointForceLoad;1;2313;;1.;0.;0.;5.
+PointForceLoad;1;2319;;1.;0.;0.;5.
+# Load set 2 = PLOAD4 on the plates of regions 1 and 7 and on the top face of
+# the CHEXA, plus gravity
+FacePressureLoad;21;101;0.01;;;;Through;102
+FacePressureLoad;21;701;0.01;;;;Through;702
+FacePressureLoad;21;2201;0.05;;;;2205;2207
+GravityLoad;22;;9810.;0.;0.;-1.
+LoadCombination;2;1.;1.;21;1.;22

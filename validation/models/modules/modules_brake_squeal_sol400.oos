@@ -1,0 +1,99 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: brake squeal of a pad on a disk held in another module
+#
+# Covers:
+#   - cards: MDBKSYS (with MDBCNCT, MDBCTB1, MDBULK, MOTION, BRKPROP,
+#     BCBODY1, BCPROP, NLPARM, EIGRL, EIGC and BEGIN MODULE)
+#   - solution: SOL 400 (nonlinear static contact step with the brake
+#     squeal friction stiffness, then complex modes)
+#   - outputs: displacements, complex eigenvectors
+# Run notes:
+#   - module 0 is the pad (one CHEXA pressed by a pressure), module 1 the
+#     disk (four CHEXA, bottom face fixed) turning about the z axis; the
+#     brake system of MDBKSYS is selected by BSQUEAL = 1
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: brake squeal across modules
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+StepStart;1
+LabelText;pad pressed on the disk
+AnalysisKind;NonlinearStatics
+NonlinearStaticParamsSelection;1
+StaticLoadSelection;1
+ContactSelection;10
+BrakeSquealSelection;1
+StepStart;2
+LabelText;complex modes with the friction stiffness
+AnalysisKind;ModalComplexEigen
+EigenMethodSelection;2
+ComplexEigenMethodSelection;3
+[model]
+Parameter;PostprocessingFile;-1
+# Module 0: the pad, one steel CHEXA at x 0 to 10, y -5 to 5, z 4 to 8,
+# held in x and y on its top face and pressed by 1 MPa. Units: mm, N,
+# tonne, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+SolidProp;12;1
+Node;1;;0.;-5.;4.
+Node;2;;10.;-5.;4.
+Node;3;;10.;5.;4.
+Node;4;;0.;5.;4.
+Node;5;;0.;-5.;8.
+Node;6;;10.;-5.;8.
+Node;7;;10.;5.;8.
+Node;8;;0.;5.;8.
+SolidHexa;1;12;1;2;3;4;5;6;7;8
+SinglePointConstrList;1;12;5;Through;8
+FacePressureLoad;1;1;1.;;;;5;7
+ContactPropertyRegion;2;12
+ContactBody1;2;;ThreeDimensional;Deformable;2
+ModuleBulkOptions;1;;;Automatic
+# Contact table 10: the pad (body 2 of module 0) touches the disk (body 1
+# of module 1).
+ModuleContactPair;1;;;0;2;1;1
+ModuleContactTable;10;;1
+# Brake system 1: the disk turns about the z axis through the origin; the
+# friction coefficient and the contact stiffness are in BRKPROP 1.
+BrakeMotion;1;10.;RotationMotion;0.;0.;1.;0.;0.;0.
+BrakeProp;1;AverageStiffnessMethod;1.E+5;Friction;0.3
+ModuleBrakeSystem;1;1.;0;No;0;DISK1;1;1;0;2;1;;1
+NonlinearStaticParams;1;4
+LanczosEigenMethod;2;;;10
+ComplexEigenMethod;3;ComplexLanczos;;;;;;0.;0.;;;;;6
+[model;ModuleSection;1]
+# Module 1: the disk, a steel slab of 2 x 2 x 1 CHEXA at x -20 to 20, y -20
+# to 20, z 0 to 4, fixed on its bottom face.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+SolidProp;11;1
+Node;101;;-20.;-20.;0.
+Node;102;;0.;-20.;0.
+Node;103;;20.;-20.;0.
+Node;104;;-20.;0.;0.
+Node;105;;0.;0.;0.
+Node;106;;20.;0.;0.
+Node;107;;-20.;20.;0.
+Node;108;;0.;20.;0.
+Node;109;;20.;20.;0.
+Node;111;;-20.;-20.;4.
+Node;112;;0.;-20.;4.
+Node;113;;20.;-20.;4.
+Node;114;;-20.;0.;4.
+Node;115;;0.;0.;4.
+Node;116;;20.;0.;4.
+Node;117;;-20.;20.;4.
+Node;118;;0.;20.;4.
+Node;119;;20.;20.;4.
+SolidHexa;101;11;101;102;105;104;111;112;115;114
+SolidHexa;102;11;102;103;106;105;112;113;116;115
+SolidHexa;103;11;104;105;108;107;114;115;118;117
+SolidHexa;104;11;105;106;109;108;115;116;119;118
+SinglePointConstrList;1;123;101;Through;109
+ContactPropertyRegion;1;11
+ContactBody1;1;;ThreeDimensional;Deformable;1

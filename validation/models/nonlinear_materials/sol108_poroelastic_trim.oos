@@ -1,0 +1,94 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: a poroelastic trim layer on a plate (SOL 108)
+#
+# Covers:
+#   - cards: MATPE1 MATF1 (with MAT1 MAT10 TABLEM1 SET1 PSOLID with
+#     FCTN = PORO, BEGIN BULK TRMC)
+#   - solution: SOL 108 (direct frequency response, 100 to 1000 Hz)
+#   - outputs: complex displacements of the plate (real/imaginary)
+# Run notes:
+#   - the trim component 101 is a 10 mm foam layer meant to be glued on a
+#     clamped aluminium plate shaken at its centre. No subcase selects it
+#     (no TRIMGRP, so TRIMGRP = NONE): the run reads the trim Bulk Data and
+#     solves the plate alone. Coupling it needs an ACPEMCP in the main Bulk
+#     Data (TID 101, SGLUED 1) and TRIMGRP = ALL, and the PEM functions of
+#     the solver at run time; O_o_Reader refuses that ACPEMCP today (its
+#     SET1 lives in the trim Bulk Data, as the format reference asks)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;a poroelastic trim layer on a plate (SOL 108)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;1
+FreqSetSelection;2
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;unit harmonic force at the centre of the plate
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, MPa.
+# The structure: a 100 x 100 x 1 mm aluminium plate of four CQUAD4, clamped
+# on its edges, shaken along Z at its centre.
+IsoMat;1;7.E+4;;0.33;2.7E-9;;;0.01
+ShellProp;1;1;1.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;0.;50.;0.
+Node;5;;50.;50.;0.
+Node;6;;100.;50.;0.
+Node;7;;0.;100.;0.
+Node;8;;50.;100.;0.
+Node;9;;100.;100.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;2;3;4;6;7;8;;;;;;;;9
+DynamicLoadScale;10;5;3;1.
+FreqResponseLoad1;1;10;;;;;100
+TableDynamic1;100;;;0.;1.;2.E+3;1.;EndTable
+FreqLinearSteps1;2;100.;100.;9
+# The trim component: a 10 mm melamine-like foam layer of four CHEXA on the
+# plate (its lower grids, SET1 1, lie on the plate grids).
+[model;TrimComponent;101]
+# Poroelastic material: a MAT1 skeleton whose modulus and loss factor depend
+# on the frequency (MATF1 and TABLEM1 of the frequency), air as MAT10, and the
+# Biot parameters (viscosity, porosity, tortuosity, flow resistivity and the
+# characteristic lengths) in N, mm, s units.
+PoroElasticMat;1001;1002;1003;;;;1.84E-11;1.402;0.71;0.99;1.01;1.09E-8;0.1;0.2
+IsoMat;1002;0.14;;0.3;8.8E-12;;;0.1
+PoroElasticMatFreq;1002;1101;;;;;1102
+TableMaterial1;1101;;;0.;0.14;2.E+3;0.18;EndTable
+TableMaterial1;1102;;;0.;0.1;2.E+3;0.12;EndTable
+FluidMat;1003;0.142;1.21E-12
+SolidProp;1001;1001;;;;;Poroelastic
+Node;1001;;0.;0.;0.
+Node;1002;;50.;0.;0.
+Node;1003;;100.;0.;0.
+Node;1004;;0.;50.;0.
+Node;1005;;50.;50.;0.
+Node;1006;;100.;50.;0.
+Node;1007;;0.;100.;0.
+Node;1008;;50.;100.;0.
+Node;1009;;100.;100.;0.
+Node;1010;;0.;0.;10.
+Node;1011;;50.;0.;10.
+Node;1012;;100.;0.;10.
+Node;1013;;0.;50.;10.
+Node;1014;;50.;50.;10.
+Node;1015;;100.;50.;10.
+Node;1016;;0.;100.;10.
+Node;1017;;50.;100.;10.
+Node;1018;;100.;100.;10.
+SolidHexa;1001;1001;1001;1002;1005;1004;1010;1011;1014;1013
+SolidHexa;1002;1001;1002;1003;1006;1005;1011;1012;1015;1014
+SolidHexa;1003;1001;1004;1005;1008;1007;1013;1014;1017;1016
+SolidHexa;1004;1001;1005;1006;1009;1008;1014;1015;1018;1017
+IdListSet1;1;1001;Through;1009
+# The master frequencies of the trim component.
+FreqLinearSteps1;2;100.;100.;9

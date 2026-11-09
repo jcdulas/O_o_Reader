@@ -1,0 +1,34 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: static element tables at the centres, SORT1
+#
+# Covers:
+#   - solution: SOL 101 (linear statics) of the shared element model of
+#     common/elements_model.inc, two subcases
+#   - outputs: the real SORT1 stresses, strains and forces at the element
+#     centres (CENTER: CQUAD4 type 33, CQUADR 228, CTRIAR 227) of every
+#     element family of the model, with the ply tables of the laminates
+# Run notes:
+#   - the centre twin of results_static/static_elements_sort1.bdf, which asks
+#     for the corners; run it a second time with the i8 executable
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: statics at the centres, SORT1
+BulkEcho;None
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly;VonMisesStress;CenterOnly
+StrainOutput;All;PlotOnly;VonMisesStress;FiberDistance;CenterOnly
+ElemForceOutput;All;PlotOnly;CenterOnly
+SubcaseStart;1
+StaticLoadSelection;1
+SubcaseStart;2
+StaticLoadSelection;2
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Include;../common/elements_model.oos

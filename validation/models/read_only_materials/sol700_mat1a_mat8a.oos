@@ -1,0 +1,61 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: SOL 700 material extensions MAT1A and MAT8A
+# (read-only)
+#
+# Covers:
+#   - cards: MAT1A MAT8A (with MAT1 EOSPOL MAT8 PCOMP PSOLID TLOAD1 TSTEPNL)
+#   - solution: SOL 700 (explicit nonlinear transient)
+#   - outputs: none (read-only deck)
+# Run notes:
+#   - read-only: read and written by O_o_Reader, not run. The format reference pages of
+#     MAT1A and MAT8A say SOL 700 only, and neither entry is in the 2024.1
+#     table of Bulk Data entries available in SOL 700 (Executive Control
+#     SOL 700,ID), run by an explicit solver of its own
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: MAT1A and MAT8A (read-only)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;1
+NonlinearTimeStepSelection;1
+[model]
+# Units: mm, N, tonne, s, MPa.
+#
+# Block 1: steel for solid elements with its equation of state (MAT1A names
+# the EOSPOL whose A1 is the bulk modulus), clamped on its base.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+IsoMatExplicitExt;1;11
+PolynomialStateEquation;11;1.75E+5
+SolidProp;1;1
+Node;101;;0.;0.;0.
+Node;102;;10.;0.;0.
+Node;103;;10.;10.;0.
+Node;104;;0.;10.;0.
+Node;105;;0.;0.;10.
+Node;106;;10.;0.;10.
+Node;107;;10.;10.;10.
+Node;108;;0.;10.;10.
+SolidHexa;100;1;101;102;103;104;105;106;107;108
+SinglePointConstrList;1;123;101;102;103;104
+DynamicLoadScale;10;105;3;-2500.;106;3;-2500.
+DynamicLoadScale;10;107;3;-2500.;108;3;-2500.
+# Strip 2: a carbon/epoxy laminate (PCOMP of MAT8 plies) with the failure
+# data of MAT8A (Hashin theory and its four strengths), clamped at X = 30.
+OrthoMat2D;2;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9
+OrthoMat2DFailure;2;HashinFailure;;70.;;;;1500.;1200.;50.;200.
+CompProp;2;;;;;;;;2;0.25;0.;Yes;2;0.25;90.;Yes;2;0.25;90.;Yes;2;0.25;0.;Yes
+Node;201;;30.;0.;0.
+Node;202;;40.;0.;0.
+Node;203;;40.;10.;0.
+Node;204;;30.;10.;0.
+ShellQuad4;201;2;201;202;203;204
+SinglePointConstrList;1;123456;201;204
+DynamicLoadScale;10;202;1;500.;203;1;500.
+# The forces of DAREA set 10 ramp up over 1 ms.
+TransientTableLoad1;1;10;;;0;11
+TableDynamic1;11;;;0.;0.;0.001;1.;EndTable
+NonlinearTimeSteps;1;100;1.E-5

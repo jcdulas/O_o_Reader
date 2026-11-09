@@ -1,0 +1,54 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: explicit spring-mass oscillators
+#
+# Covers:
+#   - cards: PELAS1, CSPR (with CELAS1D and PSPRMAT)
+#   - solution: SOL 700 (explicit nonlinear transient)
+#   - outputs: displacements (written by the explicit solver)
+# Run notes:
+#   - two one-degree-of-freedom oscillators of 1 kg: a CELAS1D whose force
+#     follows a TABLED1 curve (PELAS1) and a CSPR of linear stiffness
+#     (PSPRMAT), both under a step force of 100 N for 10 ms
+#   - SOL 700 needs the explicit solver installed (sol700.pth); no OUTPUT2 is
+#     asked, the explicit solver writes its own result files
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;NonlinearTransient
+[case]
+TitleText;O_o_Reader test model: explicit springs (SOL 700)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;2
+NonlinearTimeStepSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;step force, 10 ms
+[model]
+# 100 steps of 0.1 ms. Units: mm, N, t, s.
+NonlinearTimeSteps;1;100;1.E-4
+# A step force of 100 N along x on both masses, from time 0 on
+TransientTableLoad1;2;3;;;;4
+PointForceLoad;3;2;;100.;1.;0.;0.
+PointForceLoad;3;4;;100.;1.;0.;0.
+TableDynamic1;4;;;0.;1.;1.;1.;EndTable
+# Oscillator 1: a scalar spring between a fixed grid point and a mass along
+# x, its force a piecewise linear curve of the deflection (1000 N/mm)
+Node;1;;0.;0.;0.
+Node;2;;0.;0.;0.
+PointMassInertia;1;2;;0.001
+SpringDofPropertyExplicit;11;10;2;1;1;1
+SpringPropTable;10;12
+TableDynamic1;12;;;-10.;-1.E+4;0.;0.;10.;1.E+4;EndTable
+SinglePointConstrList;1;123456;1
+SinglePointConstrList;1;23456;2
+# Oscillator 2: a spring with offsets along the line from grid point 3 to
+# grid point 4, linear stiffness 1000 N/mm
+Node;3;;0.;50.;0.
+Node;4;;10.;50.;0.
+PointMassInertia;2;4;;0.001
+SpringOffsetExplicit;21;20;3;4
+SpringOffsetProp;20;1.E+3
+SinglePointConstrList;1;123456;3
+SinglePointConstrList;1;23456;4

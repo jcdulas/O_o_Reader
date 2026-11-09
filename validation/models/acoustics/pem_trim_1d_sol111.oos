@@ -1,0 +1,149 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: layered 1D analytical trim between plate and cavity
+#
+# Covers:
+#   - cards: ACPMCP1, TCOMPG, TRMCPL (TRMSUR and INTERF; with PLTSURF,
+#     SET3 and MATPE1 in a BEGIN BULK TRMC part, ACMODL)
+#   - solution: SOL 111 (modal frequency response of the plate and the
+#     cavity coupled through the reduced impedance of the trim)
+#   - outputs: complex displacements and fluid pressures, plate stresses
+#     and forces, fluid element pressures
+# Run notes:
+#   - needs the PEM (poroelastic material) capability of the solver
+#   - the 10 mm gap of acoustics/plate_cavity_model.inc is a two-layer trim
+#     (trim component 2): 8 mm of foam on the plate side, then a 2 mm heavy
+#     layer kept at constant thickness, described by a bottom surface
+#     (PLTSURF, z = 0, glued to the plate) and a top surface (z = 10, open
+#     to the cavity); the plate and the cavity are not coupled directly
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;O_o_Reader test model: 1D analytical trim (SOL 111)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+EigenMethodSelection;1;Structure
+EigenMethodSelection;2;Fluid
+TrimGroupSelection;All
+SetDefinition;1;101;Through;116
+DisplacementOutput;All;PlotOnly
+StressOutput;1;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;plate driven at (50, 50), trimmed cavity floor
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;UniformStructuralDamping;0.02
+LanczosEigenMethod;1;;2.E+3
+LanczosEigenMethod;2;;4.E+3
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;1.E+3;1.;EndTable
+FreqLinearSteps1;41;50.;50.;9
+# No direct coupling of the plate (z = 0) and the cavity floor (z = 10).
+FluidStructureInterface;DifferenceForm;None;;;0.5;SurfaceCoupling;0.5;0.75;0.5;No;Absolute
+# Trim component 2, 1D method: bottom surface glued to the structure (SET3
+# 1 of the trim part), top surface open to the cavity (SET3 2); search
+# distances between the two trim surfaces and to the structure and cavity.
+TrimComponentCoupling1D;2;1;;2;;0;OneDimensional
+TrimCouplingTolerances;2;TrimSurface;0.1;12.
+TrimCouplingTolerances;2;Interface;0.1;1.
+Include;plate_cavity_model.oos
+[model;TrimComponent;2]
+# Foam (skeleton, air in the pores, porous parameters) and a heavy layer.
+IsoMat;202;0.2;;0.3;3.E-11;;;0.1
+FluidMat;203;0.142;1.2E-12
+PoroElasticMat;201;202;203;;;;1.84E-11;1.4;0.71;0.95;1.4;2.5E-8;0.1;0.2
+IsoMat;204;10.;;0.45;2.E-9;;;0.2
+# Trim surfaces: grid points 8001 to 8025 and PLTSURF 8001 to 8016 at
+# z = 0, grid points 8101 to 8125 and PLTSURF 8101 to 8116 at z = 10.
+Node;8001;;0.;0.;0.
+Node;8002;;50.;0.;0.
+Node;8003;;100.;0.;0.
+Node;8004;;150.;0.;0.
+Node;8005;;200.;0.;0.
+Node;8006;;0.;50.;0.
+Node;8007;;50.;50.;0.
+Node;8008;;100.;50.;0.
+Node;8009;;150.;50.;0.
+Node;8010;;200.;50.;0.
+Node;8011;;0.;100.;0.
+Node;8012;;50.;100.;0.
+Node;8013;;100.;100.;0.
+Node;8014;;150.;100.;0.
+Node;8015;;200.;100.;0.
+Node;8016;;0.;150.;0.
+Node;8017;;50.;150.;0.
+Node;8018;;100.;150.;0.
+Node;8019;;150.;150.;0.
+Node;8020;;200.;150.;0.
+Node;8021;;0.;200.;0.
+Node;8022;;50.;200.;0.
+Node;8023;;100.;200.;0.
+Node;8024;;150.;200.;0.
+Node;8025;;200.;200.;0.
+Node;8101;;0.;0.;10.
+Node;8102;;50.;0.;10.
+Node;8103;;100.;0.;10.
+Node;8104;;150.;0.;10.
+Node;8105;;200.;0.;10.
+Node;8106;;0.;50.;10.
+Node;8107;;50.;50.;10.
+Node;8108;;100.;50.;10.
+Node;8109;;150.;50.;10.
+Node;8110;;200.;50.;10.
+Node;8111;;0.;100.;10.
+Node;8112;;50.;100.;10.
+Node;8113;;100.;100.;10.
+Node;8114;;150.;100.;10.
+Node;8115;;200.;100.;10.
+Node;8116;;0.;150.;10.
+Node;8117;;50.;150.;10.
+Node;8118;;100.;150.;10.
+Node;8119;;150.;150.;10.
+Node;8120;;200.;150.;10.
+Node;8121;;0.;200.;10.
+Node;8122;;50.;200.;10.
+Node;8123;;100.;200.;10.
+Node;8124;;150.;200.;10.
+Node;8125;;200.;200.;10.
+PlotSurface;8001;8001;8002;8007;8006
+PlotSurface;8002;8002;8003;8008;8007
+PlotSurface;8003;8003;8004;8009;8008
+PlotSurface;8004;8004;8005;8010;8009
+PlotSurface;8005;8006;8007;8012;8011
+PlotSurface;8006;8007;8008;8013;8012
+PlotSurface;8007;8008;8009;8014;8013
+PlotSurface;8008;8009;8010;8015;8014
+PlotSurface;8009;8011;8012;8017;8016
+PlotSurface;8010;8012;8013;8018;8017
+PlotSurface;8011;8013;8014;8019;8018
+PlotSurface;8012;8014;8015;8020;8019
+PlotSurface;8013;8016;8017;8022;8021
+PlotSurface;8014;8017;8018;8023;8022
+PlotSurface;8015;8018;8019;8024;8023
+PlotSurface;8016;8019;8020;8025;8024
+PlotSurface;8101;8101;8102;8107;8106
+PlotSurface;8102;8102;8103;8108;8107
+PlotSurface;8103;8103;8104;8109;8108
+PlotSurface;8104;8104;8105;8110;8109
+PlotSurface;8105;8106;8107;8112;8111
+PlotSurface;8106;8107;8108;8113;8112
+PlotSurface;8107;8108;8109;8114;8113
+PlotSurface;8108;8109;8110;8115;8114
+PlotSurface;8109;8111;8112;8117;8116
+PlotSurface;8110;8112;8113;8118;8117
+PlotSurface;8111;8113;8114;8119;8118
+PlotSurface;8112;8114;8115;8120;8119
+PlotSurface;8113;8116;8117;8122;8121
+PlotSurface;8114;8117;8118;8123;8122
+PlotSurface;8115;8118;8119;8124;8123
+PlotSurface;8116;8119;8120;8125;8124
+TypedListSet3;1;Elements;8001;Through;8016
+TypedListSet3;2;Elements;8101;Through;8116
+# Layers stacked from the bottom surface: foam 8 mm (takes the thickness
+# changes), heavy layer 2 mm (scale 0: constant).
+TrimLayeredComponent;1;1;201;8.;1.;2;204;2.;0.

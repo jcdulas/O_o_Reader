@@ -1,0 +1,38 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: buckling of the plate under edge compression (EIGB)
+#
+# Covers:
+#   - cards: EIGB
+#   - solution: SOL 105 (linear buckling)
+#   - outputs: displacements and CQUAD4 stresses of the static subcase: real,
+#              SORT1; buckling eigenvectors: real, SORT1
+# Run notes:
+#   - the free edge x = 200 carries 30 N of compression (FORCE set 2); the
+#     first buckling factor is expected near 10, inside the EIGB range 0 to 50
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;105
+[case]
+TitleText;O_o_Reader test model: buckling with EIGB
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;static preload: compression on the free edge
+StaticLoadSelection;2
+StressOutput;All;PlotOnly
+SubcaseStart;2
+LabelText;buckling
+StaticSubcaseSelection;1
+EigenMethodSelection;30
+[model]
+Parameter;PostprocessingFile;-1
+PointForceLoad;2;5;0;7.5;-1.;0.;0.
+PointForceLoad;2;10;0;15.;-1.;0.;0.
+PointForceLoad;2;15;0;7.5;-1.;0.;0.
+# Enhanced inverse power, two positive roots between 0 and 50, normalised to
+# the largest component.
+BucklingEigenMethod;30;SturmInverse;0.;50.;;2;;Maximum
+Include;plate_model.oos

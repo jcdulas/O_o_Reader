@@ -1,0 +1,42 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: HDF5 input datasets of EIGC regions and TSTEPNL (SOL 107)
+#
+# Validates:
+#   - how the solver writes an EIGC with search regions and ND0, a fully given
+#     TSTEPNL and one with blank fields in the input datasets (the input datasets
+#     of the HDF5 file)
+# Settles (library item: current status):
+#   - the missing DYNAMIC/EIGC/IDENTITY (the regions of an EIGC and ND0 have
+#     no observed dataset) and PARAMETER/TSTEPNL (blank fields resolved by
+#     the solver)
+#   - EIGC and TSTEPNL reported as 'no observed layout' by the model writer
+# Run notes:
+#   - the TSTEPNL entries are not used by SOL 107; they are there for the
+#     input datasets only
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;107
+[case]
+TitleText;O_o_Reader validation: HDF5 input datasets (EIGC, TSTEPNL)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+ComplexEigenMethodSelection;81
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;complex modes
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;UniformStructuralDamping;0.02
+# A damped plate (the model of hdf5_model.inc with dampers) for a complex
+# eigenvalue analysis whose EIGC has two search regions and ND0 (Lanczos), and
+# a TSTEPNL fully given beside one with blank fields.
+DamperDofInline;201;0.5;100;3
+DamperDofInline;202;0.5;102;3
+ComplexEigenMethod;81;ComplexLanczos;Maximum;;;;6;0.;50.;;;;;4;0.;500.;;;;;4
+NonlinearTimeSteps;61;10;0.01;1;Adaptive;2;10;PW;0.01;0.001;1.E-6;2;10;2;0.02;5;5;;0.75;16.;0.1;20.
+NonlinearTimeSteps;62;10;0.01
+Include;hdf5_model.oos

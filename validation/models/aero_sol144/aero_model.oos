@@ -1,0 +1,57 @@
+# Shared aeroelastic model of aero_sol144/ (INCLUDEd). A rectangular wing box
+# plate (4 x 2 CQUAD4, chord along x, span along y, root clamped) with one
+# doublet-lattice panel (CAERO1, 8 x 4 boxes) splined to it, a trailing-edge
+# control surface ELEV on the outboard half and monitor points. Units: mm, N,
+# tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;250.;0.
+Node;5;;100.;250.;0.
+Node;6;;200.;250.;0.
+Node;7;;0.;500.;0.
+Node;8;;100.;500.;0.
+Node;9;;200.;500.;0.
+Node;10;;0.;750.;0.
+Node;11;;100.;750.;0.
+Node;12;;200.;750.;0.
+Node;13;;0.;1.E+3;0.
+Node;14;;100.;1.E+3;0.
+Node;15;;200.;1.E+3;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+ShellQuad4;7;1;10;11;14;13
+ShellQuad4;8;1;11;12;15;14
+PointMassInertia;101;8;;0.01
+PointMassInertia;102;14;;0.01
+SinglePointConstrList;1;123456;1;2;3
+# Aerodynamics: one CAERO1 panel over the plate, splined by a SPLINE1 to the
+# structural grid points.
+AeroLiftingPanelProp1;1000
+AeroLiftingPanel1;1001;1000;;8;4;;;1;0.;0.;0.;200.;0.;1.E+3;0.;200.
+IdListSet1;1100;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15
+AeroSurfaceSpline1;1101;1001;1001;1032;1100
+RectFrame2;10;;150.;0.;0.;150.;0.;10.;160.;0.;0.
+AeroBoxList;1200;1020;1024;1028;1032
+AeroControlSurface;1201;ELEV;10;1200
+AeroRigidTrimVariable;1301;AngleOfAttack
+# Monitor points: MONPNT1 at the wing root on the structure (all grid points)
+# and on the aerodynamic model, MONPNT3 at the root (grid point forces of the
+# elements of the root bay), MONDSP1 at the tip.
+IdListSet1;1400;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15
+AeroComponent;WINGS;IdListSet1;1400
+AeroComponent;WINGA;AeroPanels;1001
+MonitorIntegratedLoad1;ROOTS;wing root on the structure;123456;WINGS;0;0.;0.;0.
+MonitorIntegratedLoad1;ROOTA;wing root on the aero model;123456;WINGA;0;0.;0.;0.
+IdListSet1;1401;1;2;3;4;5;6
+IdListSet1;1402;1;2
+MonitorNodeForceSum3;ROOT3;root bay grid point forces;123456;1401;1402;0;100.;0.;0.
+# The same cut without the SPC forces of the root (XFLAG S).
+MonitorNodeForceSum3;ROOT3S;root bay without the SPC forces;123456;1401;1402;0;100.;0.;0.;S
+MonitorDisplacement;TIPDSP;tip displacement;3;WINGS;0;200.;1.E+3;0.

@@ -1,0 +1,87 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: SOL 700 Euler bar, soil and fluid models
+#
+# Covers:
+#   - cards: YLDVM YLDPOL YLDHY YLDMC YLDMSS SHREL TICVAL DYPARAM (with MESH,
+#     PEULER1, TICEUL1, TICREG, CYLINDR, MATDEUL, EOSPOL, TSTEPNL)
+#   - solution: SOL 700,129 (explicit nonlinear transient: a von Mises steel
+#     slab at 100 m/s pushes an aluminium slab into water, soil and snow in
+#     one Euler domain)
+#   - outputs: none that the library decodes (the default Euler archive of
+#     the explicit solver)
+# Run notes:
+#   - needs the explicit solver of SOL 700 in the installation (the solver
+#     spawns it; see the SOL 700 Executive Control statement)
+#   - SOL 700 has no OUTPUT2 output: the explicit solver writes its own archive
+#     and time-history files (ARC, THS) and its output file next to the listing;
+#     bring back the listing
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;129
+[case]
+TitleText;O_o_Reader test model: SOL 700 Euler soil, fluid and snow models
+BulkEcho;None
+NonlinearTimeStepSelection;1
+StepEndTime;1.E-4
+[model]
+# Units: mm, N, tonne, s. End time 0.1 ms.
+NonlinearTimeSteps;1;100;1.E-6
+ExplicitParam;InitialStep;1.E-7
+# Euler domain: a 100 x 20 x 20 box of 10 x 2 x 2 elements made by MESH 1
+# (grid points and elements numbered from 50001), multi-material with
+# strength (PEULER1 10, MMSTREN), filled by the regions of TICEUL1 20.
+EulerMeshGenerator;1;Box;10.;10.;10.;;;;0.;0.;0.;;;;10;2;2;;50001;50001;Euler;10
+EulerRegionProp;10;MultiMaterialStrength;20
+EulerInitialRegions;20;30
+# Five slabs of 20 mm along x, one material each: a cylinder of radius 15
+# around the box axis, its ends on element faces, gives the region (TICREG),
+# the MATDEUL and the initial values (TICVAL).
+# Slab 1: von Mises steel striker (YLDVM, elastic-perfectly plastic in Euler)
+# at 100 m/s
+InitialConditionRegion;31;30;Cylinder;41;101;51;1.
+CylinderShape;41;-1.;10.;10.;20.;10.;10.;15.
+InitialConditionValues;51;;Density;7.85E-9;VelocityX;1.E+5
+# Slab 2: polynomial-hardening aluminium (YLDPOL)
+InitialConditionRegion;32;30;Cylinder;42;102;52;2.
+CylinderShape;42;20.;10.;10.;40.;10.;10.;15.
+InitialConditionValues;52;;Density;2.7E-9
+# Slab 3: water, no shear strength (YLDHY)
+InitialConditionRegion;33;30;Cylinder;43;103;53;3.
+CylinderShape;43;40.;10.;10.;60.;10.;10.;15.
+InitialConditionValues;53;;Density;1.E-9
+# Slab 4: soil, Mohr-Coulomb (YLDMC)
+InitialConditionRegion;34;30;Cylinder;44;104;54;4.
+CylinderShape;44;60.;10.;10.;80.;10.;10.;15.
+InitialConditionValues;54;;Density;1.8E-9
+# Slab 5: snow, multi-surface model (YLDMSS with EOSPOL and SHREL)
+InitialConditionRegion;35;30;Cylinder;45;105;55;5.
+CylinderShape;45;80.;10.;10.;101.;10.;10.;15.
+InitialConditionValues;55;;Density;3.E-10
+# Equations of state: polynomial, bulk modulus only.
+PolynomialStateEquation;1;1.6E+5
+PolynomialStateEquation;2;7.E+4
+PolynomialStateEquation;3;2200.
+PolynomialStateEquation;4;200.
+PolynomialStateEquation;5;1.
+# Shear models (constant).
+ElasticShearModel;1;8.E+4
+ElasticShearModel;2;2.6E+4
+ElasticShearModel;4;50.
+ElasticShearModel;5;0.5
+# Yield models.
+VonMisesYield;1;250.
+PolynomialYield;2;250.;500.;-200.;;;;600.
+HydrodynamicYield;3
+MohrCoulombYield;4;50.;0.1;0.6
+SnowMultiSurfaceYield;5;0.149;8.2E-5;1.E-5;0.09;0.2;0.99;2.7E-5;-0.37;0.
+# Euler materials: MID, RHO, EOS, shear, yield (the water has the
+# hydrodynamic shear).
+EulerMat;101;7.85E-9;1;1;1
+EulerMat;102;2.7E-9;2;2;2
+EulerMat;103;1.E-9;3;;3
+EulerMat;104;1.8E-9;4;4;4
+EulerMat;105;3.E-10;5;5;5
+# Largest time step allowed (the snow alone would allow a much larger one).
+ExplicitParam;MaxStepSize;1.E-6

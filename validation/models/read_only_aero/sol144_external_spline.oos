@@ -1,0 +1,44 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: externally evaluated spline (read only, SOL 144)
+#
+# Covers:
+#   - cards: SPLINEX AELISTC
+#   - solution: SOL 144 (restrained static aeroelastic trim of the plate wing,
+#     one CAERO1 panel splined by an external spline)
+#   - outputs: none (read and written by the library, not run)
+# Run notes:
+#   - READ ONLY: a SPLINEX is evaluated by a user supplied spline server (the
+#     GROUP SPLNSRV1 here); the project has no such program, so the solver
+#     cannot run this deck as it stands
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;O_o_Reader test model: externally evaluated spline
+BulkEcho;None
+SinglePointConstrSelection;1
+TrimSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim, angle of attack fixed
+[model]
+Parameter;PostprocessingFile;-1
+AeroStaticParams;;;200.;2.E+3;4.E+5;1
+AeroRigidTrimVariable;1301;AngleOfAttack
+AeroTrim;1;0.5;2.E-4;AngleOfAttack;0.05
+Include;../aero_models/plate_wing.oos
+# One doublet-lattice panel over the plate (4 x 4 boxes).
+AeroLiftingPanelProp1;1000
+AeroLiftingPanel1;1001;1000;;4;4;;;1;0.;0.;0.;200.;0.;1.E+3;0.;200.
+# The external spline: dependent points are the boxes of the panel, the
+# independent points the plate grid points; the integer, real and name lists
+# are data for the spline server only.
+IdListSet1;1100;1;Through;15
+AeroComponent;WINGA;AeroPanels;1001
+AeroComponent;WINGS;IdListSet1;1100
+AeroBoxList;1201;2;4
+AeroFactorList;1202;0.5;1.
+AeroLabelList;1203;TPS;SMOOTH
+AeroUserSpline;1101;SPLNSRV1;WINGA;WINGS;;;Both;1201;1202;1203

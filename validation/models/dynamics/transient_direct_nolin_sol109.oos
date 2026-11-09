@@ -1,0 +1,54 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: direct transient: TLOAD2, TIC, NOLIN1 to NOLIN4
+#
+# Covers:
+#   - cards: TLOAD2, TIC, NOLIN1, NOLIN2, NOLIN3, NOLIN4
+#   - solution: SOL 109 (direct transient response)
+#   - outputs: displacements, velocities, nonlinear loads, CQUAD4 stresses:
+#              real, SORT1
+# Run notes:
+#   - the load is a delayed, decaying 100 Hz burst (TLOAD2 with DELAY) on the
+#     free corner 15; the corner starts with a velocity of 50 mm/s (TIC, IC =
+#     81)
+#   - NONLINEAR = 70: a tabular restoring spring at 15 (NOLIN1), a product
+#     damper at 10 (NOLIN2) and a cubic hardening spring at 5, one side each
+#     (NOLIN3, NOLIN4)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;109
+[case]
+TitleText;O_o_Reader test model: direct transient, nonlinear loads
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;50
+TimeStepSelection;60
+InitialConditionSelection;81
+NonlinearLoadSelection;70
+DisplacementOutput;All;PlotOnly;SortByPoint
+VelocityOutput;All;PlotOnly;SortByPoint
+NonlinearLoadOutput;All;PlotOnly
+StressOutput;All;PlotOnly;SortByPoint
+SubcaseStart;1
+LabelText;burst on the free corner with nonlinear springs
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;UniformStructuralDamping;0.02
+Parameter;DampingReferenceFreq;250.
+# TLOAD2 50: load set 1 times t**1 exp(-100 t) cos(2 pi 100 t) between 0 and
+# 0.04 s, delayed by DELAY 52 (2 ms).
+TransientFormulaLoad2;50;1;52;;Load;0.;0.04;100.;0.;-100.;1.
+DynamicLoadDelay;52;15;3;0.002
+TransientTimeSteps;60;200;5.E-4;2
+# Initial conditions (IC = 81): velocity of the corner 15 and a small
+# displacement of grid point 10.
+TransientInitialCondition;81;15;3;0.;50.
+TransientInitialCondition;81;10;3;0.01;0.
+# Nonlinear loads (NONLINEAR = 70).
+NonlinearTableLoad1;70;15;3;1.;15;3;73
+TableDynamic2;73;0.;-10.;10.;10.;-10.;EndTable
+NonlinearProductLoad2;70;10;3;-0.001;10;13;10;3
+NonlinearPositivePowerLoad3;70;5;3;-0.5;5;3;3.
+NonlinearNegativePowerLoad4;70;5;3;-0.5;5;3;3.
+Include;plate_model.oos

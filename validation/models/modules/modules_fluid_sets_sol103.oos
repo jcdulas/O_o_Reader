@@ -1,0 +1,79 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: fluid-structure coupling between modules
+#
+# Covers:
+#   - cards: MDFSET, MDSSET (with MDBULK, ACMODL, MAT10, PSOLID PFLUID and
+#     BEGIN MODULE)
+#   - solution: SOL 103 (coupled normal modes of a plate and an air cavity)
+#   - outputs: eigenvalues, eigenvectors (displacements and pressures)
+# Run notes:
+#   - the plate is module 0, the air box below it is module 1 (1 mm below
+#     the plate, so that the boundary search joins nothing); the coupling
+#     uses the grids of MDFSET and MDSSET (ACMODL FSET = SSET = -1, CP)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: fluid-structure sets of modules
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;coupled modes
+[model]
+Parameter;PostprocessingFile;-1
+# Module 0: an aluminium plate of 2 x 2 CQUAD4 at x 0 to 20, y 0 to 20,
+# z = 0, clamped on its edges. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;1.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;2;3;4;6;7;8;9
+LanczosEigenMethod;1;;;6
+ModuleBulkOptions;1;;;Automatic
+# The coupling: the top fluid grids of module 1 face the plate grids of
+# module 0 (closed pressure vessel method, grids given by the module sets).
+FluidStructureInterface;DifferenceForm;All;-1;-1;;ClosedPressure
+ModuleFluidSet;1;1011;Through;1019
+ModuleStructureSet;0;1;Through;9
+[model;ModuleSection;1]
+# Module 1: an air box of 2 x 2 x 1 fluid CHEXA, x 0 to 20, y 0 to 20,
+# z -11 to -1, rigid walls elsewhere.
+FluidMat;2;;1.2E-12;3.4E+5
+SolidProp;2;2;;;;;PressureFluid
+Node;1001;;0.;0.;-11.;-1
+Node;1002;;10.;0.;-11.;-1
+Node;1003;;20.;0.;-11.;-1
+Node;1004;;0.;10.;-11.;-1
+Node;1005;;10.;10.;-11.;-1
+Node;1006;;20.;10.;-11.;-1
+Node;1007;;0.;20.;-11.;-1
+Node;1008;;10.;20.;-11.;-1
+Node;1009;;20.;20.;-11.;-1
+Node;1011;;0.;0.;-1.;-1
+Node;1012;;10.;0.;-1.;-1
+Node;1013;;20.;0.;-1.;-1
+Node;1014;;0.;10.;-1.;-1
+Node;1015;;10.;10.;-1.;-1
+Node;1016;;20.;10.;-1.;-1
+Node;1017;;0.;20.;-1.;-1
+Node;1018;;10.;20.;-1.;-1
+Node;1019;;20.;20.;-1.;-1
+SolidHexa;1001;2;1001;1002;1005;1004;1011;1012;1015;1014
+SolidHexa;1002;2;1002;1003;1006;1005;1012;1013;1016;1015
+SolidHexa;1003;2;1004;1005;1008;1007;1014;1015;1018;1017
+SolidHexa;1004;2;1005;1006;1009;1008;1015;1016;1019;1018

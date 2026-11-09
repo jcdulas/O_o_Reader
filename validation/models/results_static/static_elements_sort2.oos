@@ -1,0 +1,81 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: static element tables, SORT2
+#
+# Validates:
+#   - the real SORT2 element tables of every family of the shared model:
+#     springs, dampers (zero), rods, tubes, bars (and the BARS stations of
+#     CBARAO), beams, bends, shear panels,
+#     CQUAD4/CQUADR/CQUAD8/CTRIA3/CTRIAR/CTRIA6 homogeneous and laminated,
+#     CHEXA/CPENTA/CTETRA/CPYRAM, CBUSH, CBUSH1D, CGAP, CFAST, CWELD
+#   - stresses and strains at the corners (CORNER) and fibres, forces at the
+#     corners, strain energy (ESE), grid point forces (GPFORCE), MPC forces of
+#     an MPC equation and of an RBE2, applied loads, SPC forces
+#   - the failure indices (OEFIT) and strength ratios (PARAM,SRCOMPS,YES) of
+#     the plies, both homogeneous and ply tables of the laminates
+#     (PARAM,NOCOMPS,0)
+#   - the grid point weight (PARAM,GRDPNT,0: OGPWG and NODAL/GRID_WEIGHT of
+#     the same run)
+#   - EPSILON and the external work of each subcase (printed in the listing)
+#   - the same results in the HDF5 file of the same run (OUTPUT2 twin: proves the
+#     HDF5 datasets)
+# Settles (library item: current status):
+#   - the not_validated 32-bit lines of
+#     stress, strain, forces and strain_energy in real SORT2 for celas1-4,
+#     cbush, cbush1d, cfast, cweld, cpyram, cshear, cquadr, ctriar, cquad8,
+#     ctria6, the *_composite containers, cbar100, cbend, ctube, conrod
+#     (not_validated -> validated)
+#   - the HDF5 datasets of the same tables
+#     (ELAS1-3, SHEAR, QUAD8, TRIA6, QUADR, TRIAR, *_COMP, BARS, CONROD, TUBE,
+#     MPC_FORCE, APPLIED_LOAD; not_validated -> validated)
+#   - NODAL/GRID_WEIGHT (experimental ->
+#     validated against the OUTPUT2 file OGPWG)
+#   - the HDF5 datasets not proved yet (an OUTPUT2 file twin from the same run, not a
+#     mechanism, not only zeros)
+#   - the SORT2 element tables of plates, beams and
+#     laminates (checked only against the SORT1 form of the same file), the
+#     SORT2 strain energy (ONRGY2, raw today)
+# Run notes:
+#   - run it twice: once as is, once with the 64-bit (i8) executable (for
+#     example the run command of this deck with mode=i8, or the i8
+#     installation) into the subfolder i8: the 64-bit twin of a 32-bit file
+#     (every 64-bit line is experimental)
+#   - AUTOSPC (the default) holds the components that no element of a region
+#     stiffens
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: static element tables (SORT2)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DisplacementOutput;All;PlotOnly;SortByTime
+SinglePointConstrForceOutput;All;PlotOnly;SortByTime
+MultiPointConstrForceOutput;All;PlotOnly;SortByTime
+AppliedLoadOutput;All;PlotOnly;SortByTime
+StressOutput;All;PlotOnly;SortByTime;VonMisesStress;CornerResults
+StrainOutput;All;PlotOnly;SortByTime;VonMisesStress;FiberDistance;CornerResults
+ElemForceOutput;All;PlotOnly;SortByTime;CornerResults
+ElemStrainEnergyOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip loads (load set 1)
+StaticLoadSelection;1
+SubcaseStart;2
+LabelText;pressures and gravity (load set 2)
+StaticLoadSelection;2
+SubcaseStart;3
+LabelText;load set 3 = 2 x set 1 + set 2
+StaticLoadSelection;3
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;WeightReferenceNode;0
+Parameter;StrengthRatioCompositeStress;Yes
+Parameter;NoCompositeStress;0
+LoadCombination;3;1.;2.;1;1.;2
+Include;../common/elements_model.oos

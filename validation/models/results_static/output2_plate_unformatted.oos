@@ -1,0 +1,80 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: OUTPUT2 file, unformatted
+#
+# Validates:
+#   - the unformatted OUTPUT2 of a small plate (the other deck of the pair writes
+#     the same model in the other form)
+# Settles (library item: current status):
+#   - a formatted OUTPUT2 is not decoded: the pair gives the text form and its
+#     binary twin
+# Run notes:
+#   - the OUTPUT2 file is written to output2_plate_unformatted.out2 by the ASSIGN
+#     statement
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT2='output2_plate_unformatted.out2';FileUnit=12;FileForm=Unformatted
+SolutionSequence;101
+[case]
+TitleText;formatted and unformatted OUTPUT2 of one model
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load
+[model]
+Parameter;PostprocessingFile;-1
+# A plate of 4 x 4 CQUAD4 under a tip load, the same in both decks.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+Node;16;;0.;30.;0.
+Node;17;;10.;30.;0.
+Node;18;;20.;30.;0.
+Node;19;;30.;30.;0.
+Node;20;;40.;30.;0.
+Node;21;;0.;40.;0.
+Node;22;;10.;40.;0.
+Node;23;;20.;40.;0.
+Node;24;;30.;40.;0.
+Node;25;;40.;40.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+ShellQuad4;9;1;11;12;17;16
+ShellQuad4;10;1;12;13;18;17
+ShellQuad4;11;1;13;14;19;18
+ShellQuad4;12;1;14;15;20;19
+ShellQuad4;13;1;16;17;22;21
+ShellQuad4;14;1;17;18;23;22
+ShellQuad4;15;1;18;19;24;23
+ShellQuad4;16;1;19;20;25;24
+SinglePointConstrList;1;123456;1;6;11;16;21
+PointForceLoad;1;5;;1.;0.;0.;1.
+PointForceLoad;1;10;;1.;0.;0.;1.
+PointForceLoad;1;15;;1.;0.;0.;1.
+PointForceLoad;1;20;;1.;0.;0.;1.
+PointForceLoad;1;25;;1.;0.;0.;1.

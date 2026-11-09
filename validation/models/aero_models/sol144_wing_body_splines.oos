@@ -1,0 +1,75 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: wing with a tip tank body, beam splines (SOL 144)
+#
+# Covers:
+#   - cards: CAERO2 PAERO2 SPLINE2 SPLINE3 SPLINE5
+#   - solution: SOL 144 (restrained static aeroelastic trim of a doublet-lattice
+#     wing with a slender body and its interference tube)
+#   - outputs: displacements, CQUAD4 stresses, trim variables, stability
+#     derivatives, aerodynamic pressures and forces (OUTPUT2)
+# Run notes:
+#   - half model (symmetric about the root plane), root clamped: every trim
+#     variable is fixed
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;O_o_Reader test model: wing and tip tank, beam splines
+BulkEcho;None
+SinglePointConstrSelection;1
+TrimSelection;1
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+AeroForceOutput;All;PlotOnly
+AeroPressureOutput;All;PlotOnly
+TrimLoadOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim, angle of attack fixed
+[model]
+Parameter;PostprocessingFile;-1
+AeroStaticParams;;;200.;2.E+3;4.E+5;1
+AeroRigidTrimVariable;1301;AngleOfAttack
+AeroTrim;1;0.5;2.E-4;AngleOfAttack;0.05
+Include;plate_wing.oos
+# Tip tank: a beam along x through the wing tip grid points 13 to 15, with a
+# nose and a tail point and their masses.
+BarProp;2;1;300.;2.E+4;2.E+4;4.E+4
+Node;301;;-100.;1.E+3;0.
+Node;302;;300.;1.E+3;0.
+Bar2;311;2;301;13;0.;;0.;1.
+Bar2;312;2;13;14;0.;;0.;1.
+Bar2;313;2;14;15;0.;;0.;1.
+Bar2;314;2;15;302;0.;;0.;1.
+PointMassInertia;303;301;;0.002
+PointMassInertia;304;302;;0.002
+# Doublet-lattice wing: two CAERO1 panels (4 x 4 boxes each) up to the
+# interference tube of the tank, in one interference group with the body.
+AeroLiftingPanelProp1;1000;3001
+AeroLiftingPanel1;1001;1000;;4;4;;;1;0.;0.;0.;200.;0.;480.;0.;200.
+AeroLiftingPanel1;1101;1000;;4;4;;;1;0.;480.;0.;200.;0.;960.;0.;200.
+# Slender body of the tank: 8 body elements, 4 interference elements, half
+# widths from an AEFACT (nose at zero), one theta array for all the
+# interference elements. ZY: the tank is off the symmetry plane.
+AeroBodyProp2;3000;PlaneZy;40.;1.;3002;;3003;;1;4
+AeroBody2;3001;3000;;8;4;;;1;-100.;1.E+3;0.;400.
+AeroFactorList;3002;0.;20.;32.;38.;40.;40.;38.;24.
+AeroFactorList;3003;0.;45.;90.;135.;180.;225.;270.
+# Spline axis system: y along the span, through the mid chord.
+RectFrame2;20;;100.;0.;0.;100.;0.;1.;200.;0.;0.
+# Inboard panel: SPLINE5 beam spline on an AELIST of its 16 boxes, attached
+# to the translations of the inboard grid points.
+IdListSet1;1203;1;Through;9
+AeroBoxList;1202;1001;Through;1016
+AeroBeamSpline5;1201;1001;1202;1203;0.;1.;20;-1.;-1.;Both;Beam
+# Outboard panel: SPLINE2 beam spline on the boxes 1101 to 1115; the trailing
+# edge box of the tip strip (1116) is driven by two SPLINE3 equations, its
+# plunge from grid point 15 and its pitch from the slope between 14 and 15.
+IdListSet1;1103;7;Through;15
+AeroBeamSpline2;1102;1101;1101;1115;1103;0.;1.;20;-1.;-1.
+AeroSplineEquation3;1121;1101;1116;3;15;3;1.
+AeroSplineEquation3;1122;1101;1116;5;15;3;-0.01;;14;3;0.01
+# Tank body: SPLINE2 on the 8 slender body elements, attached to the beam.
+IdListSet1;3102;13;14;15;301;302
+AeroBeamSpline2;3101;3001;3001;3008;3102;0.;1.;;-1.;0.

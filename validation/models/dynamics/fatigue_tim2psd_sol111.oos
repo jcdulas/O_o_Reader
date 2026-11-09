@@ -1,0 +1,55 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: random vibration fatigue from a time history (TIM2PSD)
+#
+# Covers:
+#   - cards: TIM2PSD
+#   - solution: SOL 111 (modal frequency response with a vibration fatigue
+#               analysis)
+#   - outputs: displacements: complex magnitude/phase, SORT1; the fatigue
+#              results (listing and OUTPUT2)
+# Run notes:
+#   - FATIGUE = 10 runs the fatigue analysis 10 (FTGPARM, FTGDEF, FTGSEQ 10):
+#     one event of one PSD load whose PSD TIM2PSD 10 computes from the time
+#     history in tim2psd-signal.csv (one channel, 256 samples per second, 4 s;
+#     UDNAME 13), mapped to subcase 1, the transfer function of a unit force
+#     at the corner
+#   - keep tim2psd-signal.csv next to the deck; the run writes the generated
+#     RANDPS/TABRND1 file next to it, bring it back with the listing
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;O_o_Reader test model: vibration fatigue, TIM2PSD
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ModalDampingSelection;72
+FreqSetSelection;40
+FatigueOutput;10;PrintListing;PlotOnly
+SubcaseStart;1
+LabelText;transfer function of a unit force at the free corner
+DynamicLoadSelection;21
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;71;;;8
+TableModalDamping1;72;CriticalDamping;0.;0.02;2.E+3;0.02;EndTable
+FreqLinearSteps1;40;1.;1.;127
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+# Fatigue analysis 10: every plate element, S-N data of the aluminium, one
+# hour of the event.
+FatigueParams;10;StressLifeMethod
+FatigueDefinition;10;;;;;;;;ElemSet;1;11
+IdListSet1;11;1;Through;8
+FatigueMat;1;1.;;Static;250.;310.;;Amplitude;;;;;StressLifeMethod;1.E+3;-0.1;1.E+7;0.;1.E+30
+FatigueSequence;10;;;TimeInSeconds;;1;11;3600.
+FatigueEvent;11;1;12;Name;shaker
+FatigueLoad;12;13;-1;;;;SpectralDensityLoad
+UserFileName;13;tim2psd-signal.csv
+# Time history to PSD: 256 samples per second, Hanning window, CSV file,
+# one-second blocks with half a second of overlap; channel 1 drives subcase 1.
+TimeToSpectrum;10;256.;HanningWindow;CommaSeparatedFile;No;0;Event;1;13;1.;0.5;Map;1;1;1
+Include;plate_model.oos

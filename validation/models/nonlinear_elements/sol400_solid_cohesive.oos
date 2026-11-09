@@ -1,0 +1,84 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: solid blocks bonded by cohesive interface elements
+#
+# Covers:
+#   - cards: CIFHEX, CIFPENT (with PCOHE, MCOHE)
+#   - solution: SOL 400 (nonlinear static, one load step)
+#   - outputs: displacements, SPC forces, element stresses
+# Run notes:
+#   - zero-thickness interfaces: the top and bottom grid points of each
+#     interface element coincide; the traction stays below the peak
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: solid cohesive interface (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;one load step, ten increments
+AnalysisKind;NonlinearStatics
+NonlinearStaticParamsSelection;10
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+NonlinearStaticParams;10;10
+# Units: mm, N, t. Steel blocks; an exponential cohesive law (energy
+# 0.5 N/mm, critical opening 0.005 mm), Gauss integration, output at the
+# integration points.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+SolidProp;1;1
+CohesiveProp;5;5;0;;GaussPoints;0
+CohesiveMat;5;2;;0.5;0.005;;1.
+# Region 1: two steel cubes bonded by one CIFHEX at z = 10, clamped at the
+# bottom and pulled along z at the top
+Node;101;;0.;0.;0.;;456
+Node;102;;10.;0.;0.;;456
+Node;103;;10.;10.;0.;;456
+Node;104;;0.;10.;0.;;456
+Node;105;;0.;0.;10.;;456
+Node;106;;10.;0.;10.;;456
+Node;107;;10.;10.;10.;;456
+Node;108;;0.;10.;10.;;456
+Node;109;;0.;0.;10.;;456
+Node;110;;10.;0.;10.;;456
+Node;111;;10.;10.;10.;;456
+Node;112;;0.;10.;10.;;456
+Node;113;;0.;0.;20.;;456
+Node;114;;10.;0.;20.;;456
+Node;115;;10.;10.;20.;;456
+Node;116;;0.;10.;20.;;456
+SolidHexa;101;1;101;102;103;104;105;106;107;108
+CohesiveHexa;102;5;105;106;107;108;109;110;111;112
+SolidHexa;103;1;109;110;111;112;113;114;115;116
+SinglePointConstrList;1;123;101;102;103;104
+PointForceLoad;1;113;;500.;0.;0.;1.
+PointForceLoad;1;114;;500.;0.;0.;1.
+PointForceLoad;1;115;;500.;0.;0.;1.
+PointForceLoad;1;116;;500.;0.;0.;1.
+# Region 2: two steel prisms bonded by one CIFPENT at z = 10, clamped at
+# the bottom and pulled along z at the top
+Node;201;;50.;0.;0.;;456
+Node;202;;60.;0.;0.;;456
+Node;203;;50.;10.;0.;;456
+Node;204;;50.;0.;10.;;456
+Node;205;;60.;0.;10.;;456
+Node;206;;50.;10.;10.;;456
+Node;207;;50.;0.;10.;;456
+Node;208;;60.;0.;10.;;456
+Node;209;;50.;10.;10.;;456
+Node;210;;50.;0.;20.;;456
+Node;211;;60.;0.;20.;;456
+Node;212;;50.;10.;20.;;456
+SolidPenta;201;1;201;202;203;204;205;206
+CohesivePenta;202;5;204;205;206;207;208;209
+SolidPenta;203;1;207;208;209;210;211;212
+SinglePointConstrList;1;123;201;202;203
+PointForceLoad;1;210;;300.;0.;0.;1.
+PointForceLoad;1;211;;300.;0.;0.;1.
+PointForceLoad;1;212;;300.;0.;0.;1.

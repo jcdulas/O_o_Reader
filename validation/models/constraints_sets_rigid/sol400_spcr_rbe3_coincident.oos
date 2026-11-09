@@ -1,0 +1,66 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: relative enforced motion between steps and an RBE3
+# on coincident grid points with Lagrange rigid elements (SOL 400)
+#
+# Covers:
+#   - cards: SPCR, GMOVR3
+#   - solution: SOL 400 (nonlinear statics, two steps, RIGID = LAGRANGE)
+#   - outputs: displacements, SPC forces
+# Run notes:
+#   - RBE3 40 has its reference point and its three legs at the origin;
+#     MDLPRM,GMOVR3,3 with the GMOVR3 entry moves the legs of RBE3 40 by the
+#     given perturbation
+#   - step 2 removes the load and moves grid point 31 by -0.01 in z from
+#     where step 1 left it (SPCR, with SPC1 on the same component)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: SPCR and GMOVR3 (SOL 400)
+BulkEcho;None
+RigidElemMethod;Lagrange
+SubcaseStart;1
+LabelText;step 1 joint load, step 2 relative motion of point 31
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StepStart;1
+AnalysisKind;NonlinearStatics
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;10
+StepStart;2
+AnalysisKind;NonlinearStatics
+SinglePointConstrSelection;2
+StaticLoadSelection;22
+NonlinearStaticParamsSelection;10
+[model]
+Parameter;PostprocessingFile;-1
+ModelParams;GMOVR3;3
+# Units: mm, N, tonne, s. Steel tripod: three CBAR from the clamped points
+# 1, 2 and 3 to their own end points 31, 32 and 33, all at the origin,
+# joined by RBE3 40 whose reference point 30 is at the origin too.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BarProp;1;1;78.54;490.9;490.9;981.7
+Node;1;;100.;0.;0.
+Node;2;;0.;100.;0.
+Node;3;;0.;0.;100.
+Node;30;;0.;0.;0.
+Node;31;;0.;0.;0.
+Node;32;;0.;0.;0.
+Node;33;;0.;0.;0.
+Bar2;1;1;1;31;0.;;0.;1.
+Bar2;2;1;2;32;0.;;0.;1.
+Bar2;3;1;3;33;1.;;0.;0.
+RigidInterpolation;40;30;123456;1;1.;123456;3;31;32;33
+# Perturbation of the legs of RBE3 40 (x, y and z).
+RigidInterpolationOverride;40;0.01;0.02;0.03
+# Step 1: clamped ends, load on the reference point. Step 2: the same
+# clamps and z of grid point 31 held by SPC1, moved by SPCR set 22.
+SinglePointConstrList;1;123456;1;2;3
+SinglePointConstrList;2;123456;1;2;3
+SinglePointConstrList;2;3;31
+PointForceLoad;1;30;0;100.;1.;1.;1.
+RelativeEnforcedMotionConstr;22;31;3;-0.01
+NonlinearStaticParams;10;2

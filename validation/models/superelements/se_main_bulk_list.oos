@@ -1,0 +1,106 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: main Bulk Data superelements (SESET, CSUPER, CSUPEXT, RELEASE, SETREE) (SOL 101)
+#
+# Validates:
+#   - the exterior and interior points of list superelements, an identical
+#     image (CSUPER), an exterior point added by CSUPEXT for an MPC-only
+#     point, a released component (RELEASE), scalar points of a list
+#     superelement, a two-level tree whose upstream exterior point is interior
+#     to its downstream superelement
+# Settles (library item: current status):
+#   - 'Not validated against the solver': CSUPER, RELEASE,
+#     multi-level trees, a list superelement whose exterior point is interior
+#     to another, scalar points of list superelements, CSUPEXT for an MPC-only
+#     point
+#   - the T14 queries parts_table and part_boundaries on main Bulk Data
+#     superelements
+# Run notes:
+#   - PARAM,POST,-2 writes the GPLS tables; the listing prints the exterior points
+#     of each superelement
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: main Bulk Data superelements
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+StaticLoadSelection;1
+SuperelementAllSteps;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;loads on superelements 1, 5 and the MPC point
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-2
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Main Bulk Data superelements. The residual is a plate of 4 x 2 CQUAD4 (grid
+# points 1 to 15) clamped at x = 0. Superelement 1 is a CHEXA block standing
+# on the residual square 2-3-8-7 (its upper face interior, SESET 1);
+# superelement 3 is an identical image of 1 standing on the square 4-5-10-9
+# (CSUPER); superelement 2 is a plate of 2 CQUAD4 hanging below y = 0 whose
+# exterior points are 2, 3, 4 with component 4 of point 3 released (RELEASE);
+# superelement 5 is a CQUAD4 hanging on superelement 2 (two levels, SETREE 2
+# 5) whose exterior point 205 is interior to 2; a scalar point 300 of
+# superelement 2 carries a CELAS3; grid point 500, joined to superelement 1 by
+# an MPC only, is made exterior by CSUPEXT. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+SolidProp;2;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+Node;101;;10.;0.;10.;;456
+Node;102;;20.;0.;10.;;456
+Node;103;;20.;10.;10.;;456
+Node;104;;10.;10.;10.;;456
+SolidHexa;101;2;2;3;8;7;101;102;103;104
+SuperelementInteriorNodes;1;101;Through;104
+SuperelementCopyPoints;3;1;4;5;9;10
+Node;201;;10.;-10.;0.
+Node;202;;20.;-10.;0.
+Node;203;;30.;-10.;0.
+ShellQuad4;201;1;201;202;3;2
+ShellQuad4;202;1;202;203;4;3
+ScalarPoint;300
+SpringScalarProperty;203;203;300
+SpringProp;203;100.
+SpringDofInline;204;1.E+3;202;3;300
+SuperelementInteriorNodes;2;201;202;203;300
+SuperelementReleasedDofs;2;4;3
+Node;205;;20.;-20.;0.
+Node;206;;30.;-20.;0.
+ShellQuad4;205;1;205;206;203;202
+SuperelementInteriorNodes;5;205;206
+SuperelementTree;2;5
+SuperelementTree;0;1;2;3
+Node;500;;15.;5.;20.;;456
+MultiPointConstr;50;500;3;1.;101;3;-1.
+SuperelementExteriorPoints;1;500
+PointForceLoad;1;103;;10.;0.;0.;-1.
+PointForceLoad;1;206;;10.;0.;0.;1.
+PointForceLoad;1;500;;5.;0.;0.;1.

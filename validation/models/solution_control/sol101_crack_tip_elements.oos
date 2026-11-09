@@ -1,0 +1,80 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: crack tip elements declared by their dummy element attributes (SOL 101)
+#
+# Covers:
+#   - cards: ADUM8 ADUM9 (with the CRAC2D, PRAC2D, CRAC3D and PRAC3D they
+#     declare)
+#   - solution: SOL 101 (mode I loading of a symmetric half crack, in plane
+#     strain and in a solid)
+#   - outputs: displacements, SPC forces; the crack tip stresses and stress
+#     intensity factors in the listing
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: crack tip elements, ADUM8 and ADUM9
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PrintListing
+SubcaseStart;1
+LabelText;tension normal to the crack plane
+[model]
+Parameter;PostprocessingFile;-1
+# The two crack tip elements are dummy elements of the solver: ADUM8 and
+# ADUM9 give their number of grid points, of property fields and of
+# differential stiffness components. Units: mm, N, t, s.
+UserDefined8Attributes;18;0;5;0;CrackTip2D
+UserDefined9Attributes;64;0;6;0;CrackTip3D
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# CRAC2D 10: symmetric half crack, square 20 x 10 mm, crack tip at grid 1,
+# crack face 2-1 free, ligament 1-7-6 on the symmetry plane y = 0. Plane
+# strain, 1 mm thick. In-plane degrees of freedom only.
+CrackTipProp2D;1;1;1.;0
+Node;1;;0.;0.;0.;;3456
+Node;2;;-10.;0.;0.;;3456
+Node;3;;-10.;10.;0.;;3456
+Node;4;;0.;10.;0.;;3456
+Node;5;;10.;10.;0.;;3456
+Node;6;;10.;0.;0.;;3456
+Node;7;;5.;0.;0.;;3456
+CrackTip2D;10;1;1;2;3;4;5;6;7
+# CRAC3D 20: the same half crack as a solid 10 mm thick, placed at x = 50:
+# front face grids 101-107 at z = 0, back face grids 119-125 at z = -10.
+CrackTipProp3D;2;1
+Node;101;;50.;0.;0.;;456
+Node;102;;40.;0.;0.;;456
+Node;103;;40.;10.;0.;;456
+Node;104;;50.;10.;0.;;456
+Node;105;;60.;10.;0.;;456
+Node;106;;60.;0.;0.;;456
+Node;107;;55.;0.;0.;;456
+Node;119;;50.;0.;-10.;;456
+Node;120;;40.;0.;-10.;;456
+Node;121;;40.;10.;-10.;;456
+Node;122;;50.;10.;-10.;;456
+Node;123;;60.;10.;-10.;;456
+Node;124;;60.;0.;-10.;;456
+Node;125;;55.;0.;-10.;;456
+CrackTip3D;20;2;101;102;103;104;105;106;107;;;;;;;;;;;;119;120;121;122;123;124;125
+# Symmetry plane: y fixed along the ligaments; rigid motion removed by x at
+# the far ligament end and, for the solid, z at two front face grids.
+SinglePointConstrList;1;2;1;7;6
+SinglePointConstrList;1;1;6
+SinglePointConstrList;1;2;101;107;106;119;125;124
+SinglePointConstrList;1;1;106;124
+SinglePointConstrList;1;3;101;106
+# Tension along y on the top edges and faces: a nominal stress of 1 MPa.
+PointForceLoad;1;3;0;5.;0.;1.;0.
+PointForceLoad;1;4;0;10.;0.;1.;0.
+PointForceLoad;1;5;0;5.;0.;1.;0.
+PointForceLoad;1;103;0;25.;0.;1.;0.
+PointForceLoad;1;104;0;50.;0.;1.;0.
+PointForceLoad;1;105;0;25.;0.;1.;0.
+PointForceLoad;1;121;0;25.;0.;1.;0.
+PointForceLoad;1;122;0;50.;0.;1.;0.
+PointForceLoad;1;123;0;25.;0.;1.;0.

@@ -1,0 +1,132 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: frequency dependent materials (SOL 108)
+#
+# Covers:
+#   - cards: MAT1F MAT2F MAT8F MAT9F PCOMPFQ (with MAT1 MAT2 MAT8 MAT9 PSHELL
+#     PCOMP PSOLID TABLED1 RLOAD1 DAREA FREQ1)
+#   - solution: SOL 108 (direct frequency response, 100 to 1000 Hz)
+#   - outputs: complex displacements and element stresses (real/imaginary)
+# Run notes:
+#   - three cantilever strips of CQUAD4 (isotropic, anisotropic and laminate
+#     shells) and a solid block, each shaken at its free end; the moduli and
+#     the structural damping of the materials follow TABLED1 tables of the
+#     frequency
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: frequency dependent materials (SOL 108)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;1
+FreqSetSelection;2
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;unit harmonic forces at the free ends
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, MPa. Every table has the frequency (Hz) as its
+# X value.
+#
+# Strip 1: steel (MAT1) whose E, G, NU and GE are tables of the frequency
+# (MAT1F: the three elastic constants all have a table, as they are tied).
+IsoMat;1;2.1E+5;80769.;0.3;7.85E-9;;;0.02
+IsoMatFreq;1;11;12;13;14
+TableDynamic1;11;;;0.;2.1E+5;2.E+3;2.15E+5;EndTable
+TableDynamic1;12;;;0.;80769.;2.E+3;82692.;EndTable
+TableDynamic1;13;;;0.;0.3;2.E+3;0.3;EndTable
+TableDynamic1;14;;;0.;0.02;2.E+3;0.03;EndTable
+ShellProp;1;1;1.;1;;1
+Node;101;;0.;0.;0.
+Node;102;;10.;0.;0.
+Node;103;;20.;0.;0.
+Node;104;;30.;0.;0.
+Node;105;;40.;0.;0.
+Node;106;;0.;10.;0.
+Node;107;;10.;10.;0.
+Node;108;;20.;10.;0.
+Node;109;;30.;10.;0.
+Node;110;;40.;10.;0.
+ShellQuad4;101;1;101;102;107;106
+ShellQuad4;102;1;102;103;108;107
+ShellQuad4;103;1;103;104;109;108
+ShellQuad4;104;1;104;105;110;109
+SinglePointConstrList;1;123456;101;106
+DynamicLoadScale;10;105;3;1.;110;3;1.
+# Strip 2: the same steel as a shell anisotropic material (MAT2) whose G11,
+# G22, G33 and GE are tables of the frequency (MAT2F).
+AnisoMat2D;2;230769.;69231.;;230769.;;80769.;7.85E-9;;;;;0.02
+AnisoMat2DFreq;2;21;;;21;;22;23
+TableDynamic1;21;;;0.;230769.;2.E+3;236264.;EndTable
+TableDynamic1;22;;;0.;80769.;2.E+3;82692.;EndTable
+TableDynamic1;23;;;0.;0.02;2.E+3;0.03;EndTable
+ShellProp;2;2;1.;2
+Node;201;;0.;20.;0.
+Node;202;;10.;20.;0.
+Node;203;;20.;20.;0.
+Node;204;;30.;20.;0.
+Node;205;;40.;20.;0.
+Node;206;;0.;30.;0.
+Node;207;;10.;30.;0.
+Node;208;;20.;30.;0.
+Node;209;;30.;30.;0.
+Node;210;;40.;30.;0.
+ShellQuad4;201;2;201;202;207;206
+ShellQuad4;202;2;202;203;208;207
+ShellQuad4;203;2;203;204;209;208
+ShellQuad4;204;2;204;205;210;209
+SinglePointConstrList;1;123456;201;206
+DynamicLoadScale;10;205;3;1.;210;3;1.
+# Strip 3: a carbon/epoxy laminate (PCOMP of MAT8 plies) whose fibre modulus
+# and ply damping follow the frequency (MAT8F) and whose laminate damping GE
+# is a table too (PCOMPFQ).
+OrthoMat2D;3;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9;0.02
+OrthoMat2DFreq;3;31;;;;;;32
+TableDynamic1;31;;;0.;1.35E+5;2.E+3;1.38E+5;EndTable
+TableDynamic1;32;;;0.;0.02;2.E+3;0.03;EndTable
+CompProp;3;;;;;;0.02;;3;0.25;0.;Yes;3;0.25;90.;Yes;3;0.25;90.;Yes;3;0.25;0.;Yes
+CompPropFreqDamping;3;33
+TableDynamic1;33;;;0.;0.02;2.E+3;0.04;EndTable
+Node;301;;0.;40.;0.
+Node;302;;10.;40.;0.
+Node;303;;20.;40.;0.
+Node;304;;30.;40.;0.
+Node;305;;40.;40.;0.
+Node;306;;0.;50.;0.
+Node;307;;10.;50.;0.
+Node;308;;20.;50.;0.
+Node;309;;30.;50.;0.
+Node;310;;40.;50.;0.
+ShellQuad4;301;3;301;302;307;306
+ShellQuad4;302;3;302;303;308;307
+ShellQuad4;303;3;303;304;309;308
+ShellQuad4;304;3;304;305;310;309
+SinglePointConstrList;1;123456;301;306
+DynamicLoadScale;10;305;3;1.;310;3;1.
+# Block 4: a solid of carbon/epoxy given as a MAT9 (fibres along X) whose
+# G11 and GE are tables of the frequency (MAT9F). The block is clamped on its
+# base and shaken along X at one top corner.
+AnisoMat3D;4;137755.;4592.;4592.;;;;10867.;4439.;;;;10867.;;;;5.E+3;;;3200.;;5.E+3;1.6E-9;;;;;;;;0.02
+AnisoMat3DFreq;4;41;;;;;;;;;;;;;;;;;;;;;42
+TableDynamic1;41;;;0.;137755.;2.E+3;1.4E+5;EndTable
+TableDynamic1;42;;;0.;0.02;2.E+3;0.03;EndTable
+SolidProp;4;4
+Node;401;;60.;0.;0.;;456
+Node;402;;70.;0.;0.;;456
+Node;403;;70.;10.;0.;;456
+Node;404;;60.;10.;0.;;456
+Node;405;;60.;0.;10.;;456
+Node;406;;70.;0.;10.;;456
+Node;407;;70.;10.;10.;;456
+Node;408;;60.;10.;10.;;456
+SolidHexa;400;4;401;402;403;404;405;406;407;408
+SinglePointConstrList;1;123;401;402;403;404
+DynamicLoadScale;10;407;1;1.
+# Excitation: the forces of DAREA set 10 times a unit table of the
+# frequency; 10 frequencies from 100 to 1000 Hz.
+FreqResponseLoad1;1;10;;;;;100
+TableDynamic1;100;;;0.;1.;2.E+3;1.;EndTable
+FreqLinearSteps1;2;100.;100.;9

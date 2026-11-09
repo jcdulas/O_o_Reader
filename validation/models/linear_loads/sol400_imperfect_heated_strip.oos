@@ -1,0 +1,88 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: imperfect strip heated in time, IMPGEOM and TTEMP
+# (SOL 400)
+#
+# Covers:
+#   - cards: IMPCASE IMPGEOM (a DISP and a GEOM imperfection file), TTEMP
+#     TMPSET (time-dependent temperature of two grid point groups)
+#   - solution: SOL 400 (ANALYSIS = NLTRAN, large displacements)
+#   - outputs: displacements (one table per output time)
+# Run notes:
+#   - the imperfection files imperfection_bow.impf (DISP format) and
+#     imperfection_crown.impf (GEOM format) sit next to the deck (ASSIGN
+#     IMPFIN, units 31 and 32): run the deck from its folder
+#   - the strip is clamped at both ends; heating from 20 to 70 (y = 0 edge)
+#     and to 56 (y = 20 edge) makes it buckle thermally from its bow
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;IMPFIN='imperfection_bow.impf';FileUnit=31
+FileAssignment;IMPFIN='imperfection_crown.impf';FileUnit=32
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: imperfect heated strip
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+ImperfectionSelection;5
+ImperfectionOutput;All
+TemperatureSelection;12;InitialTemperature
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;temperature ramp over one second
+AnalysisKind;NonlinearTransient
+NonlinearTimeStepSelection;1
+TemperatureSelection;11;TemperatureLoadPart
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+# Steel strip 200 x 20 x 2 (mm, N, t, s), 8 CQUAD4 along x, clamped ends.
+IsoMat;1;2.1E+5;;0.3;7.85E-9;1.2E-5;20.
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;25.;0.;0.
+Node;3;;50.;0.;0.
+Node;4;;75.;0.;0.
+Node;5;;100.;0.;0.
+Node;6;;125.;0.;0.
+Node;7;;150.;0.;0.
+Node;8;;175.;0.;0.
+Node;9;;200.;0.;0.
+Node;11;;0.;20.;0.
+Node;12;;25.;20.;0.
+Node;13;;50.;20.;0.
+Node;14;;75.;20.;0.
+Node;15;;100.;20.;0.
+Node;16;;125.;20.;0.
+Node;17;;150.;20.;0.
+Node;18;;175.;20.;0.
+Node;19;;200.;20.;0.
+ShellQuad4;1;1;1;2;12;11
+ShellQuad4;2;1;2;3;13;12
+ShellQuad4;3;1;3;4;14;13
+ShellQuad4;4;1;4;5;15;14
+ShellQuad4;5;1;5;6;16;15
+ShellQuad4;6;1;6;7;17;16
+ShellQuad4;7;1;7;8;18;17
+ShellQuad4;8;1;8;9;19;18
+SinglePointConstrList;1;123456;1;11;9;19
+# Imperfection case 5: a bow read from unit 31 (DISP file, scale 1, points
+# of SET1 101) and the crown points read from unit 32 (GEOM file, SET1 102).
+ImperfectionCase;5;1;2
+IdListSet1;101;2;3;4;6;7;8;12;13;14;16;17;18
+IdListSet1;102;5;15
+ImperfectionGeometry;1;;;;;;;;101;1.;31
+ImperfectionGeometry;2;;;;;;;;102;1.;32
+# Temperatures: 20 at the start (set 12); set 11 is the time-dependent field
+# T(x, t) = 70 F(t), F from table 31 on the y = 0 edge (group 101) and from
+# table 32 on the y = 20 edge (group 102).
+DefaultTemperatureLoad;12;20.
+DefaultTemperatureLoad;11;70.
+TemperatureTimeGroup;101;1;Through;9
+TemperatureTimeGroup;102;11;Through;19
+TimeTemperatureLoad;11;101;31
+TimeTemperatureLoad;11;102;32
+TableDynamic1;31;;;0.;0.285714;1.;1.;EndTable
+TableDynamic1;32;;;0.;0.285714;1.;0.8;EndTable
+# 20 steps of .05 s.
+NonlinearTimeSteps;1;20;0.05;1

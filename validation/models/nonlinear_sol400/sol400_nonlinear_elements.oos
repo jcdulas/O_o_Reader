@@ -1,0 +1,153 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: nonlinear element tables (SOL 400)
+#
+# Validates:
+#   - the nonlinear stress and strain tables (OESNLXR, OESNLXD and the SOL 400
+#     forms) of a nonlinear CBUSH, CELAS1, CELAS3, an elastic-plastic CPYRAM
+#     and CHEXA, a CQUAD4 in large rotation, the plies of a laminate (OESCP,
+#     OESTRCP) and a hyperelastic CQUAD4 on PLPLANE
+#   - the frame of the nonlinear shell tables (deformed or original element
+#     system): the shell turns by about 90 degrees, so the two systems differ
+# Settles (library item: current status):
+#   - stress.cbush_nonlinear, celas3_nonlinear, cpyram_nonlinear real SORT1;
+#     strain.cquad4_hyperelastic real SORT1 (not_validated -> validated)
+#   - the 'nonlinear' family is refused for any frame change (no file settles
+#     the frame)
+#   - the OESCP layout of the laminates (assumed equal to OES1C)
+# Run notes:
+#   - NLSTRESS asks for the nonlinear stresses; the HDF5 file holds the SOL
+#     400 datasets (no decoder: raw tables)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader validation: nonlinear element tables (SOL 400)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;ten increments, large displacements
+AnalysisKind;NonlinearStatics
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;10
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+StrainOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+NonlinearStressOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Nonlinear element regions, each clamped at its root, loaded in ten
+# increments with large displacements (PARAM,LGDISP,1). Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+IsoMatStressDependent;1;;Plastic;1.E+3;1;1;150.
+OrthoMat2D;2;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9
+HyperelasticPolynomialMat;3;0.5;0.1;50.;1.1E-9
+# Region 1: a nonlinear CBUSH (PBUSH with PBUSHT force-deflection tables)
+Node;101;;0.;100.;0.
+Node;102;;10.;100.;0.
+Bushing;101;101;101;102;;0.;1.;0.
+BushProp;101;Stiffness;1.E+3;1.E+3;1.E+3;1.E+4;1.E+4;1.E+4
+BushPropFreq;101;Stiffness;111;111;111
+TableDynamic1;111;;;-10.;-2.E+4;0.;0.;1.;1.E+3;10.;3.E+4;EndTable
+SinglePointConstrList;1;123456;101
+PointForceLoad;1;102;;1.;5.E+3;500.;500.
+# Region 2: nonlinear scalar springs, CELAS1 on a grid point and CELAS3
+# between scalar points (PELAS with PELAST force-deflection tables)
+Node;201;;0.;200.;0.;;23456
+ScalarPoint;202;203
+SpringDofProperty;201;201;201;1
+SpringScalarProperty;202;202;202;203
+SpringScalarInline;203;500.;203
+SpringProp;201;1.E+3;;1.;202;1.E+3;;1.
+SpringPropFreq;201;111
+SpringPropFreq;202;111
+PointForceLoad;1;201;;2.E+3;1.;0.;0.
+ScalarPointLoad;1;202;2.E+3
+# Region 3: an elastic-plastic CPYRAM and CHEXA (MATS1, bilinear hardening)
+# clamped on their base
+SolidProp;3;1
+Node;301;;0.;300.;0.;;456
+Node;302;;10.;300.;0.;;456
+Node;303;;10.;310.;0.;;456
+Node;304;;0.;310.;0.;;456
+Node;305;;5.;305.;8.;;456
+SolidPyramid;301;3;301;302;303;304;305
+Node;311;;20.;300.;0.;;456
+Node;312;;30.;300.;0.;;456
+Node;313;;30.;310.;0.;;456
+Node;314;;20.;310.;0.;;456
+Node;315;;20.;300.;10.;;456
+Node;316;;30.;300.;10.;;456
+Node;317;;30.;310.;10.;;456
+Node;318;;20.;310.;10.;;456
+SolidHexa;302;3;311;312;313;314;315;316;317;318
+SinglePointConstrList;1;123;301;302;303;304;311;312;313;314
+PointForceLoad;1;305;;1.;3.E+3;0.;-6.E+3
+PointForceLoad;1;315;;1.;1500.;0.;-3.E+3
+PointForceLoad;1;316;;1.;1500.;0.;-3.E+3
+PointForceLoad;1;317;;1.;1500.;0.;-3.E+3
+PointForceLoad;1;318;;1.;1500.;0.;-3.E+3
+# Region 4: a CQUAD4 strip in large rotation (a tip moment of about a quarter
+# turn) and the same strip as a laminate (PCOMP): the frame of the nonlinear
+# shell tables, the OESCP ply tables
+ShellProp;4;1;1.;1;;1
+CompProp;5;;;;;;;;2;0.25;0.;Yes;2;0.25;90.;Yes;2;0.25;90.;Yes;2;0.25;0.;Yes
+Node;401;;0.;400.;0.
+Node;402;;10.;400.;0.
+Node;403;;20.;400.;0.
+Node;404;;30.;400.;0.
+Node;405;;40.;400.;0.
+Node;406;;0.;410.;0.
+Node;407;;10.;410.;0.
+Node;408;;20.;410.;0.
+Node;409;;30.;410.;0.
+Node;410;;40.;410.;0.
+ShellQuad4;401;4;401;402;407;406
+ShellQuad4;402;4;402;403;408;407
+ShellQuad4;403;4;403;404;409;408
+ShellQuad4;404;4;404;405;410;409
+Node;501;;0.;500.;0.
+Node;502;;10.;500.;0.
+Node;503;;20.;500.;0.
+Node;504;;30.;500.;0.
+Node;505;;40.;500.;0.
+Node;506;;0.;510.;0.
+Node;507;;10.;510.;0.
+Node;508;;20.;510.;0.
+Node;509;;30.;510.;0.
+Node;510;;40.;510.;0.
+ShellQuad4;501;5;501;502;507;506
+ShellQuad4;502;5;502;503;508;507
+ShellQuad4;503;5;503;504;509;508
+ShellQuad4;504;5;504;505;510;509
+SinglePointConstrList;1;123456;401;406;501;506
+PointMomentLoad;1;405;;1150.;0.;1.;0.
+PointMomentLoad;1;410;;1150.;0.;1.;0.
+PointForceLoad;1;505;;20.;0.;0.;1.
+PointForceLoad;1;510;;20.;0.;0.;1.
+# Region 5: a hyperelastic plane strain strip (CQUAD4 on PLPLANE with a
+# MATHP), stretched
+PlanePropNonlinear;6;3
+Node;601;;0.;600.;0.;;3456
+Node;602;;10.;600.;0.;;3456
+Node;603;;20.;600.;0.;;3456
+Node;604;;30.;600.;0.;;3456
+Node;605;;0.;610.;0.;;3456
+Node;606;;10.;610.;0.;;3456
+Node;607;;20.;610.;0.;;3456
+Node;608;;30.;610.;0.;;3456
+ShellQuad4;601;6;601;602;606;605
+ShellQuad4;602;6;602;603;607;606
+ShellQuad4;603;6;603;604;608;607
+SinglePointConstrList;1;12;601
+SinglePointConstrList;1;1;605
+PointForceLoad;1;604;;5.;1.;0.;0.
+PointForceLoad;1;608;;5.;1.;0.;0.
+NonlinearStaticParams;10;10
+Parameter;LargeDisplacements;1

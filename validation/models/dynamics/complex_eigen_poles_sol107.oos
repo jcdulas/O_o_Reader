@@ -1,0 +1,32 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: direct complex modes with poles (EIGP)
+#
+# Covers:
+#   - cards: EIGP
+#   - solution: SOL 107 (direct complex eigenvalues)
+#   - outputs: eigenvectors: complex real/imaginary, SORT1
+# Run notes:
+#   - EIGP 40 gives two poles to the complex eigenvalue set 40; the poles
+#     serve the determinant method only, which the 2024.1 EIGC no longer
+#     lists, so the run extracts the roots by inverse power (INV) and the
+#     poles are read and not used
+#   - damping: the material damping GE = 0.02 of the plate
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;107
+[case]
+TitleText;O_o_Reader test model: complex modes with poles
+BulkEcho;None
+SinglePointConstrSelection;1
+ComplexEigenMethodSelection;40
+DisplacementOutput;All;PlotOnly;RealPart
+SubcaseStart;1
+LabelText;damped plate
+[model]
+Parameter;PostprocessingFile;-1
+# Inverse power search on the imaginary axis up to 3000 rad/s, four roots.
+ComplexEigenMethod;40;InverseIteration;Maximum;;;;;0.;0.;0.;3.E+3;500.;4;4
+ComplexEigenPoles;40;-10.;0.;1;-10.;500.;1
+Include;plate_model.oos

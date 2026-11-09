@@ -1,0 +1,44 @@
+# Shared axisymmetric ring of results_static/static_axisymmetric_ctriax6.bdf,
+# static_ctriax6_sort2.bdf and results_dynamics/*_ctriax6.bdf (INCLUDEd).
+# Units: mm, N, tonne, s. SPC set 1; load set 1 (axial pull and radial
+# load), load set 2 (the radial load alone).
+# An axisymmetric ring of four CTRIAX6 (PAXSYMH is not used: CTRIAX6 takes a
+# MAT1 directly), r = x, z = z. The grid points lie in the XZ plane of the
+# basic system; components 1 (radial) and 3 (axial) are the only ones of a
+# CTRIAX6, the others are in GRID PS.
+IsoMat;1;7.E+4;;0.33;2.7E-9;2.3E-5;20.
+Node;11;;50.;0.;0.;;2456
+Node;12;;52.5;0.;0.;;2456
+Node;13;;55.;0.;0.;;2456
+Node;14;;57.5;0.;0.;;2456
+Node;15;;60.;0.;0.;;2456
+Node;16;;50.;0.;5.;;2456
+Node;17;;52.5;0.;5.;;2456
+Node;18;;55.;0.;5.;;2456
+Node;19;;57.5;0.;5.;;2456
+Node;20;;60.;0.;5.;;2456
+Node;21;;50.;0.;10.;;2456
+Node;22;;52.5;0.;10.;;2456
+Node;23;;55.;0.;10.;;2456
+Node;24;;57.5;0.;10.;;2456
+Node;25;;60.;0.;10.;;2456
+AxisymTria6;1;1;11;12;13;18;23;17
+AxisymTria6;2;1;11;17;23;22;21;16
+AxisymTria6;3;1;13;14;15;20;25;19
+AxisymTria6;4;1;13;19;25;24;23;18
+SinglePointConstrList;1;3;11;12;13;14;15
+SinglePointConstrList;1;1;11
+# Load set 1: an axial pull on the top edge (force per radian of the ring) and
+# a radial pressure
+PointForceLoad;1;21;;10.;0.;0.;1.
+PointForceLoad;1;22;;10.;0.;0.;1.
+PointForceLoad;1;23;;10.;0.;0.;1.
+PointForceLoad;1;24;;10.;0.;0.;1.
+PointForceLoad;1;25;;10.;0.;0.;1.
+PointForceLoad;1;11;;5.;-1.;0.;0.
+PointForceLoad;1;16;;5.;-1.;0.;0.
+PointForceLoad;1;21;;5.;-1.;0.;0.
+# Load set 2: the radial load alone
+PointForceLoad;2;11;;5.;-1.;0.;0.
+PointForceLoad;2;16;;5.;-1.;0.;0.
+PointForceLoad;2;21;;5.;-1.;0.;0.

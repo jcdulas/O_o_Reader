@@ -1,0 +1,71 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: radial gap and squeeze film damper (SOL 128)
+#
+# Covers:
+#   - cards: NLHARM, NLFREQ, NLFREQ1, NHRMPRM, NLRGAP, NLRSFD
+#   - solution: SOL 128 (nonlinear harmonic response, two frequency sweeps)
+#   - outputs: displacements (harmonic response per frequency)
+# Run notes:
+#   - a journal (grid 1) in a housing (grid 2), both on springs to ground,
+#     with a radial gap and a squeeze film damper between them; subcase 1
+#     sweeps 400 to 600 Hz (NLFREQ1), subcase 2 solves three listed
+#     frequencies (NLFREQ) with a subharmonic factor of 2
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;128
+[case]
+TitleText;radial gap and squeeze film damper (SOL 128)
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+DynamicLoadSelection;200
+NonlinearLoadSelection;100
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;sweep up from 400 Hz in steps of 20 Hz
+NonlinearHarmonicSelection;10
+SubcaseStart;2
+LabelText;three forcing frequencies, subharmonics of order 2
+NonlinearHarmonicSelection;20
+[model]
+Parameter;PostprocessingFile;-1
+# Journal grid 1 and housing grid 2 at the origin, each on a CBUSH to its own
+# fixed ground point; only T1 and T2 are free (the gap and the damper act in
+# the XY plane; no shaft radius, so no in-plane rotation is needed). Units:
+# mm, N, t, s.
+Node;1;;0.;0.;0.
+Node;2;;0.;0.;0.
+Node;11;;0.;0.;0.
+Node;12;;0.;0.;0.
+SinglePointConstrList;1;3456;1;2
+SinglePointConstrList;1;123456;11;12
+PointMassInertia;1;1;;0.001
+PointMassInertia;2;2;;0.002
+Bushing;11;11;1;11;;;;;0
+Bushing;12;12;2;12;;;;;0
+BushProp;11;Stiffness;1.E+4;1.E+4;;;;;Damping;1.;1.
+BushProp;12;Stiffness;1.E+5;1.E+5;;;;;Damping;2.;2.
+# Unbalance-like excitation: 200 N along x on the journal, flat in
+# frequency (enough to close the gap near the first resonance)
+DynamicLoadScale;300;1;1;200.
+FreqResponseLoad1;200;300;;;;;400
+TableDynamic1;400;;;0.;1.;2.E+3;1.;EndTable
+# Radial gap (clearance 0.05 mm, contact stiffness 1.E5 N/mm, friction
+# 0.05, all flat in frequency) with the smoothing function
+NonlinearRadialGap;100;1;2;PlaneXy;401;402;403;;Gamma;1.E+6
+TableDynamic1;401;;;0.;1.E+5;2.E+3;1.E+5;EndTable
+TableDynamic1;402;;;0.;0.05;2.E+3;0.05;EndTable
+TableDynamic1;403;;;0.;0.05;2.E+3;0.05;EndTable
+# Short squeeze film damper: 50 mm journal, 20 mm long, 0.1 mm clearance,
+# oil of 2.E-8 MPa s, one port at 90 degrees fed at 0.2 MPa
+NonlinearSqueezeFilmDamper;100;1;2;PlaneXy;50.;20.;0.1;Short;2.E-8;0.002;1;0.2;90.
+# The two harmonic analyses and their frequencies
+NonlinearHarmonicParams;10;;3;15
+NonlinearHarmonicFreqSteps;15;400.;20.;10
+NonlinearHarmonicParams;20;2;3;16
+NonlinearHarmonicFreqList;16;450.;500.;550.
+NonlinearHarmonicSolverParams;NonlinearHarmonicTolerance;1.E-5;MaxNonConvergedFrequencies;3;NonlinearHarmonicDiagnostic;1
+# Modes used by the reduction of the harmonic balance
+LanczosEigenMethod;1;;3.E+3;4

@@ -1,0 +1,63 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: upstream superelement load combination (SOL 106)
+#
+# Covers:
+#   - cards: CLOAD
+#   - solution: SOL 106 (nonlinear static analysis of a cantilever whose outer
+#     half is an upstream superelement loaded through a load sequence)
+#   - outputs: displacements, SPC forces, CBAR forces (OUTPUT2)
+# Run notes:
+#   - CLOAD is not an aeroelastic card: it sits with the aero package because
+#     the card list was split that way. The upstream subcase (SUPER = 1)
+#     builds the load vector of the LSEQ (LOADSET), the residual subcase
+#     applies it through the CLOAD in four increments
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;106
+[case]
+TitleText;O_o_Reader test model: superelement load combination
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;upstream superelement 1, load sequence 10
+SuperelementSelection;1
+LoadSequenceSelection;10
+SubcaseStart;2
+LabelText;residual, upstream load scaled by the CLOAD
+SuperelementSelection;0
+SuperelementLoadCombinationSelection;25
+NonlinearStaticParamsSelection;30
+[model]
+Parameter;PostprocessingFile;-1
+# Steel cantilever along x, 6 CBAR of 100 mm, 10 x 10 mm square section,
+# clamped at grid point 1. Units: mm, N, tonne, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BarProp;1;1;100.;833.3;833.3;1406.
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;300.;0.;0.
+Node;5;;400.;0.;0.
+Node;6;;500.;0.;0.
+Node;7;;600.;0.;0.
+Bar2;1;1;1;2;0.;;0.;1.
+Bar2;2;1;2;3;0.;;0.;1.
+Bar2;3;1;3;4;0.;;0.;1.
+Bar2;4;1;4;5;0.;;0.;1.
+Bar2;5;1;5;6;0.;;0.;1.
+Bar2;6;1;6;7;0.;;0.;1.
+SinglePointConstrList;1;123456;1
+# Superelement 1: the interior grid points 5 to 7 (grid point 4 becomes its
+# boundary with the residual).
+SuperelementInteriorNodes;1;5;6;7
+# Load sequence 10: the excitation 100 is the force set 200 at the tip,
+# inside the superelement. The CLOAD 25 applies it twice in the residual.
+StaticLoadSequence;10;100;200
+PointForceLoad;200;7;0;10.;0.;0.;1.
+SuperelementLoadCombination;25;1.;2.;100
+NonlinearStaticParams;30;4

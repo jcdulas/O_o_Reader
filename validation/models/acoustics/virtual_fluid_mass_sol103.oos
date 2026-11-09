@@ -1,0 +1,84 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: open tank with virtual fluid mass
+#
+# Covers:
+#   - cards: MFLUID, ELIST
+#   - solution: SOL 103 (normal modes with the virtual mass of an
+#     incompressible fluid)
+#   - outputs: eigenvalues, eigenvectors
+# Run notes:
+#   - a steel tank, 200 x 200 mm base, 100 mm walls, 2 mm thick, clamped on
+#     the edge of its base, filled with water up to z = 80 (free surface);
+#     the water is inside: on the normal side of the base elements and on
+#     the opposite side of the wall elements (negative IDs on the ELIST)
+#   - units: mm, N, t, s
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: virtual fluid mass (SOL 103)
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+FluidVirtualMassSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;water-filled tank modes
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;1;;;6
+# Water, free surface at z = 80, no plane of symmetry.
+FluidVirtualMass;1;;80.;1.E-9;1;;NoSymmetry;NoSymmetry
+FluidMassElemList;1;1;Through;4;-11;Through;-18;-21;Through;-28
+# Base grid points 1 to 9 (z = 0), wall rings 11 to 18 (z = 50) and 21 to
+# 28 (z = 100); base elements 1 to 4, wall elements 11 to 18 and 21 to 28.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;100.;0.
+Node;5;;100.;100.;0.
+Node;6;;200.;100.;0.
+Node;7;;0.;200.;0.
+Node;8;;100.;200.;0.
+Node;9;;200.;200.;0.
+Node;11;;0.;0.;50.
+Node;12;;100.;0.;50.
+Node;13;;200.;0.;50.
+Node;14;;200.;100.;50.
+Node;15;;200.;200.;50.
+Node;16;;100.;200.;50.
+Node;17;;0.;200.;50.
+Node;18;;0.;100.;50.
+Node;21;;0.;0.;100.
+Node;22;;100.;0.;100.
+Node;23;;200.;0.;100.
+Node;24;;200.;100.;100.
+Node;25;;200.;200.;100.
+Node;26;;100.;200.;100.
+Node;27;;0.;200.;100.
+Node;28;;0.;100.;100.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;11;1;1;2;12;11
+ShellQuad4;12;1;2;3;13;12
+ShellQuad4;13;1;3;6;14;13
+ShellQuad4;14;1;6;9;15;14
+ShellQuad4;15;1;9;8;16;15
+ShellQuad4;16;1;8;7;17;16
+ShellQuad4;17;1;7;4;18;17
+ShellQuad4;18;1;4;1;11;18
+ShellQuad4;21;1;11;12;22;21
+ShellQuad4;22;1;12;13;23;22
+ShellQuad4;23;1;13;14;24;23
+ShellQuad4;24;1;14;15;25;24
+ShellQuad4;25;1;15;16;26;25
+ShellQuad4;26;1;16;17;27;26
+ShellQuad4;27;1;17;18;28;27
+ShellQuad4;28;1;18;11;21;28
+SinglePointConstrList;1;123456;1;2;3;4;6;7;8;9

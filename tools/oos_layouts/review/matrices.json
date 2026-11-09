@@ -1,0 +1,1432 @@
+{
+  "description": "Reviewed card layouts of the matrices family (src/model/cards/matrices).",
+  "cards": {
+    "DirectMatrix": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "header",
+          "when": {
+            "field": "columnIndex",
+            "values": [
+              "0"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "columnIndex",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "matrixForm",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "inputType",
+              "slot": 4,
+              "kind": "integer"
+            },
+            {
+              "name": "outputType",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "rowCount",
+              "slot": 7,
+              "kind": "integer"
+            },
+            {
+              "name": "columnCount",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "name": "column",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "columnIndex",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "firstRow",
+              "slot": 3,
+              "kind": "integer"
+            }
+          ],
+          "group": {
+            "name": "values",
+            "firstSlot": 4,
+            "period": 1,
+            "fields": [
+              {
+                "name": "value",
+                "offset": 0,
+                "kind": "any"
+              }
+            ]
+          }
+        }
+      ],
+      "note": "a value of a column is a real (the element of the next row), an integer (the row of the element that follows) or THRU then a row (the element above repeated down to it)"
+    },
+    "DirectMatrixAeroJ": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "header",
+          "when": {
+            "field": "nodeJ",
+            "values": [
+              "0"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "matrixShape",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "inputType",
+              "slot": 4,
+              "kind": "integer"
+            },
+            {
+              "name": "outputType",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "polarFlag",
+              "slot": 6,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "columnCount",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "name": "column",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "componentsJ",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            }
+          ],
+          "group": {
+            "name": "terms",
+            "firstSlot": 5,
+            "period": 4,
+            "fields": [
+              {
+                "name": "node",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "components",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "realValue",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "imaginaryValue",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "DirectMatrixAeroJInterference": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "header",
+          "when": {
+            "field": "nodeJ",
+            "values": [
+              "0"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "matrixShape",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "inputType",
+              "slot": 4,
+              "kind": "integer"
+            },
+            {
+              "name": "outputType",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "polarFlag",
+              "slot": 6,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "columnCount",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "name": "column",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "componentsJ",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            }
+          ],
+          "group": {
+            "name": "terms",
+            "firstSlot": 5,
+            "period": 4,
+            "fields": [
+              {
+                "name": "node",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "components",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "realValue",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "imaginaryValue",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "DirectMatrixAeroK": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "header",
+          "when": {
+            "field": "nodeJ",
+            "values": [
+              "0"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "matrixShape",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "inputType",
+              "slot": 4,
+              "kind": "integer"
+            },
+            {
+              "name": "outputType",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "polarFlag",
+              "slot": 6,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "columnCount",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "name": "column",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "componentsJ",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            }
+          ],
+          "group": {
+            "name": "terms",
+            "firstSlot": 5,
+            "period": 4,
+            "fields": [
+              {
+                "name": "node",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "components",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "realValue",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "imaginaryValue",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "DirectMatrixAxisym": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "header",
+          "when": {
+            "field": "nodeJ",
+            "values": [
+              "0"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "matrixShape",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "inputType",
+              "slot": 4,
+              "kind": "integer"
+            },
+            {
+              "name": "outputType",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "name": "column",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "componentsJ",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "harmonicJ",
+              "slot": 4,
+              "kind": "integer"
+            }
+          ],
+          "group": {
+            "name": "terms",
+            "firstSlot": 9,
+            "period": 8,
+            "fields": [
+              {
+                "name": "node",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "components",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "harmonic",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "realValue",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "imaginaryValue",
+                "offset": 4,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "DirectMatrixNodal": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "header",
+          "when": {
+            "field": "nodeJ",
+            "values": [
+              "0"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "matrixShape",
+              "slot": 3,
+              "kind": "integer"
+            },
+            {
+              "name": "inputType",
+              "slot": 4,
+              "kind": "integer"
+            },
+            {
+              "name": "outputType",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "polarFlag",
+              "slot": 6,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "columnCount",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            }
+          ]
+        },
+        {
+          "name": "column",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "nodeJ",
+              "slot": 2,
+              "kind": "integer"
+            },
+            {
+              "name": "componentsJ",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            }
+          ],
+          "group": {
+            "name": "terms",
+            "firstSlot": 5,
+            "period": 4,
+            "fields": [
+              {
+                "name": "node",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "components",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "realValue",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "imaginaryValue",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "DirectTable": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "recordNumber",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "recordValues",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "recordValue",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "MonitorChordNormalCoeffs": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        },
+        {
+          "name": "momentChordFraction",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.25"
+        }
+      ],
+      "group": {
+        "name": "aeroPanelIds",
+        "firstSlot": 10,
+        "period": 1,
+        "fields": [
+          {
+            "name": "aeroPanelId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "MonitorDisplacement": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        },
+        {
+          "name": "outputAxes",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "component",
+          "slot": 10,
+          "kind": "text"
+        },
+        {
+          "name": "positionFrameId",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "xCoord",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yCoord",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zCoord",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "displacementFrameId",
+          "slot": 15,
+          "kind": "integer",
+          "default": "same as positionFrameId"
+        },
+        {
+          "name": "sampledComponents",
+          "slot": 16,
+          "kind": "integer"
+        }
+      ]
+    },
+    "MonitorElemLoad2": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        },
+        {
+          "name": "resultTable",
+          "slot": 9,
+          "kind": "text"
+        },
+        {
+          "name": "kind",
+          "slot": 10,
+          "kind": "text"
+        },
+        {
+          "name": "resultItem",
+          "slot": 11,
+          "kind": "text"
+        },
+        {
+          "name": "elemId",
+          "slot": 12,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "MonitorGroup": {
+      "fields": [
+        {
+          "name": "groupName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        }
+      ],
+      "group": {
+        "name": "members",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "memberName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "monitorClass",
+            "offset": 1,
+            "kind": "text"
+          },
+          {
+            "name": "realAttribute",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "integerAttribute",
+            "offset": 3,
+            "kind": "integer"
+          },
+          {
+            "name": "textAttribute",
+            "offset": 4,
+            "kind": "text",
+            "span": 4
+          }
+        ]
+      }
+    },
+    "MonitorIntegratedLoad1": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        },
+        {
+          "name": "outputAxes",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "component",
+          "slot": 10,
+          "kind": "text"
+        },
+        {
+          "name": "positionFrameId",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "xCoord",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yCoord",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zCoord",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "displacementFrameId",
+          "slot": 15,
+          "kind": "integer",
+          "default": "same as positionFrameId"
+        }
+      ]
+    },
+    "MonitorNodeForceSum3": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        },
+        {
+          "name": "outputAxes",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeSetId",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "elementSetId",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "positionFrameId",
+          "slot": 12,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "xCoord",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yCoord",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zCoord",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "excludedForces",
+          "slot": 16,
+          "kind": "text"
+        },
+        {
+          "name": "displacementFrameId",
+          "slot": 17,
+          "kind": "integer",
+          "default": "same as positionFrameId"
+        }
+      ]
+    },
+    "MonitorSum": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "typeFirst",
+          "when": {
+            "field": "termType",
+            "kinds": [
+              "text"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "label",
+              "slot": 2,
+              "kind": "text",
+              "span": 7
+            }
+          ],
+          "group": {
+            "name": "lines",
+            "firstSlot": 9,
+            "period": 8,
+            "fields": [
+              {
+                "name": "termType",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "newAxes",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "termNames",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "termAxes",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "termCoefficient",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "secondTermNames",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "secondTermAxes",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "secondTermCoefficient",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "axesFirst",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "label",
+              "slot": 2,
+              "kind": "text",
+              "span": 7
+            }
+          ],
+          "group": {
+            "name": "lines",
+            "firstSlot": 9,
+            "period": 8,
+            "fields": [
+              {
+                "name": "newAxes",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "termType",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "termNames",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "termAxes",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "termCoefficient",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "secondTermNames",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "secondTermAxes",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "secondTermCoefficient",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "MonitorSumLocated": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "typeFirst",
+          "when": {
+            "field": "termType",
+            "kinds": [
+              "text"
+            ]
+          },
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "label",
+              "slot": 2,
+              "kind": "text",
+              "span": 7
+            },
+            {
+              "name": "positionFrameId",
+              "slot": 9,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "xCoord",
+              "slot": 10,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "yCoord",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "zCoord",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "displacementFrameId",
+              "slot": 13,
+              "kind": "integer",
+              "default": "same as positionFrameId"
+            }
+          ],
+          "group": {
+            "name": "lines",
+            "firstSlot": 17,
+            "period": 8,
+            "fields": [
+              {
+                "name": "termType",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "newAxes",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "termNames",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "termAxes",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "termCoefficient",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "secondTermNames",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "secondTermAxes",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "secondTermCoefficient",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          }
+        },
+        {
+          "name": "axesFirst",
+          "fields": [
+            {
+              "name": "entryName",
+              "slot": 1,
+              "kind": "text"
+            },
+            {
+              "name": "label",
+              "slot": 2,
+              "kind": "text",
+              "span": 7
+            },
+            {
+              "name": "positionFrameId",
+              "slot": 9,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "xCoord",
+              "slot": 10,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "yCoord",
+              "slot": 11,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "zCoord",
+              "slot": 12,
+              "kind": "real",
+              "default": "0.0"
+            },
+            {
+              "name": "displacementFrameId",
+              "slot": 13,
+              "kind": "integer",
+              "default": "same as positionFrameId"
+            }
+          ],
+          "group": {
+            "name": "lines",
+            "firstSlot": 17,
+            "period": 8,
+            "fields": [
+              {
+                "name": "newAxes",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "termType",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "termNames",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "termAxes",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "termCoefficient",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "secondTermNames",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "secondTermAxes",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "secondTermCoefficient",
+                "offset": 7,
+                "kind": "real"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "MonitorSumTotal": {
+      "fields": [
+        {
+          "name": "entryName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "label",
+          "slot": 2,
+          "kind": "text",
+          "span": 7
+        },
+        {
+          "name": "outputAxes",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "positionFrameId",
+          "slot": 10,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "xCoord",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yCoord",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zCoord",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "displacementFrameId",
+          "slot": 14,
+          "kind": "integer",
+          "default": "same as positionFrameId"
+        }
+      ],
+      "sections": {
+        "name": "memberLines",
+        "firstSlot": 17,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "AeroMonitorIntegratedLoad",
+            "name": "aeroPointMembers",
+            "fields": [],
+            "list": {
+              "name": "members",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "memberName",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "StructMonitorIntegratedLoad",
+            "name": "structuralPointMembers",
+            "fields": [],
+            "list": {
+              "name": "members",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "memberName",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "MonitorNodeForceSum3",
+            "name": "nodeForceSumMembers",
+            "fields": [],
+            "list": {
+              "name": "members",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "memberName",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "MonteCarloParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "variabilityType",
+          "slot": 2,
+          "kind": "text",
+          "default": "AlphaVariation"
+        }
+      ],
+      "sections": {
+        "name": "variabilities",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "StructuralVariation",
+            "name": "structural",
+            "fields": [
+              {
+                "name": "structuralMassVariability",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "structuralStiffnessVariability",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "structuralDampingVariability",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "FluidVariation",
+            "name": "fluid",
+            "fields": [
+              {
+                "name": "fluidMassVariability",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "fluidStiffnessVariability",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "fluidDampingVariability",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

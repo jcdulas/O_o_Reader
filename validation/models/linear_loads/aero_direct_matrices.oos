@@ -1,0 +1,50 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: aerodynamic direct matrix input, DMI DMIJ DMIK
+# (SOL 144)
+#
+# Covers:
+#   - cards: DMI (W2GJ, the j-set downwash of the doublet-lattice boxes),
+#     DMIJ (pressures of an AEPRESS), DMIK (forces of an AEFORCE), with
+#     UXVEC, AEPRESS and AEFORCE
+#   - solution: SOL 144 (static aeroelastic trim, restrained wing)
+#   - outputs: displacements, SPC forces
+# Run notes:
+#   - the wing model is the shared one of aero_sol144 (INCLUDEd, read only):
+#     one CAERO1 of 8 x 4 boxes (1001 to 1032), so the j-set has 32 rows
+#   - AEROS gives no symmetry: the user vectors are ASYMM, ASYMM
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;DMI, DMIJ and DMIK in static aeroelasticity
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+TrimSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+AeroForceOutput;All;PlotOnly
+AeroPressureOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim with user downwash, pressures and forces
+[model]
+Parameter;PostprocessingFile;-1
+AeroStaticParams;;;200.;2.E+3;4.E+5
+AeroTrim;1;0.5;0.02;AngleOfAttack;0.05;ELEV;0.
+# W2GJ: an incidence of .01 rad on every box (one column, 32 rows).
+DirectMatrix;DownwashMatrix;0;2;1;0;32;1
+DirectMatrix;DownwashMatrix;1;1;0.01;Through;32
+# AEPRESS at the intercept: pressure per unit dynamic pressure on the four
+# boxes of the root strip.
+AeroControlVector;10;Intercept;1.
+AeroPressureVector;0.5;Asymmetric;Asymmetric;10;PRSJ
+DirectMatrixAeroJ;PRSJ;0;9;1;0;;1
+DirectMatrixAeroJ;PRSJ;1;1;1001;3;0.02;;1002;3;0.02;;1003;3;0.01;;1004;3;0.005
+# AEFORCE on the aerodynamic mesh, added to the ANGLEA derivative: forces
+# (times the dynamic pressure) normal to the boxes of the tip strip.
+AeroControlVector;11;AngleOfAttack;1.
+AeroForceVector;0.5;Asymmetric;Asymmetric;11;AeroMesh;;FRCK
+DirectMatrixAeroK;FRCK;0;9;1;0;;1
+DirectMatrixAeroK;FRCK;1;1;1029;3;500.;;1030;3;500.;;1031;3;250.;;1032;3;250.
+Include;../aero_sol144/aero_model.oos

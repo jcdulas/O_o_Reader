@@ -1,0 +1,64 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: aerodynamic spline on a grid point list made from
+# an aerodynamic macro element (SOL 144)
+#
+# Covers:
+#   - cards: SET2
+#   - solution: SOL 144 (static aeroelastic trim of a clamped wing, angle of
+#     attack fixed)
+#   - outputs: displacements
+# Run notes:
+#   - SET2 1100 takes every structural grid point inside the prism of CAERO1
+#     1001 (span and chord fractions -0.01 to 1.01); SPLINE1 1101 uses it
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;O_o_Reader test model: spline on a SET2 grid point list
+BulkEcho;None
+SinglePointConstrSelection;1
+TrimSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim, angle of attack fixed
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Rectangular wing plate (chord 200 along x, span
+# 800 along y, 10 mm thick aluminium, 2 x 4 CQUAD4), clamped at the root.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;10.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;200.;0.
+Node;5;;100.;200.;0.
+Node;6;;200.;200.;0.
+Node;7;;0.;400.;0.
+Node;8;;100.;400.;0.
+Node;9;;200.;400.;0.
+Node;10;;0.;600.;0.
+Node;11;;100.;600.;0.
+Node;12;;200.;600.;0.
+Node;13;;0.;800.;0.
+Node;14;;100.;800.;0.
+Node;15;;200.;800.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+ShellQuad4;7;1;10;11;14;13
+ShellQuad4;8;1;11;12;15;14
+SinglePointConstrList;1;123456;1;2;3
+# Aerodynamics: one doublet-lattice panel (4 x 4 boxes) over the plate,
+# splined to the grid points that SET2 finds inside its prism.
+AeroStaticParams;;;200.;1600.;1.6E+5
+AeroLiftingPanelProp1;1000
+AeroLiftingPanel1;1001;1000;;4;4;;;1;0.;0.;0.;200.;0.;800.;0.;200.
+AeroPrismNodeSet2;1100;1001;-0.01;1.01;-0.01;1.01;10.;-10.
+AeroSurfaceSpline1;1101;1001;1001;1016;1100
+AeroRigidTrimVariable;1301;AngleOfAttack
+AeroTrim;1;0.5;0.005;AngleOfAttack;0.05

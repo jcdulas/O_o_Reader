@@ -1,0 +1,40 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: FRF generation of component 10, the plate
+#
+# Covers:
+#   - cards: FRFXIT
+#   - solution: SOL 108 (direct frequency response, FRF generation for an FRF
+#               based assembly)
+#   - outputs: displacements: complex magnitude/phase, SORT1 (one subcase per
+#              unit load)
+# Run notes:
+#   - FRF(COMPID=10 ...) generates the FRFs of the plate for the assembly run
+#     dynamics/frf_assembly_fba.bdf, on the OUTPUT2 file frf_gen_plate_frf.out2
+#     (unit 25); the run also writes the .asm punch file with its FRFCOMP
+#     entry
+#   - unit loads: FRFXIT at grid point 13 along z, plus the loads the program
+#     applies by itself at the connection points 5 and 15 (SET 100)
+#   - bring back frf_gen_plate_frf.out2 and the .asm file next to the deck: the
+#     assembly run reads the OUTPUT2 file
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT2='frf_gen_plate_frf.out2';FileUnit=25;FileForm=Unformatted
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: FRF generation, plate component
+BulkEcho;None
+SinglePointConstrSelection;1
+FreqSetSelection;41
+SetDefinition;100;5;15
+FrfGeneration;;COMPID = 10 COMPNAME = PLATE CONNPTS = 100 OP2 = 25
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+SubcaseStart;1
+LabelText;FRFs of the plate
+[model]
+Parameter;PostprocessingFile;-1
+FreqLinearSteps1;41;10.;10.;29
+# Unit load for the FRFs (small field format, the label spans fields 4 to 9).
+FrfExcitationDof;13;3;UNIT LOAD AT GRID POINT 13 ALONG Z
+Include;plate_model.oos

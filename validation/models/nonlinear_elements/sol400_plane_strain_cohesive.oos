@@ -1,0 +1,82 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: plane strain blocks bonded by cohesive elements
+#
+# Covers:
+#   - cards: PSHLN2, CIFQUAD, PCOHE, MCOHE, CQUAD
+#   - solution: SOL 400 (nonlinear static, one load step)
+#   - outputs: displacements, SPC forces, element stresses
+# Run notes:
+#   - every element lies in the x-y plane of the basic system (plane strain,
+#     unit thickness); the interface opens below its peak traction
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: plane strain cohesive interface (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;one load step, ten fixed increments
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;10
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+NonlinearStepControl;10;1.;;FixedStepping;10
+# Units: mm, N, t. A Mooney-Rivlin rubber (the material a PLPLANE names)
+# and a steel that the PSHLN2 puts in its place for the bonded blocks.
+HyperelasticPolynomialMat;10;0.5;0.1;50.;1.1E-9
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# Region 1: two plane strain blocks of two CQUAD4 each (PLPLANE with a
+# PSHLN2, plane strain, linear integration), bonded along y = 10 by two
+# zero-thickness CIFQUAD (bilinear cohesive law: energy 0.5 N/mm, peak
+# traction 50 MPa), clamped at the bottom and pulled at the top
+PlanePropNonlinear;1;10
+PlanePropNonlinearExt;1;1;;1.;ImplicitStructural;FourNodeElems;PlaneStrain;Linear
+CohesiveProp;5;5;0;1.;Nodes;0
+CohesiveMat;5;1;;0.5;0.002;0.02;1.
+Node;1;;0.;0.;0.;;3456
+Node;2;;10.;0.;0.;;3456
+Node;3;;20.;0.;0.;;3456
+Node;4;;0.;10.;0.;;3456
+Node;5;;10.;10.;0.;;3456
+Node;6;;20.;10.;0.;;3456
+Node;7;;0.;10.;0.;;3456
+Node;8;;10.;10.;0.;;3456
+Node;9;;20.;10.;0.;;3456
+Node;10;;0.;20.;0.;;3456
+Node;11;;10.;20.;0.;;3456
+Node;12;;20.;20.;0.;;3456
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+CohesiveQuad;3;5;4;5;8;7
+CohesiveQuad;4;5;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+SinglePointConstrList;1;12;1;2;3
+PointForceLoad;1;10;;125.;0.;1.;0.
+PointForceLoad;1;11;;250.;0.;1.;0.
+PointForceLoad;1;12;;125.;0.;1.;0.
+# Region 2: one nine-node hyperelastic plane strain CQUAD on a PLPLANE,
+# clamped at the bottom and stretched at the top
+PlanePropNonlinear;20;10
+Node;21;;100.;0.;0.;;3456
+Node;22;;120.;0.;0.;;3456
+Node;23;;120.;20.;0.;;3456
+Node;24;;100.;20.;0.;;3456
+Node;25;;110.;0.;0.;;3456
+Node;26;;120.;10.;0.;;3456
+Node;27;;110.;20.;0.;;3456
+Node;28;;100.;10.;0.;;3456
+Node;29;;110.;10.;0.;;3456
+PlaneStrainQuad;20;20;21;22;23;24;25;26;27;28;29
+SinglePointConstrList;1;12;21;22;25
+PointForceLoad;1;23;;1.;0.;1.;0.
+PointForceLoad;1;24;;1.;0.;1.;0.
+PointForceLoad;1;27;;4.;0.;1.;0.

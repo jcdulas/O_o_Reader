@@ -1,0 +1,35 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: external superelement matrices on an OP4 file (dense text)
+#
+# Validates:
+#   - the OP4 file the solver writes with EXTSEOUT MATOP4 = -25 (non-sparse form,
+#     formatted): stiffness, mass, damping and load matrices of the boundary,
+#     their names and forms
+#   - the punch file of the external superelement (ASMBULK)
+# Settles (library item: current status):
+#   - the OP4 forms the solver writes (BIGMAT and the 8-byte word form of an i8
+#     run)
+#   - superelements: the assembly deck se_external_assemble_auto.bdf reads the
+#     sparse binary file (EXTOP4 with AUTO)
+# Run notes:
+#   - the OP4 file is op4_extseout_dense_text.op4; bring back the .pch as well
+#   - run the sparse binary deck a second time with the i8 executable for the
+#     8-byte word form (subfolder i8)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT4='op4_extseout_dense_text.op4';FileUnit=25;FileForm=Formatted
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader validation: external superelement on OP4 (formatted)
+BulkEcho;Sorted
+EigenMethodSelection;1
+ExternalSuperelementOutput;;Stiffness;Mass;Damping;Loads;AssemblyBulk;EXTID=100;MATOP4=-25
+SubcaseStart;1
+LabelText;reduction to the boundary
+StaticLoadSelection;1
+[model]
+LanczosEigenMethod;1;;;4
+PointForceLoad;1;1009;;10.;0.;0.;1.
+Include;external_part.oos

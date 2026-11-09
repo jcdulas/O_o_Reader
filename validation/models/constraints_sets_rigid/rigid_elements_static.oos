@@ -1,0 +1,162 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rigid elements, constraint sets and rigid element
+# selection (SOL 101)
+#
+# Covers:
+#   - cards: RBAR, RBAR1, RBE1, RROD, RTRPLT, RTRPLT1, RSPLINE, RSSCON,
+#     RJOINT, RBE2GS, SPCADD, MPCADD, SPCOFF, SPCOFF1, SET3 (RBEex), SEQGP
+#   - solution: SOL 101 (linear statics, two subcases: every rigid element,
+#     then the same MPC equations without the RROD strut)
+#   - outputs: displacements, SPC forces, MPC forces, element stresses
+# Run notes:
+#   - MPC = 30 selects MPCADD 30 and SET3 30, which leaves RROD 505 out of
+#     subcase 2; the frame stays supported by RBAR 501
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: rigid elements and constraint sets
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;every rigid element (MPC = 20)
+MultiPointConstrSelection;20
+SubcaseStart;2
+LabelText;RROD 505 left out by SET3 30 (MPC = 30)
+MultiPointConstrSelection;30
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;ShellDrillingStiffness;100.
+# Units: mm, N, tonne, s. Steel.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# Plate P1: 4 x 2 CQUAD4 (x 0 to 40, y 0 to 20), clamped at x = 0.
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+# Solid S: 2 CHEXA (x 40 to 50, z -1 to 1, as thick as the plate) clamped to
+# the plate edge x = 40 by two RSSCON (shell grid point between a lower and
+# an upper solid grid point).
+SolidProp;2;1
+Node;101;;40.;0.;-1.
+Node;102;;40.;0.;1.
+Node;103;;40.;10.;-1.
+Node;104;;40.;10.;1.
+Node;105;;40.;20.;-1.
+Node;106;;40.;20.;1.
+Node;111;;50.;0.;-1.
+Node;112;;50.;0.;1.
+Node;113;;50.;10.;-1.
+Node;114;;50.;10.;1.
+Node;115;;50.;20.;-1.
+Node;116;;50.;20.;1.
+SolidHexa;201;2;101;111;113;103;102;112;114;104
+SolidHexa;202;2;103;113;115;105;104;114;116;106
+RigidShellSolidConnection;301;Node;5;101;102;10;103;104
+RigidShellSolidConnection;302;Node;15;105;106
+# Frame F: a beam along y at x = 30 hung on plate grid point 14 by RBAR
+# 501, cut at y = 60 into two coincident grid points joined by RJOINT 502,
+# ended by RBAR1 503 and an RBE1 504 bracket (408 fully, 409 in
+# translation). RROD 505 is a pin-ended strut from plate grid point 13 to
+# frame grid point 402.
+BarProp;4;1;20.;30.;30.;50.
+Node;401;;30.;30.;0.
+Node;402;;30.;40.;0.
+Node;403;;30.;50.;0.
+Node;404;;30.;60.;0.
+Node;405;;30.;60.;0.
+Node;406;;30.;70.;0.
+Node;407;;30.;80.;0.
+Node;408;;40.;80.;0.
+Node;409;;20.;80.;0.
+Bar2;411;4;401;402;0.;;0.;1.
+Bar2;412;4;402;403;0.;;0.;1.
+Bar2;413;4;403;404;0.;;0.;1.
+Bar2;414;4;405;406;0.;;0.;1.
+RigidBar;501;14;401;123456;;;123456
+RigidJoint;502;404;405
+RigidBar1;503;406;407;123456
+RigidBodyMulti;504;1;407;123456;DependentDofs;2;408;123456;409;123
+RigidRod;505;13;402;;2
+# Plate P2: 2 x 2 CQUAD4 (x 0 to 20, y 30 to 50) carried by RTRPLT 506 on
+# plate grid point 12. RTRPLT1 507 makes a bracket on its grid point 428
+# (431 fully, 432 in translation).
+Node;421;;0.;30.;0.
+Node;422;;10.;30.;0.
+Node;423;;20.;30.;0.
+Node;424;;0.;40.;0.
+Node;425;;10.;40.;0.
+Node;426;;20.;40.;0.
+Node;427;;0.;50.;0.
+Node;428;;10.;50.;0.
+Node;429;;20.;50.;0.
+ShellQuad4;421;1;421;422;425;424
+ShellQuad4;422;1;422;423;426;425
+ShellQuad4;423;1;424;425;428;427
+ShellQuad4;424;1;425;426;429;428
+RigidTriaPlate;506;12;421;423;123456;;;;123456;123456
+Node;431;;10.;60.;0.
+Node;432;;20.;60.;0.
+RigidTriaPlate1;507;428;431;432;123456;123
+# RSPLINE 508 interpolates grid point 441 between the corner 429 of P2 and
+# the frame grid point 403; RBE2GS 509 finds the grid point 461 within 1 mm
+# of frame grid point 406 and makes it follow 406.
+Node;441;;25.;50.;0.
+RigidSpline;508;0.1;429;441;123456;403
+Node;461;;30.;70.;0.5
+RigidBodySearched;509;406;;;1.
+# Constraints: SPC set 1 is the union of the clamp (11) and a vertical
+# support of the solid end (12). The MPC equations 21 and 22 are combined in
+# MPC sets 20 and 30; SET3 30 leaves the RROD out of MPC = 30.
+SinglePointConstrList;11;123456;1;6;11
+SinglePointConstrList;12;3;113;114
+SinglePointConstrUnion;1;11;12
+MultiPointConstr;21;427;3;1.;424;3;-1.
+MultiPointConstr;22;409;4;1.;406;4;-1.
+MultiPointConstrUnion;20;21;22
+MultiPointConstrUnion;30;21;22
+TypedListSet3;30;RigidElemsExcluded;505
+# Degrees of freedom AUTOSPC must leave alone (all have bending stiffness).
+AutoConstrExclusion;7;345;8;345
+AutoConstrExclusionList;345;2;Through;4
+# Resequencing: the two rigid points next to the points they follow.
+NodeSequence;461;406.5;441;403.5
+# Load set 1: tension on the solid end, out-of-plane loads on the brackets,
+# on the interpolated point, on the RBE2GS point and on plate P2.
+PointForceLoad;1;111;0;100.;1.;0.;0.
+PointForceLoad;1;112;0;100.;1.;0.;0.
+PointForceLoad;1;115;0;100.;1.;0.;0.
+PointForceLoad;1;116;0;100.;1.;0.;0.
+PointForceLoad;1;408;0;10.;0.;0.;1.
+PointForceLoad;1;409;0;10.;0.;0.;1.
+PointForceLoad;1;431;0;10.;0.;0.;1.
+PointForceLoad;1;441;0;10.;0.;0.;1.
+PointForceLoad;1;461;0;10.;0.;0.;1.
+PointForceLoad;1;427;0;10.;0.;0.;1.

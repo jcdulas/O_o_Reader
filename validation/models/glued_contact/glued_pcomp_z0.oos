@@ -1,0 +1,128 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: glued shells on a laminate offset by Z0 (SOL 101)
+#
+# Validates:
+#   - whether the solver's glued contact places the skins of a PCOMP on its plies:
+#     Z0 is the distance from the grid plane to the bottom of the laminate
+#     (format reference PCOMP), here 0, so the 4 mm laminate stands from z = 0 to z = 4
+#     instead of -2 to 2
+#   - body 2, a 2 mm PSHELL plate with its grid points at z = 5 (skins 4 and
+#     6), rests on the real top of the laminate; body 3, a plate at z = -1
+#     (skins -2 and 0), on its real bottom. The automatic ERROR is 0.5 (the
+#     smallest edge 10 over 20, the thinnest shell 2 over 4) and BIAS 0: both
+#     plates are glued when Z0 counts (gap 0), neither when the laminate is
+#     taken centred on its grid plane (gap 2 and -2)
+# Settles (library item: current status):
+#   - the laminate's Z0 in the contact distance: the library's assumption
+#     that it counts, not validated against
+#     the solver; contactNodePairs(rule="solver") ties 7 grid points of the laminate
+#     to the plates at gap 0 (the search from the lower body ID first,
+#     ISEARCH 0), none when the laminate is taken centred
+# Run notes:
+#   - NLOPRM MPCPCH punches the glue equations (format reference BCTABLE remark 18): bring
+#     the .pch back with the listing and the OUTPUT2 file
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;glued shells on a laminate offset by Z0
+BulkEcho;Sorted
+NonlinearOutputParams;PunchGlueEquations
+ContactSelection;1
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;loads on the plates glued to the laminate
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Body 1: a 40 x 40 laminate of 4 x 4 CQUAD4 with its grid points at z = 0,
+# two plies of 2 mm, Z0 = 0. Bodies 2 and 3: 20 x 20 plates of 2 x 2 CQUAD4,
+# 2 mm thick, at z = 5 and z = -1. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+OrthoMat2D;2;1.5E+5;1.E+4;0.3;5.E+3;5.E+3;5.E+3;1.6E-9
+ShellProp;1;1;2.;1;;1
+CompProp;2;0.;;;;;;;2;2.;0.;Yes;2;2.;90.;Yes
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+Node;16;;0.;30.;0.
+Node;17;;10.;30.;0.
+Node;18;;20.;30.;0.
+Node;19;;30.;30.;0.
+Node;20;;40.;30.;0.
+Node;21;;0.;40.;0.
+Node;22;;10.;40.;0.
+Node;23;;20.;40.;0.
+Node;24;;30.;40.;0.
+Node;25;;40.;40.;0.
+ShellQuad4;1;2;1;2;7;6
+ShellQuad4;2;2;2;3;8;7
+ShellQuad4;3;2;3;4;9;8
+ShellQuad4;4;2;4;5;10;9
+ShellQuad4;5;2;6;7;12;11
+ShellQuad4;6;2;7;8;13;12
+ShellQuad4;7;2;8;9;14;13
+ShellQuad4;8;2;9;10;15;14
+ShellQuad4;9;2;11;12;17;16
+ShellQuad4;10;2;12;13;18;17
+ShellQuad4;11;2;13;14;19;18
+ShellQuad4;12;2;14;15;20;19
+ShellQuad4;13;2;16;17;22;21
+ShellQuad4;14;2;17;18;23;22
+ShellQuad4;15;2;18;19;24;23
+ShellQuad4;16;2;19;20;25;24
+Node;101;;5.;5.;5.
+Node;102;;15.;5.;5.
+Node;103;;25.;5.;5.
+Node;104;;5.;15.;5.
+Node;105;;15.;15.;5.
+Node;106;;25.;15.;5.
+Node;107;;5.;25.;5.
+Node;108;;15.;25.;5.
+Node;109;;25.;25.;5.
+ShellQuad4;101;1;101;102;105;104
+ShellQuad4;102;1;102;103;106;105
+ShellQuad4;103;1;104;105;108;107
+ShellQuad4;104;1;105;106;109;108
+Node;201;;15.;15.;-1.
+Node;202;;25.;15.;-1.
+Node;203;;35.;15.;-1.
+Node;204;;15.;25.;-1.
+Node;205;;25.;25.;-1.
+Node;206;;35.;25.;-1.
+Node;207;;15.;35.;-1.
+Node;208;;25.;35.;-1.
+Node;209;;35.;35.;-1.
+ShellQuad4;201;1;201;202;205;204
+ShellQuad4;202;1;202;203;206;205
+ShellQuad4;203;1;204;205;208;207
+ShellQuad4;204;1;205;206;209;208
+ContactElemSurface;1;1;Through;16
+ContactElemSurface;2;101;102;103;104
+ContactElemSurface;3;201;202;203;204
+ContactBody;1;ThreeDimensional;Deformable;1
+ContactBody;2;ThreeDimensional;Deformable;2
+ContactBody;3;ThreeDimensional;Deformable;3
+ContactTable;1;;;2;;;Secondary;2;;;;;1;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;1;Secondary;3;;;;;1;;;;;;;;;;;;;;;;;;;;;;;;;Primary;1;1
+SinglePointConstrList;1;123456;1;5;21;25
+PointForceLoad;1;109;;10.;0.;0.;1.
+PointForceLoad;1;209;;10.;0.;0.;1.

@@ -1,0 +1,90 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: part superelements: REPEAT image and a two-level tree (SOL 101)
+#
+# Validates:
+#   - a REPEAT image placed by SELOC, a multi-level tree (SETREE), the
+#     boundary points of each level
+# Settles (library item: current status):
+#   - 'Not validated against the solver': REPEAT images, multi-
+#     level trees (SETREE)
+#   - superelement_point_list of an image (the IDs
+#     of its primary)
+# Run notes:
+#   - PARAM,POST,-2 writes the GPLS tables
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: part superelement tree and image
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;load on the residual
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-2
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Residual structure: a plate of 2 x 2 CQUAD4 at x 0 to 20, clamped at x = 0.
+# Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;4;7
+PointForceLoad;1;9;;10.;0.;0.;1.
+# A two-level tree: parts 10 and 11 (11 a REPEAT image of 10 placed by SELOC)
+# are upstream of part 20, which is upstream of the residual (SETREE). The
+# SELOC target points are POINT entries of the main Bulk Data.
+SuperelementBulkOptions;10;Primary;;Automatic
+SuperelementBulkOptions;11;Repeat;10;Automatic
+SuperelementBulkOptions;20;Primary;;Automatic
+SuperelementTree;20;10;11
+SuperelementTree;0;20
+GeomPoint;901;;40.;10.;0.
+GeomPoint;902;;50.;10.;0.
+GeomPoint;903;;40.;20.;0.
+SuperelementLocation;11;1001;1002;1004;901;902;903
+PointForceLoad;1;3;;10.;0.;0.;1.
+[model;SuperelementPart;10]
+# Part 10: a plate x 40 to 50, y 0 to 10, joined to part 20 at x = 40.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1001;;40.;0.;0.
+Node;1002;;50.;0.;0.
+Node;1003;;40.;10.;0.
+Node;1004;;50.;10.;0.
+ShellQuad4;1001;1;1001;1002;1004;1003
+[model;SuperelementPart;20]
+# Part 20: a plate x 20 to 40, y 0 to 20, joined to the residual at x = 20 and
+# to parts 10 and 11 at x = 40.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;2001;;20.;0.;0.
+Node;2002;;30.;0.;0.
+Node;2003;;40.;0.;0.
+Node;2004;;20.;10.;0.
+Node;2005;;30.;10.;0.
+Node;2006;;40.;10.;0.
+Node;2007;;20.;20.;0.
+Node;2008;;30.;20.;0.
+Node;2009;;40.;20.;0.
+ShellQuad4;2001;1;2001;2002;2005;2004
+ShellQuad4;2002;1;2002;2003;2006;2005
+ShellQuad4;2003;1;2004;2005;2008;2007
+ShellQuad4;2004;1;2005;2006;2009;2008

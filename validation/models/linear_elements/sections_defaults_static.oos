@@ -1,0 +1,128 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: bar and beam defaults, sections, distributions
+#
+# Covers:
+#   - cards: BAROR, BEAMOR, PBRSECT, PBMSECT, PBCOMP, PDISTB, PDISTBM (with
+#     CBAR, CBEAM, CQUAD4, PBAR, PBEAM, PSHELL, POINT, SET1)
+#   - solution: SOL 101 (linear static, one subcase)
+#   - outputs: displacements, SPC forces, element stresses and forces (OUTPUT2)
+# Run notes:
+#   - the CBAR and CBEAM entries of regions 1 and 2 leave the property and the
+#     orientation fields blank on purpose: BAROR and BEAMOR supply them
+#   - region 5 is two CBAR on the box section PBRSECT 12, region 6 two CBEAM
+#     on the rectangle PBMSECT 51 (the solver meshes the sections itself); their
+#     POINT entries leave CP and X3 blank
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: bar and beam defaults, arbitrary sections
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip loads on every region
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Steel (MAT1 1) for every region; aluminium (MAT1 2)
+# only for the material distribution of region 4.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+IsoMat;2;7.E+4;;0.33;2.7E-9
+# Region 1: two CBAR with a blank property and a blank orientation: BAROR
+# gives PBAR 11 and the vector (0,0,1). PDISTB changes the area of bar 102
+# only.
+Bar2Defaults;11;0.;;0.;1.
+BarProp;11;1;200.;1667.;6667.;4577.
+Node;101;;0.;0.;0.
+Node;102;;100.;0.;0.
+Node;103;;200.;0.;0.
+Bar2;101;;101;102
+Bar2;102;;102;103
+PropDistribution;1;BarProp;11;area;;;;102;150.
+# Region 5: two CBAR on PBRSECT 12, a closed thin-walled box (centreline
+# 20 x 10, wall 1 mm) outlined by the POINT entries of SET1 120 (CP and X3
+# blank, format reference POINT remark 3).
+GeomPoint;1201;;-10.;-5.
+GeomPoint;1202;;10.;-5.
+GeomPoint;1203;;10.;5.
+GeomPoint;1204;;-10.;5.
+IdListSet1;120;1201;1202;1203;1204
+BarArbitrarySectionProp;12;1;ClosedProfile;;outerPerimeter=120,thickness=1.0
+Node;121;;0.;100.;0.
+Node;122;;100.;100.;0.
+Node;123;;200.;100.;0.
+Bar2;121;12;121;122;0.;;0.;1.
+Bar2;122;12;122;123;0.;;0.;1.
+# Region 2: two CBEAM with a blank property and a blank orientation: BEAMOR
+# gives PBEAM 31 and the vector (0,0,1).
+Beam2Defaults;31;0.;;0.;1.
+BeamProp;31;1;200.;1667.;6667.;0.;4577.
+Node;301;;0.;200.;0.
+Node;302;;100.;200.;0.
+Node;303;;200.;200.;0.
+Beam2;301;;301;302
+Beam2;302;;302;303
+# Region 3: two CBEAM on PBCOMP 41, a 10 x 10 square section given by its
+# properties and by lumped areas (SYMOPT 1: one area entered, four generated
+# by symmetry).
+BeamLumpedAreaProp;41;1;100.;833.3;833.3;0.;1406.;;;;;;;;1;2.887;2.887;0.25;1
+Node;401;;0.;300.;0.
+Node;402;;100.;300.;0.
+Node;403;;200.;300.;0.
+Beam2;401;41;401;402
+Beam2;402;41;402;403
+# Region 6: two CBEAM on PBMSECT 51, a solid 10 x 20 rectangle (general
+# section) outlined by the POINT entries of SET1 510.
+GeomPoint;5101;;-5.;-10.
+GeomPoint;5102;;5.;-10.
+GeomPoint;5103;;5.;10.
+GeomPoint;5104;;-5.;10.
+IdListSet1;510;5101;5102;5103;5104
+BeamArbitrarySectionProp;51;1;GeneralSection;outerPerimeter=510
+Node;511;;0.;400.;0.
+Node;512;;100.;400.;0.
+Node;513;;200.;400.;0.
+Beam2;511;51;511;512;0.;;0.;1.
+Beam2;512;51;512;513;0.;;0.;1.
+# Region 4: a 100 x 100 plate of four CQUAD4 on PSHELL 61 (2 mm). PDISTB sets
+# the thickness of elements 601 and 602; PDISTBM gives element 603 the
+# aluminium as membrane material (MID1).
+ShellProp;61;1;2.;1
+Node;601;;0.;500.;0.
+Node;602;;50.;500.;0.
+Node;603;;100.;500.;0.
+Node;604;;0.;550.;0.
+Node;605;;50.;550.;0.
+Node;606;;100.;550.;0.
+Node;607;;0.;600.;0.
+Node;608;;50.;600.;0.
+Node;609;;100.;600.;0.
+ShellQuad4;601;61;601;602;605;604
+ShellQuad4;602;61;602;603;606;605
+ShellQuad4;603;61;604;605;608;607
+ShellQuad4;604;61;605;606;609;608
+PropDistribution;2;ShellProp;61;thickness;;;;601;1.5;602;2.5
+PropMatDistribution;3;ShellProp;61;1;603;2
+# Constraints: SPC set 1 clamps the root (x = 0) of every region.
+SinglePointConstrList;1;123456;101;121;301;401;511;601;607
+# Load set 1: a tip force with a lateral component and a torque on every line
+# region, a bending force on the free edge of the plate.
+PointForceLoad;1;103;;100.;0.;0.2;-1.
+PointMomentLoad;1;103;;500.;1.;0.;0.
+PointForceLoad;1;303;;100.;0.;0.2;-1.
+PointMomentLoad;1;303;;500.;1.;0.;0.
+PointForceLoad;1;403;;100.;0.;0.2;-1.
+PointMomentLoad;1;403;;500.;1.;0.;0.
+PointForceLoad;1;123;;100.;0.;0.2;-1.
+PointMomentLoad;1;123;;500.;1.;0.;0.
+PointForceLoad;1;513;;100.;0.;0.2;-1.
+PointMomentLoad;1;513;;500.;1.;0.;0.
+PointForceLoad;1;603;;10.;0.;0.;-1.
+PointForceLoad;1;606;;10.;0.;0.;-1.
+PointForceLoad;1;609;;10.;0.;0.;-1.

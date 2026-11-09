@@ -1,0 +1,54 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: strip theory frequency response (SOL 146)
+#
+# Covers:
+#   - cards: CAERO4 PAERO4 MKAERO2 SPLINE7
+#   - solution: SOL 146 (modal aeroelastic frequency response of the plate wing
+#     to a tip force, strip theory aerodynamics at Mach 0.5)
+#   - outputs: complex displacements, SORT1 (OUTPUT2)
+# Run notes:
+#   - strip theory is accepted in SOL 146 with mechanical loads only (no
+#     gust); PARAM,Q gives the dynamic pressure (0.5 rho V**2 of the AERO
+#     entry)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;146
+[case]
+TitleText;O_o_Reader test model: strip theory frequency response
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ModalDampingSelection;72
+DynamicLoadSelection;92
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly;SortByPoint;RealPart
+SubcaseStart;1
+LabelText;tip force, strip theory at Mach 0.5
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;DynamicPressure;1.734E-4
+Parameter;LowestModesCount;6
+AeroUnsteadyParams;;1.7E+4;200.;1.2E-12;1
+LanczosEigenMethod;71;;;6
+TableModalDamping1;72;CriticalDamping;0.;0.02;1.E+3;0.02;EndTable
+Include;plate_wing.oos
+# Strip theory panel over the plate: 3 equal strips (IDs 6000 to 6002),
+# Theodorsen function, no control surface on any strip.
+AeroStripProp4;6001;0;0;0;0;0.;0.;0.;0.;0.;0.;0.;0.;0.
+AeroStripPanel4;6000;6001;0;3;;0.;0.;0.;200.;0.;1.E+3;0.;200.
+# Finite beam spline from the strips to every plate grid point, beam axis
+# along y at mid chord (coordinate system 20).
+RectFrame2;20;;100.;0.;0.;100.;0.;1.;200.;0.;0.
+IdListSet1;6102;1;Through;15
+AeroBoxList;6101;6000;6001;6002
+AeroFiniteBeamSpline7;6100;6000;6101;6102;0.;1.;20;Both;FiniteBeamSpline6
+# One Mach number (the one SOL 146 uses), six reduced frequencies.
+AeroMachFreqPairs2;0.5;0.001;0.5;0.05;0.5;0.1;0.5;0.2
+AeroMachFreqPairs2;0.5;0.4;0.5;0.8
+# Unit vertical force at the tip grid point 14, flat spectrum, 0.5 to 20 Hz.
+FreqResponseLoad1;92;93;;;;;94
+DynamicLoadScale;93;14;3;1.
+TableDynamic1;94;;;0.;1.;100.;1.;EndTable
+FreqLinearSteps1;41;0.5;0.5;39

@@ -1,0 +1,488 @@
+{
+ "description": "Reviewed card layouts of the loads family (src/model/cards/loads).",
+ "cards": {
+  "AccelFieldLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "frameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "directionX", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "direction", "slot": 6, "kind": "text"}
+  ], "group": {"name": "points", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "location", "offset": 0, "kind": "real"},
+    {"name": "acceleration", "offset": 1, "kind": "real"}
+  ]}},
+  "AccelNodeLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "frameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "magnitude", "slot": 3, "kind": "real"},
+    {"name": "directionX", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 6, "kind": "real", "default": "0.0"}
+  ], "group": {"name": "nodes", "firstSlot": 9, "period": 1, "fields": [
+    {"name": "nodeId", "offset": 0, "kind": "any"}
+  ]}},
+  "AcousticInfiniteParams": {"fields": [], "group": {"name": "parameters", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "parameterName", "offset": 0, "kind": "text"},
+    {"name": "parameterValue", "offset": 1, "kind": "number"}
+  ]}},
+  "AcousticPressureLoadMatrices": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "dataFileUnit", "slot": 2, "kind": "integer"},
+    {"name": "propertyFileUnit", "slot": 3, "kind": "integer"},
+    {"name": "scaleReal", "slot": 4, "kind": "real"},
+    {"name": "scaleImaginary", "slot": 5, "kind": "real"},
+    {"name": "fileLoadCaseId", "slot": 6, "kind": "integer"}
+  ]},
+  "AxialDeformationLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "deformations", "firstSlot": 2, "period": 2, "fields": [
+    {"name": "elemId", "offset": 0, "kind": "integer"},
+    {"name": "deformation", "offset": 1, "kind": "real"}
+  ]}},
+  "AxisymConePressureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "pressure", "slot": 2, "kind": "real"},
+    {"name": "ringId1", "slot": 3, "kind": "integer"},
+    {"name": "ringId2", "slot": 4, "kind": "integer"},
+    {"name": "phiAngle1", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "phiAngle2", "slot": 6, "kind": "real", "default": "360.0"}
+  ]},
+  "AxisymConeTemperatureLoad": {"fields": [
+    {"name": "id1", "slot": 1, "kind": "integer"},
+    {"name": "ringId1", "slot": 2, "kind": "integer"},
+    {"name": "phiAngle1", "slot": 3, "kind": "real"},
+    {"name": "temperature1", "slot": 4, "kind": "real"},
+    {"name": "id2", "slot": 5, "kind": "integer"},
+    {"name": "ringId2", "slot": 6, "kind": "integer"},
+    {"name": "phiAngle2", "slot": 7, "kind": "real"},
+    {"name": "temperature2", "slot": 8, "kind": "real"}
+  ]},
+  "AxisymRingForceLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "ringId", "slot": 2, "kind": "integer"},
+    {"name": "harmonicId", "slot": 3, "kind": "any"},
+    {"name": "scaleFactor", "slot": 4, "kind": "real"},
+    {"name": "radialForce", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "azimuthalForce", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "axialForce", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "AxisymRingMomentLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "ringId", "slot": 2, "kind": "integer"},
+    {"name": "harmonicId", "slot": 3, "kind": "any"},
+    {"name": "scaleFactor", "slot": 4, "kind": "real"},
+    {"name": "radialMoment", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "azimuthalMoment", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "axialMoment", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "AxisymTractionLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId", "slot": 2, "kind": "integer"},
+    {"name": "tractionA", "slot": 3, "kind": "real"},
+    {"name": "tractionB", "slot": 4, "kind": "real", "default": "same as tractionA"},
+    {"name": "nodeA", "slot": 5, "kind": "integer"},
+    {"name": "nodeB", "slot": 6, "kind": "integer"},
+    {"name": "tractionAngle", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "Beam3DistributedLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId", "slot": 2, "kind": "integer"},
+    {"name": "frameId", "slot": 3, "kind": "any", "default": "0"},
+    {"name": "directionX", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "kind", "slot": 7, "kind": "text"},
+    {"name": "scaleFactor", "slot": 8, "kind": "real"},
+    {"name": "pressureA", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "pressureB", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "pressureC", "slot": 11, "kind": "real", "default": "0.0"}
+  ]},
+  "Beam3TemperatureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId", "slot": 2, "kind": "integer"},
+    {"name": "temperatureA", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "temperatureB", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "temperatureC", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "gradientYA", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "gradientZA", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "gradientYB", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "gradientZB", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "gradientYC", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "gradientZC", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "temperatureCA", "slot": 12, "kind": "real"},
+    {"name": "temperatureDA", "slot": 13, "kind": "real"},
+    {"name": "temperatureEA", "slot": 14, "kind": "real"},
+    {"name": "temperatureFA", "slot": 15, "kind": "real"},
+    {"name": "temperatureCB", "slot": 16, "kind": "real"},
+    {"name": "temperatureDB", "slot": 17, "kind": "real"},
+    {"name": "temperatureEB", "slot": 18, "kind": "real"},
+    {"name": "temperatureFB", "slot": 19, "kind": "real"},
+    {"name": "temperatureCC", "slot": 20, "kind": "real"},
+    {"name": "temperatureDC", "slot": 21, "kind": "real"},
+    {"name": "temperatureEC", "slot": 22, "kind": "real"},
+    {"name": "temperatureFC", "slot": 23, "kind": "real"}
+  ], "group": {"name": "elements", "firstSlot": 25, "period": 1, "fields": [
+    {"name": "element", "offset": 0, "kind": "any"}
+  ]}},
+  "BeamDistributedLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId", "slot": 2, "kind": "integer"},
+    {"name": "kind", "slot": 3, "kind": "text"},
+    {"name": "scaleFactor", "slot": 4, "kind": "text"},
+    {"name": "xCoord1", "slot": 5, "kind": "real"},
+    {"name": "pressure1", "slot": 6, "kind": "real"},
+    {"name": "xCoord2", "slot": 7, "kind": "real", "default": "same as xCoord1"},
+    {"name": "pressure2", "slot": 8, "kind": "real"}
+  ]},
+  "CyclicAzimuthTableLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "tableId1", "slot": 2, "kind": "integer"},
+    {"name": "loadSetId1", "slot": 3, "kind": "integer"},
+    {"name": "methodName1", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "tableId2", "slot": 5, "kind": "integer"},
+    {"name": "loadSetId2", "slot": 6, "kind": "integer"},
+    {"name": "methodName2", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "CyclicHarmonicLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"},
+    {"name": "harmonicId", "slot": 3, "kind": "integer"},
+    {"name": "harmonicType", "slot": 4, "kind": "text"},
+    {"name": "scaleFactor1", "slot": 5, "kind": "real"},
+    {"name": "loadSetId1", "slot": 6, "kind": "integer"},
+    {"name": "scaleFactor2", "slot": 7, "kind": "real"},
+    {"name": "loadSetId2", "slot": 8, "kind": "integer"}
+  ]},
+  "CyclicSegmentLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"},
+    {"name": "segmentId", "slot": 3, "kind": "integer"},
+    {"name": "segmentType", "slot": 4, "kind": "text"},
+    {"name": "scaleFactor1", "slot": 5, "kind": "real"},
+    {"name": "loadSetId1", "slot": 6, "kind": "integer"},
+    {"name": "scaleFactor2", "slot": 7, "kind": "real"},
+    {"name": "loadSetId2", "slot": 8, "kind": "integer"}
+  ]},
+  "DefaultTemperatureLoad": {"fields": [
+    {"name": "id1", "slot": 1, "kind": "integer"},
+    {"name": "temperature1", "slot": 2, "kind": "real"},
+    {"name": "id2", "slot": 3, "kind": "integer"},
+    {"name": "temperature2", "slot": 4, "kind": "real"},
+    {"name": "id3", "slot": 5, "kind": "integer"},
+    {"name": "temperature3", "slot": 6, "kind": "real"},
+    {"name": "id4", "slot": 7, "kind": "integer"},
+    {"name": "temperature4", "slot": 8, "kind": "real"}
+  ]},
+  "FacePressureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId", "slot": 2, "kind": "integer"},
+    {"name": "pressure1", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "pressure2", "slot": 4, "kind": "real"},
+    {"name": "pressure3", "slot": 5, "kind": "real"},
+    {"name": "pressure4", "slot": 6, "kind": "real"},
+    {"name": "node1", "slot": 7, "kind": "any", "default": "0"},
+    {"name": "node3Or4OrElemId2", "slot": 8, "kind": "integer"},
+    {"name": "frameId", "slot": 9, "kind": "integer", "default": "0"},
+    {"name": "directionX", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 12, "kind": "real", "default": "0.0"},
+    {"name": "surfaceOrLine", "slot": 13, "kind": "text"},
+    {"name": "lineLoadDirection", "slot": 14, "kind": "text"}
+  ]},
+  "FreeBodyLoad": {"fields": [
+    {"name": "name", "slot": 1, "kind": "text"},
+    {"name": "subsystemName", "slot": 2, "kind": "text"},
+    {"name": "label", "slot": 9, "kind": "text", "span": 8}
+  ]},
+  "FreeBodyLoadSubcase": {"fields": [
+    {"name": "names", "slot": 1, "kind": "text"},
+    {"name": "nodeSetId", "slot": 2, "kind": "integer"},
+    {"name": "elementSetId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "excludedForces", "slot": 4, "kind": "text"},
+    {"name": "label", "slot": 9, "kind": "text", "span": 8}
+  ]},
+  "GravityLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "frameId", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "magnitude", "slot": 3, "kind": "real"},
+    {"name": "directionX", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "mainBulkFlag", "slot": 7, "kind": "integer", "default": "0"}
+  ]},
+  "HeatShellInitialTemperature": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "components1", "slot": 3, "kind": "integer", "default": "1"},
+    {"name": "temperature1", "slot": 4, "kind": "real"},
+    {"name": "node2", "slot": 5, "kind": "integer"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "1"},
+    {"name": "temperature2", "slot": 7, "kind": "real"}
+  ]},
+  "HydrostaticCavityLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "propId", "slot": 2, "kind": "integer"},
+    {"name": "nominalPressure", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "gravity", "slot": 4, "kind": "real", "default": "1.0"},
+    {"name": "punchOption", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "punchPressureLoads", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "overrideOption", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "frameOrNode", "slot": 9, "kind": "integer"},
+    {"name": "baseHeight", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "heightAbove", "slot": 11, "kind": "real", "default": "0.0"}
+  ]},
+  "HydrostaticLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nominalPressure", "slot": 2, "kind": "real", "default": "0.0"},
+    {"name": "density", "slot": 3, "kind": "real"},
+    {"name": "gravity", "slot": 4, "kind": "real", "default": "1.0"},
+    {"name": "elementSetId", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "nodeSetId", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "punchPressureLoads", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "overrideOption", "slot": 8, "kind": "integer", "default": "0"},
+    {"name": "frameOrNode", "slot": 9, "kind": "integer"},
+    {"name": "baseHeight", "slot": 10, "kind": "real", "default": "0.0"},
+    {"name": "heightAbove", "slot": 11, "kind": "real", "default": "0.0"},
+    {"name": "controlNodeSetId", "slot": 12, "kind": "integer", "default": "0"}
+  ]},
+  "ImperfectionCase": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "imperfections", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "imperfectionId", "offset": 0, "kind": "any"}
+  ]}},
+  "ImperfectionGeometry": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "nodeSetId", "slot": 4, "kind": "integer", "default": "0"},
+    {"name": "scaleFactor", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "fileUnit", "slot": 7, "kind": "integer", "default": "0"},
+    {"name": "moduleId", "slot": 8, "kind": "integer", "default": "-1"}
+  ], "group": {"name": "subcases", "firstSlot": 9, "period": 8, "fields": [
+    {"name": "subcase", "offset": 0, "kind": "integer"},
+    {"name": "step", "offset": 1, "kind": "integer"},
+    {"name": "modeIncrement", "offset": 2, "kind": "integer"},
+    {"name": "subcaseNodeSetId", "offset": 3, "kind": "integer"},
+    {"name": "subcaseScaleFactor", "offset": 4, "kind": "real"},
+    {"name": "subcaseFileUnit", "offset": 6, "kind": "integer"},
+    {"name": "subcaseModuleId", "offset": 7, "kind": "integer"}
+  ]}},
+  "InflatorInlet": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "inflatorId", "slot": 2, "kind": "integer"},
+    {"name": "subsurfaceId", "slot": 3, "kind": "integer"},
+    {"name": "inflatorKind", "slot": 4, "kind": "text"},
+    {"name": "inflatorKindId", "slot": 5, "kind": "integer"},
+    {"name": "areaCoefficientSource", "slot": 6, "kind": "text"},
+    {"name": "areaCoefficient", "slot": 7, "kind": "any"}
+  ]},
+  "LineElemTemperatureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId1", "slot": 2, "kind": "integer"},
+    {"name": "temperatureA", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "temperatureB", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "gradientYA", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "gradientYB", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "gradientZA", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "gradientZB", "slot": 8, "kind": "real", "default": "0.0"},
+    {"name": "temperatureCA", "slot": 9, "kind": "real"},
+    {"name": "temperatureDA", "slot": 10, "kind": "real"},
+    {"name": "temperatureEA", "slot": 11, "kind": "real"},
+    {"name": "temperatureFA", "slot": 12, "kind": "real"},
+    {"name": "temperatureCB", "slot": 13, "kind": "real"},
+    {"name": "temperatureDB", "slot": 14, "kind": "real"},
+    {"name": "temperatureEB", "slot": 15, "kind": "real"},
+    {"name": "temperatureFB", "slot": 16, "kind": "real"}
+  ], "group": {"name": "elements", "firstSlot": 17, "period": 1, "fields": [
+    {"name": "elemId", "offset": 0, "kind": "any"}
+  ]}},
+  "LoadCaseIdLabel": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"}
+  ], "group": {"name": "items", "firstSlot": 9, "period": 16, "fields": [
+    {"name": "itemScaleFactor", "offset": 0, "kind": "real"},
+    {"name": "loadId", "offset": 1, "kind": "integer"},
+    {"name": "partName", "offset": 8, "kind": "text", "span": 8}
+  ]}},
+  "LoadCaseNameLabel": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"}
+  ], "group": {"name": "items", "firstSlot": 9, "period": 24, "fields": [
+    {"name": "itemScaleFactor", "offset": 0, "kind": "real"},
+    {"name": "loadName", "offset": 8, "kind": "text", "span": 8},
+    {"name": "partName", "offset": 16, "kind": "text", "span": 8}
+  ]}},
+  "LoadCaseSubcaseLabel": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"}
+  ], "group": {"name": "items", "firstSlot": 9, "period": 16, "fields": [
+    {"name": "itemScaleFactor", "offset": 0, "kind": "real"},
+    {"name": "subcase", "offset": 1, "kind": "integer"},
+    {"name": "partName", "offset": 8, "kind": "text", "span": 8}
+  ]}},
+  "LoadCombination": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"}
+  ], "group": {"name": "terms", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "termScaleFactor", "offset": 0, "kind": "real"},
+    {"name": "loadSetId", "offset": 1, "kind": "integer"}
+  ]}},
+  "MetadataBooleanPairs": {"fields": [
+    {"name": "metadataGroupId", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "pairs", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "entryName", "offset": 0, "kind": "text"},
+    {"name": "entryValue", "offset": 1, "kind": "text"}
+  ]}},
+  "MetadataGroup": {"fields": [
+    {"name": "metadataGroupName", "slot": 1, "kind": "text"},
+    {"name": "id", "slot": 2, "kind": "integer"},
+    {"name": "entityName", "slot": 3, "kind": "text"}
+  ], "group": {"name": "entities", "firstSlot": 4, "period": 1, "fields": [
+    {"name": "entityId", "offset": 0, "kind": "integer"}
+  ]}},
+  "MetadataIntegerPairs": {"fields": [
+    {"name": "metadataGroupId", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "pairs", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "entryName", "offset": 0, "kind": "text"},
+    {"name": "entryValue", "offset": 1, "kind": "integer"}
+  ]}},
+  "MetadataRealPairs": {"fields": [
+    {"name": "metadataGroupId", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "pairs", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "entryName", "offset": 0, "kind": "text"},
+    {"name": "entryValue", "offset": 1, "kind": "real"}
+  ]}},
+  "MetadataTextPairs": {"fields": [
+    {"name": "metadataGroupId", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "pairs", "firstSlot": 9, "period": 8, "fields": [
+    {"name": "entryName", "offset": 0, "kind": "text"},
+    {"name": "entryValue", "offset": 1, "kind": "text", "span": 7}
+  ]}},
+  "NodeTemperatureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "points", "firstSlot": 2, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "temperature", "offset": 1, "kind": "real"}
+  ]}},
+  "PlateTemperatureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "elemId1", "slot": 2, "kind": "integer"},
+    {"name": "meanTemperature", "slot": 3, "kind": "real", "default": "0.0"},
+    {"name": "temperatureGradient", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "temperature1", "slot": 5, "kind": "real"},
+    {"name": "temperature2", "slot": 6, "kind": "real"}
+  ], "group": {"name": "elements", "firstSlot": 9, "period": 1, "fields": [
+    {"name": "elemId", "offset": 0, "kind": "any"}
+  ]}},
+  "PointForceLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "frameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "magnitude", "slot": 4, "kind": "real"},
+    {"name": "directionX", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "PointForceLoad1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "magnitude", "slot": 3, "kind": "real"},
+    {"name": "node1", "slot": 4, "kind": "integer"},
+    {"name": "node2", "slot": 5, "kind": "integer"}
+  ]},
+  "PointForceLoad2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "magnitude", "slot": 3, "kind": "real"},
+    {"name": "node1", "slot": 4, "kind": "integer"},
+    {"name": "node2", "slot": 5, "kind": "integer"},
+    {"name": "node3", "slot": 6, "kind": "integer"},
+    {"name": "node4", "slot": 7, "kind": "integer"}
+  ]},
+  "PointMomentLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "frameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "magnitude", "slot": 4, "kind": "real"},
+    {"name": "directionX", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "directionY", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "directionZ", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "PointMomentLoad1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "magnitude", "slot": 3, "kind": "real"},
+    {"name": "node1", "slot": 4, "kind": "integer"},
+    {"name": "node2", "slot": 5, "kind": "integer"}
+  ]},
+  "PointMomentLoad2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer"},
+    {"name": "magnitude", "slot": 3, "kind": "real"},
+    {"name": "node1", "slot": 4, "kind": "integer"},
+    {"name": "node2", "slot": 5, "kind": "integer"},
+    {"name": "node3", "slot": 6, "kind": "integer"},
+    {"name": "node4", "slot": 7, "kind": "integer"}
+  ]},
+  "PointsPressureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "pressure", "slot": 2, "kind": "real"},
+    {"name": "node1", "slot": 3, "kind": "integer"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "node3", "slot": 5, "kind": "integer"},
+    {"name": "node4", "slot": 6, "kind": "integer", "default": "0"}
+  ]},
+  "RotationalForceLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node", "slot": 2, "kind": "integer", "default": "0"},
+    {"name": "frameId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "magnitude", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "radius1", "slot": 5, "kind": "real", "default": "0.0"},
+    {"name": "radius2", "slot": 6, "kind": "real", "default": "0.0"},
+    {"name": "radius3", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "methodName", "slot": 8, "kind": "integer", "default": "1"},
+    {"name": "angularAcceleration", "slot": 9, "kind": "real", "default": "0.0"},
+    {"name": "mainBulkFlag", "slot": 10, "kind": "integer", "default": "0"},
+    {"name": "regionId", "slot": 11, "kind": "integer", "default": "0"}
+  ]},
+  "ScalarPointLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "loads", "firstSlot": 2, "period": 2, "fields": [
+    {"name": "scalarPoint", "offset": 0, "kind": "integer"},
+    {"name": "magnitude", "offset": 1, "kind": "real"}
+  ]}},
+  "ShellPressureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "pressure", "slot": 2, "kind": "real"}
+  ], "group": {"name": "elements", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "elemId", "offset": 0, "kind": "any"}
+  ]}},
+  "StaticLoadSequence": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "excitationId", "slot": 2, "kind": "integer"},
+    {"name": "loadId", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "tableId", "slot": 4, "kind": "integer", "default": "0"}
+  ]},
+  "SuperelementLoadCombination": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "scaleFactor", "slot": 2, "kind": "real"}
+  ], "group": {"name": "terms", "firstSlot": 3, "period": 2, "fields": [
+    {"name": "termScaleFactor", "offset": 0, "kind": "real"},
+    {"name": "loadId", "offset": 1, "kind": "integer"}
+  ]}},
+  "TemperatureTimeGroup": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "TimeTemperatureLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "groupId", "slot": 2, "kind": "integer"},
+    {"name": "tableId", "slot": 3, "kind": "integer"}
+  ]},
+  "WettedSurfaceLoad": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "wettedSurfaceId", "slot": 2, "kind": "integer"},
+    {"name": "serviceName", "slot": 3, "kind": "text"}
+  ]}
+ }
+}

@@ -1,0 +1,96 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: ply columns, failure indices and strength ratios of laminates
+#
+# Validates:
+#   - the last column of a ply table under STRESS(VONMISES) and under
+#     STRESS(MAXS) (subcases 1 and 2)
+#   - the failure indices (OEFIT) of CQUAD4 and CTRIA3 laminates for the four
+#     theories, and the strength ratios (PARAM,SRCOMPS,YES: OESRT)
+# Settles (library item: current status):
+#   - the ply column flagged maximum shear that holds von Mises
+#   - failure_indices.ctria3_composite real SORT1 (not_validated ->
+#     validated)
+#   - the strength ratios (OESRT is raw; the composite criteria of the
+#     queries use stored ratios when present)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;laminate ply columns, failure indices, strength ratios
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+StrainOutput;All;PlotOnly;FiberDistance
+SubcaseStart;1
+LabelText;von Mises in the last column
+StressOutput;All;PlotOnly;PrintListing;VonMisesStress
+SubcaseStart;2
+LabelText;maximum shear in the last column
+StressOutput;All;PlotOnly;PrintListing;MaxShearStress
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Four laminated plates, one failure theory each (HILL, HOFF, TSAI, STRN),
+# CQUAD4 and CTRIA3.
+OrthoMat2D;2;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9;-3.E-7;2.8E-5;20.;1500.;1200.;50.;200.;80.;0.01
+OrthoMat2D;3;1.35E+5;9.E+3;0.3;5.E+3;5.E+3;3500.;1.6E-9;-3.E-7;2.8E-5;20.;0.011;0.009;0.006;0.02;0.012;0.01;;1.
+CompProp;10;;;60.;Hill;20.;;;2;0.25;0.;Yes;2;0.25;45.;Yes;2;0.25;-45.;Yes;2;0.25;90.;Yes
+Node;101;;0.;0.;0.
+Node;102;;10.;0.;0.
+Node;103;;20.;0.;0.
+Node;104;;0.;10.;0.
+Node;105;;10.;10.;0.
+Node;106;;20.;10.;0.
+ShellQuad4;101;10;101;102;105;104
+ShellTria3;102;10;102;103;106
+ShellTria3;103;10;102;106;105
+SinglePointConstrList;1;123456;101;104
+PointForceLoad;1;103;;1.;100.;0.;1.
+PointForceLoad;1;106;;1.;100.;0.;1.
+CompProp;11;;;60.;Hoffman;20.;;;2;0.25;0.;Yes;2;0.25;45.;Yes;2;0.25;-45.;Yes;2;0.25;90.;Yes
+Node;201;;0.;100.;0.
+Node;202;;10.;100.;0.
+Node;203;;20.;100.;0.
+Node;204;;0.;110.;0.
+Node;205;;10.;110.;0.
+Node;206;;20.;110.;0.
+ShellQuad4;201;11;201;202;205;204
+ShellTria3;202;11;202;203;206
+ShellTria3;203;11;202;206;205
+SinglePointConstrList;1;123456;201;204
+PointForceLoad;1;203;;1.;100.;0.;1.
+PointForceLoad;1;206;;1.;100.;0.;1.
+CompProp;12;;;60.;TsaiWu;20.;;;2;0.25;0.;Yes;2;0.25;45.;Yes;2;0.25;-45.;Yes;2;0.25;90.;Yes
+Node;301;;0.;200.;0.
+Node;302;;10.;200.;0.
+Node;303;;20.;200.;0.
+Node;304;;0.;210.;0.
+Node;305;;10.;210.;0.
+Node;306;;20.;210.;0.
+ShellQuad4;301;12;301;302;305;304
+ShellTria3;302;12;302;303;306
+ShellTria3;303;12;302;306;305
+SinglePointConstrList;1;123456;301;304
+PointForceLoad;1;303;;1.;100.;0.;1.
+PointForceLoad;1;306;;1.;100.;0.;1.
+CompProp;13;;;60.;StrainTheory;20.;;;3;0.25;0.;Yes;3;0.25;45.;Yes;3;0.25;-45.;Yes;3;0.25;90.;Yes
+Node;401;;0.;300.;0.
+Node;402;;10.;300.;0.
+Node;403;;20.;300.;0.
+Node;404;;0.;310.;0.
+Node;405;;10.;310.;0.
+Node;406;;20.;310.;0.
+ShellQuad4;401;13;401;402;405;404
+ShellTria3;402;13;402;403;406
+ShellTria3;403;13;402;406;405
+SinglePointConstrList;1;123456;401;404
+PointForceLoad;1;403;;1.;100.;0.;1.
+PointForceLoad;1;406;;1.;100.;0.;1.
+Parameter;StrengthRatioCompositeStress;Yes
+Parameter;NoCompositeStress;0

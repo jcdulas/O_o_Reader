@@ -1,0 +1,47 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: ID namespaces: two AEFACT entries with the same ID (SOL 101)
+#
+# Validates:
+#   - whether the solver accepts two entries of these types with one ID (a fatal
+#     message, a warning, or both kept), and which survives in GEOM2 / GEOM4
+#     (PARAM,POST,-1 with the geometry) and in the listing echo
+# Settles (library item: current status):
+#   - the 'duplicate-ID' readings (the library has one element ID space and
+#     drops the earlier card)
+# Run notes:
+#   - this deck is refused by O_o_Reader in strict mode on purpose
+#     (check_decks.py expects the DeckError); a FATAL from the solver is a result
+#     too: bring the listing back whatever happens
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: ID namespaces
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load
+[model]
+Parameter;PostprocessingFile;-1
+# A plate of 2 x 1 CQUAD4 clamped at x = 0 and two AEFACT entries with the
+# same ID. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+Node;7;;30.;0.;0.
+SinglePointConstrList;1;123456;1;4
+PointForceLoad;1;3;;1.;0.;0.;1.
+AeroFactorList;5;0.;0.5;1.
+AeroFactorList;5;0.;0.25;1.

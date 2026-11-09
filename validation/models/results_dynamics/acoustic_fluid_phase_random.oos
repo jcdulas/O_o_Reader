@@ -1,0 +1,38 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: fluid elements, magnitude/phase and random tables
+#
+# Covers:
+#   - solution: SOL 108 (direct frequency response) of the coupled
+#     fluid-structure model of acoustic_model.inc, with a random analysis
+#     (RANDPS, TABRND1) of the same subcase
+#   - outputs: the complex pressure tables of the fluid CHEXA, CPENTA, CTETRA
+#     and CPYRAM (element types 76 to 79) in magnitude/phase, and their random
+#     tables (PSDF, ATOC, CRMS, RMS, number of zero crossings) in SORT1 and
+#     SORT2
+# Run notes:
+#   - results_dynamics/acoustic_fluid_frequency.bdf asks for the real and
+#     imaginary form of the same tables
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;fluid elements, magnitude/phase and random
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+RandomAnalysisSelection;91
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+ElemForceOutput;All;PlotOnly;MagnitudePhase;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults
+SubcaseStart;1
+LabelText;plate-driven cavity
+[model]
+Parameter;PostprocessingFile;-1
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;5.E+3;1.;EndTable
+FreqLinearSteps1;41;100.;100.;20
+RandomSpectralDensity;91;1;1;1.;0.;92
+TableRandomSpectrum1;92;;;1.;1.;5.E+3;1.;EndTable
+Include;acoustic_model.oos

@@ -1,0 +1,50 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: normal modes, effective mass, SORT2 eigenvectors (SOL 103)
+#
+# Validates:
+#   - the real eigenvectors in SORT2 (subcase 2) and SORT1 (subcase 1)
+#   - the modal effective mass and participation factors (MEFFMASS with a
+#     reference grid point)
+#   - the grid point weight (OGPWG), the kinetic and strain energies of the
+#     modes
+#   - the element tables of the modes (stresses, forces) of every family
+# Settles (library item: current status):
+#   - eigenvectors real SORT2 (not_validated)
+#   - the named result modal_effective_mass (made in memory; the OUTPUT2 file matrices
+#     MEFMASS, MPFACS, EFMFACS, RBMASSS and EFMASSS/EFMFSMS, which the writer
+#     does not write)
+#   - setup: MEFFMASS with GRID= (hand decks only)
+#   - the OUTPUT2 file and HDF5 files of one run with no rigid-body modes of a free
+#     structure
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader validation: normal modes
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+EigenMethodSelection;71
+ModalEffectiveMassOutput;Yes;PrintListing;PunchFile;GRID=1801;ResultSummary;ParticipationFactors;EffectiveMassPerMode;EffectiveWeightPerMode;FractionSummary
+SubcaseStart;1
+LabelText;SORT1 modes with element output
+DisplacementOutput;All;PlotOnly;SortByPoint
+StressOutput;All;PlotOnly;SortByPoint;CornerResults
+ElemForceOutput;All;PlotOnly;SortByPoint
+ElemStrainEnergyOutput;All;PlotOnly
+ElemKineticEnergyOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;2
+LabelText;SORT2 eigenvectors
+DisplacementOutput;All;PlotOnly;SortByTime
+SinglePointConstrForceOutput;All;PlotOnly;SortByTime
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;WeightReferenceNode;0
+LanczosEigenMethod;71;;;12
+Include;../common/elements_model.oos

@@ -1,0 +1,104 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: component mode reduction of the residual structure
+# with every degree-of-freedom set entry, and user sets (SOL 103)
+#
+# Covers:
+#   - cards: ASET, BSET, BSET1, CSET, CSET1, QSET, QSET1, OMIT, OMIT1, USET,
+#     USET1, DEFUSET
+#   - solution: SOL 103 (normal modes of a cantilever plate reduced to a
+#     boundary set and eight generalized coordinates)
+#   - outputs: eigenvalues, eigenvectors
+# Run notes:
+#   - the q-set (SPOINT 1001 to 1008) makes the solver compute component modes of
+#     the residual structure with EIGRL 2 (PARAM,METHCMRS), b-set fixed and
+#     c-set free; the system modes use EIGRL 1
+#   - PARAM,USETPRT,0 with USETSTR1 prints the user sets U1 and U2
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: component mode reduction and DOF sets
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;modes of the reduced cantilever plate
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;ResidualModeMethod;2
+Parameter;DofSetPrint;0
+Parameter;DofSetPrintSets1;U1:U2
+# Units: mm, N, tonne, s. Aluminium plate 80 x 20 x 2 mm, 8 x 2 CQUAD4,
+# clamped at x = 0.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;50.;0.;0.
+Node;7;;60.;0.;0.
+Node;8;;70.;0.;0.
+Node;9;;80.;0.;0.
+Node;11;;0.;10.;0.
+Node;12;;10.;10.;0.
+Node;13;;20.;10.;0.
+Node;14;;30.;10.;0.
+Node;15;;40.;10.;0.
+Node;16;;50.;10.;0.
+Node;17;;60.;10.;0.
+Node;18;;70.;10.;0.
+Node;19;;80.;10.;0.
+Node;21;;0.;20.;0.
+Node;22;;10.;20.;0.
+Node;23;;20.;20.;0.
+Node;24;;30.;20.;0.
+Node;25;;40.;20.;0.
+Node;26;;50.;20.;0.
+Node;27;;60.;20.;0.
+Node;28;;70.;20.;0.
+Node;29;;80.;20.;0.
+ShellQuad4;1;1;1;2;12;11
+ShellQuad4;2;1;2;3;13;12
+ShellQuad4;3;1;3;4;14;13
+ShellQuad4;4;1;4;5;15;14
+ShellQuad4;5;1;5;6;16;15
+ShellQuad4;6;1;6;7;17;16
+ShellQuad4;7;1;7;8;18;17
+ShellQuad4;8;1;8;9;19;18
+ShellQuad4;9;1;11;12;22;21
+ShellQuad4;10;1;12;13;23;22
+ShellQuad4;11;1;13;14;24;23
+ShellQuad4;12;1;14;15;25;24
+ShellQuad4;13;1;15;16;26;25
+ShellQuad4;14;1;16;17;27;26
+ShellQuad4;15;1;17;18;28;27
+ShellQuad4;16;1;18;19;29;28
+SinglePointConstrList;1;123456;1;11;21
+# Analysis set: the tip (fixed boundary, b-set), the mid-span line (free
+# boundary in z, c-set), one more point retained by ASET (it goes to the
+# b-set, as BSET and CSET are both given) and eight generalized
+# coordinates (q-set). Every other degree of freedom is omitted; OMIT and
+# OMIT1 name a few of them explicitly.
+FixedBoundaryDofSet;9;12345;19;12345
+FixedBoundaryDofSet1;12345;29
+FreeBoundaryDofSet;5;3
+FreeBoundaryDofSet1;3;15;25
+AnalysisDofSet;17;3
+ScalarPoint;1001;Through;1008
+GeneralizedDofSet1;0;1001;Through;1006
+GeneralizedDofSet;1007;0;1008;0
+OmittedDofSet;13;3;23;3
+OmittedDofSet1;3;3;Through;4
+# User sets: U1 and U2 are printed by PARAM,USETSTR1; U4 is renamed TIPS.
+UserDofSet;U1;9;3;29;3
+UserDofSet1;U2;3;5;15;25
+DofSetRenames;U4;TIPS
+UserDofSet1;TIPS;3;9;19;29
+# EIGRL 1: system modes; EIGRL 2: component modes of the residual.
+LanczosEigenMethod;1;;;5
+LanczosEigenMethod;2;;;8

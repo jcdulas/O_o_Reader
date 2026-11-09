@@ -1,0 +1,46 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: heat shell with top and bottom power inputs (SLOADN1)
+#
+# Covers:
+#   - cards: SLOADN1
+#   - solution: SOL 400 (ANALYSIS = HSTAT, steady-state heat transfer)
+#   - outputs: temperatures: real, SORT1
+# Run notes:
+#   - the two CQUAD4 are heat shells with a temperature on each face (PSHLN1,
+#     ANAL = IH, BEH4H = DCT): components 1 and 2 of a grid point are its top
+#     and bottom temperatures
+#   - the edge x = 0 is held at 20 degrees on both faces (SPC 1); SLOADN1 10
+#     puts 50 mW on the top face of grid point 3 and on the bottom face of
+#     grid point 6
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: heat shell power inputs
+BulkEcho;None
+SubcaseStart;1
+StepStart;1
+LabelText;steady state, power on the top and bottom faces
+AnalysisKind;SteadyHeatTransfer
+SinglePointConstrSelection;1
+StaticLoadSelection;10
+ThermalOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+# Aluminium plate of 2 x 1 CQUAD4 (x 0 to 100, y 0 to 50, 2 mm thick). Units:
+# mm, N, tonne, s; conductivity in N/(s K).
+HeatIsoMat;1;237.;9.E+8;2.7E-9
+ShellProp;1;1;2.
+ShellPropNonlinear;1;;;ImplicitHeat;FourNodeElems;;;ThickShell;Linear
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;0.;50.;0.
+Node;5;;50.;50.;0.
+Node;6;;100.;50.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+SinglePointConstr;1;1;12;20.;4;12;20.
+HeatShellNodalLoad;10;3;1;50.;6;2;50.

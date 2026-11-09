@@ -1,0 +1,85 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: control surface setting as a design variable (SOL 200)
+#
+# Covers:
+#   - cards: DVPSURF
+#   - solution: SOL 200 (static aeroelastic trim, ANALYSIS = SAERO, minimum
+#     weight with the elevator setting and the skin thickness designed)
+#   - outputs: displacements and CQUAD4 stresses of each design cycle, the
+#     design tables (DESTAB, HISADD)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: designed control surface setting
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DesignObjectiveSelection;31;MinimumObjective
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim, angle of attack fixed, elevator designed
+AnalysisKind;StaticAeroelasticity
+TrimSelection;1
+SubcaseDesignConstrSelection;40
+[model]
+Parameter;PostprocessingFile;-1
+# A straight wing: an aluminium plate 200 mm (chord, x) by 1000 mm (span, y),
+# 2 x 4 CQUAD4, clamped at the root. Units: mm, N, t, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;8.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;250.;0.
+Node;5;;100.;250.;0.
+Node;6;;200.;250.;0.
+Node;7;;0.;500.;0.
+Node;8;;100.;500.;0.
+Node;9;;200.;500.;0.
+Node;10;;0.;750.;0.
+Node;11;;100.;750.;0.
+Node;12;;200.;750.;0.
+Node;13;;0.;1.E+3;0.
+Node;14;;100.;1.E+3;0.
+Node;15;;200.;1.E+3;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+ShellQuad4;7;1;10;11;14;13
+ShellQuad4;8;1;11;12;15;14
+SinglePointConstrList;1;123456;1;2;3
+# Aerodynamics: one doublet-lattice panel (8 spanwise x 4 chordwise boxes)
+# over the plate, splined to all structural grid points. The elevator ELEV
+# is the trailing-edge box row of the outboard half, hinged at x = 150.
+AeroStaticParams;;;200.;2.E+3;4.E+5
+AeroLiftingPanelProp1;1000
+AeroLiftingPanel1;1001;1000;;8;4;;;1;0.;0.;0.;200.;0.;1.E+3;0.;200.
+IdListSet1;1100;1;Through;15
+AeroSurfaceSpline1;1101;1001;1001;1032;1100
+RectFrame2;10;;150.;0.;0.;150.;0.;10.;160.;0.;0.
+AeroBoxList;1200;1020;1024;1028;1032
+AeroControlSurface;1201;ELEV;10;1200
+AeroRigidTrimVariable;1301;AngleOfAttack
+# Trim 1: Mach 0.2, dynamic pressure 0.002 MPa, angle of attack 0.02 rad,
+# elevator 0.03 rad (replaced at each cycle by the designed setting).
+AeroTrim;1;0.2;0.002;AngleOfAttack;0.02;ELEV;0.03
+# Design variables: the elevator setting (rad) through DVPSURF, the skin
+# thickness through DVPREL1.
+DesignVar;1;ELEVSET;0.03;-0.2;0.2
+DesignVar;2;THICK;8.;4.;12.
+DesignControlSurface;11;ELEV;1;1;1.
+DesignPropRelation1;12;ShellProp;1;thickness;4.;12.;;2;1.
+# Responses: weight (objective), tip deflections at the leading and trailing
+# edges and the skin von Mises stress (constraints).
+DesignResp1;31;WEIGHT;Weight
+DesignResp1;32;TIPZ;Displacement;;;3;;13;15
+DesignResp1;33;VMZ1;Stress;ShellProp;;9;;1
+DesignConstr;40;32;-10.;;10.
+DesignConstr;40;33;;;100.
+DesignOptimParams;MaxDesignCycles;6

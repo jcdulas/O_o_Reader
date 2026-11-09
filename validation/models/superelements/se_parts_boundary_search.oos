@@ -1,0 +1,191 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: part superelements: boundary search options (SOL 101)
+#
+# Validates:
+#   - SEBNDRY, SEEXCLD, SECONCT with LOC = NO, two SEBULK TOLs met at one
+#     interface, and the tolerance the solver's automatic search applies (gaps of
+#     5e-6 to 1e-4 near 0 and near 1e3)
+#   - the boundary points and their numbers (GPLS tables of PARAM,POST,-2; the
+#     listing BOUNDARY SEQUENCE ASSIGNMENT TABLE)
+# Settles (library item: current status):
+#   - 'Not validated against the solver': SEBNDRY, SEEXCLD,
+#     SECONCT with LOC = NO, the precedence of two SEBULK TOLs
+#   - the tolerance rule (points 2.77e-5 apart joined by the solver)
+#   - superelement_point_list (experimental)
+# Run notes:
+#   - PARAM,POST,-2 writes the GPLS tables; run it a
+#     second time with PARAM,POST,-1 into a subfolder post-1 for the per-
+#     superelement geometry
+#   - run it a third time with PARAM,CONFAC,1.0E-4 added (subfolder confac)
+#     for the tolerance probe
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: part superelement boundary search
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip load on the residual
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-2
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;SuperelementMappingPrint;1
+# Residual structure: a plate of 4 x 1 CQUAD4 (x 0 to 40, y 0 to 10) clamped
+# at x = 0, and a second plate at x = 1000 (coordinates near 1e3 for the
+# tolerance probe). Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+SinglePointConstrList;1;123456;1;6
+Node;101;;1.E+3;0.;0.
+Node;102;;1010.;0.;0.
+Node;103;;1.E+3;10.;0.
+Node;104;;1010.;10.;0.
+Node;105;;1.E+3;20.;0.
+Node;106;;1010.;20.;0.
+Node;107;;1.E+3;30.;0.
+Node;108;;1010.;30.;0.
+Node;109;;1.E+3;40.;0.
+Node;110;;1010.;40.;0.
+ShellQuad4;101;1;101;102;104;103
+ShellQuad4;102;1;103;104;106;105
+ShellQuad4;103;1;105;106;108;107
+ShellQuad4;104;1;107;108;110;109
+SinglePointConstrList;1;123456;101;102
+PointForceLoad;1;5;;10.;0.;0.;1.
+# Superelement options (main Bulk Data): part 10 searched automatically but
+# only at its SEBNDRY grid points; part 20 has a grid point excluded from its
+# connection to part 10 (SEEXCLD); part 30 is joined by SECONCT with LOC = NO
+# to residual points 0.5 mm away; part 40 probes the automatic search at gaps
+# of 5e-6 to 1e-4 (no TOL, PARAM,CONFAC at its default), near x = 0 and near x
+# = 1000 (part 50); parts 60 and 70 have two different SEBULK TOLs and meet
+# each other 1e-4 apart.
+SuperelementBulkOptions;10;Primary;;Automatic
+SuperelementBoundarySearch;10;All;1001;1003;1006
+SuperelementBulkOptions;20;Primary;;Automatic
+SuperelementExcludedNodes;20;10;2004
+SuperelementBulkOptions;30;Primary;;Manual
+SuperelementConnection;30;0;;No;3001;1;3004;2
+SuperelementBulkOptions;40;Primary;;Automatic
+SuperelementBulkOptions;50;Primary;;Automatic
+SuperelementBulkOptions;60;Primary;;Automatic;0.001
+SuperelementBulkOptions;70;Primary;;Automatic;1.E-6
+[model;SuperelementPart;10]
+# Part 10: x 40 to 60. Its points at x = 40 are 1001 and 1004; SEBNDRY lists
+# 1001, 1003 and 1006, so 1004 is not searched and part 10 hangs on the
+# residual by 1001 alone (one grid point of a shell carries all six
+# components); 1003 and 1006 face part 20.
+Node;1001;;40.;0.;0.
+Node;1002;;50.;0.;0.
+Node;1003;;60.;0.;0.
+Node;1004;;40.;10.;0.
+Node;1005;;50.;10.;0.
+Node;1006;;60.;10.;0.
+ShellQuad4;1001;1;1001;1002;1005;1004
+ShellQuad4;1002;1;1002;1003;1006;1005
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9
+[model;SuperelementPart;20]
+# Part 20: x 60 to 80, coincident with part 10 at x = 60 (2001, 2004); SEEXCLD
+# 20 10 2006 is a grid point of the interface: only 2001 joins part 10 (one
+# grid point of a shell carries all six components).
+Node;2001;;60.;0.;0.
+Node;2002;;70.;0.;0.
+Node;2003;;80.;0.;0.
+Node;2004;;60.;10.;0.
+Node;2005;;70.;10.;0.
+Node;2006;;80.;10.;0.
+ShellQuad4;2001;1;2001;2002;2005;2004
+ShellQuad4;2002;1;2002;2003;2006;2005
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9
+[model;SuperelementPart;30]
+# Part 30: below the residual, its points 3001 and 3004 0.5 mm from residual
+# points 1 and 2 (SECONCT LOC = NO joins them anyway).
+Node;3001;;0.;-0.5;0.
+Node;3002;;10.;-10.;0.
+Node;3003;;0.;-10.;0.
+Node;3004;;10.;-0.5;0.
+ShellQuad4;3001;1;3003;3002;3004;3001
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9
+[model;SuperelementPart;40]
+# Part 40: above the residual, its lower edge 5e-6, 1e-5, 2e-5, 2.8e-5 and
+# 5e-5 above residual points 6 to 10 (y = 10); its upper edge is clamped so
+# that it stands whatever the search joins.
+Node;4001;;0.;10.;0.
+Node;4011;;0.;20.;0.
+Node;4002;;10.;10.00001;0.
+Node;4012;;10.;20.;0.
+Node;4003;;20.;10.00002;0.
+Node;4013;;20.;20.;0.
+Node;4004;;30.;10.00003;0.
+Node;4014;;30.;20.;0.
+Node;4005;;40.;10.00005;0.
+Node;4015;;40.;20.;0.
+ShellQuad4;4001;1;4001;4002;4012;4011
+ShellQuad4;4002;1;4002;4003;4013;4012
+ShellQuad4;4003;1;4003;4004;4014;4013
+ShellQuad4;4004;1;4004;4005;4015;4014
+SinglePointConstrList;1;123456;4011;4015
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9
+[model;SuperelementPart;50]
+# Part 50: at x = 1010 beside the second residual plate, gaps of 5e-6, 2e-5,
+# 2.8e-5 and 1e-4 at coordinates near 1e3; its far edge is clamped.
+Node;5001;;1010.;0.;0.
+Node;5011;;1020.;0.;0.
+Node;5002;;1010.;10.;0.
+Node;5012;;1020.;10.;0.
+Node;5003;;1010.;20.;0.
+Node;5013;;1020.;20.;0.
+Node;5004;;1010.;30.;0.
+Node;5014;;1020.;30.;0.
+ShellQuad4;5001;1;5001;5011;5012;5002
+ShellQuad4;5002;1;5002;5012;5013;5003
+ShellQuad4;5003;1;5003;5013;5014;5004
+SinglePointConstrList;1;123456;5011;5014
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9
+[model;SuperelementPart;60]
+# Part 60 (SEBULK TOL 1e-3): a plate at y = 100, clamped on its left edge.
+Node;6001;;0.;100.;0.
+Node;6002;;10.;100.;0.
+Node;6003;;0.;110.;0.
+Node;6004;;10.;110.;0.
+ShellQuad4;6001;1;6001;6002;6004;6003
+SinglePointConstrList;1;123456;6001;6003
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9
+[model;SuperelementPart;70]
+# Part 70 (SEBULK TOL 1e-6): its left edge 1e-4 from the right edge of part
+# 60, clamped on its right edge.
+Node;7001;;10.0001;100.;0.
+Node;7002;;20.;100.;0.
+Node;7003;;20.;110.;0.
+Node;7004;;10.0001;110.;0.
+ShellQuad4;7001;1;7001;7002;7003;7004
+SinglePointConstrList;1;123456;7002;7003
+ShellProp;1;1;2.;1;;1
+IsoMat;1;7.E+4;;0.33;2.7E-9

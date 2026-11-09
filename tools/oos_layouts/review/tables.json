@@ -1,0 +1,1134 @@
+{
+  "description": "Reviewed card layouts of the tables family (src/model/cards/tables).",
+  "cards": {
+    "TableDynamic1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "xAxisKind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "yAxisKind",
+          "slot": 3,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableDynamic2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "abscissaShift",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableDynamic3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "abscissaShift",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaScale",
+          "slot": 3,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableDynamic4": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "abscissaShift",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaScale",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaMinimum",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaMaximum",
+          "slot": 5,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "coefficients",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "coefficient",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "TableDynamic5": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "table",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "TableFatigueHistory": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "ordinates",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "ordinate",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "TableGustSpectrum": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "turbulenceScaleRatio",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "gustVelocity",
+          "slot": 4,
+          "kind": "real"
+        }
+      ]
+    },
+    "TableHeat1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableHeatTwoVariables": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "table",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "TableMaterial1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "xAxisKind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "yAxisKind",
+          "slot": 3,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableMaterial2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "abscissaShift",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableMaterial3": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "abscissaShift",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaScale",
+          "slot": 3,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableMaterial4": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "abscissaShift",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaScale",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaMinimum",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "abscissaMaximum",
+          "slot": 5,
+          "kind": "real"
+        }
+      ],
+      "group": {
+        "name": "coefficients",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "coefficient",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "TableModalDamping1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text",
+          "default": "StructuralDamping"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableMultiVariable0": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "aboveRangeTableId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "smoothing",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "abscissa",
+            "offset": 0,
+            "kind": "real"
+          },
+          {
+            "name": "ordinate",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableMultiVariable1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "variableCount",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "kind1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "kind2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "kind3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "kind4",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount1",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount2",
+          "slot": 8,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount3",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount4",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation1",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation2",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation3",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation4",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId1",
+          "slot": 17,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId1",
+          "slot": 18,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId2",
+          "slot": 19,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId2",
+          "slot": 20,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId3",
+          "slot": 21,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId3",
+          "slot": 22,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId4",
+          "slot": 23,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId4",
+          "slot": 24,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing1",
+          "slot": 25,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing2",
+          "slot": 26,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing3",
+          "slot": 27,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing4",
+          "slot": 28,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "xValues1",
+        "firstSlot": 33,
+        "period": 1,
+        "count": "valueCount1",
+        "fields": [
+          {
+            "name": "variableValues1",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      },
+      "nextGroups": [
+        {
+          "name": "xValues2",
+          "period": 1,
+          "count": "valueCount2",
+          "fields": [
+            {
+              "name": "variableValues2",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "xValues3",
+          "period": 1,
+          "count": "valueCount3",
+          "fields": [
+            {
+              "name": "variableValues3",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "xValues4",
+          "period": 1,
+          "count": "valueCount4",
+          "fields": [
+            {
+              "name": "variableValues4",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "yValues",
+          "period": 1,
+          "fields": [
+            {
+              "name": "ordinate",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        }
+      ]
+    },
+    "TableMultiVariable2": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "variableCount",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "kind1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "kind2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "kind3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "kind4",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount1",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount2",
+          "slot": 8,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount3",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "valueCount4",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation1",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation2",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation3",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "extrapolation4",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId1",
+          "slot": 17,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId1",
+          "slot": 18,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId2",
+          "slot": 19,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId2",
+          "slot": 20,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId3",
+          "slot": 21,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId3",
+          "slot": 22,
+          "kind": "integer"
+        },
+        {
+          "name": "belowRangeTableId4",
+          "slot": 23,
+          "kind": "integer"
+        },
+        {
+          "name": "aboveRangeTableId4",
+          "slot": 24,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing1",
+          "slot": 25,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing2",
+          "slot": 26,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing3",
+          "slot": 27,
+          "kind": "integer"
+        },
+        {
+          "name": "smoothing4",
+          "slot": 28,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "xValues1",
+        "firstSlot": 33,
+        "period": 1,
+        "count": "valueCount1",
+        "fields": [
+          {
+            "name": "variableValues1",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      },
+      "nextGroups": [
+        {
+          "name": "xValues2",
+          "period": 1,
+          "count": "valueCount2",
+          "fields": [
+            {
+              "name": "variableValues2",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "xValues3",
+          "period": 1,
+          "count": "valueCount3",
+          "fields": [
+            {
+              "name": "variableValues3",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "xValues4",
+          "period": 1,
+          "count": "valueCount4",
+          "fields": [
+            {
+              "name": "variableValues4",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        },
+        {
+          "name": "yValues",
+          "period": 1,
+          "fields": [
+            {
+              "name": "ordinate",
+              "offset": 0,
+              "kind": "real"
+            }
+          ]
+        }
+      ]
+    },
+    "TableRandomSpectrum1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "xAxisKind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "yAxisKind",
+          "slot": 3,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableScattered3D": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "xOffset",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yOffset",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zOffset",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "valueOffset",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 4,
+        "fields": [
+          {
+            "name": "pointX",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "pointY",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "pointZ",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "pointValue",
+            "offset": 3,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableStress1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "integer",
+          "default": "1"
+        }
+      ],
+      "group": {
+        "name": "points",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "x",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "y",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "TableStressTemperature": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "temperature",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "table",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "TableTimeHistoryFile": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "xAxisKind",
+          "slot": 2,
+          "kind": "text",
+          "default": "Linear"
+        },
+        {
+          "name": "yAxisKind",
+          "slot": 3,
+          "kind": "text",
+          "default": "Linear"
+        },
+        {
+          "name": "externalFileId",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "fileType",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "channel",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "totalTime",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "punch",
+          "slot": 8,
+          "kind": "text",
+          "default": "No"
+        }
+      ],
+      "group": {
+        "name": "windows",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "windowStart",
+            "offset": 0,
+            "kind": "any"
+          },
+          {
+            "name": "windowEnd",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "TableUserRoutine": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "groupName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "routineName",
+          "slot": 3,
+          "kind": "text",
+          "default": "ExternalFunction"
+        }
+      ]
+    }
+  }
+}

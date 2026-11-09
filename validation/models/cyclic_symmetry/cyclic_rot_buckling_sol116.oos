@@ -1,0 +1,65 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rotational cyclic symmetry, buckling of a disk
+#
+# Covers:
+#   - cards: LOADCYH (harmonic 0), CYSYM (ROT), CYJOIN (with CORD2C,
+#     CQUAD4, EIGRL)
+#   - solution: SOL 116 (cyclic symmetry buckling: a static subcase, then
+#     the buckling subcase)
+#   - outputs: displacements, eigenvalues, eigenvectors of the segments
+# Run notes:
+#   - the segment of cyclic_rot_static_sol114.bdf without the hub: the
+#     inner edge is pushed outwards, the outer edge clamped; buckling loads
+#     are given as harmonic 0 (LOADCYH), as the solution asks
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;116
+[case]
+TitleText;O_o_Reader test model: cyclic symmetry buckling
+BulkEcho;None
+SinglePointConstrSelection;1
+HarmonicsSelection;All
+CyclicSegmentOutput;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;radial push on the inner edge
+StaticLoadSelection;10
+SubcaseStart;2
+LabelText;buckling
+EigenMethodSelection;1
+[model]
+Parameter;PostprocessingFile;-1
+# Six segments of 60 degrees about the z axis of the basic system.
+CyclicSymmetry;6;Rotational
+# The segment: an annular steel plate of 2 x 2 CQUAD4, r 50 to 100, theta 0
+# to 60, given and displaced in the cylindrical system 1 (z along the axis).
+# Units: mm, N, tonne, s.
+CylindricalFrame2;1;0;0.;0.;0.;0.;0.;1.;1.;0.;0.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;1;50.;0.;0.;1
+Node;2;1;75.;0.;0.;1
+Node;3;1;100.;0.;0.;1
+Node;4;1;50.;30.;0.;1
+Node;5;1;75.;30.;0.;1
+Node;6;1;100.;30.;0.;1
+Node;7;1;50.;60.;0.;1
+Node;8;1;75.;60.;0.;1
+Node;9;1;100.;60.;0.;1
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+# Side 1 (theta = 0) is joined to side 2 (theta = 60) of the next segment.
+CyclicBoundaryJoin;1;;1;2;3
+CyclicBoundaryJoin;2;;7;8;9
+# The outer edge is clamped.
+SinglePointConstrList;1;123456;3;6;9
+# The same radial force on the inner edge of every segment (harmonic 0),
+# on side 1 and in the middle (side 2 belongs to the next segment).
+PointForceLoad;11;1;1;1.E+3;1.;0.;0.
+PointForceLoad;11;4;1;1.E+3;1.;0.;0.
+CyclicHarmonicLoad;10;1.;0;Cosine;1.;11
+LanczosEigenMethod;1;;;3

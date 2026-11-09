@@ -1,0 +1,52 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: FRF based assembly of the plate and the struts
+#
+# Covers:
+#   - cards: FRFCOMP, FRFCONN, FRFFLEX, FRFRELS, FRFSPC1, FBALOAD, FBADLAY,
+#            FBAPHAS
+#   - solution: SOL 108 (FRF based assembly, FRF(ASM))
+#   - outputs: displacements: complex magnitude/phase, SORT1
+# Run notes:
+#   - run dynamics/frf_gen_plate.bdf and dynamics/frf_gen_strut.bdf first, in
+#     the same folder: this run reads their OUTPUT2 files (ASSIGN INPUTT2,
+#     units 25 and 26); the FRFCOMP entries are written here, so the .asm
+#     files of the generation runs are not INCLUDEd
+#   - connections: plate 5 to strut 201 explicit (FRFCONN) and flexible along
+#     z (FRFFLEX), plate 15 to strut 211 found by coordinates, its rotations
+#     released (FRFRELS); FRFSPC1 holds plate 15 along x
+#   - the load is a unit force along z at plate point 15 given through
+#     FBALOAD, with the delay of FBADLAY and the phase of FBAPHAS
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;INPUTT2='frf_gen_plate_frf.out2';FileUnit=25
+FileAssignment;INPUTT2='frf_gen_strut_frf.out2';FileUnit=26
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: FRF based assembly
+BulkEcho;None
+SinglePointConstrSelection;300
+DynamicLoadSelection;400
+FreqSetSelection;41
+FrfGeneration;;ASM ASMOUT =All
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+SubcaseStart;1
+LabelText;plate on two struts, assembled from FRFs
+[model]
+Parameter;PostprocessingFile;-1
+FreqLinearSteps1;41;10.;10.;29
+# The two FRF components, read from the OUTPUT2 files of the generation runs.
+FrfComponent;10;PLATE;BinaryResultsFile;25
+FrfComponent;20;STRUT;BinaryResultsFile;26
+# Connections and supports of the assembly.
+FrfConnection;1;PLATE;5;STRUT;201
+FrfFlexibleConnection;2;3;PLATE;5;STRUT;201;;1.E+3;;0.5;;0.02
+FrfReleasedDofs;3;456;STRUT;211
+FrfSinglePointConstr;300;1;PLATE;15
+# Dynamic load: RLOAD2 400 with the FBA forms of the scale factor, delay and
+# phase.
+FreqResponseLoad2;400;401;402;;403;;;1.
+FrfAssemblyLoadScale;401;PLATE;15;3;1.
+FrfAssemblyLoadDelay;402;PLATE;15;3;5.E-4
+FrfAssemblyLoadPhase;403;PLATE;15;3;20.

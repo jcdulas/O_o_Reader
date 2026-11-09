@@ -1,0 +1,81 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rotor on two-dimensional bearings
+#
+# Covers:
+#   - cards: CBUSH2D, PBUSH2D, PBSH2DT (with ROTORG, RSPINR, RGYRO, CBEAM,
+#     CONM2, RBE2, TABLED1, RLOAD1, DAREA, FREQ1)
+#   - solution: SOL 108 (direct frequency response with the gyroscopic terms
+#     of a spinning rotor)
+#   - outputs: complex displacements, SPC forces and beam forces,
+#     real/imaginary (OUTPUT2)
+# Run notes:
+#   - RGYRO 41 (asynchronous, reference rotor 1 at 3000 RPM) is selected by
+#     the Case Control RGYRO
+#   - PBSH2DT needs a rotor in the model (ROTORG 1); the bearing stiffnesses
+#     follow TABLED1 22 in the frequency loop, the nominal values of PBUSH2D
+#     elsewhere
+#   - the bearings are not on the rotor line: RBE2 links each rotor end to its
+#     bearing grid, as the ROTORG remarks ask
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: rotor on two-dimensional bearings
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DynamicLoadSelection;50
+FreqSetSelection;31
+RotordynamicSelection;41
+DisplacementOutput;All;PlotOnly;SortByPoint;RealPart
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint;RealPart
+ElemForceOutput;All;PlotOnly;SortByPoint;RealPart
+SubcaseStart;1
+LabelText;lateral harmonic force on the disk, 10 to 590 Hz
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. Steel (MAT1 1).
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+FreqLinearSteps1;31;10.;20.;29
+# Rotor 1: a 400 mm shaft of diameter 20 (four CBEAM on PBEAM 11) along x, a
+# disk (CONM2 with its polar inertia) at mid-span. RSPINR gives the rotor its
+# spin direction (101 to 105) and a relative speed of 1; RGYRO 41 sets the
+# reference speed.
+Node;101;;0.;0.;0.
+Node;102;;100.;0.;0.
+Node;103;;200.;0.;0.
+Node;104;;300.;0.;0.
+Node;105;;400.;0.;0.
+RotorLineNodes;1;101;Through;105
+BeamProp;11;1;314.16;7854.;7854.;0.;15708.
+Beam2;101;11;101;102;0.;;0.;1.
+Beam2;102;11;102;103;0.;;0.;1.
+Beam2;103;11;103;104;0.;;0.;1.
+Beam2;104;11;104;105;0.;;0.;1.
+PointMassInertia;110;103;;0.002;;;;2.5;0.;1.25;0.;0.;1.25
+RotorRelativeSpin;1;101;105;RevolutionsPerMinute;;1.
+RotordynamicParams;41;AsynchronousWhirl;1;RevolutionsPerMinute;;;3.E+3
+# Bearings: at each shaft end an RBE2 carries the rotor grid to a bearing grid
+# (201, 205) at the same place; a CBUSH2D in the YZ plane joins the bearing
+# grid to a clamped grid (301, 305). PBUSH2D 21 holds the nominal stiffness
+# and damping, PBSH2DT 21 the stiffness tables.
+Node;201;;0.;0.;0.
+Node;205;;400.;0.;0.
+Node;301;;0.;0.;0.
+Node;305;;400.;0.;0.
+RigidBodyStar;201;101;123456;201
+RigidBodyStar;205;105;123456;205
+BushProp2D;21;1.E+4;1.E+4;1.;1.
+BushProp2DFreq;21;Stiffness;22;22
+Bushing2D;211;21;201;301;0;PlaneYz
+Bushing2D;215;21;205;305;0;PlaneYz
+TableDynamic1;22;;;0.;1.E+4;1.E+3;2.E+4;EndTable
+# Constraints and load: SPC set 1 clamps the outer bearing grids and holds the
+# axial and torsional motion of the shaft at grid 101; RLOAD1 50 applies a
+# unit lateral force (DAREA 51) on the disk with the constant TABLED1 52.
+SinglePointConstrList;1;123456;301;305
+SinglePointConstrList;1;14;101
+DynamicLoadScale;51;103;2;1.
+FreqResponseLoad1;50;51;;;;;52
+TableDynamic1;52;;;0.;1.;1.E+3;1.;EndTable

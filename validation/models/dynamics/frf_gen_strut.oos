@@ -1,0 +1,51 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: FRF generation of component 20, the struts
+#
+# Covers:
+#   - cards: FRFXIT1
+#   - solution: SOL 108 (direct frequency response, FRF generation for an FRF
+#               based assembly)
+#   - outputs: displacements: complex magnitude/phase, SORT1 (one subcase per
+#              unit load)
+# Run notes:
+#   - FRF(COMPID=20 ...) generates the FRFs of two steel struts standing under
+#     the free corners of the plate (their top points 201 and 211 coincide
+#     with plate points 5 and 15) on frf_gen_strut_frf.out2 (unit 26)
+#   - unit loads: FRFXIT1 along x at the mid points 202 and 212, plus the
+#     program's loads at the connection points 201 and 211 (SET 200)
+#   - bring back frf_gen_strut_frf.out2 and the .asm file next to the deck
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;OUTPUT2='frf_gen_strut_frf.out2';FileUnit=26;FileForm=Unformatted
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: FRF generation, strut component
+BulkEcho;None
+SinglePointConstrSelection;1
+FreqSetSelection;41
+SetDefinition;200;201;211
+FrfGeneration;;COMPID = 20 COMPNAME = STRUT CONNPTS = 200 OP2 = 26
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+SubcaseStart;1
+LabelText;FRFs of the struts
+[model]
+Parameter;PostprocessingFile;-1
+FreqLinearSteps1;41;10.;10.;29
+FrfExcitationDofList;1;202;212
+# Two steel struts of 2 CBAR each (diameter 10 mm) from z = -100 (clamped) up
+# to the plate corners.
+IsoMat;2;2.1E+5;;0.3;7.85E-9;;;0.02
+BarProp;2;2;78.54;490.9;490.9;981.7
+Node;201;;200.;0.;0.
+Node;202;;200.;0.;-50.
+Node;203;;200.;0.;-100.
+Node;211;;200.;100.;0.
+Node;212;;200.;100.;-50.
+Node;213;;200.;100.;-100.
+Bar2;201;2;201;202;1.;;0.;0.
+Bar2;202;2;202;203;1.;;0.;0.
+Bar2;211;2;211;212;1.;;0.;0.
+Bar2;212;2;212;213;1.;;0.;0.
+SinglePointConstrList;1;123456;203;213

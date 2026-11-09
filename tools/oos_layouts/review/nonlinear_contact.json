@@ -1,0 +1,5290 @@
+{
+  "description": "Reviewed card layouts of the nonlinear_contact family (src/model/cards/nonlinear_contact).",
+  "cards": {
+    "BoltConnection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "controlNode",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lists",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Top",
+            "name": "top",
+            "list": {
+              "name": "topNodes",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "topNode",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Bottom",
+            "name": "bottom",
+            "list": {
+              "name": "bottomNodes",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "bottomNode",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "BoltPretension": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "controlNode",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "form",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "directionX",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "directionY",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "directionZ",
+          "slot": 6,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "offset",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "idType",
+          "slot": 8,
+          "kind": "text",
+          "default": "List"
+        }
+      ],
+      "sections": {
+        "name": "lists",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Elems",
+            "name": "elementList",
+            "list": {
+              "name": "elements",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "element",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Nodes",
+            "name": "nodeList",
+            "list": {
+              "name": "nodes",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "node",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "BrakeMotion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "velocity",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "form",
+          "slot": 9,
+          "kind": "text"
+        },
+        {
+          "name": "cosineX",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "cosineY",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "cosineZ",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "xCoord",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "yCoord",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "zCoord",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "BrakeProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "number"
+          }
+        ]
+      }
+    },
+    "BrakeSqueal": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "loadFactor",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "areaStiffness",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "squealOnly",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "axisX",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "axisY",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "axisZ",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "xCoord",
+          "slot": 12,
+          "kind": "real"
+        },
+        {
+          "name": "yCoord",
+          "slot": 13,
+          "kind": "real"
+        },
+        {
+          "name": "zCoord",
+          "slot": 14,
+          "kind": "real"
+        }
+      ]
+    },
+    "BrakeSystem": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "loadFactor",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "frictionVectorMode",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "squealOnly",
+          "slot": 4,
+          "kind": "text",
+          "default": "Yes"
+        },
+        {
+          "name": "slidingContactOption",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "disks",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "diskName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "firstBodyId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "secondBodyId",
+            "offset": 2,
+            "kind": "integer"
+          },
+          {
+            "name": "firstMotionId",
+            "offset": 3,
+            "kind": "integer"
+          },
+          {
+            "name": "secondMotionId",
+            "offset": 4,
+            "kind": "integer"
+          },
+          {
+            "name": "brakePropId",
+            "offset": 5,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactAutoParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactBeamCap": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "capKind",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "segmentCount",
+          "slot": 3,
+          "kind": "integer",
+          "default": "32"
+        }
+      ]
+    },
+    "ContactBeamRadius": {
+      "fields": [
+        {
+          "name": "radius",
+          "slot": 1,
+          "kind": "real"
+        },
+        {
+          "name": "idKind",
+          "slot": 2,
+          "kind": "text",
+          "default": "ElemId"
+        }
+      ],
+      "group": {
+        "name": "ids",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "entityId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactBeamSectionFlags": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "branch1",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "segmentFlag1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "branch2",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "segmentFlag2",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "branch3",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "segmentFlag3",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "segments",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "branch",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "segmentFlag",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactBezierSurface": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "pointCount1",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "pointCount2",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "subdivisions1",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "subdivisions2",
+          "slot": 5,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 6,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactBody": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "noMotionLine",
+          "when": {
+            "field": "lines",
+            "kinds": [
+              "text"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "dimension",
+              "slot": 2,
+              "kind": "text",
+              "default": "ThreeDimensional"
+            },
+            {
+              "name": "behavior",
+              "slot": 3,
+              "kind": "text",
+              "default": "Deformable"
+            },
+            {
+              "name": "surfaceId",
+              "slot": 4,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "contactKind",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "friction",
+              "slot": 6,
+              "kind": "number",
+              "default": "0.0"
+            },
+            {
+              "name": "splineSegmentsId",
+              "slot": 7,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "control",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            }
+          ],
+          "sections": {
+            "name": "lines",
+            "firstSlot": 9,
+            "keyOffset": 0,
+            "kinds": [
+              {
+                "key": "Advance",
+                "name": "advance",
+                "fields": [
+                  {
+                    "name": "smoothingAngle",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "contactOption",
+                    "offset": 2,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "midsideProjection",
+                    "offset": 4,
+                    "kind": "integer"
+                  }
+                ]
+              },
+              {
+                "key": "Rigid",
+                "name": "rigid",
+                "fields": [
+                  {
+                    "name": "referenceNode",
+                    "offset": 1,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "entityCount",
+                    "offset": 2,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "rigidBodyName",
+                    "offset": 3,
+                    "kind": "text",
+                    "span": 3
+                  }
+                ]
+              },
+              {
+                "key": "ApproachVelocity",
+                "name": "approach",
+                "fields": [
+                  {
+                    "name": "approachAngularVelocity",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis1",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis2",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis3",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity1",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity2",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity3",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "Growth",
+                "name": "growth",
+                "fields": [
+                  {
+                    "name": "growthFactor1",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor2",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor3",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthTable1",
+                    "offset": 4,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable2",
+                    "offset": 5,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable3",
+                    "offset": 6,
+                    "kind": "integer"
+                  }
+                ]
+              },
+              {
+                "key": "HeatTransfer",
+                "name": "heat",
+                "fields": [
+                  {
+                    "name": "environmentFilmCoefficient",
+                    "offset": 1,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "sinkTemperature",
+                    "offset": 2,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "contactHeatTransferCoefficient",
+                    "offset": 3,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "bodyTemperature",
+                    "offset": 4,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactConvectionCoefficient",
+                    "offset": 5,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactNaturalConvectionCoefficient",
+                    "offset": 6,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "thermalInterfaceKind",
+                    "offset": 7,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "nearContactNaturalConvectionExponent",
+                    "offset": 9,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "emissivity",
+                    "offset": 10,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "distanceDependentConvectionCoefficient",
+                    "offset": 11,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactNonlinearConvectionCoefficient",
+                    "offset": 12,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactNonlinearConvectionExponent",
+                    "offset": 13,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNonlinearConvectionCoefficient",
+                    "offset": 14,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNonlinearConvectionExponent",
+                    "offset": 15,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNaturalConvectionCoefficient",
+                    "offset": 17,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNaturalConvectionExponent",
+                    "offset": 18,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "additionalHeatCoefficient1",
+                    "offset": 19,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "additionalHeatCoefficient2",
+                    "offset": 20,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "PatchSurface",
+                "name": "patchSurface",
+                "fields": [
+                  {
+                    "name": "patchCount",
+                    "offset": 1,
+                    "kind": "integer"
+                  }
+                ],
+                "list": {
+                  "name": "patches",
+                  "offset": 9,
+                  "period": 5,
+                  "perLine": 1,
+                  "fields": [
+                    {
+                      "name": "patchId",
+                      "offset": 0,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode1",
+                      "offset": 1,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode2",
+                      "offset": 2,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode3",
+                      "offset": 3,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode4",
+                      "offset": 4,
+                      "kind": "integer"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "BezierSurface",
+                "name": "bezierSurface",
+                "fields": [
+                  {
+                    "name": "pointCount1",
+                    "offset": 1,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "pointCount2",
+                    "offset": 2,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "subdivisions1",
+                    "offset": 3,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "subdivisions2",
+                    "offset": 4,
+                    "kind": "integer"
+                  }
+                ],
+                "list": {
+                  "name": "controlPoints",
+                  "offset": 9,
+                  "period": 1,
+                  "perLine": 7,
+                  "fields": [
+                    {
+                      "name": "controlPoint",
+                      "offset": 0,
+                      "kind": "integer"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "NurbsCurve",
+                "name": "nurbsCurve",
+                "list": {
+                  "name": "curveData",
+                  "offset": 1,
+                  "period": 1,
+                  "perLine": 7,
+                  "fields": [
+                    {
+                      "name": "curveDataValue",
+                      "offset": 0,
+                      "kind": "number"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "NurbsSurface",
+                "name": "nurbsSurface",
+                "list": {
+                  "name": "surfaceData",
+                  "offset": 1,
+                  "period": 1,
+                  "perLine": 7,
+                  "fields": [
+                    {
+                      "name": "surfaceDataValue",
+                      "offset": 0,
+                      "kind": "number"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "motionLine",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "dimension",
+              "slot": 2,
+              "kind": "text",
+              "default": "ThreeDimensional"
+            },
+            {
+              "name": "behavior",
+              "slot": 3,
+              "kind": "text",
+              "default": "Deformable"
+            },
+            {
+              "name": "surfaceId",
+              "slot": 4,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "contactKind",
+              "slot": 5,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "friction",
+              "slot": 6,
+              "kind": "number",
+              "default": "0.0"
+            },
+            {
+              "name": "splineSegmentsId",
+              "slot": 7,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "control",
+              "slot": 8,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "loadNode",
+              "slot": 9,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "angularVelocity",
+              "slot": 10,
+              "kind": "number"
+            },
+            {
+              "name": "axisCosine1",
+              "slot": 11,
+              "kind": "number"
+            },
+            {
+              "name": "axisCosine2",
+              "slot": 12,
+              "kind": "number"
+            },
+            {
+              "name": "axisCosine3",
+              "slot": 13,
+              "kind": "number"
+            },
+            {
+              "name": "rigidVelocity1",
+              "slot": 14,
+              "kind": "number"
+            },
+            {
+              "name": "rigidVelocity2",
+              "slot": 15,
+              "kind": "number"
+            },
+            {
+              "name": "rigidVelocity3",
+              "slot": 16,
+              "kind": "number"
+            }
+          ],
+          "sections": {
+            "name": "lines",
+            "firstSlot": 17,
+            "keyOffset": 0,
+            "kinds": [
+              {
+                "key": "Advance",
+                "name": "advance",
+                "fields": [
+                  {
+                    "name": "smoothingAngle",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "contactOption",
+                    "offset": 2,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "midsideProjection",
+                    "offset": 4,
+                    "kind": "integer"
+                  }
+                ]
+              },
+              {
+                "key": "Rigid",
+                "name": "rigid",
+                "fields": [
+                  {
+                    "name": "referenceNode",
+                    "offset": 1,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "entityCount",
+                    "offset": 2,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "rigidBodyName",
+                    "offset": 3,
+                    "kind": "text",
+                    "span": 3
+                  }
+                ]
+              },
+              {
+                "key": "ApproachVelocity",
+                "name": "approach",
+                "fields": [
+                  {
+                    "name": "approachAngularVelocity",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis1",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis2",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis3",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity1",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity2",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity3",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "Growth",
+                "name": "growth",
+                "fields": [
+                  {
+                    "name": "growthFactor1",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor2",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor3",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthTable1",
+                    "offset": 4,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable2",
+                    "offset": 5,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable3",
+                    "offset": 6,
+                    "kind": "integer"
+                  }
+                ]
+              },
+              {
+                "key": "HeatTransfer",
+                "name": "heat",
+                "fields": [
+                  {
+                    "name": "environmentFilmCoefficient",
+                    "offset": 1,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "sinkTemperature",
+                    "offset": 2,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "contactHeatTransferCoefficient",
+                    "offset": 3,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "bodyTemperature",
+                    "offset": 4,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactConvectionCoefficient",
+                    "offset": 5,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactNaturalConvectionCoefficient",
+                    "offset": 6,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "thermalInterfaceKind",
+                    "offset": 7,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "nearContactNaturalConvectionExponent",
+                    "offset": 9,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "emissivity",
+                    "offset": 10,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "distanceDependentConvectionCoefficient",
+                    "offset": 11,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactNonlinearConvectionCoefficient",
+                    "offset": 12,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "nearContactNonlinearConvectionExponent",
+                    "offset": 13,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNonlinearConvectionCoefficient",
+                    "offset": 14,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNonlinearConvectionExponent",
+                    "offset": 15,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNaturalConvectionCoefficient",
+                    "offset": 17,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "environmentNaturalConvectionExponent",
+                    "offset": 18,
+                    "kind": "number"
+                  },
+                  {
+                    "name": "additionalHeatCoefficient1",
+                    "offset": 19,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "additionalHeatCoefficient2",
+                    "offset": 20,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "PatchSurface",
+                "name": "patchSurface",
+                "fields": [
+                  {
+                    "name": "patchCount",
+                    "offset": 1,
+                    "kind": "integer"
+                  }
+                ],
+                "list": {
+                  "name": "patches",
+                  "offset": 9,
+                  "period": 5,
+                  "perLine": 1,
+                  "fields": [
+                    {
+                      "name": "patchId",
+                      "offset": 0,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode1",
+                      "offset": 1,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode2",
+                      "offset": 2,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode3",
+                      "offset": 3,
+                      "kind": "integer"
+                    },
+                    {
+                      "name": "patchNode4",
+                      "offset": 4,
+                      "kind": "integer"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "BezierSurface",
+                "name": "bezierSurface",
+                "fields": [
+                  {
+                    "name": "pointCount1",
+                    "offset": 1,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "pointCount2",
+                    "offset": 2,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "subdivisions1",
+                    "offset": 3,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "subdivisions2",
+                    "offset": 4,
+                    "kind": "integer"
+                  }
+                ],
+                "list": {
+                  "name": "controlPoints",
+                  "offset": 9,
+                  "period": 1,
+                  "perLine": 7,
+                  "fields": [
+                    {
+                      "name": "controlPoint",
+                      "offset": 0,
+                      "kind": "integer"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "NurbsCurve",
+                "name": "nurbsCurve",
+                "list": {
+                  "name": "curveData",
+                  "offset": 1,
+                  "period": 1,
+                  "perLine": 7,
+                  "fields": [
+                    {
+                      "name": "curveDataValue",
+                      "offset": 0,
+                      "kind": "number"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "NurbsSurface",
+                "name": "nurbsSurface",
+                "list": {
+                  "name": "surfaceData",
+                  "offset": 1,
+                  "period": 1,
+                  "perLine": 7,
+                  "fields": [
+                    {
+                      "name": "surfaceDataValue",
+                      "offset": 0,
+                      "kind": "number"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "ContactBody1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bodyParamsId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "dimension",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "behavior",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "surfaceId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "rigidMotionId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "forceReferencePoint",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "ContactBodyChange": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "ranges",
+        "firstSlot": 3,
+        "period": 4,
+        "fields": [
+          {
+            "name": "bodyId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "firstNode",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "lastNode",
+            "offset": 2,
+            "kind": "integer"
+          },
+          {
+            "name": "increment",
+            "offset": 3,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactBodyMove": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "moveKind",
+          "slot": 2,
+          "kind": "text",
+          "default": "Approach"
+        }
+      ],
+      "group": {
+        "name": "bodies",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "bodyId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactBodyParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactBoxRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "inclusionRule",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "coordinateForm",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "cornerNode1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "cornerNode2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerX1",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "cornerNode3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerY1",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "cornerNode4",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerZ1",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "cornerNode5",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerX2",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "cornerNode6",
+          "slot": 8,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerY2",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "cornerNode7",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerZ2",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "cornerNode8",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "cornerX3",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "cornerY3",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "cornerZ3",
+          "slot": 12,
+          "kind": "real"
+        },
+        {
+          "name": "cornerX4",
+          "slot": 13,
+          "kind": "real"
+        },
+        {
+          "name": "cornerY4",
+          "slot": 14,
+          "kind": "real"
+        },
+        {
+          "name": "cornerZ4",
+          "slot": 15,
+          "kind": "real"
+        },
+        {
+          "name": "cornerX5",
+          "slot": 16,
+          "kind": "real"
+        },
+        {
+          "name": "cornerY5",
+          "slot": 17,
+          "kind": "real"
+        },
+        {
+          "name": "cornerZ5",
+          "slot": 18,
+          "kind": "real"
+        },
+        {
+          "name": "cornerX6",
+          "slot": 19,
+          "kind": "real"
+        },
+        {
+          "name": "cornerY6",
+          "slot": 20,
+          "kind": "real"
+        },
+        {
+          "name": "cornerZ6",
+          "slot": 21,
+          "kind": "real"
+        },
+        {
+          "name": "cornerX7",
+          "slot": 22,
+          "kind": "real"
+        },
+        {
+          "name": "cornerY7",
+          "slot": 23,
+          "kind": "real"
+        },
+        {
+          "name": "cornerZ7",
+          "slot": 24,
+          "kind": "real"
+        },
+        {
+          "name": "cornerX8",
+          "slot": 25,
+          "kind": "real"
+        },
+        {
+          "name": "cornerY8",
+          "slot": 26,
+          "kind": "real"
+        },
+        {
+          "name": "cornerZ8",
+          "slot": 27,
+          "kind": "real"
+        }
+      ]
+    },
+    "ContactControlParams": {
+      "fields": [
+        {
+          "name": "contactSetId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "parameterName1",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "parameterName2",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue2",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "parameterName3",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue3",
+          "slot": 7,
+          "kind": "any"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactElemSurface": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "elements",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "element",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactEllipsoidList": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "ellipsoidNames",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "ellipsoidName",
+            "offset": 0,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "ContactFaceRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bodyParamsId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "dimension",
+          "slot": 3,
+          "kind": "text",
+          "default": "ThreeDimensional"
+        },
+        {
+          "name": "form",
+          "slot": 5,
+          "kind": "text",
+          "default": "Face"
+        },
+        {
+          "name": "includeThickness",
+          "slot": 6,
+          "kind": "text",
+          "default": "Yes"
+        },
+        {
+          "name": "edgeContact",
+          "slot": 7,
+          "kind": "integer",
+          "default": "1"
+        }
+      ],
+      "group": {
+        "name": "faces",
+        "firstSlot": 9,
+        "period": 4,
+        "perLine": 2,
+        "fields": [
+          {
+            "name": "faceElemId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "faceId",
+            "offset": 1,
+            "kind": "any"
+          },
+          {
+            "name": "idType",
+            "offset": 2,
+            "kind": "any"
+          },
+          {
+            "name": "node",
+            "offset": 3,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactMaterialRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "materials",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "matId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactNodeRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bodyParamsId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "dimension",
+          "slot": 3,
+          "kind": "any",
+          "default": "ThreeDimensional"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 4,
+        "period": 1,
+        "fields": [
+          {
+            "name": "nodeId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactNurbsCurve": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "pointCountU",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "orderU",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "subdivisions",
+          "slot": 4,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "dataLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Node",
+            "name": "controlNodes",
+            "list": {
+              "name": "controlNodes",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "nodeId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Coordinates",
+            "name": "controlCoordinates",
+            "list": {
+              "name": "coordinates",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "coordinate",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "HomogeneousCoordinates",
+            "name": "homogeneousCoordinates",
+            "list": {
+              "name": "weights",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "homogeneous",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "KnotVector",
+            "name": "knotVector",
+            "list": {
+              "name": "knots",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "knot",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ContactNurbsSurface": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "pointCountU",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "pointCountV",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "orderU",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "orderV",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "subdivisionsU",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "subdivisionsV",
+          "slot": 7,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "dataLines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Node",
+            "name": "controlNodes",
+            "list": {
+              "name": "controlNodes",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "nodeId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Coordinates",
+            "name": "controlCoordinates",
+            "list": {
+              "name": "coordinates",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "coordinate",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "HomogeneousCoordinates",
+            "name": "homogeneousCoordinates",
+            "list": {
+              "name": "weights",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "homogeneous",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "KnotVector",
+            "name": "knotVector",
+            "list": {
+              "name": "knots",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "knot",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Trimming",
+            "name": "trimming",
+            "list": {
+              "name": "trimCurves",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "trimCurveId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ContactPair": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "geomParamsId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "physicalParamsId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "secondaryBodyId",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "primaryBodyId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "bodyLists",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Secondary",
+            "name": "secondaryList",
+            "list": {
+              "name": "secondaryBodies",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "secondaryBody",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Primary",
+            "name": "primaryList",
+            "list": {
+              "name": "primaryBodies",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "primaryBody",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ContactPairGeomParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactPairPhysicalParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 3,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "parameterName1",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "parameterName2",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue2",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "parameterName3",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue3",
+          "slot": 7,
+          "kind": "any"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactPatchSurface": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "patches",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "patchId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "node1",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "node2",
+            "offset": 2,
+            "kind": "integer"
+          },
+          {
+            "name": "node3",
+            "offset": 3,
+            "kind": "integer"
+          },
+          {
+            "name": "node4",
+            "offset": 4,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactPropertyRegion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "properties",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "propId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactRigidMotion": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "noMotionLine",
+          "when": {
+            "field": "motionLines",
+            "kinds": [
+              "text"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "referenceNode",
+              "slot": 2,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "control",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            }
+          ],
+          "sections": {
+            "name": "motionLines",
+            "firstSlot": 9,
+            "keyOffset": 0,
+            "kinds": [
+              {
+                "key": "ApproachVelocity",
+                "name": "approach",
+                "fields": [
+                  {
+                    "name": "approachAngularVelocity",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis1",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis2",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis3",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity1",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity2",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity3",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "Growth",
+                "name": "growth",
+                "fields": [
+                  {
+                    "name": "growthFactor1",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor2",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor3",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthTable1",
+                    "offset": 4,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable2",
+                    "offset": 5,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable3",
+                    "offset": 6,
+                    "kind": "integer"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "motionLine",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "referenceNode",
+              "slot": 2,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "control",
+              "slot": 3,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "loadNode",
+              "slot": 9,
+              "kind": "integer",
+              "default": "0"
+            },
+            {
+              "name": "angularVelocity",
+              "slot": 10,
+              "kind": "number"
+            },
+            {
+              "name": "axisCosine1",
+              "slot": 11,
+              "kind": "number"
+            },
+            {
+              "name": "axisCosine2",
+              "slot": 12,
+              "kind": "number"
+            },
+            {
+              "name": "axisCosine3",
+              "slot": 13,
+              "kind": "number"
+            },
+            {
+              "name": "rigidVelocity1",
+              "slot": 14,
+              "kind": "number"
+            },
+            {
+              "name": "rigidVelocity2",
+              "slot": 15,
+              "kind": "number"
+            },
+            {
+              "name": "rigidVelocity3",
+              "slot": 16,
+              "kind": "number"
+            }
+          ],
+          "sections": {
+            "name": "motionLines",
+            "firstSlot": 17,
+            "keyOffset": 0,
+            "kinds": [
+              {
+                "key": "ApproachVelocity",
+                "name": "approach",
+                "fields": [
+                  {
+                    "name": "approachAngularVelocity",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis1",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis2",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachAxis3",
+                    "offset": 4,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity1",
+                    "offset": 5,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity2",
+                    "offset": 6,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "approachVelocity3",
+                    "offset": 7,
+                    "kind": "real"
+                  }
+                ]
+              },
+              {
+                "key": "Growth",
+                "name": "growth",
+                "fields": [
+                  {
+                    "name": "growthFactor1",
+                    "offset": 1,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor2",
+                    "offset": 2,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthFactor3",
+                    "offset": 3,
+                    "kind": "real"
+                  },
+                  {
+                    "name": "growthTable1",
+                    "offset": 4,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable2",
+                    "offset": 5,
+                    "kind": "integer"
+                  },
+                  {
+                    "name": "growthTable3",
+                    "offset": 6,
+                    "kind": "integer"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "ContactRigidSurfaceList": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "rigidSurfaces",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "rigidSurfaceId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactSegment": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "surfaceId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "node1",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "node2",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "node3",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "node4",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "ContactSet": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 2,
+        "period": 8,
+        "fields": [
+          {
+            "name": "sourceRegionId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "targetRegionId",
+            "offset": 1,
+            "kind": "integer"
+          },
+          {
+            "name": "friction",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "minimumDistance",
+            "offset": 3,
+            "kind": "real"
+          },
+          {
+            "name": "maximumDistance",
+            "offset": 4,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "ContactSetUnion": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "memberSets",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "memberSetId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ContactSlideline": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "secondaryLineId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "primaryLineId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "penaltyScale",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "frictionId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "penetrationKind",
+          "slot": 7,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "frameId",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "ContactSurfaceParams": {
+      "fields": [
+        {
+          "name": "contactSetId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "parameterName1",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue1",
+          "slot": 3,
+          "kind": "any"
+        },
+        {
+          "name": "parameterName2",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue2",
+          "slot": 5,
+          "kind": "any"
+        },
+        {
+          "name": "parameterName3",
+          "slot": 6,
+          "kind": "text"
+        },
+        {
+          "name": "parameterValue3",
+          "slot": 7,
+          "kind": "any"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactTable": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "secondaryBodyId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "primaryBodyId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "setCount",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "secondaryContactOption",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "primaryContactOption",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "sets",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Secondary",
+            "name": "secondarySet",
+            "fields": [
+              {
+                "name": "setSecondaryBodyId",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "contactDistanceTolerance",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "separationForce",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "frictionCoefficient",
+                "offset": 4,
+                "kind": "number"
+              },
+              {
+                "name": "interferenceClosure",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "glueOption",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "contactSearchOrder",
+                "offset": 9,
+                "kind": "integer"
+              },
+              {
+                "name": "stressFreeInitialContact",
+                "offset": 10,
+                "kind": "integer"
+              },
+              {
+                "name": "glueSeparationOption",
+                "offset": 11,
+                "kind": "integer"
+              },
+              {
+                "name": "nearContactDistance",
+                "offset": 13,
+                "kind": "real"
+              },
+              {
+                "name": "kineticFrictionCoefficient",
+                "offset": 17,
+                "kind": "real"
+              },
+              {
+                "name": "frictionDecayCoefficient",
+                "offset": 18,
+                "kind": "real"
+              },
+              {
+                "name": "contactMethod",
+                "offset": 19,
+                "kind": "text"
+              },
+              {
+                "name": "adaptiveContactSurface",
+                "offset": 20,
+                "kind": "text"
+              },
+              {
+                "name": "contactThickness",
+                "offset": 21,
+                "kind": "real"
+              },
+              {
+                "name": "thicknessOffset",
+                "offset": 22,
+                "kind": "real"
+              },
+              {
+                "name": "penetrationLimit",
+                "offset": 23,
+                "kind": "real"
+              },
+              {
+                "name": "penaltyScaleFactor",
+                "offset": 25,
+                "kind": "real"
+              },
+              {
+                "name": "contactStartTime",
+                "offset": 26,
+                "kind": "real"
+              },
+              {
+                "name": "contactEndTime",
+                "offset": 27,
+                "kind": "real"
+              },
+              {
+                "name": "maxParametricCoordinate",
+                "offset": 28,
+                "kind": "real"
+              },
+              {
+                "name": "initialPenetrationAdjustment",
+                "offset": 35,
+                "kind": "integer"
+              },
+              {
+                "name": "ignoreInitialPenetration",
+                "offset": 43,
+                "kind": "integer"
+              },
+              {
+                "name": "automaticContact",
+                "offset": 55,
+                "kind": "text"
+              },
+              {
+                "name": "contactSide",
+                "offset": 57,
+                "kind": "text"
+              },
+              {
+                "name": "contactForceWeighting",
+                "offset": 58,
+                "kind": "text"
+              },
+              {
+                "name": "monitorDisplacement",
+                "offset": 59,
+                "kind": "text"
+              },
+              {
+                "name": "monitorDisplacementValue",
+                "offset": 60,
+                "kind": "real"
+              },
+              {
+                "name": "initialMonitor",
+                "offset": 61,
+                "kind": "real"
+              },
+              {
+                "name": "contactDamping",
+                "offset": 62,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "Primary",
+            "name": "primaryList",
+            "list": {
+              "name": "primaryBodies",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "primaryBodyIds",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "FrictionAndBias",
+            "name": "frictionAndBias",
+            "keyOffset": 1,
+            "fields": [
+              {
+                "name": "frictionStressLimit",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "contactToleranceBias",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "slidingVelocityThreshold",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "hardSoftRatio",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "touchingBodyOptions",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "touchedBodyOptions",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "GlueBreak",
+            "name": "glueBreak",
+            "keyOffset": 1,
+            "fields": [
+              {
+                "name": "glueBreakNormalStress",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "glueBreakShearStress",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "glueBreakNormalExponent",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "glueBreakShearExponent",
+                "offset": 5,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "SegmentContact",
+            "name": "segmentContact",
+            "keyOffset": 1,
+            "fields": [
+              {
+                "name": "normalPenaltyFactor",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "augmentationDistance",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "tangentPenaltyFactor",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stickSlip",
+                "offset": 5,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "HeatTransfer",
+            "name": "heatTransfer",
+            "keyOffset": 1,
+            "fields": [
+              {
+                "name": "contactHeatTransferCoefficient",
+                "offset": 2,
+                "kind": "number"
+              },
+              {
+                "name": "nearContactConvectionCoefficient",
+                "offset": 3,
+                "kind": "number"
+              },
+              {
+                "name": "nearContactNaturalConvectionCoefficient",
+                "offset": 4,
+                "kind": "number"
+              },
+              {
+                "name": "nearContactNaturalConvectionExponent",
+                "offset": 5,
+                "kind": "number"
+              },
+              {
+                "name": "emissivity",
+                "offset": 6,
+                "kind": "number"
+              },
+              {
+                "name": "distanceDependentConvectionCoefficient",
+                "offset": 7,
+                "kind": "number"
+              },
+              {
+                "name": "nearContactNonlinearConvectionCoefficient",
+                "offset": 10,
+                "kind": "number"
+              },
+              {
+                "name": "nearContactNonlinearConvectionExponent",
+                "offset": 11,
+                "kind": "number"
+              },
+              {
+                "name": "glueHeatTransfer",
+                "offset": 12,
+                "kind": "integer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ContactTable1": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "pairs",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "pairId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactTrimCurve": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "pointCount",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "order",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "subdivisions",
+          "slot": 4,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lists",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Coordinates",
+            "name": "coordinates",
+            "list": {
+              "name": "coordinates",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "coordinate",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "HomogeneousCoordinates",
+            "name": "homogeneous",
+            "list": {
+              "name": "homogeneousWeights",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "homogeneousWeight",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "KnotVector",
+            "name": "knots",
+            "list": {
+              "name": "knots",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "knot",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ContactUnglueNodes": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bodyId",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ContactUserService": {
+      "fields": [
+        {
+          "name": "bodyId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "bodyKind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "groupName",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "userRoutineName",
+          "slot": 4,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "lists",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "IntegerData",
+            "name": "integerData",
+            "list": {
+              "name": "integerData",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "integerValue",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "RealData",
+            "name": "realData",
+            "list": {
+              "name": "realData",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "realValue",
+                  "offset": 0,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "TextData",
+            "name": "textData",
+            "list": {
+              "name": "textData",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "textValue",
+                  "offset": 0,
+                  "kind": "text"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "CrackClosureCrack": {
+      "fields": [
+        {
+          "name": "setId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "crackId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "propagationKind",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "growthMethod",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "incrementMethod",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "growthCriterion",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "growthIncrement",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "growthResistance",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "growthResistanceII",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "growthResistanceIII",
+          "slot": 16,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "growthIncrementTableId",
+          "slot": 17,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "growthResistanceTableId",
+          "slot": 18,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "growthResistanceIITableId",
+          "slot": 23,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "growthResistanceIIITableId",
+          "slot": 24,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 25,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "NonlinearAdaptiveStepping": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Stepping",
+            "name": "stepping",
+            "fields": [
+              {
+                "name": "minStepRatio",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "maxStepRatio",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "minTimeStep",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "maxTimeStep",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "maxSubsteps",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "recycleCount",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "timeStepScaleFactor",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "dampingKind",
+                "offset": 9,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingFactor",
+                "offset": 10,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "Creep",
+            "name": "creep",
+            "fields": [
+              {
+                "name": "creepStepCheck",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "tensionCutoffStrain",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "tensionCutoffStress",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "cutoffTime",
+                "offset": 4,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "NonlinearBushForceTables": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "form",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "minimumFreq",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "maximumFreq",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "termTable11",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable12",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable13",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable14",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable15",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable16",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable21",
+          "slot": 17,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable22",
+          "slot": 18,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable23",
+          "slot": 19,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable24",
+          "slot": 20,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable25",
+          "slot": 21,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable26",
+          "slot": 22,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable31",
+          "slot": 25,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable32",
+          "slot": 26,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable33",
+          "slot": 27,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable34",
+          "slot": 28,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable35",
+          "slot": 29,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable36",
+          "slot": 30,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable41",
+          "slot": 33,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable42",
+          "slot": 34,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable43",
+          "slot": 35,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable44",
+          "slot": 36,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable45",
+          "slot": 37,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable46",
+          "slot": 38,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable51",
+          "slot": 41,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable52",
+          "slot": 42,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable53",
+          "slot": 43,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable54",
+          "slot": 44,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable55",
+          "slot": 45,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable56",
+          "slot": 46,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable61",
+          "slot": 49,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable62",
+          "slot": 50,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable63",
+          "slot": 51,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable64",
+          "slot": 52,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable65",
+          "slot": 53,
+          "kind": "integer"
+        },
+        {
+          "name": "termTable66",
+          "slot": 54,
+          "kind": "integer"
+        }
+      ]
+    },
+    "NonlinearBushLoad3D": {
+      "fields": [
+        {
+          "name": "setId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeA",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeB",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "loadId1",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "loadId2",
+          "slot": 6,
+          "kind": "integer"
+        }
+      ]
+    },
+    "NonlinearHarmonicFreqContinuation": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "initialFreq",
+          "slot": 2,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "initialStep",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "minimumStepSize",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "maximumStepSize",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "maximumSteps",
+          "slot": 6,
+          "kind": "integer",
+          "default": "3"
+        },
+        {
+          "name": "minimumFreq",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "maximumFreq",
+          "slot": 8,
+          "kind": "real"
+        },
+        {
+          "name": "derivativeStep",
+          "slot": 9,
+          "kind": "real",
+          "default": "1.0E-3"
+        },
+        {
+          "name": "printOnFailure",
+          "slot": 10,
+          "kind": "text",
+          "default": "No"
+        },
+        {
+          "name": "outputRequest",
+          "slot": 17,
+          "kind": "text"
+        },
+        {
+          "name": "outputFreqStep",
+          "slot": 18,
+          "kind": "real"
+        },
+        {
+          "name": "outputFreqTolerance",
+          "slot": 19,
+          "kind": "real",
+          "default": "5.0"
+        },
+        {
+          "name": "outputStartFreq",
+          "slot": 20,
+          "kind": "real"
+        },
+        {
+          "name": "outputEndFreq",
+          "slot": 21,
+          "kind": "real"
+        }
+      ]
+    },
+    "NonlinearHarmonicFreqList": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "frequencies",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "frequency",
+            "offset": 0,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "NonlinearHarmonicFreqSteps": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "startFreq",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "freqStep",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "stepCount",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        }
+      ]
+    },
+    "NonlinearHarmonicParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "subharmonicFactor",
+          "slot": 2,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "harmonicCount",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "freqListId",
+          "slot": 4,
+          "kind": "integer"
+        }
+      ]
+    },
+    "NonlinearOutputItems": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "outputItems",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "outputItem",
+            "offset": 0,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "NonlinearRadialGap": {
+      "fields": [
+        {
+          "name": "setId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeA",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeB",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "plane",
+          "slot": 4,
+          "kind": "text",
+          "default": "PlaneXy"
+        },
+        {
+          "name": "stiffnessTableId",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "clearanceTableId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "frictionTableId",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "radius",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "smoothing",
+          "slot": 9,
+          "kind": "text"
+        },
+        {
+          "name": "smoothingValue",
+          "slot": 10,
+          "kind": "real",
+          "default": "1.0E6"
+        }
+      ]
+    },
+    "NonlinearSqueezeFilmDamper": {
+      "fields": [
+        {
+          "name": "setId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeA",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeB",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "plane",
+          "slot": 4,
+          "kind": "text",
+          "default": "PlaneXy"
+        },
+        {
+          "name": "bearingDiameter",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "bearingLength",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "bearingClearance",
+          "slot": 7,
+          "kind": "real"
+        },
+        {
+          "name": "bearingKind",
+          "slot": 8,
+          "kind": "text",
+          "default": "Long"
+        },
+        {
+          "name": "viscosity",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "vapourPressure",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "portCount",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "pressure1",
+          "slot": 12,
+          "kind": "real"
+        },
+        {
+          "name": "portAngle1",
+          "slot": 13,
+          "kind": "real"
+        },
+        {
+          "name": "pressure2",
+          "slot": 14,
+          "kind": "real"
+        },
+        {
+          "name": "portAngle2",
+          "slot": 15,
+          "kind": "real"
+        },
+        {
+          "name": "pointCount",
+          "slot": 16,
+          "kind": "integer",
+          "default": "101"
+        },
+        {
+          "name": "offset1",
+          "slot": 17,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "offset2",
+          "slot": 18,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceGroup",
+          "slot": 19,
+          "kind": "text"
+        },
+        {
+          "name": "serviceEvaluation",
+          "slot": 20,
+          "kind": "text"
+        },
+        {
+          "name": "serviceParameter1",
+          "slot": 25,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter2",
+          "slot": 26,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter3",
+          "slot": 27,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter4",
+          "slot": 28,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter5",
+          "slot": 29,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter6",
+          "slot": 30,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter7",
+          "slot": 31,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "serviceParameter8",
+          "slot": 32,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "NonlinearStepControl": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "totalTime",
+          "slot": 2,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "controlSetting",
+          "slot": 3,
+          "kind": "text"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "General",
+            "name": "general",
+            "fields": [
+              {
+                "name": "maxIterations",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "minIterations",
+                "offset": 2,
+                "kind": "integer"
+              },
+              {
+                "name": "maxBisections",
+                "offset": 3,
+                "kind": "integer"
+              },
+              {
+                "name": "creepOption",
+                "offset": 4,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "LoadCaseContinue",
+            "name": "loadCaseContinue",
+            "fields": [
+              {
+                "name": "incrementCountCoupled",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "convergenceCoupled",
+                "offset": 2,
+                "kind": "text"
+              },
+              {
+                "name": "displacementToleranceCoupled",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "loadToleranceCoupled",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "energyToleranceCoupled",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "maxDivergencesCoupled",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "maxBisectionsCoupled",
+                "offset": 7,
+                "kind": "integer"
+              },
+              {
+                "name": "maxIterationsCoupled",
+                "offset": 9,
+                "kind": "integer"
+              },
+              {
+                "name": "minIterationsCoupled",
+                "offset": 10,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "FixedStepping",
+            "name": "fixedStepping",
+            "fields": [
+              {
+                "name": "incrementCount",
+                "offset": 1,
+                "kind": "integer"
+              },
+              {
+                "name": "outputInterval",
+                "offset": 2,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "AdaptiveStepping",
+            "name": "adaptiveStepping",
+            "fields": [
+              {
+                "name": "initialTimeStepFactor",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "minTimeStepFactor",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "maxTimeStepFactor",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "desiredIterations",
+                "offset": 4,
+                "kind": "integer"
+              },
+              {
+                "name": "timeStepScaleFactor",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "intermediateOutput",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "maxSubsteps",
+                "offset": 7,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingKind",
+                "offset": 9,
+                "kind": "integer"
+              },
+              {
+                "name": "dampingFactor",
+                "offset": 10,
+                "kind": "real"
+              },
+              {
+                "name": "criteriaTableId",
+                "offset": 11,
+                "kind": "integer"
+              },
+              {
+                "name": "physicsOption",
+                "offset": 12,
+                "kind": "integer"
+              },
+              {
+                "name": "targetLimit",
+                "offset": 13,
+                "kind": "integer"
+              },
+              {
+                "name": "minStepRatio",
+                "offset": 14,
+                "kind": "real"
+              },
+              {
+                "name": "maxStepRatio",
+                "offset": 15,
+                "kind": "real"
+              },
+              {
+                "name": "timeStepAdjustInterval",
+                "offset": 17,
+                "kind": "integer"
+              },
+              {
+                "name": "stepMultiplier",
+                "offset": 18,
+                "kind": "integer"
+              },
+              {
+                "name": "timeStepHoldBounds",
+                "offset": 19,
+                "kind": "real"
+              },
+              {
+                "name": "displacementConvergence",
+                "offset": 20,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "ArcLengthMethod",
+            "name": "arcLengthMethod",
+            "fields": [
+              {
+                "name": "steppingMethod",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "initialTimeStepFactorAdapted",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "minAdaptiveRatio",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "maxAdaptiveRatio",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "desiredIterationsAdapted",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "maxSubstepsAdapted",
+                "offset": 7,
+                "kind": "integer"
+              }
+            ]
+          },
+          {
+            "key": "HeatAnalysis",
+            "name": "heatAnalysis",
+            "fields": [
+              {
+                "name": "convergenceHeat",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "displacementToleranceHeat",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "loadToleranceHeat",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "energyToleranceHeat",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stiffnessMethodHeat",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "stiffnessStepHeat",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "maxQuasiNewtonVectorsHeat",
+                "offset": 9,
+                "kind": "integer"
+              },
+              {
+                "name": "maxLineSearchesHeat",
+                "offset": 10,
+                "kind": "integer"
+              },
+              {
+                "name": "lineSearchToleranceHeat",
+                "offset": 11,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "MechanicalAnalysis",
+            "name": "mechanicalAnalysis",
+            "fields": [
+              {
+                "name": "convergenceCriteria",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "displacementTolerance",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "loadTolerance",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "energyTolerance",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stiffnessMethod",
+                "offset": 5,
+                "kind": "text"
+              },
+              {
+                "name": "stiffnessUpdateStep",
+                "offset": 6,
+                "kind": "integer"
+              },
+              {
+                "name": "massRatioConvergence",
+                "offset": 7,
+                "kind": "integer"
+              },
+              {
+                "name": "maxQuasiNewtonVectors",
+                "offset": 9,
+                "kind": "integer"
+              },
+              {
+                "name": "maxLineSearches",
+                "offset": 10,
+                "kind": "integer"
+              },
+              {
+                "name": "lineSearchTolerance",
+                "offset": 11,
+                "kind": "real"
+              },
+              {
+                "name": "frictionStress",
+                "offset": 12,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "CoupledAnalysis",
+            "name": "coupledAnalysis",
+            "fields": [
+              {
+                "name": "heatFromPlasticWork",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "heatFromFriction",
+                "offset": 2,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "NonlinearUserOutput": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "groupName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "outputKind",
+          "slot": 3,
+          "kind": "text",
+          "default": "ElemExplicitOutput"
+        },
+        {
+          "name": "timeInterval",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "stepInterval",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "outputName",
+          "slot": 6,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "entities",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "entityId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "SlidelineFriction": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "stickStiffness",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "staticFriction",
+          "slot": 4,
+          "kind": "real"
+        }
+      ]
+    },
+    "SlidelineOutput": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SlidelineSegments": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "SlidelineWidth": {
+      "fields": [
+        {
+          "name": "segmentsId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "widths",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "width",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "StepControlCriteria": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "criteria",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "StrainIncrement",
+            "name": "strainIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "PlasticStrainIncrement",
+            "name": "plasticStrainIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "CreepStrainIncrement",
+            "name": "creepStrainIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "NormalizedCreepStrainIncrement",
+            "name": "normalizedCreepStrainIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "StressIncrement",
+            "name": "stressIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "StrainEnergyIncrement",
+            "name": "strainEnergyIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "TemperatureIncrement",
+            "name": "temperatureIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "DisplacementIncrement",
+            "name": "displacementIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "RotationIncrement",
+            "name": "rotationIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "NormalizedStressIncrement",
+            "name": "normalizedStressIncrement",
+            "fields": [
+              {
+                "name": "setId",
+                "offset": 1,
+                "kind": "any"
+              },
+              {
+                "name": "limit1",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd1",
+                "offset": 3,
+                "kind": "real"
+              },
+              {
+                "name": "limit2",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd2",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "limit3",
+                "offset": 6,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd3",
+                "offset": 7,
+                "kind": "real"
+              },
+              {
+                "name": "limit4",
+                "offset": 8,
+                "kind": "real"
+              },
+              {
+                "name": "rangeEnd4",
+                "offset": 9,
+                "kind": "real"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

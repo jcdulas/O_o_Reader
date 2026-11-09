@@ -1,0 +1,60 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: wetted surface of a coupled fluid (read only)
+#
+# Covers:
+#   - cards: WETELME, WETELMG, WETSURF, WETLOAD
+#   - solution: SOL 400 (nonlinear transient, external fluid loads)
+#   - outputs: none brought back (read-only deck)
+# Run notes:
+#   - read and written by O_o_Reader only: the fluid loads on the wetted
+#     surface come from an external flow code through the coupling service
+#     "fsisvc" (CONNECT SERVICE), which this project does not have
+#   - a clamped steel plate, 100 x 100 x 1 mm, 2 x 2 CQUAD4; two wetted
+#     elements by element side, two by grid points; units: mm, N, t, s
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: wetted surface (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;plate under external fluid loads
+AnalysisKind;NonlinearTransient
+NonlinearStepSelection;10
+DynamicLoadSelection;20
+DisplacementOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+# Ten fixed steps over 0.01 s.
+NonlinearStepControl;10;0.01;;FixedStepping;10
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;1.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;0.;50.;0.
+Node;5;;50.;50.;0.
+Node;6;;100.;50.;0.
+Node;7;;0.;100.;0.
+Node;8;;50.;100.;0.
+Node;9;;100.;100.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;2;3;4;6;7;8;9
+# Wetted elements: the top side of elements 1 and 2, the faces of
+# elements 3 and 4 given by their grid points.
+WettedElemSide;101;1;1
+WettedElemSide;102;2;1
+WettedElemNodes;103;Quad4Shape;4;5;8;7
+WettedElemNodes;104;Quad4Shape;5;6;9;8
+WettedSurface;1;plate;101;Through;104
+# Load set 30 of the service fsisvc on wetted surface 1, switched on by a
+# TLOAD1 with a constant table (the values are not used by the service).
+WettedSurfaceLoad;30;1;fsisvc
+TransientTableLoad1;20;30;;;;40
+TableDynamic1;40;;;0.;1.;1.;1.;EndTable

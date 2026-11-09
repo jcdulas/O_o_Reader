@@ -1,0 +1,140 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: element masses and the grid point weight (SOL 103)
+#
+# Validates:
+#   - the solver's grid point weight (OGPWG and the listing print) and element summary
+#     (ELSUM) for elements whose mass the library computes by a rule of its
+#     own: CBAR and CBEAM with offsets, CBEAM3 with an off-centre mid node,
+#     CBEND GEOM 1 to 4, distorted solids with mid-side nodes, an oblique
+#     CPYRAM, CMASS1 and CMASS2 on scalar points and on component 5
+# Settles (library item: current status):
+#   - the mass (CBAR length between the offset ends, CBEAM3 arc length and
+#     centre, CBEND mass not computed, the solids with mid-side nodes, CMASS
+#     on scalar points or rotations: confirmed against independent
+#     computations only)
+#   - the geometry (CBEAM3 length, area, volume; CBEND length)
+#   - the model mass against the grid point weight (not investigated)
+# Run notes:
+#   - the elements are free: the modes include rigid-body modes; only the grid
+#     point weight and the element summary are wanted
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader validation: element masses and grid point weight
+BulkEcho;Sorted
+EigenMethodSelection;1
+ElemSummaryOutput;All;Both
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;grid point weight
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;WeightReferenceNode;0
+# One element of each kind whose mass the library computes by a rule the solver's
+# grid point weight confirms: CBAR and CBEAM with end offsets, CBEAM3 with a
+# mid-node off centre, CBEND in its four GEOM forms, distorted CHEXA (20
+# nodes), CTETRA (10), CPENTA (15), an oblique CPYRAM, CMASS1 and CMASS2 on
+# scalar points and on component 5. Each element is free (no SPC): the run is
+# a modal analysis whose grid point weight (PARAM,GRDPNT,0) and element
+# summary (ELSUM) are the reference. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+BarProp;1;1;20.;40.;30.;50.;0.001
+BeamProp;2;1;20.;40.;30.;0.;50.;0.001
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Bar2;1;1;1;2;0.;;0.;1.;;;;5.;0.;3.;-4.;2.;1.
+Node;3;;0.;50.;0.
+Node;4;;100.;50.;0.
+Beam2;2;2;3;4;0.;;0.;1.;;;;5.;0.;3.;-4.;2.;1.
+Node;5;;0.;100.;0.
+Node;6;;100.;110.;0.
+Node;7;;55.;112.;0.
+Beam3;3;3;5;6;7;;0.;0.;1.
+BeamProp3;3;1;20.;40.;30.;0.;50.;0.001
+CurvedBeamProp;4;1;20.;40.;30.;50.
+CurvedBeamProp;5;1;20.;40.;30.;50.;30.
+CurvedBeamProp;6;1;20.;40.;30.;50.;;60.
+Node;11;;0.;200.;0.
+Node;12;;20.;220.;0.
+CurvedBeam2;10;4;11;12;;0.;1.;0.;1
+Node;13;;0.;250.;0.
+Node;14;;20.;270.;0.
+CurvedBeam2;11;4;13;14;;1.;0.;0.;2
+Node;15;;0.;300.;0.
+Node;16;;20.;320.;0.
+CurvedBeam2;12;5;15;16;;1.;-1.;0.;3
+Node;17;;0.;350.;0.
+Node;18;;20.;370.;0.
+CurvedBeam2;13;6;17;18;;1.;-1.;0.;4
+SolidProp;7;1
+Node;101;;0.;400.;0.
+Node;102;;12.;400.;0.
+Node;103;;11.;410.;1.
+Node;104;;0.;409.;0.
+Node;105;;1.;400.;10.
+Node;106;;10.;401.;11.
+Node;107;;12.;412.;10.
+Node;108;;0.;410.;12.
+Node;109;;6.;399.5;0.
+Node;110;;11.5;405.;0.5
+Node;111;;5.5;409.5;0.5
+Node;112;;0.;404.5;0.
+Node;113;;0.5;400.;5.
+Node;114;;11.;400.5;5.5
+Node;115;;11.5;411.;5.5
+Node;116;;0.;409.5;6.
+Node;117;;5.5;400.5;10.5
+Node;118;;11.;406.5;10.5
+Node;119;;6.;411.;11.
+Node;120;;0.5;405.;11.
+SolidHexa;101;7;101;102;103;104;105;106;107;108;109;110;111;112;113;114;115;116;117;118;119;120
+Node;201;;0.;450.;0.
+Node;202;;10.;450.;0.
+Node;203;;0.;460.;0.
+Node;204;;0.;450.;10.
+Node;205;;5.;450.5;0.
+Node;206;;5.;455.;0.5
+Node;207;;0.5;455.;0.
+Node;208;;0.;450.5;5.
+Node;209;;5.;450.;5.5
+Node;210;;0.;455.;5.
+SolidTetra;201;7;201;202;203;204;205;206;207;208;209;210
+Node;301;;0.;500.;0.
+Node;302;;10.;500.;0.
+Node;303;;0.;510.;0.
+Node;304;;0.;500.;10.
+Node;305;;11.;500.;10.
+Node;306;;0.;510.;11.
+Node;307;;5.;499.5;0.
+Node;308;;5.;505.;0.5
+Node;309;;0.;505.;0.
+Node;310;;0.;500.;5.
+Node;311;;10.5;500.;5.
+Node;312;;0.;510.;5.5
+Node;313;;5.5;500.;10.5
+Node;314;;5.5;505.5;10.5
+Node;315;;0.;505.;10.5
+SolidPenta;301;7;301;302;303;304;305;306;307;308;309;310;311;312;313;314;315
+Node;401;;0.;550.;0.
+Node;402;;10.;550.;0.
+Node;403;;10.;560.;0.
+Node;404;;0.;560.;0.
+Node;405;;8.;559.;7.
+SolidPyramid;401;7;401;402;403;404;405
+ScalarPoint;501;502
+Node;503;;0.;600.;0.
+MassProp;8;0.002
+MassDofProperty;501;8;501
+MassDofProperty;502;8;503;5
+MassDofInline;503;0.003;502
+MassDofInline;504;0.004;503;5
+SpringDofInline;505;10.;501
+SpringDofInline;506;10.;502
+SpringDofInline;507;10.;503;5
+LanczosEigenMethod;1;;;6

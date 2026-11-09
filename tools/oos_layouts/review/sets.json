@@ -1,0 +1,120 @@
+{
+ "description": "Reviewed card layouts of the sets family (src/model/cards/sets).",
+ "cards": {
+  "AeroPrismNodeSet2": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "aeroPanelId", "slot": 2, "kind": "integer"},
+    {"name": "spanStart", "slot": 3, "kind": "real"},
+    {"name": "spanEnd", "slot": 4, "kind": "real"},
+    {"name": "chordStart", "slot": 5, "kind": "real"},
+    {"name": "chordEnd", "slot": 6, "kind": "real"},
+    {"name": "zMaximum", "slot": 7, "kind": "real", "default": "0.0"},
+    {"name": "zMinimum", "slot": 8, "kind": "real", "default": "0.0"}
+  ]},
+  "AnalysisDofSet": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "AnalysisDofSet1": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "AxisymOmittedDofSet": {"fields": [], "group": {"name": "dofs", "firstSlot": 1, "period": 3, "perLine": 2, "fields": [
+    {"name": "ringId", "offset": 0, "kind": "integer"},
+    {"name": "harmonicId", "offset": 1, "kind": "integer"},
+    {"name": "components", "offset": 2, "kind": "integer"}
+  ]}},
+  "DofSetRenames": {"fields": [
+    {"name": "oldName1", "slot": 1, "kind": "text"},
+    {"name": "newName1", "slot": 2, "kind": "text"},
+    {"name": "oldName2", "slot": 3, "kind": "text"},
+    {"name": "newName2", "slot": 4, "kind": "text"},
+    {"name": "oldName3", "slot": 5, "kind": "text"},
+    {"name": "newName3", "slot": 6, "kind": "text"},
+    {"name": "oldName4", "slot": 7, "kind": "text"},
+    {"name": "newName4", "slot": 8, "kind": "text"}
+  ]},
+  "FixedBoundaryDofSet": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "FixedBoundaryDofSet1": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "FreeBoundaryDofSet": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "FreeBoundaryDofSet1": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "GeneralizedDofSet": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "GeneralizedDofSet1": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "IdListSet1": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "members", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "memberId", "offset": 0, "kind": "any"}
+  ]}},
+  "OmittedDofSet": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "OmittedDofSet1": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "PropertyListSet4": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "entityClass", "slot": 2, "kind": "text"},
+    {"name": "type", "slot": 3, "kind": "text"}
+  ], "group": {"name": "propIds", "firstSlot": 4, "period": 1, "fields": [
+    {"name": "propId", "offset": 0, "kind": "any"}
+  ]}},
+  "RadiatedPowerPanelSet": {"fields": [], "group": {"name": "panels", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "panelName", "offset": 0, "kind": "text"},
+    {"name": "panelSetId", "offset": 1, "kind": "integer"}
+  ]}},
+  "ShapeBoundaryNodeSet": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "TypedListSet3": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "kind", "slot": 2, "kind": "text"}
+  ], "group": {"name": "members", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "memberId", "offset": 0, "kind": "any"}
+  ]}},
+  "UserDofSet": {"fields": [
+    {"name": "setName", "slot": 1, "kind": "text"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "components1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "components2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "node3", "slot": 6, "kind": "integer"},
+    {"name": "components3", "slot": 7, "kind": "integer", "default": "0"}
+  ], "group": {"name": "pairs", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "UserDofSet1": {"fields": [
+    {"name": "setName", "slot": 1, "kind": "text"},
+    {"name": "components", "slot": 2, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}}
+ }
+}

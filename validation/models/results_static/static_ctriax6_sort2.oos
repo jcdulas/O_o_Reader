@@ -1,0 +1,30 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric CTRIAX6, SORT2
+#
+# Covers:
+#   - solution: SOL 101 (linear statics), two subcases, of the axisymmetric
+#     ring of ctriax6_model.inc
+#   - outputs: the real SORT2 stress and strain tables of CTRIAX6 (element
+#     type 53) and the strain energy of a ring element
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: CTRIAX6 statics, SORT2
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly;SortByTime
+StressOutput;All;PlotOnly;SortByTime
+StrainOutput;All;PlotOnly;SortByTime
+ElemStrainEnergyOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;axial pull and radial load
+StaticLoadSelection;1
+SubcaseStart;2
+LabelText;radial load
+StaticLoadSelection;2
+[model]
+Parameter;PostprocessingFile;-1
+Include;ctriax6_model.oos

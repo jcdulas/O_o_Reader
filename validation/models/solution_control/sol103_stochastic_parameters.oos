@@ -1,0 +1,61 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: randomised model parameters (SOL 103)
+#
+# Covers:
+#   - cards: STOCHAS
+#   - solution: SOL 103 (normal modes of a plate whose property and material
+#     values are randomised once, STOCHASTICS request)
+#   - outputs: eigenvalues, eigenvectors
+# Run notes:
+#   - each run draws new values: the frequencies differ slightly from one
+#     run to the next and from the deterministic model
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: randomised parameters
+BulkEcho;Sorted
+StochasticSelection;10
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;first modes of a cantilever plate
+[model]
+Parameter;PostprocessingFile;-1
+# Randomisation: the real values of the property entries (Gaussian, 5 %
+# coefficient of variance, 3 standard deviations) and of the material
+# entries (3 %, 2 standard deviations).
+StochasticParams;10;PropertyEntries;Gauss;0.05;3.;MaterialEntries;Gauss;0.03;2.
+# A cantilever steel plate 100 x 50 mm, 2 mm thick, 4 x 2 CQUAD4, with a
+# tip mass. Units: mm, N, t, s.
+LanczosEigenMethod;1;;;4
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;25.;0.;0.
+Node;3;;50.;0.;0.
+Node;4;;75.;0.;0.
+Node;5;;100.;0.;0.
+Node;6;;0.;25.;0.
+Node;7;;25.;25.;0.
+Node;8;;50.;25.;0.
+Node;9;;75.;25.;0.
+Node;10;;100.;25.;0.
+Node;11;;0.;50.;0.
+Node;12;;25.;50.;0.
+Node;13;;50.;50.;0.
+Node;14;;75.;50.;0.
+Node;15;;100.;50.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+PointMassInertia;101;10;;1.E-4
+SinglePointConstrList;1;123456;1;6;11

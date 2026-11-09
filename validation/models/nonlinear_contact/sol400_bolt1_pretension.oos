@@ -1,0 +1,104 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: BOLT1 pretension, two input forms (SOL 400)
+#
+# Covers:
+#   - cards: BOLT1 (FORM 0 with a list of elements, FORM 1 with SET3 lists)
+#   - solution: SOL 400 (nonlinear static, bolt pretension on the control
+#     grid points)
+#   - outputs: displacements, SPC forces, nonlinear stresses
+# Run notes:
+#   - two bolt shanks of four CHEXA each, clamped at both ends; a 1000 N
+#     pretension on T1 of each control grid point (1001, 1002)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: BOLT1 pretension (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+StepStart;1
+LabelText;pretension of both bolts
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;1
+StaticLoadSelection;1
+[model]
+Parameter;PostprocessingFile;-1
+# Steel shanks 6 x 6 x 20 mm along z (advanced nonlinear solids, PSLDN1, as
+# BOLT1 needs); no rotations on their grid points (PS 456). Units: mm, N, t.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+SolidProp;1;1
+SolidPropNonlinear;1;1;;ImplicitStructural
+# Shank 1 at x = 0: grid point IDs 100 + 10 x level + corner, levels 5 mm apart
+Node;101;;-3.;-3.;0.;;456
+Node;102;;3.;-3.;0.;;456
+Node;103;;3.;3.;0.;;456
+Node;104;;-3.;3.;0.;;456
+Node;111;;-3.;-3.;5.;;456
+Node;112;;3.;-3.;5.;;456
+Node;113;;3.;3.;5.;;456
+Node;114;;-3.;3.;5.;;456
+Node;121;;-3.;-3.;10.;;456
+Node;122;;3.;-3.;10.;;456
+Node;123;;3.;3.;10.;;456
+Node;124;;-3.;3.;10.;;456
+Node;131;;-3.;-3.;15.;;456
+Node;132;;3.;-3.;15.;;456
+Node;133;;3.;3.;15.;;456
+Node;134;;-3.;3.;15.;;456
+Node;141;;-3.;-3.;20.;;456
+Node;142;;3.;-3.;20.;;456
+Node;143;;3.;3.;20.;;456
+Node;144;;-3.;3.;20.;;456
+SolidHexa;1;1;101;102;103;104;111;112;113;114
+SolidHexa;2;1;111;112;113;114;121;122;123;124
+SolidHexa;3;1;121;122;123;124;131;132;133;134
+SolidHexa;4;1;131;132;133;134;141;142;143;144
+SinglePointConstrList;1;123;101;Through;104
+SinglePointConstrList;1;123;141;Through;144
+# Shank 2 at x = 20: grid point IDs 200 + 10 x level + corner, levels 5 mm apart
+Node;201;;17.;-3.;0.;;456
+Node;202;;23.;-3.;0.;;456
+Node;203;;23.;3.;0.;;456
+Node;204;;17.;3.;0.;;456
+Node;211;;17.;-3.;5.;;456
+Node;212;;23.;-3.;5.;;456
+Node;213;;23.;3.;5.;;456
+Node;214;;17.;3.;5.;;456
+Node;221;;17.;-3.;10.;;456
+Node;222;;23.;-3.;10.;;456
+Node;223;;23.;3.;10.;;456
+Node;224;;17.;3.;10.;;456
+Node;231;;17.;-3.;15.;;456
+Node;232;;23.;-3.;15.;;456
+Node;233;;23.;3.;15.;;456
+Node;234;;17.;3.;15.;;456
+Node;241;;17.;-3.;20.;;456
+Node;242;;23.;-3.;20.;;456
+Node;243;;23.;3.;20.;;456
+Node;244;;17.;3.;20.;;456
+SolidHexa;11;1;201;202;203;204;211;212;213;214
+SolidHexa;12;1;211;212;213;214;221;222;223;224
+SolidHexa;13;1;221;222;223;224;231;232;233;234
+SolidHexa;14;1;231;232;233;234;241;242;243;244
+SinglePointConstrList;1;123;201;Through;204
+SinglePointConstrList;1;123;241;Through;244
+# Bolt 1, simple form: the four elements of the shank, the cross-section
+# through their centre of mass (OFFSET 0.)
+Node;1001;;0.;0.;10.
+BoltPretension;1;1001;0;;;;0.;List;Elems;4;1;2;3;4
+# Bolt 2, cross-section form: the section z = 10 (grid points of SET3 22),
+# the axis along +z, the element below the section (SET3 21)
+Node;1002;;20.;0.;10.
+BoltPretension;2;1002;1;0.;0.;1.;;Set;Elems;1;21;Nodes;1;22
+TypedListSet3;21;Elements;12
+TypedListSet3;22;Node;221;Through;224
+# The pretension loads, along T1 of each control grid point
+PointForceLoad;1;1001;;1.E+3;1.;0.;0.
+PointForceLoad;1;1002;;1.E+3;1.;0.;0.
+NonlinearStepControl;1;1.;;FixedStepping;5

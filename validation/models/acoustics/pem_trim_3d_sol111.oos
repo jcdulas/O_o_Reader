@@ -1,0 +1,128 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: poroelastic trim component between plate and cavity
+#
+# Covers:
+#   - cards: ACPEMCP, TRMCPL (with MATPE1, PSOLID PORO in a BEGIN BULK TRMC
+#     part, ACMODL)
+#   - solution: SOL 111 (modal frequency response of the plate and the
+#     cavity coupled through the reduced impedance of the trim)
+#   - outputs: complex displacements and fluid pressures, plate stresses
+#     and forces, fluid element pressures
+# Run notes:
+#   - needs the PEM (poroelastic material) capability of the solver
+#   - the 10 mm gap of acoustics/plate_cavity_model.inc is a foam layer of
+#     4 x 4 CHEXA (trim component 1), glued to the plate on its bottom face
+#     and open to the cavity on its top face; the plate and the cavity are
+#     not coupled directly (ACMODL search height 0.5 mm, absolute)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;O_o_Reader test model: 3D poroelastic trim (SOL 111)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+EigenMethodSelection;1;Structure
+EigenMethodSelection;2;Fluid
+TrimGroupSelection;All
+SetDefinition;1;101;Through;116
+DisplacementOutput;All;PlotOnly
+StressOutput;1;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;plate driven at (50, 50), foam-lined cavity
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;UniformStructuralDamping;0.02
+LanczosEigenMethod;1;;2.E+3
+LanczosEigenMethod;2;;4.E+3
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;1.E+3;1.;EndTable
+FreqLinearSteps1;41;50.;50.;9
+# No direct coupling of the plate (z = 0) and the cavity floor (z = 10).
+FluidStructureInterface;DifferenceForm;None;;;0.5;SurfaceCoupling;0.5;0.75;0.5;No;Absolute
+# Trim component 1: glued to the structure (set 1 of the trim part), open
+# to the cavity (set 2); tolerances of the two interfaces.
+TrimComponentCoupling;1;1;;2
+TrimCouplingTolerances;1;SolidGlued;0.1;1.
+TrimCouplingTolerances;1;SolidOpen;0.1;1.
+Include;plate_cavity_model.oos
+[model;TrimComponent;1]
+# Foam: skeleton (MAT1 with loss factor), air in the pores (MAT10),
+# porosity, tortuosity, flow resistivity (N.s/mm4), characteristic lengths.
+IsoMat;102;0.2;;0.3;3.E-11;;;0.1
+FluidMat;103;0.142;1.2E-12
+PoroElasticMat;101;102;103;;;;1.84E-11;1.4;0.71;0.95;1.4;2.5E-8;0.1;0.2
+SolidProp;101;101;;;;;Poroelastic
+# Trim grid points 7001 to 7025 (z = 0) and 7101 to 7125 (z = 10).
+Node;7001;;0.;0.;0.
+Node;7002;;50.;0.;0.
+Node;7003;;100.;0.;0.
+Node;7004;;150.;0.;0.
+Node;7005;;200.;0.;0.
+Node;7006;;0.;50.;0.
+Node;7007;;50.;50.;0.
+Node;7008;;100.;50.;0.
+Node;7009;;150.;50.;0.
+Node;7010;;200.;50.;0.
+Node;7011;;0.;100.;0.
+Node;7012;;50.;100.;0.
+Node;7013;;100.;100.;0.
+Node;7014;;150.;100.;0.
+Node;7015;;200.;100.;0.
+Node;7016;;0.;150.;0.
+Node;7017;;50.;150.;0.
+Node;7018;;100.;150.;0.
+Node;7019;;150.;150.;0.
+Node;7020;;200.;150.;0.
+Node;7021;;0.;200.;0.
+Node;7022;;50.;200.;0.
+Node;7023;;100.;200.;0.
+Node;7024;;150.;200.;0.
+Node;7025;;200.;200.;0.
+Node;7101;;0.;0.;10.
+Node;7102;;50.;0.;10.
+Node;7103;;100.;0.;10.
+Node;7104;;150.;0.;10.
+Node;7105;;200.;0.;10.
+Node;7106;;0.;50.;10.
+Node;7107;;50.;50.;10.
+Node;7108;;100.;50.;10.
+Node;7109;;150.;50.;10.
+Node;7110;;200.;50.;10.
+Node;7111;;0.;100.;10.
+Node;7112;;50.;100.;10.
+Node;7113;;100.;100.;10.
+Node;7114;;150.;100.;10.
+Node;7115;;200.;100.;10.
+Node;7116;;0.;150.;10.
+Node;7117;;50.;150.;10.
+Node;7118;;100.;150.;10.
+Node;7119;;150.;150.;10.
+Node;7120;;200.;150.;10.
+Node;7121;;0.;200.;10.
+Node;7122;;50.;200.;10.
+Node;7123;;100.;200.;10.
+Node;7124;;150.;200.;10.
+Node;7125;;200.;200.;10.
+SolidHexa;7001;101;7001;7002;7007;7006;7101;7102;7107;7106
+SolidHexa;7002;101;7002;7003;7008;7007;7102;7103;7108;7107
+SolidHexa;7003;101;7003;7004;7009;7008;7103;7104;7109;7108
+SolidHexa;7004;101;7004;7005;7010;7009;7104;7105;7110;7109
+SolidHexa;7005;101;7006;7007;7012;7011;7106;7107;7112;7111
+SolidHexa;7006;101;7007;7008;7013;7012;7107;7108;7113;7112
+SolidHexa;7007;101;7008;7009;7014;7013;7108;7109;7114;7113
+SolidHexa;7008;101;7009;7010;7015;7014;7109;7110;7115;7114
+SolidHexa;7009;101;7011;7012;7017;7016;7111;7112;7117;7116
+SolidHexa;7010;101;7012;7013;7018;7017;7112;7113;7118;7117
+SolidHexa;7011;101;7013;7014;7019;7018;7113;7114;7119;7118
+SolidHexa;7012;101;7014;7015;7020;7019;7114;7115;7120;7119
+SolidHexa;7013;101;7016;7017;7022;7021;7116;7117;7122;7121
+SolidHexa;7014;101;7017;7018;7023;7022;7117;7118;7123;7122
+SolidHexa;7015;101;7018;7019;7024;7023;7118;7119;7124;7123
+SolidHexa;7016;101;7019;7020;7025;7024;7119;7120;7125;7124
+IdListSet1;1;7001;Through;7025
+IdListSet1;2;7101;Through;7125

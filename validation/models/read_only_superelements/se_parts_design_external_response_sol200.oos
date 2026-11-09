@@ -1,0 +1,109 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: external response across part superelements (read only)
+#
+# Covers:
+#   - cards: SEDRSP3 (with the parts, SEDLINK and SEDRSP2 of
+#     superelements_parts/se_parts_design_sol200.bdf)
+#   - solution: SOL 200 (sizing of two part superelements)
+#   - outputs: none (not run)
+# Run notes:
+#   - read only: SEDRSP3 evaluates its response with a user-supplied
+#     external routine (the DRESP3 server group USRWT), which a deck cannot
+#     bring; the deck is read and written by O_o_Reader, not run by the solver
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: external response of part superelements
+BulkEcho;None
+SinglePointConstrSelection;1
+DesignObjectiveSelection;100;MinimumObjective
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip loads on both parts
+AnalysisKind;Statics
+StaticLoadSelection;1
+SubcaseDesignConstrSelection;1
+[model]
+Parameter;PostprocessingFile;-1
+# Residual structure: a plate of 2 x 4 CQUAD4 at x 0 to 20, y 0 to 40,
+# clamped at x = 0. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+Node;7;;0.;20.;0.
+Node;8;;10.;20.;0.
+Node;9;;20.;20.;0.
+Node;10;;0.;30.;0.
+Node;11;;10.;30.;0.
+Node;12;;20.;30.;0.
+Node;13;;0.;40.;0.
+Node;14;;10.;40.;0.
+Node;15;;20.;40.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+ShellQuad4;5;1;7;8;11;10
+ShellQuad4;6;1;8;9;12;11
+ShellQuad4;7;1;10;11;14;13
+ShellQuad4;8;1;11;12;15;14
+SinglePointConstrList;1;123456;1;4;7;10;13
+# Two parts found on the residual edge x = 20: part 10 at y 0 to 10, part 20
+# at y 30 to 40.
+SuperelementBulkOptions;10;Primary;;Automatic
+SuperelementBulkOptions;20;Primary;;Automatic
+# Relations across the parts: thickness variable 21 of part 20 equals
+# variable 11 of part 10; response 100 is the weight of both parts and
+# response 101 the tip deflection of part 10.
+SuperelementDesignLink;1;20;21;0.;1.;10;11;1.
+SuperelementDesignResp2;100;TOTWT;;Sum;;;;;;DesignResp1;2;10;13;20;23
+SuperelementDesignResp2;101;TIPDZ;;Sum;;;;;;DesignResp1;1;10;14
+# Response 200: an external response of both parts, computed by the user
+# routine of group USRWT from the thicknesses and the weights of the parts.
+SuperelementDesignResp3;200;USRW;USRWT;WTUSER;;DesignVar;2;10;11;20;21;DesignResp1;2;10;13;20;23;UserData;1;SCALE1
+DesignConstr;1;101;-1.;;1.
+DesignConstr;1;200;;;1.E-5
+DesignOptimParams;MaxDesignCycles;5
+[model;SuperelementPart;10]
+# Part 10: a plate of 2 x 1 CQUAD4 at x 20 to 40, y 0 to 10, its thickness
+# designed, a load at its tip.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1001;;20.;0.;0.
+Node;1002;;30.;0.;0.
+Node;1003;;40.;0.;0.
+Node;1004;;20.;10.;0.
+Node;1005;;30.;10.;0.
+Node;1006;;40.;10.;0.
+ShellQuad4;1001;1;1001;1002;1005;1004
+ShellQuad4;1002;1;1002;1003;1006;1005
+PointForceLoad;1;1003;;5.;0.;0.;1.
+DesignVar;11;T10;2.;0.5;5.
+DesignPropRelation1;12;ShellProp;1;thickness;;;;11;1.
+DesignResp1;13;W10;Weight
+DesignResp1;14;TIP10;Displacement;;;3;;1003
+[model;SuperelementPart;20]
+# Part 20: a plate of 2 x 1 CQUAD4 at x 20 to 40, y 30 to 40, its thickness
+# designed (linked to part 10), a load at its tip.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;2001;;20.;30.;0.
+Node;2002;;30.;30.;0.
+Node;2003;;40.;30.;0.
+Node;2004;;20.;40.;0.
+Node;2005;;30.;40.;0.
+Node;2006;;40.;40.;0.
+ShellQuad4;2001;1;2001;2002;2005;2004
+ShellQuad4;2002;1;2002;2003;2006;2005
+PointForceLoad;1;2006;;5.;0.;0.;1.
+DesignVar;21;T20;2.;0.5;5.
+DesignPropRelation1;22;ShellProp;1;thickness;;;;21;1.
+DesignResp1;23;W20;Weight

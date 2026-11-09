@@ -1,0 +1,190 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: static load forms, one subcase each (SOL 101)
+#
+# Covers:
+#   - cards: FORCE1 FORCE2 MOMENT1 MOMENT2 PLOAD PLOAD2 RFORCE ACCEL ACCEL1
+#     HYDROS PLOADB3 DEFORM TEMPP1 TEMPRB TEMPB3 SPCD MPCY MPCD DMIG (K2GG
+#     and P2G) DTI (INDTA) FBODYSB FBODYLD ABSTRCT ABSNMVS ABSNMVB ABSNMVI
+#     ABSNMVR
+#   - solution: SOL 101 (linear statics, 13 subcases)
+#   - outputs: displacements, SPC forces, applied loads, element stresses,
+#     grid point forces (subcase 1)
+# Run notes:
+#   - P2G is selected above the subcases: DMIG PLDS has one column per
+#     subcase (13), only the column of subcase 13 is not null
+#   - PARAM,S1 with DTI,INDTA sorts the printed stresses (listing)
+#   - the HDF5 file carries the ABSTRCT meta data group
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: static load forms
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DirectInputStiffnessMatrix;KSPR
+DirectInputLoadMatrix;PLDS
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+AppliedLoadOutput;All;PlotOnly
+StressOutput;All;PrintListing;PlotOnly
+SubcaseStart;1
+LabelText;follower forces and moments FORCE1 FORCE2 MOMENT1 MOMENT2
+StaticLoadSelection;11
+NodeForceOutput;All;PlotOnly
+FreeBodyLoadSelection;TIPLD
+SubcaseStart;2
+LabelText;PLOAD on a quadrilateral and a triangular surface
+StaticLoadSelection;12
+SubcaseStart;3
+LabelText;PLOAD2 on shell elements
+StaticLoadSelection;13
+SubcaseStart;4
+LabelText;RFORCE angular velocity and acceleration
+StaticLoadSelection;14
+SubcaseStart;5
+LabelText;ACCEL acceleration varying along y
+StaticLoadSelection;15
+SubcaseStart;6
+LabelText;ACCEL1 acceleration at listed grid points
+StaticLoadSelection;16
+SubcaseStart;7
+LabelText;HYDROS hydrostatic pressure on the plate
+StaticLoadSelection;17
+SubcaseStart;8
+LabelText;PLOADB3 distributed load on the CBEAM3 elements
+StaticLoadSelection;18
+SubcaseStart;9
+LabelText;DEFORM enforced elongation of a CROD and a CBAR
+DeformationLoadSelection;19
+SubcaseStart;10
+LabelText;thermal load TEMPP1 TEMPRB TEMPB3
+TemperatureSelection;20;TemperatureLoadPart
+SubcaseStart;11
+LabelText;SPCD enforced displacement of the plate corner
+SinglePointConstrSelection;2
+StaticLoadSelection;21
+SubcaseStart;12
+LabelText;MPCD right-hand side of an MPCY equation
+MultiPointConstrSelection;50
+StaticLoadSelection;22
+SubcaseStart;13
+LabelText;P2G direct input load column
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Stress sorting of the printed output, items from the DTI,INDTA record 1:
+# CQUAD4 (type 33) on item 17, CBAR (type 34) on item 14.
+Parameter;StressSign;1
+DirectTable;INDTA;1;33;17;34;14;ENDREC
+# Steel, mm N t s, reference temperature 20.
+IsoMat;1;2.1E+5;;0.3;7.85E-9;1.2E-5;20.
+# Plate 100 x 200, 2 mm: 7 CQUAD4 and 2 CTRIA3, clamped on y = 0.
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;0.;50.;0.
+Node;5;;50.;50.;0.
+Node;6;;100.;50.;0.
+Node;7;;0.;100.;0.
+Node;8;;50.;100.;0.
+Node;9;;100.;100.;0.
+Node;10;;0.;150.;0.
+Node;11;;50.;150.;0.
+Node;12;;100.;150.;0.
+Node;13;;0.;200.;0.
+Node;14;;50.;200.;0.
+Node;15;;100.;200.;0.
+ShellQuad4;101;1;1;2;5;4
+ShellQuad4;102;1;2;3;6;5
+ShellQuad4;103;1;4;5;8;7
+ShellQuad4;104;1;5;6;9;8
+ShellQuad4;105;1;7;8;11;10
+ShellQuad4;106;1;8;9;12;11
+ShellQuad4;107;1;10;11;14;13
+ShellTria3;108;1;11;12;15
+ShellTria3;109;1;11;15;14
+# Frame in the plane y = 300 to 400: two CBAR from the clamped grid point 21
+# and a CROD brace from the clamped grid point 24 to the bar tip 23.
+BarProp;2;1;100.;833.3;833.3;1406.;;5.;5.;5.;-5.;-5.;-5.;-5.;5.
+RodProp;3;1;50.
+Node;21;;0.;300.;0.
+Node;22;;100.;300.;0.
+Node;23;;200.;300.;0.
+Node;24;;0.;400.;0.
+Bar2;201;2;21;22;0.;;0.;1.
+Bar2;202;2;22;23;0.;;0.;1.
+Rod2;203;3;24;23
+# Cantilever of two three-node beams (CBEAM3) along y = 500.
+BeamProp3;4;1;100.;833.3;833.3;0.;1406.;;5.;5.;5.;-5.;-5.;-5.;-5.;5.
+Node;31;;0.;500.;0.
+Node;32;;50.;500.;0.
+Node;33;;100.;500.;0.
+Node;34;;150.;500.;0.
+Node;35;;200.;500.;0.
+Beam3;301;4;31;33;32;;0.;0.;1.
+Beam3;302;4;33;35;34;;0.;0.;1.
+# Constraints: set 1 clamps the three parts; set 2 adds the plate corner
+# normal for the SPCD of subcase 11.
+SinglePointConstrList;1;123456;1;2;3;21;24;31
+SinglePointConstrList;2;123456;1;2;3;21;24;31
+SinglePointConstrList;2;3;15
+# Set 50: the tip corner 15 follows grid point 14 in z, with a right-hand
+# side that the MPCD of subcase 12 replaces.
+MultiPointConstrWithValue;50;15;3;1.;0.;14;3;-1.
+# A spring of 10 N/mm between the z of grid points 14 and 15 (K2GG).
+DirectMatrixNodal;KSPR;0;6;1;0
+DirectMatrixNodal;KSPR;14;3;14;3;10.;;15;3;-10.
+DirectMatrixNodal;KSPR;15;3;15;3;10.
+# Load columns of P2G: 13 columns, one per subcase; column 13 pushes the
+# tip grid points in -z.
+DirectMatrixNodal;PLDS;0;9;1;0;;13
+DirectMatrixNodal;PLDS;13;0;14;3;-20.;;15;3;-20.
+# Subcase 1: follower forces and moments, directions from grid points.
+PointForceLoad1;11;15;100.;13;15
+PointForceLoad2;11;14;50.;13;14;13;10
+PointMomentLoad1;11;15;1.E+3;1;13
+PointMomentLoad2;11;13;500.;1;2;1;4
+# Free-body load of the tip bay (FBODYLD Case Control in subcase 1).
+IdListSet1;1801;10;11;12;13;14;15
+IdListSet1;1802;107;108;109
+FreeBodyLoadSubcase;SBTIP;1801;1802;;tip bay of the plate
+FreeBodyLoad;TIPLD;SBTIP;tip bay free-body load
+# Subcase 2: pressure on a quadrilateral and on a triangular surface.
+PointsPressureLoad;12;0.05;4;5;8;7
+PointsPressureLoad;12;-0.05;11;12;15
+# Subcase 3: uniform pressure on elements, THRU form and list form.
+ShellPressureLoad;13;0.02;101;Through;107
+ShellPressureLoad;13;0.02;108;109
+# Subcase 4: rotation about z through grid point 1, 5 rev/s and 1 rev/s2.
+RotationalForceLoad;14;1;;5.;0.;0.;1.;2;1.
+# Subcase 5: acceleration in -z, scaled from 1 g at y = 0 to 2 g at y = 500.
+AccelFieldLoad;15;;0.;0.;-1.;YDirection;0.;9810.;500.;19620.
+# Subcase 6: acceleration of 2 g in -z on the plate tip and the beam.
+AccelNodeLoad;16;;19620.;0.;0.;-1.;13;14;15;31;Through;35
+# Subcase 7: water column of 500 mm above the plate (z = 0 is the bottom).
+IdListSet1;1701;101;Through;109
+HydrostaticLoad;17;;1.E-9;9810.;1701;;;;0;0.;500.
+# Subcase 8: distributed force in -z on both CBEAM3 elements.
+Beam3DistributedLoad;18;301;;0.;0.;-1.;Force;1.;0.5;0.5;0.5
+Beam3DistributedLoad;18;302;;0.;0.;-1.;Force;1.;0.5;0.25;0.375
+# Subcase 9: enforced elongation of the brace and shortening of a bar.
+AxialDeformationLoad;19;203;0.1;201;-0.05
+# Subcase 10: element temperatures (TEMPD for the grid points).
+DefaultTemperatureLoad;20;20.
+PlateTemperatureLoad;20;101;80.;0.5;;;102;Through;109
+LineElemTemperatureLoad;20;201;80.;60.;0.5;0.5;0.;0.;82.5;82.5;77.5;77.5;62.5;62.5;57.5;57.5;202;203
+Beam3TemperatureLoad;20;301;80.;60.;70.;0.5;0.;0.5;0.;0.5;0.;82.5;82.5;77.5;77.5;62.5;62.5;57.5;57.5;72.5;72.5;67.5;67.5;302
+# Subcase 11: enforced normal displacement of the plate corner.
+EnforcedMotionConstr;21;15;3;0.5
+# Subcase 12: right-hand side of the MPCY equation of grid point 15.
+MultiPointConstrValue;22;15;3;0.2
+# Meta data group of the plate elements (HDF5 and OUTPUT2).
+MetadataGroup;PLATE;60;ShellQuad4;101;102;103;104;105;106;107
+MetadataGroup;PLATE;60;ShellTria3;108;109
+MetadataTextPairs;60;ABSNAME;cantilever_plate;ABSDESC;plate_of_seven_quads_and_two_trias
+MetadataBooleanPairs;60;STIFFNER;False
+MetadataIntegerPairs;60;NELEM;9
+MetadataRealPairs;60;THICK;2.

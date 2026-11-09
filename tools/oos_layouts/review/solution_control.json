@@ -1,0 +1,2912 @@
+{
+  "description": "Reviewed card layouts of the solution_control family (src/model/cards/solution_control).",
+  "cards": {
+    "ArcLengthParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "constraintKind",
+          "slot": 2,
+          "kind": "text",
+          "default": "Crisfield"
+        },
+        {
+          "name": "minArcLengthRatio",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.25"
+        },
+        {
+          "name": "maxArcLengthRatio",
+          "slot": 4,
+          "kind": "real",
+          "default": "4.0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "designIteration",
+          "slot": 7,
+          "kind": "integer",
+          "default": "12"
+        },
+        {
+          "name": "maxIncrements",
+          "slot": 8,
+          "kind": "integer",
+          "default": "20"
+        }
+      ]
+    },
+    "CampbellDiagram": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "varyingParameter",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "discreteValuesId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "speedUnit",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "modeTrackingMethod",
+          "slot": 9,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "correlationThreshold",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.7"
+        },
+        {
+          "name": "trackingSwitch",
+          "slot": 11,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "trackedModeCount",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "printCorrelation",
+          "slot": 13,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "CosimulationArea": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "points",
+          "when": {
+            "field": "kind",
+            "values": [
+              "Point"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "kind",
+              "slot": 2,
+              "kind": "text",
+              "default": "Surface"
+            }
+          ],
+          "group": {
+            "name": "nodes",
+            "firstSlot": 9,
+            "period": 1,
+            "fields": [
+              {
+                "name": "nodeIds",
+                "offset": 0,
+                "kind": "any"
+              }
+            ]
+          }
+        },
+        {
+          "name": "volume",
+          "when": {
+            "field": "kind",
+            "values": [
+              "Volume"
+            ]
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "kind",
+              "slot": 2,
+              "kind": "text",
+              "default": "Surface"
+            }
+          ],
+          "group": {
+            "name": "elements",
+            "firstSlot": 9,
+            "period": 1,
+            "fields": [
+              {
+                "name": "elemIds",
+                "offset": 0,
+                "kind": "any"
+              }
+            ]
+          }
+        },
+        {
+          "name": "surface",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "kind",
+              "slot": 2,
+              "kind": "text",
+              "default": "Surface"
+            }
+          ],
+          "group": {
+            "name": "faces",
+            "firstSlot": 9,
+            "period": 2,
+            "fields": [
+              {
+                "name": "elemIds",
+                "offset": 0,
+                "kind": "integer"
+              },
+              {
+                "name": "faceIds",
+                "offset": 1,
+                "kind": "integer"
+              }
+            ]
+          }
+        }
+      ],
+      "note": "a list of IDs may hold THRU between two IDs (a range)"
+    },
+    "CosimulationInputs": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "quantity1",
+          "slot": 9,
+          "kind": "text",
+          "default": "Force"
+        },
+        {
+          "name": "quantity2",
+          "slot": 10,
+          "kind": "text"
+        }
+      ]
+    },
+    "CosimulationOutputs": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "quantity1",
+          "slot": 9,
+          "kind": "text"
+        },
+        {
+          "name": "quantity2",
+          "slot": 10,
+          "kind": "text"
+        },
+        {
+          "name": "quantity3",
+          "slot": 11,
+          "kind": "text"
+        }
+      ]
+    },
+    "CosimulationSelection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "serviceId1",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "serviceId2",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "serviceId3",
+          "slot": 11,
+          "kind": "integer"
+        }
+      ]
+    },
+    "CosimulationService": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "serviceName",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "followerForces",
+          "slot": 4,
+          "kind": "text",
+          "default": "NoFollower"
+        },
+        {
+          "name": "inputAreaId",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "inputId",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "outputAreaId",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "outputId",
+          "slot": 12,
+          "kind": "integer"
+        }
+      ]
+    },
+    "CrossSpectrumPair": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "responseKind1",
+          "slot": 2,
+          "kind": "text",
+          "default": "same as responseKind2"
+        },
+        {
+          "name": "targetId1",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "component1",
+          "slot": 4,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "responseKind2",
+          "slot": 5,
+          "kind": "text",
+          "default": "same as responseKind1"
+        },
+        {
+          "name": "targetId2",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "component2",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "curveId",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "CyclicSymmetry": {
+      "fields": [
+        {
+          "name": "segmentCount",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "symmetryKind",
+          "slot": 2,
+          "kind": "text"
+        }
+      ]
+    },
+    "DeactivatedElems": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "elemSetId",
+          "slot": 5,
+          "kind": "integer"
+        }
+      ]
+    },
+    "EchoOffMarker": {
+      "fields": []
+    },
+    "EchoOnMarker": {
+      "fields": []
+    },
+    "FatigueDefinition": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "topStressCount",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "fatiguePropIds",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "topDamageCount",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "maxEntities",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "maxOutputEntities",
+          "slot": 6,
+          "kind": "integer",
+          "default": "100"
+        },
+        {
+          "name": "hotSpotCount",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "hotSpotGate",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "ElemSet",
+            "name": "elemSetLines",
+            "list": {
+              "name": "elemSets",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "elemSetId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "fatiguePropId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "SpotWeld",
+            "name": "spotWeldLines",
+            "list": {
+              "name": "spotWelds",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "elemSetId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "fatiguePropId",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          },
+          {
+            "key": "SeamWeld",
+            "name": "seamWeldLines",
+            "list": {
+              "name": "seamWelds",
+              "offset": 1,
+              "period": 5,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "elemSetId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "fatiguePropId",
+                  "offset": 1,
+                  "kind": "integer"
+                },
+                {
+                  "name": "nodeSetId",
+                  "offset": 2,
+                  "kind": "integer"
+                },
+                {
+                  "name": "weldType",
+                  "offset": 3,
+                  "kind": "text"
+                },
+                {
+                  "name": "weldLocation",
+                  "offset": 4,
+                  "kind": "text"
+                }
+              ]
+            }
+          },
+          {
+            "key": "ExcludedElemSet",
+            "name": "excludedLines",
+            "list": {
+              "name": "excludedElemSets",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "excludedElemSetId",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "FatigueEvent": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "fatigueLoads",
+        "firstSlot": 2,
+        "period": 1,
+        "perLine": 7,
+        "fields": [
+          {
+            "name": "fatigueLoadId",
+            "offset": 0,
+            "kind": "integer"
+          }
+        ]
+      },
+      "sections": {
+        "name": "lines",
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Name",
+            "name": "nameLine",
+            "fields": [
+              {
+                "name": "eventName",
+                "offset": 1,
+                "kind": "text",
+                "span": 7
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "FatigueLoad": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "tableId",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "loadCaseId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "referenceLoadMagnitude",
+          "slot": 4,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "offset",
+          "slot": 6,
+          "kind": "real"
+        },
+        {
+          "name": "historyKind",
+          "slot": 7,
+          "kind": "text"
+        },
+        {
+          "name": "channel",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Units",
+            "name": "units",
+            "fields": [
+              {
+                "name": "equivalentUnits",
+                "offset": 1,
+                "kind": "real",
+                "default": "1.0"
+              },
+              {
+                "name": "equivalentUnitName",
+                "offset": 2,
+                "kind": "text",
+                "span": 6
+              }
+            ]
+          },
+          {
+            "key": "DeterministicLoad",
+            "name": "deterministicLoad",
+            "list": {
+              "name": "bands",
+              "offset": 1,
+              "period": 3,
+              "perLine": 2,
+              "fields": [
+                {
+                  "name": "bandFrequency",
+                  "offset": 0,
+                  "kind": "real"
+                },
+                {
+                  "name": "bandAmplitude",
+                  "offset": 1,
+                  "kind": "real"
+                },
+                {
+                  "name": "bandWidth",
+                  "offset": 2,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "SweepLoad",
+            "name": "sweep",
+            "fields": [
+              {
+                "name": "sweepStartFrequency",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "sweepStartAmplitude",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "sweepEndFrequency",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "sweepEndAmplitude",
+                "offset": 5,
+                "kind": "real"
+              },
+              {
+                "name": "sweepKind",
+                "offset": 9,
+                "kind": "text",
+                "default": "FreqInHertz"
+              },
+              {
+                "name": "sweepNumber",
+                "offset": 10,
+                "kind": "integer",
+                "default": "50"
+              },
+              {
+                "name": "sweepRate",
+                "offset": 11,
+                "kind": "real"
+              },
+              {
+                "name": "sweepCount",
+                "offset": 12,
+                "kind": "integer"
+              },
+              {
+                "name": "transferFunctionQuantity",
+                "offset": 13,
+                "kind": "text",
+                "default": "Acceleration"
+              },
+              {
+                "name": "loadQuantity",
+                "offset": 14,
+                "kind": "text",
+                "default": "Acceleration"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "FatigueParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "lifeModel",
+          "slot": 2,
+          "kind": "text",
+          "default": "StressLifeMethod"
+        },
+        {
+          "name": "factor",
+          "slot": 3,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "threadCount",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "logLevel",
+          "slot": 5,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "layer",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "lines",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Stress",
+            "name": "stressResults",
+            "fields": [
+              {
+                "name": "combination",
+                "offset": 1,
+                "kind": "text",
+                "default": "AbsoluteMaxPrincipal"
+              },
+              {
+                "name": "meanStressCorrection",
+                "offset": 2,
+                "kind": "text",
+                "default": "None"
+              },
+              {
+                "name": "plasticityCorrection",
+                "offset": 3,
+                "kind": "text",
+                "default": "Neuber"
+              },
+              {
+                "name": "resultLocation",
+                "offset": 4,
+                "kind": "text",
+                "default": "NodalAveraging"
+              },
+              {
+                "name": "curveInterpolation",
+                "offset": 5,
+                "kind": "integer",
+                "default": "0"
+              },
+              {
+                "name": "stressRecovery",
+                "offset": 6,
+                "kind": "text"
+              },
+              {
+                "name": "surfaceResolved",
+                "offset": 7,
+                "kind": "text",
+                "default": "No"
+              },
+              {
+                "name": "planeAngleCount",
+                "offset": 9,
+                "kind": "integer",
+                "default": "36"
+              }
+            ]
+          },
+          {
+            "key": "Strain",
+            "name": "strainResults",
+            "fields": [
+              {
+                "name": "combination",
+                "offset": 1,
+                "kind": "text",
+                "default": "AbsoluteMaxPrincipal"
+              },
+              {
+                "name": "meanStressCorrection",
+                "offset": 2,
+                "kind": "text",
+                "default": "None"
+              },
+              {
+                "name": "plasticityCorrection",
+                "offset": 3,
+                "kind": "text",
+                "default": "Neuber"
+              },
+              {
+                "name": "resultLocation",
+                "offset": 4,
+                "kind": "text",
+                "default": "NodalAveraging"
+              },
+              {
+                "name": "curveInterpolation",
+                "offset": 5,
+                "kind": "integer",
+                "default": "0"
+              },
+              {
+                "name": "stressRecovery",
+                "offset": 6,
+                "kind": "text"
+              },
+              {
+                "name": "surfaceResolved",
+                "offset": 7,
+                "kind": "text",
+                "default": "No"
+              },
+              {
+                "name": "planeAngleCount",
+                "offset": 9,
+                "kind": "integer",
+                "default": "36"
+              }
+            ]
+          },
+          {
+            "key": "RainflowCounting",
+            "name": "rainflow",
+            "fields": [
+              {
+                "name": "responseKind",
+                "offset": 1,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "CertaintyOfSurvival",
+            "name": "certainty",
+            "fields": [
+              {
+                "name": "survivalCertainty",
+                "offset": 1,
+                "kind": "real",
+                "default": "50.0"
+              }
+            ]
+          },
+          {
+            "key": "FactorOfSafety",
+            "name": "safetyFactor",
+            "fields": [
+              {
+                "name": "safetyFactorOption",
+                "offset": 1,
+                "kind": "text",
+                "default": "LifeResult"
+              },
+              {
+                "name": "targetLife",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "backCalculationAccuracy",
+                "offset": 3,
+                "kind": "real",
+                "default": "1.0"
+              },
+              {
+                "name": "maxSafetyFactor",
+                "offset": 4,
+                "kind": "real",
+                "default": "5.0"
+              },
+              {
+                "name": "minSafetyFactor",
+                "offset": 5,
+                "kind": "real",
+                "default": "0.2"
+              }
+            ]
+          },
+          {
+            "key": "SpotWeld",
+            "name": "spotWeld",
+            "fields": [
+              {
+                "name": "combination",
+                "offset": 1,
+                "kind": "text",
+                "default": "StandardCorrection"
+              },
+              {
+                "name": "meanStressCorrection",
+                "offset": 2,
+                "kind": "text",
+                "default": "None"
+              },
+              {
+                "name": "planeAngleCount",
+                "offset": 3,
+                "kind": "integer",
+                "default": "18"
+              },
+              {
+                "name": "spotWeldLocation",
+                "offset": 4,
+                "kind": "integer",
+                "default": "0"
+              },
+              {
+                "name": "middleSheets",
+                "offset": 5,
+                "kind": "integer",
+                "default": "1"
+              },
+              {
+                "name": "torsion",
+                "offset": 6,
+                "kind": "integer",
+                "default": "0"
+              }
+            ]
+          },
+          {
+            "key": "SeamWeld",
+            "name": "seamWeld",
+            "fields": [
+              {
+                "name": "combination",
+                "offset": 1,
+                "kind": "text",
+                "default": "AbsoluteMaxPrincipal"
+              },
+              {
+                "name": "meanStressCorrection",
+                "offset": 2,
+                "kind": "text",
+                "default": "None"
+              },
+              {
+                "name": "thicknessCorrection",
+                "offset": 3,
+                "kind": "integer",
+                "default": "0"
+              },
+              {
+                "name": "seamWeldLocation",
+                "offset": 4,
+                "kind": "text",
+                "default": "Node"
+              },
+              {
+                "name": "seamWeldResult",
+                "offset": 5,
+                "kind": "text"
+              }
+            ]
+          },
+          {
+            "key": "Multiaxial",
+            "name": "multiaxial",
+            "fields": [
+              {
+                "name": "multiaxialMethod",
+                "offset": 1,
+                "kind": "text"
+              },
+              {
+                "name": "nonProportionalityLower",
+                "offset": 2,
+                "kind": "number"
+              },
+              {
+                "name": "nonProportionalityUpper",
+                "offset": 3,
+                "kind": "number"
+              },
+              {
+                "name": "biaxialityLower",
+                "offset": 4,
+                "kind": "number"
+              },
+              {
+                "name": "biaxialityMiddle",
+                "offset": 5,
+                "kind": "number"
+              },
+              {
+                "name": "biaxialityUpper",
+                "offset": 6,
+                "kind": "number"
+              },
+              {
+                "name": "zeroThreshold",
+                "offset": 7,
+                "kind": "number"
+              },
+              {
+                "name": "gateThreshold",
+                "offset": 9,
+                "kind": "number"
+              }
+            ]
+          },
+          {
+            "key": "NodeAverage",
+            "name": "averaging",
+            "fields": [
+              {
+                "name": "averagingMethod",
+                "offset": 1,
+                "kind": "text",
+                "default": "Topology"
+              },
+              {
+                "name": "output",
+                "offset": 2,
+                "kind": "integer",
+                "default": "0"
+              },
+              {
+                "name": "surfaceNormal",
+                "offset": 3,
+                "kind": "text",
+                "default": "RadiusVector"
+              }
+            ]
+          },
+          {
+            "key": "VibrationFatigue",
+            "name": "vibration",
+            "fields": [
+              {
+                "name": "spectrumMethod",
+                "offset": 1,
+                "kind": "text",
+                "default": "DirlikMethod"
+              },
+              {
+                "name": "maxStressRms",
+                "offset": 2,
+                "kind": "real",
+                "default": "10.0"
+              },
+              {
+                "name": "clipLevel",
+                "offset": 3,
+                "kind": "real",
+                "default": "same as maxStressRms"
+              },
+              {
+                "name": "maxPeak",
+                "offset": 4,
+                "kind": "real"
+              },
+              {
+                "name": "stressBins",
+                "offset": 5,
+                "kind": "integer"
+              },
+              {
+                "name": "maxFrequencyFraction",
+                "offset": 6,
+                "kind": "real",
+                "default": "99.9"
+              },
+              {
+                "name": "binLifeMethod",
+                "offset": 7,
+                "kind": "text",
+                "default": "Average"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "FatigueProp": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "surfaceFinish",
+          "slot": 3,
+          "kind": "text"
+        },
+        {
+          "name": "finishFactor",
+          "slot": 4,
+          "kind": "real"
+        },
+        {
+          "name": "fatigueNotchFactor",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "scaleFactor",
+          "slot": 6,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "offset",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "treatmentFactor",
+          "slot": 10,
+          "kind": "real",
+          "default": "1.0"
+        },
+        {
+          "name": "diameter",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "thickness1",
+          "slot": 12,
+          "kind": "real"
+        },
+        {
+          "name": "thickness2",
+          "slot": 13,
+          "kind": "real"
+        },
+        {
+          "name": "spotWeldFlag",
+          "slot": 14,
+          "kind": "integer",
+          "default": "0"
+        }
+      ]
+    },
+    "FatigueSequence": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "eventOutput",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "combinationMethod",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "timeUnit",
+          "slot": 4,
+          "kind": "text",
+          "default": "TimeInSeconds"
+        },
+        {
+          "name": "referenceLoadMagnitude",
+          "slot": 5,
+          "kind": "real",
+          "default": "1.0"
+        }
+      ],
+      "group": {
+        "name": "sequenceItems",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "eventOrSequenceId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "repeats",
+            "offset": 1,
+            "kind": "real"
+          }
+        ]
+      },
+      "sections": {
+        "name": "lines",
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Units",
+            "name": "units",
+            "fields": [
+              {
+                "name": "equivalentUnits",
+                "offset": 1,
+                "kind": "real",
+                "default": "1.0"
+              },
+              {
+                "name": "equivalentUnitName",
+                "offset": 2,
+                "kind": "text",
+                "span": 6
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "FluidStructureControl": {
+      "fields": [
+        {
+          "name": "serviceName",
+          "slot": 1,
+          "kind": "text"
+        },
+        {
+          "name": "couplingKind",
+          "slot": 2,
+          "kind": "text",
+          "default": "ExplicitSolver"
+        },
+        {
+          "name": "frequency",
+          "slot": 3,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "interfaceKind",
+          "slot": 4,
+          "kind": "text",
+          "default": "DesignVariables"
+        }
+      ]
+    },
+    "InitialPlasticStrain": {
+      "fields": [
+        {
+          "name": "firstElemId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "lastElemId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "firstPoint",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "lastPoint",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "firstLayer",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "lastLayer",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "strain",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "InitialStress": {
+      "fields": [
+        {
+          "name": "firstElemId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "lastElemId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "firstPoint",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "lastPoint",
+          "slot": 4,
+          "kind": "integer"
+        },
+        {
+          "name": "firstLayer",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "lastLayer",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "stress1",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stress2",
+          "slot": 8,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stress3",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stress4",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stress5",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stress6",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stress7",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "coordinate",
+          "slot": 17,
+          "kind": "text"
+        },
+        {
+          "name": "frameId",
+          "slot": 18,
+          "kind": "integer"
+        }
+      ]
+    },
+    "IterativeSolverOptions": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "options",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "option",
+            "offset": 0,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "ModeTracking": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "lowRange",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "highRange",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "trackingFilter",
+          "slot": 4,
+          "kind": "real",
+          "default": "0.9"
+        }
+      ]
+    },
+    "ModelParams": {
+      "fields": [],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ModuleResultFileParams": {
+      "fields": [
+        {
+          "name": "moduleId",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "NonlinearHarmonicSolverParams": {
+      "fields": [],
+      "group": {
+        "name": "parameters",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "parameterName",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "parameterValue",
+            "offset": 1,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "NonlinearStaticParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "incrementCount",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "timeStep",
+          "slot": 3,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stiffnessMethod",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "stiffnessUpdateStep",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "maxIterations",
+          "slot": 6,
+          "kind": "integer",
+          "default": "25"
+        },
+        {
+          "name": "convergenceFlags",
+          "slot": 7,
+          "kind": "text"
+        },
+        {
+          "name": "intermediateOutput",
+          "slot": 8,
+          "kind": "text",
+          "default": "No"
+        },
+        {
+          "name": "epsilonU",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "epsilonP",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "epsilonW",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "maxDivergences",
+          "slot": 12,
+          "kind": "integer",
+          "default": "3"
+        },
+        {
+          "name": "maxQuasiNewtonVectors",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "maxLineSearches",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "stressSubincrementFraction",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.2"
+        },
+        {
+          "name": "lineSearchTolerance",
+          "slot": 16,
+          "kind": "real",
+          "default": "0.5"
+        },
+        {
+          "name": "maxBisections",
+          "slot": 17,
+          "kind": "integer"
+        },
+        {
+          "name": "maxRotationRatio",
+          "slot": 21,
+          "kind": "real",
+          "default": "20.0"
+        },
+        {
+          "name": "rotationTolerance",
+          "slot": 23,
+          "kind": "real",
+          "default": "20.0"
+        },
+        {
+          "name": "minIterations",
+          "slot": 24,
+          "kind": "integer"
+        }
+      ]
+    },
+    "NonlinearTimeSteps": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "stepCount",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "timeStep",
+          "slot": 3,
+          "kind": "real"
+        },
+        {
+          "name": "outputInterval",
+          "slot": 4,
+          "kind": "integer",
+          "default": "1"
+        },
+        {
+          "name": "method",
+          "slot": 5,
+          "kind": "text"
+        },
+        {
+          "name": "stiffnessUpdateStep",
+          "slot": 6,
+          "kind": "integer"
+        },
+        {
+          "name": "maxIterations",
+          "slot": 7,
+          "kind": "integer"
+        },
+        {
+          "name": "convergenceFlags",
+          "slot": 8,
+          "kind": "text"
+        },
+        {
+          "name": "epsilonU",
+          "slot": 9,
+          "kind": "real"
+        },
+        {
+          "name": "epsilonP",
+          "slot": 10,
+          "kind": "real"
+        },
+        {
+          "name": "epsilonW",
+          "slot": 11,
+          "kind": "real"
+        },
+        {
+          "name": "maxDivergences",
+          "slot": 12,
+          "kind": "integer",
+          "default": "2"
+        },
+        {
+          "name": "maxQuasiNewtonVectors",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "maxLineSearches",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "stressSubincrementFraction",
+          "slot": 15,
+          "kind": "real",
+          "default": "0.2"
+        },
+        {
+          "name": "maxBisections",
+          "slot": 17,
+          "kind": "integer"
+        },
+        {
+          "name": "adjustInterval",
+          "slot": 18,
+          "kind": "integer",
+          "default": "5"
+        },
+        {
+          "name": "minStepsPerCycle",
+          "slot": 19,
+          "kind": "integer"
+        },
+        {
+          "name": "stepBounds",
+          "slot": 20,
+          "kind": "real",
+          "default": "0.6"
+        },
+        {
+          "name": "maxRotationRatio",
+          "slot": 21,
+          "kind": "real",
+          "default": "32.0"
+        },
+        {
+          "name": "displacementTolerance",
+          "slot": 22,
+          "kind": "real",
+          "default": "0.1"
+        },
+        {
+          "name": "rotationTolerance",
+          "slot": 23,
+          "kind": "real",
+          "default": "20.0"
+        },
+        {
+          "name": "minIterations",
+          "slot": 24,
+          "kind": "integer"
+        }
+      ]
+    },
+    "ReferenceRotor": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "referenceRotorId",
+          "slot": 2,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nonFollowingRotors",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "nonFollowingRotorId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ResidualVectorDofs": {
+      "fields": [],
+      "group": {
+        "name": "dofs",
+        "firstSlot": 1,
+        "period": 2,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "components",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ResidualVectorDofs1": {
+      "fields": [
+        {
+          "name": "components",
+          "slot": 1,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "node",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "ResultFileModules": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "configuration",
+          "slot": 2,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "modules",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "moduleId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "userNameId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "ResultFileParams": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "numbered",
+          "when": {
+            "field": "number",
+            "kinds": [
+              "integer"
+            ]
+          },
+          "fields": [
+            {
+              "name": "number",
+              "slot": 1,
+              "kind": "integer"
+            }
+          ],
+          "group": {
+            "name": "parameters",
+            "firstSlot": 2,
+            "period": 2,
+            "fields": [
+              {
+                "name": "parameterName",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "parameterValue",
+                "offset": 1,
+                "kind": "any"
+              }
+            ]
+          }
+        },
+        {
+          "name": "plain",
+          "fields": [],
+          "group": {
+            "name": "parameters",
+            "firstSlot": 1,
+            "period": 2,
+            "fields": [
+              {
+                "name": "parameterName",
+                "offset": 0,
+                "kind": "text"
+              },
+              {
+                "name": "parameterValue",
+                "offset": 1,
+                "kind": "any"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "ResultMetadata": {
+      "fields": [
+        {
+          "name": "metadataName",
+          "slot": 1,
+          "kind": "text",
+          "span": 3
+        }
+      ],
+      "group": {
+        "name": "metadataLines",
+        "firstSlot": 9,
+        "period": 8,
+        "fields": [
+          {
+            "name": "metadataInfo",
+            "offset": 0,
+            "kind": "text",
+            "span": 8
+          }
+        ]
+      }
+    },
+    "RotorAxisym": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "listType",
+          "slot": 2,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 3,
+        "period": 1,
+        "fields": [
+          {
+            "name": "nodeId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "RotorInitialBend": {
+      "fields": [
+        {
+          "name": "bendTableId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "rotorId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "loadId",
+          "slot": 3,
+          "kind": "integer"
+        }
+      ],
+      "sections": {
+        "name": "rows",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "UnbalanceFrame",
+            "name": "unbalancePlane",
+            "fields": [
+              {
+                "name": "coordinate1",
+                "offset": 1,
+                "kind": "real"
+              },
+              {
+                "name": "coordinate2",
+                "offset": 2,
+                "kind": "real"
+              },
+              {
+                "name": "coordinate3",
+                "offset": 3,
+                "kind": "real"
+              }
+            ]
+          },
+          {
+            "key": "KinkDeformation",
+            "name": "kinkRows",
+            "list": {
+              "name": "kinks",
+              "offset": 1,
+              "period": 3,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "station",
+                  "offset": 0,
+                  "kind": "real"
+                },
+                {
+                  "name": "angle",
+                  "offset": 1,
+                  "kind": "real"
+                },
+                {
+                  "name": "phase",
+                  "offset": 2,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Offset",
+            "name": "offsetRows",
+            "list": {
+              "name": "offsets",
+              "offset": 1,
+              "period": 3,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "station",
+                  "offset": 0,
+                  "kind": "real"
+                },
+                {
+                  "name": "offset",
+                  "offset": 1,
+                  "kind": "real"
+                },
+                {
+                  "name": "phase",
+                  "offset": 2,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "BearingDeflectionProfile",
+            "name": "bearingRows",
+            "list": {
+              "name": "bearings",
+              "offset": 1,
+              "period": 2,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "rotorNode",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "statorNode",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "RotorLineNodes": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "nodes",
+        "firstSlot": 2,
+        "period": 1,
+        "fields": [
+          {
+            "name": "nodeId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    },
+    "RotorModel3D": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "frame",
+          "slot": 2,
+          "kind": "text",
+          "default": "FixedEnd"
+        }
+      ],
+      "sections": {
+        "name": "lists",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Elements",
+            "name": "elementList",
+            "list": {
+              "name": "elements",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "elemId",
+                  "offset": 0,
+                  "kind": "any"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Property",
+            "name": "propertyList",
+            "list": {
+              "name": "properties",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "propId",
+                  "offset": 0,
+                  "kind": "any"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Axis",
+            "name": "axisList",
+            "list": {
+              "name": "axisNodes",
+              "offset": 1,
+              "period": 1,
+              "perLine": 7,
+              "fields": [
+                {
+                  "name": "axisNode",
+                  "offset": 0,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "RotorRelativeSpin": {
+      "fields": [
+        {
+          "name": "rotorId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeA",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeB",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "speedUnit",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "spinTableId",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "spinRate",
+          "slot": 5,
+          "kind": "real"
+        },
+        {
+          "name": "rotorSuperelementId",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "massDampingFactor",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stiffnessDampingFactor",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "viscousDampingFrequency",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDampingFrequency",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "hybridDampingFrequency",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "RotorSuperelement": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "superelementId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "superelementOption",
+          "slot": 3,
+          "kind": "integer",
+          "default": "1"
+        }
+      ]
+    },
+    "RotorTransientSpin": {
+      "fields": [
+        {
+          "name": "rotorId",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeA",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeB",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "speedUnit",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "spinTableId",
+          "slot": 5,
+          "kind": "integer"
+        },
+        {
+          "name": "speedOutput",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "rotorSuperelementId",
+          "slot": 7,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "node",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "massDampingFactor",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "stiffnessDampingFactor",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "viscousDampingFrequency",
+          "slot": 12,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDampingFrequency",
+          "slot": 13,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "hybridDampingFrequency",
+          "slot": 14,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "RotordynamicParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "synchronous",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "referenceRotorId",
+          "slot": 3,
+          "kind": "integer"
+        },
+        {
+          "name": "speedUnit",
+          "slot": 4,
+          "kind": "text"
+        },
+        {
+          "name": "speedLow",
+          "slot": 5,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "speedHigh",
+          "slot": 6,
+          "kind": "real",
+          "default": "99999.0"
+        },
+        {
+          "name": "speed",
+          "slot": 7,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "rotorSuperelementId",
+          "slot": 8,
+          "kind": "integer",
+          "default": "0"
+        },
+        {
+          "name": "viscousDampingFrequency",
+          "slot": 9,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "structuralDampingFrequency",
+          "slot": 10,
+          "kind": "real",
+          "default": "0.0"
+        },
+        {
+          "name": "hybridDampingFrequency",
+          "slot": 11,
+          "kind": "real",
+          "default": "0.0"
+        }
+      ]
+    },
+    "StochasticParams": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "randomGroups",
+        "firstSlot": 2,
+        "period": 8,
+        "fields": [
+          {
+            "name": "flag",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "distribution",
+            "offset": 1,
+            "kind": "text"
+          },
+          {
+            "name": "variationCoefficient",
+            "offset": 2,
+            "kind": "real"
+          },
+          {
+            "name": "standardDeviations",
+            "offset": 3,
+            "kind": "real"
+          }
+        ]
+      }
+    },
+    "SuperelementReferenceRotor": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "referenceRotorId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "referenceSuperelementId",
+          "slot": 3,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "group": {
+        "name": "rotors",
+        "firstSlot": 4,
+        "period": 2,
+        "fields": [
+          {
+            "name": "nonFollowingRotorId",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "nonFollowingSuperelementId",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "TimeToSpectrum": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "samplingRate",
+          "slot": 2,
+          "kind": "real"
+        },
+        {
+          "name": "window",
+          "slot": 3,
+          "kind": "text",
+          "default": "HanningWindow"
+        },
+        {
+          "name": "fileFormat",
+          "slot": 4,
+          "kind": "text",
+          "default": "CommaSeparatedFile"
+        },
+        {
+          "name": "meanStress",
+          "slot": 5,
+          "kind": "text",
+          "default": "No"
+        },
+        {
+          "name": "skipCount",
+          "slot": 6,
+          "kind": "integer",
+          "default": "0"
+        }
+      ],
+      "sections": {
+        "name": "sections",
+        "firstSlot": 9,
+        "keyOffset": 0,
+        "kinds": [
+          {
+            "key": "Event",
+            "name": "eventLines",
+            "list": {
+              "name": "events",
+              "offset": 1,
+              "period": 7,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "eventId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "sliceTime",
+                  "offset": 5,
+                  "kind": "real"
+                },
+                {
+                  "name": "sliceDuration",
+                  "offset": 6,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Delete",
+            "name": "deleteLines",
+            "list": {
+              "name": "deletions",
+              "offset": 1,
+              "period": 7,
+              "perLine": 1,
+              "fields": [
+                {
+                  "name": "eventId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "sliceStart1",
+                  "offset": 1,
+                  "kind": "real"
+                },
+                {
+                  "name": "sliceEnd1",
+                  "offset": 2,
+                  "kind": "real"
+                },
+                {
+                  "name": "sliceStart2",
+                  "offset": 3,
+                  "kind": "real"
+                },
+                {
+                  "name": "sliceEnd2",
+                  "offset": 4,
+                  "kind": "real"
+                },
+                {
+                  "name": "sliceStart3",
+                  "offset": 5,
+                  "kind": "real"
+                },
+                {
+                  "name": "sliceEnd3",
+                  "offset": 6,
+                  "kind": "real"
+                }
+              ]
+            }
+          },
+          {
+            "key": "Map",
+            "name": "mapLines",
+            "list": {
+              "name": "channels",
+              "offset": 1,
+              "period": 2,
+              "perLine": 3,
+              "fields": [
+                {
+                  "name": "loadCaseId",
+                  "offset": 0,
+                  "kind": "integer"
+                },
+                {
+                  "name": "channel",
+                  "offset": 1,
+                  "kind": "integer"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "TireSelection": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "tireFileKeyword",
+          "slot": 9,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "tires",
+        "firstSlot": 10,
+        "period": 1,
+        "fields": [
+          {
+            "name": "tireName",
+            "offset": 0,
+            "kind": "text"
+          }
+        ]
+      }
+    },
+    "TransferPathSetup": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "nodeSetId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "unit",
+          "slot": 3,
+          "kind": "integer",
+          "default": "24"
+        }
+      ],
+      "group": {
+        "name": "responses",
+        "firstSlot": 9,
+        "period": 2,
+        "fields": [
+          {
+            "name": "responseKind",
+            "offset": 0,
+            "kind": "text"
+          },
+          {
+            "name": "outputSet",
+            "offset": 1,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "TransientTimeSteps": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        }
+      ],
+      "group": {
+        "name": "intervals",
+        "firstSlot": 2,
+        "period": 8,
+        "fields": [
+          {
+            "name": "stepCount",
+            "offset": 0,
+            "kind": "integer"
+          },
+          {
+            "name": "timeStep",
+            "offset": 1,
+            "kind": "real"
+          },
+          {
+            "name": "outputInterval",
+            "offset": 2,
+            "kind": "integer"
+          }
+        ]
+      }
+    },
+    "UserFileName": {
+      "fields": [],
+      "forms": [
+        {
+          "name": "nameOnFirstLine",
+          "when": {
+            "filledSlot": 2
+          },
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "entryName",
+              "slot": 2,
+              "kind": "text",
+              "span": 0
+            }
+          ]
+        },
+        {
+          "name": "nameOnSecondLine",
+          "fields": [
+            {
+              "name": "id",
+              "slot": 1,
+              "kind": "integer"
+            },
+            {
+              "name": "entryName",
+              "slot": 9,
+              "kind": "text",
+              "span": 0
+            }
+          ]
+        }
+      ]
+    },
+    "WettedElemNodes": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "kind",
+          "slot": 2,
+          "kind": "text"
+        },
+        {
+          "name": "node1",
+          "slot": 9,
+          "kind": "integer"
+        },
+        {
+          "name": "node2",
+          "slot": 10,
+          "kind": "integer"
+        },
+        {
+          "name": "node3",
+          "slot": 11,
+          "kind": "integer"
+        },
+        {
+          "name": "node4",
+          "slot": 12,
+          "kind": "integer"
+        },
+        {
+          "name": "node5",
+          "slot": 13,
+          "kind": "integer"
+        },
+        {
+          "name": "node6",
+          "slot": 14,
+          "kind": "integer"
+        },
+        {
+          "name": "node7",
+          "slot": 15,
+          "kind": "integer"
+        },
+        {
+          "name": "node8",
+          "slot": 16,
+          "kind": "integer"
+        }
+      ]
+    },
+    "WettedElemSide": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "elemId",
+          "slot": 2,
+          "kind": "integer"
+        },
+        {
+          "name": "sideCode",
+          "slot": 3,
+          "kind": "integer"
+        }
+      ]
+    },
+    "WettedSurface": {
+      "fields": [
+        {
+          "name": "id",
+          "slot": 1,
+          "kind": "integer"
+        },
+        {
+          "name": "wettedTag",
+          "slot": 2,
+          "kind": "text"
+        }
+      ],
+      "group": {
+        "name": "wettedElems",
+        "firstSlot": 9,
+        "period": 1,
+        "fields": [
+          {
+            "name": "wettedElemId",
+            "offset": 0,
+            "kind": "any"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: shape optimisation on basis vectors of a database (SOL 200)
+#
+# Covers:
+#   - cards: DVSHAP
+#   - solution: SOL 200 (static shape optimisation of a cantilever plate,
+#     minimum tip deflection)
+#   - outputs: displacements and CQUAD4 stresses of each design cycle, the
+#     design tables (DESTAB, HISADD)
+# Run notes:
+#   - needs the database of sol101_shape_basis.bdf (run with scr=no in the
+#     same folder): the ASSIGN names its MASTER file, the DBLOCATE takes the
+#     displacement matrix and the geometry from it
+#   - PARAM,DESPCH,1 punches the moved grid points of the final design
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;DISPMAT='sol101_shape_basis.MASTER'
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: DVSHAP basis vectors
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DesignObjectiveSelection;31;MinimumObjective
+AnalysisKind;Statics
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;cantilever plate, tip load
+SubcaseDesignConstrSelection;40
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;DesignPunchOutput;1
+# The same plate (same include as the basis run), clamped at x = 0, loaded
+# upwards along the free edge x = 100.
+Include;shape_plate_mesh.oos
+SinglePointConstrList;1;123456;1;12;23;34;45;56
+PointForceLoad;1;11;0;10.;0.;0.;1.
+PointForceLoad;1;22;0;20.;0.;0.;1.
+PointForceLoad;1;33;0;20.;0.;0.;1.
+PointForceLoad;1;44;0;20.;0.;0.;1.
+PointForceLoad;1;55;0;20.;0.;0.;1.
+PointForceLoad;1;66;0;10.;0.;0.;1.
+# Shape variables: the grid points move by X1 times basis vector 1 (column 1
+# of UG: the pressure shape) plus X2 times half of basis vector 2 (column 2:
+# the central load shape) plus X2 times half of basis vector 1.
+DesignVar;1;DOME;0.;-3.;3.
+DesignVar;2;BUMP;0.;-3.;3.
+DesignShapeBasis;1;1;1.
+DesignShapeBasis;2;2;0.5;1;0.5
+# Responses: tip corner deflection (objective), plate von Mises stress at
+# both fibres (constraints).
+DesignResp1;31;TIPZ;Displacement;;;3;;66
+DesignResp1;32;VMZ1;Stress;ShellProp;;9;;1
+DesignResp1;33;VMZ2;Stress;ShellProp;;17;;1
+DesignConstr;40;32;;;200.
+DesignConstr;40;33;;;200.
+DesignOptimParams;MaxDesignCycles;6

@@ -1,0 +1,46 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: direct frequency response, centre and ply output
+#
+# Covers:
+#   - solution: SOL 108 (direct frequency response) of the shared element
+#     model of common/elements_model.inc
+#   - outputs: the complex SORT1 element tables at the element centres
+#     (CENTER: CQUAD4 type 33, CQUADR type 228, CTRIAR type 227), in both
+#     complex forms (real/imaginary in subcase 1, magnitude/phase in
+#     subcase 2), and the complex ply tables of the laminates (PCOMP 2:
+#     QUAD4_COMP_CPLX, TRIA3_COMP_CPLX, ... in the HDF5 file)
+# Run notes:
+#   - the twin of results_dynamics/freq_direct_sort1.bdf, which asks for the
+#     corners; run it a second time with the i8 executable (subfolder i8)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: direct frequency response at the centres
+BulkEcho;None
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DynamicLoadSelection;21
+FreqSetSelection;41
+SubcaseStart;1
+LabelText;real and imaginary parts, centres
+DisplacementOutput;All;PlotOnly;SortByPoint;RealPart
+StressOutput;All;PlotOnly;SortByPoint;RealPart;CenterOnly
+StrainOutput;All;PlotOnly;SortByPoint;RealPart;FiberDistance;CenterOnly
+ElemForceOutput;All;PlotOnly;SortByPoint;RealPart;CenterOnly
+SubcaseStart;2
+LabelText;magnitude and phase, centres
+DisplacementOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+StressOutput;All;PlotOnly;SortByPoint;MagnitudePhase;CenterOnly
+StrainOutput;All;PlotOnly;SortByPoint;MagnitudePhase;FiberDistance;CenterOnly
+ElemForceOutput;All;PlotOnly;SortByPoint;MagnitudePhase;CenterOnly
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;UniformStructuralDamping;0.02
+FreqLinearSteps1;41;5.;5.;40
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+Include;../common/elements_model.oos

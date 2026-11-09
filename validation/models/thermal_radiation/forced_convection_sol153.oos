@@ -1,0 +1,95 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: forced and tabulated free convection
+#
+# Covers:
+#   - cards: CONVM, PCONVM, TABLEHT, TABLEH1, MAT5, MATT4, MATT5, TEMPBC
+#   - solution: SOL 153 (steady nonlinear heat transfer)
+#   - outputs: temperatures, element heat flux and boundary heat flows
+# Run notes:
+#   - region 1: water flowing in a pipe (CHBDYP FTUBE with CONVM) cools a
+#     steel wall heated at both ends; region 2: an anisotropic plate heated
+#     on one edge, cooled by free convection whose coefficient comes from a
+#     two-variable table
+#   - units: mm, t, s, N, mJ, mW, degrees C
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;153
+[case]
+TitleText;O_o_Reader test model: forced convection (SOL 153)
+BulkEcho;None
+SinglePointConstrSelection;3
+NonlinearStaticParamsSelection;1
+TemperatureSelection;2;InitialTemperature
+ThermalOutput;All;PlotOnly
+HeatFluxOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;pipe flow and tabulated free convection
+[model]
+Parameter;PostprocessingFile;-1
+NonlinearStaticParams;1
+DefaultTemperatureLoad;2;20.
+# Region 1: steel pipe wall (CROD, conductivity scaled with temperature by
+# MATT4), grid points 11 to 15 along x.
+HeatIsoMat;2;50.;4.6E+8;7.85E-9
+HeatIsoMatTemperature;2;31
+TableMaterial1;31;;;0.;1.;300.;0.9;EndTable
+RodProp;11;2;50.
+Node;11;;0.;10.;0.
+Node;12;;50.;10.;0.
+Node;13;;100.;10.;0.
+Node;14;;150.;10.;0.
+Node;15;;200.;10.;0.
+Rod2;11;11;11;12
+Rod2;12;11;12;13
+Rod2;13;11;13;14
+Rod2;14;11;14;15
+# Water stream, grid points 1 to 5, 10 mm tube; inlet at grid 1. The mass
+# flow rate (1.E-5 t/s) is given on CONVM, the film coefficient comes from
+# the Reynolds and Prandtl numbers of the water (MAT4 with viscosity).
+HeatIsoMat;3;0.6;4.18E+9;1.E-9;;1.E-9
+HeatSurfaceProp;21;;10.;10.
+ForcedConvectionProp;22;3;1;1;0.023;0.8;0.4;0.3
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;150.;0.;0.
+Node;5;;200.;0.;0.
+HeatSurfaceProperty;21;21;ForcedConvectionTube;;;1;2
+HeatSurfaceProperty;22;21;ForcedConvectionTube;;;2;3
+HeatSurfaceProperty;23;21;ForcedConvectionTube;;;3;4
+HeatSurfaceProperty;24;21;ForcedConvectionTube;;;4;5
+ForcedConvection;21;22;;;11;12;1.E-5
+ForcedConvection;22;22;;;12;13;1.E-5
+ForcedConvection;23;22;;;13;14;1.E-5
+ForcedConvection;24;22;;;14;15;1.E-5
+# Region 2: an orthotropic plate, 100 x 50 mm, 2 mm thick, its x
+# conductivity scaled with temperature by MATT5.
+HeatAnisoMat;5;150.;0.;0.;50.;0.;50.;9.E+8;2.7E-9
+HeatAnisoMatTemperature;5;32
+TableMaterial1;32;;;0.;1.;300.;0.8;EndTable
+ShellProp;31;5;2.
+Node;31;;300.;0.;0.
+Node;32;;350.;0.;0.
+Node;33;;400.;0.;0.
+Node;34;;300.;50.;0.
+Node;35;;350.;50.;0.
+Node;36;;400.;50.;0.
+ShellQuad4;31;31;31;32;35;34
+ShellQuad4;32;31;32;33;36;35
+# Free convection on the top face to the ambient point 99; the film
+# coefficient is a table of two temperatures (TABLEHT of TABLEH1).
+HeatSurfaceSide;41;31;1
+HeatSurfaceSide;42;32;1
+FreeConvectionProp;43;;;;1;44
+FreeConvection;41;43;;;99
+FreeConvection;42;43;;;99
+TableHeatTwoVariables;44;0.;45;100.;46;EndTable
+TableHeat1;45;0.;0.005;200.;0.008;EndTable
+TableHeat1;46;0.;0.006;200.;0.01;EndTable
+Node;99;;500.;0.;0.
+# Temperature boundary conditions (SPC = 3): both ends of the pipe wall,
+# the water inlet, the hot edge of the plate, the ambient point.
+TemperatureBoundary;3;Static;150.;11;150.;15;20.;1
+TemperatureBoundary;3;Static;150.;31;150.;34;20.;99

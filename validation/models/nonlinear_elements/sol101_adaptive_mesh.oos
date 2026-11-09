@@ -1,0 +1,67 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: adaptive mesh refinement of a plate
+#
+# Covers:
+#   - cards: HADAPTL, HADACRI
+#   - solution: SOL 101 (linear static, adaptive mesh refinement)
+#   - outputs: displacements, SPC forces, element stresses
+# Run notes:
+#   - HADAPT = 1 selects the two HADAPTL entries of ID 1: an error indicator
+#     criterion on every element and a spherical region at the clamped
+#     corner, two refinement passes at most
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: adaptive mesh refinement (SOL 101)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+MeshAdaptivitySelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;cantilever plate under a tip load
+[model]
+Parameter;PostprocessingFile;-1
+# Adaptive refinement: criterion 1 refines the elements whose error
+# indicator exceeds 0.9 times the mean, criterion 2 the elements of
+# property 1 with a grid point within 15 mm of the corner (0, 0, 0).
+AdaptiveRefineControl;1;2;1;All;;0;2
+AdaptiveRefineControl;1;2;2;Property;1;0;2
+AdaptiveRefineCriterion;1;1;0.9
+AdaptiveRefineCriterion;2;2;0.;0.;0.;15.
+# A steel plate 80 x 20 x 2 mm of eight CQUAD4, clamped at x = 0, bent by
+# a tip load. Units: mm, N, t.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;20.;0.;0.
+Node;3;;40.;0.;0.
+Node;4;;60.;0.;0.
+Node;5;;80.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;20.;10.;0.
+Node;8;;40.;10.;0.
+Node;9;;60.;10.;0.
+Node;10;;80.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;20.;20.;0.
+Node;13;;40.;20.;0.
+Node;14;;60.;20.;0.
+Node;15;;80.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+PointForceLoad;1;5;;5.;0.;0.;1.
+PointForceLoad;1;10;;10.;0.;0.;1.
+PointForceLoad;1;15;;5.;0.;0.;1.

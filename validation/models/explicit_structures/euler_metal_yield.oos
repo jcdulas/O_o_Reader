@@ -1,0 +1,103 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: SOL 700 Euler bar, metal models
+#
+# Covers:
+#   - cards: YLDJC YLDSG YLDTM YLDZA YLDRPL SHREL SHRPOL FAILJC FAILMPS
+#     TICVAL BARRIER CMARKN1 CMARKB2 PMARKER DYFSISW DYPARAM (with MESH,
+#     PEULER1, TICEUL1, TICREG, CYLINDR, MATDEUL, EOSPOL, TABLED1, TSTEPNL)
+#   - solution: SOL 700,129 (explicit nonlinear transient: a Johnson-Cook
+#     steel slab at 200 m/s strikes four metal slabs in one Euler domain)
+#   - outputs: none that the library decodes (the default Euler archive of
+#     the explicit solver)
+# Run notes:
+#   - needs the explicit solver of SOL 700 in the installation (the solver
+#     spawns it; see the SOL 700 Executive Control statement)
+#   - SOL 700 has no OUTPUT2 output: the explicit solver writes its own archive
+#     and time-history files (ARC, THS) and its output file next to the listing;
+#     bring back the listing
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;129
+[case]
+TitleText;O_o_Reader test model: SOL 700 Euler metal yield models
+BulkEcho;None
+NonlinearTimeStepSelection;1
+StepEndTime;1.E-4
+[model]
+# Units: mm, N, tonne, s, K; specific heats in mm2/(s2 K). End time 0.1 ms.
+NonlinearTimeSteps;1;100;1.E-6
+ExplicitParam;InitialStep;1.E-7
+# Euler domain: a 100 x 20 x 20 box of 10 x 2 x 2 elements made by MESH 1
+# (grid points and elements numbered from 50001), multi-material with
+# strength (PEULER1 10, MMSTREN), filled by the regions of TICEUL1 20.
+EulerMeshGenerator;1;Box;10.;10.;10.;;;;0.;0.;0.;;;;10;2;2;;50001;50001;Euler;10
+EulerRegionProp;10;MultiMaterialStrength;20
+EulerInitialRegions;20;30
+# Five slabs of 20 mm along x, one material each: a cylinder of radius 15
+# around the box axis, its ends on element faces, gives the region (TICREG),
+# the MATDEUL and the initial values (TICVAL).
+# Slab 1: Johnson-Cook steel striker (YLDJC, FAILJC, SHREL) at 200 m/s
+InitialConditionRegion;31;30;Cylinder;41;101;51;1.
+CylinderShape;41;-1.;10.;10.;20.;10.;10.;15.
+InitialConditionValues;51;;Density;7.85E-9;VelocityX;2.E+5
+# Slab 2: Steinberg-Guinan steel (YLDSG, FAILMPS, SHRPOL)
+InitialConditionRegion;32;30;Cylinder;42;102;52;2.
+CylinderShape;42;20.;10.;10.;40.;10.;10.;15.
+InitialConditionValues;52;;Density;7.85E-9
+# Slab 3: Tanimura-Mimura steel (YLDTM, SHREL)
+InitialConditionRegion;33;30;Cylinder;43;103;53;3.
+CylinderShape;43;40.;10.;10.;60.;10.;10.;15.
+InitialConditionValues;53;;Density;7.85E-9
+# Slab 4: Zerilli-Armstrong copper (YLDZA, SHREL)
+InitialConditionRegion;34;30;Cylinder;44;104;54;4.
+CylinderShape;44;60.;10.;10.;80.;10.;10.;15.
+InitialConditionValues;54;;Density;8.96E-9
+# Slab 5: rate power law aluminium (YLDRPL, SHRPOL)
+InitialConditionRegion;35;30;Cylinder;45;105;55;5.
+CylinderShape;45;80.;10.;10.;101.;10.;10.;15.
+InitialConditionValues;55;;Density;2.7E-9
+# Equations of state: polynomial, bulk modulus only.
+PolynomialStateEquation;1;1.6E+5
+PolynomialStateEquation;2;1.4E+5
+PolynomialStateEquation;3;7.E+4
+# Shear models: constant (SHREL) and polynomial in the plastic shear strain
+# (SHRPOL).
+ElasticShearModel;1;8.E+4
+ElasticShearModel;2;4.6E+4
+PolynomialShearModel;3;8.E+4;1.E+3
+PolynomialShearModel;4;2.6E+4;500.;-100.;10.
+# Yield models.
+JohnsonCookYield;1;350.;275.;0.36;0.022;1.;1.;4.5E+8;1800.;293.
+SteinbergGuinanYield;2;340.;2500.;43.;0.35;;;4.5E+8;1800.;293.
+TanimuraMimuraYield;3;300.;200.;0.1;0.01;1.;1.;4.5E+8;1800.;293.;4.E+3;2100.;0.5;1.
+ZerilliArmstrongYield;4;65.;890.;0.5;1.15E-4;0.0028;1.;3.85E+8
+RatePowerLawYield;5;250.;400.;0.3;0.02;200.
+# Failure models: Johnson-Cook damage (continuous) and maximum plastic
+# strain.
+JohnsonCookFailure;1;0.05;3.44;-2.12;0.002;0.61;1.;293.;1800.;4.5E+8;Continue
+MaxPlasticStrainFailure;2;0.3
+# Euler materials: MID, RHO, EOS, shear, yield, failure.
+EulerMat;101;7.85E-9;1;1;1;1
+EulerMat;102;7.85E-9;1;3;2;2
+EulerMat;103;7.85E-9;1;1;3
+EulerMat;104;8.96E-9;2;2;4
+EulerMat;105;2.7E-9;3;4;5
+# The two ends of the bar are closed for transport (they are also closed by
+# default).
+EulerBarrier;1;;1;NegativeXDirection
+EulerBarrier;2;;1;PositiveXDirection
+# Markers in the Euler domain: a fixed one-point marker and a two-point
+# marker that moves with the material, on free grid points (no mass).
+Node;60001;;50.;10.;10.
+Node;60002;;30.;10.;10.
+Node;60003;;70.;10.;10.
+MarkerProp;71;Fixed
+MarkerProp;72;Moving
+MarkerNode;70001;71;60001
+MarkerBody;70002;72;60002;60003
+# The Euler solver stays on for the whole run (DYFSISW 81: switch table 82
+# positive), its elements initialized at cycle 0.
+FluidStructureSwitch;81;82;No
+TableDynamic1;82;;;0.;1.;1.;1.;EndTable

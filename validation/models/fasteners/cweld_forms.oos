@@ -1,0 +1,263 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: CWELD connection forms on linear and quadratic shells (SOL 101)
+#
+# Validates:
+#   - the piercing points (generated grid points) for each CWELD form (GEOM1
+#     of PARAM,POST,-1): PARTPAT, ELEMID with two shells,
+#     ELEMID point to patch, GRIDID QQ on CQUAD4 and on CQUAD8 (mid-side
+#     nodes), GRIDID TT on CTRIA6, GRIDID point to patch, ALIGN, a second
+#     ELPAT and PARTPAT (the numbering after the first connector), PWELD TYPE
+#     SPOT
+#   - the weld forces and stresses (FORCE, STRESS)
+# Settles (library item: current status):
+#   - the piercing points of CWELD PARTPAT (taken as CFAST PROP), ELEMID,
+#     GRIDID, point to patch; CQUAD8, CTRIA6 and GRIDID shapes with mid-side
+#     nodes; the length of a SPOT weld; the generated IDs beyond the first
+#     connector
+#   - the stress/strain/forces tables of cweld (not_validated)
+# Run notes:
+#   - SWLDPRM PRTSW 1 prints the projections in the listing: bring the listing back
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: CWELD forms
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;tip loads on the upper plates
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Two pairs of parallel plates 2 mm apart (units mm, N, tonne). Pair 1: linear
+# shells, lower plate PSHELL 11 (4 x 4 CQUAD4, z = 0, clamped at x = 0), upper
+# plate PSHELL 12 (4 x 4 CQUAD4, z = 2). Pair 2: quadratic shells at y = 100,
+# lower 2 CQUAD8 and 2 CTRIA6 (PSHELL 13), upper the same (PSHELL 14).
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;11;1;1.5;1;;1
+ShellProp;12;1;1.5;1;;1
+ShellProp;13;1;1.5;1;;1
+ShellProp;14;1;1.5;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+Node;16;;0.;30.;0.
+Node;17;;10.;30.;0.
+Node;18;;20.;30.;0.
+Node;19;;30.;30.;0.
+Node;20;;40.;30.;0.
+Node;21;;0.;40.;0.
+Node;22;;10.;40.;0.
+Node;23;;20.;40.;0.
+Node;24;;30.;40.;0.
+Node;25;;40.;40.;0.
+ShellQuad4;1;11;1;2;7;6
+ShellQuad4;2;11;2;3;8;7
+ShellQuad4;3;11;3;4;9;8
+ShellQuad4;4;11;4;5;10;9
+ShellQuad4;5;11;6;7;12;11
+ShellQuad4;6;11;7;8;13;12
+ShellQuad4;7;11;8;9;14;13
+ShellQuad4;8;11;9;10;15;14
+ShellQuad4;9;11;11;12;17;16
+ShellQuad4;10;11;12;13;18;17
+ShellQuad4;11;11;13;14;19;18
+ShellQuad4;12;11;14;15;20;19
+ShellQuad4;13;11;16;17;22;21
+ShellQuad4;14;11;17;18;23;22
+ShellQuad4;15;11;18;19;24;23
+ShellQuad4;16;11;19;20;25;24
+Node;101;;0.;0.;2.
+Node;102;;10.;0.;2.
+Node;103;;20.;0.;2.
+Node;104;;30.;0.;2.
+Node;105;;40.;0.;2.
+Node;106;;0.;10.;2.
+Node;107;;10.;10.;2.
+Node;108;;20.;10.;2.
+Node;109;;30.;10.;2.
+Node;110;;40.;10.;2.
+Node;111;;0.;20.;2.
+Node;112;;10.;20.;2.
+Node;113;;20.;20.;2.
+Node;114;;30.;20.;2.
+Node;115;;40.;20.;2.
+Node;116;;0.;30.;2.
+Node;117;;10.;30.;2.
+Node;118;;20.;30.;2.
+Node;119;;30.;30.;2.
+Node;120;;40.;30.;2.
+Node;121;;0.;40.;2.
+Node;122;;10.;40.;2.
+Node;123;;20.;40.;2.
+Node;124;;30.;40.;2.
+Node;125;;40.;40.;2.
+ShellQuad4;101;12;101;102;107;106
+ShellQuad4;102;12;102;103;108;107
+ShellQuad4;103;12;103;104;109;108
+ShellQuad4;104;12;104;105;110;109
+ShellQuad4;105;12;106;107;112;111
+ShellQuad4;106;12;107;108;113;112
+ShellQuad4;107;12;108;109;114;113
+ShellQuad4;108;12;109;110;115;114
+ShellQuad4;109;12;111;112;117;116
+ShellQuad4;110;12;112;113;118;117
+ShellQuad4;111;12;113;114;119;118
+ShellQuad4;112;12;114;115;120;119
+ShellQuad4;113;12;116;117;122;121
+ShellQuad4;114;12;117;118;123;122
+ShellQuad4;115;12;118;119;124;123
+ShellQuad4;116;12;119;120;125;124
+SinglePointConstrList;1;123456;1;6;11;16;21
+PointForceLoad;1;105;;10.;1.;0.;1.
+PointForceLoad;1;110;;10.;1.;0.;1.
+PointForceLoad;1;115;;10.;1.;0.;1.
+PointForceLoad;1;120;;10.;1.;0.;1.
+PointForceLoad;1;125;;10.;1.;0.;1.
+# Pair 2: quadratic shells. Each layer: CQUAD8 at x 0 to 20, CTRIA6 pair at x
+# 20 to 40 (y 100 to 120).
+Node;201;;0.;100.;0.
+Node;202;;5.;100.;0.
+Node;203;;10.;100.;0.
+Node;204;;15.;100.;0.
+Node;205;;20.;100.;0.
+Node;206;;25.;100.;0.
+Node;207;;30.;100.;0.
+Node;208;;35.;100.;0.
+Node;209;;40.;100.;0.
+Node;210;;0.;105.;0.
+Node;211;;5.;105.;0.
+Node;212;;10.;105.;0.
+Node;213;;15.;105.;0.
+Node;214;;20.;105.;0.
+Node;215;;25.;105.;0.
+Node;216;;30.;105.;0.
+Node;217;;35.;105.;0.
+Node;218;;40.;105.;0.
+Node;219;;0.;110.;0.
+Node;220;;5.;110.;0.
+Node;221;;10.;110.;0.
+Node;222;;15.;110.;0.
+Node;223;;20.;110.;0.
+Node;224;;25.;110.;0.
+Node;225;;30.;110.;0.
+Node;226;;35.;110.;0.
+Node;227;;40.;110.;0.
+Node;228;;0.;115.;0.
+Node;229;;5.;115.;0.
+Node;230;;10.;115.;0.
+Node;231;;15.;115.;0.
+Node;232;;20.;115.;0.
+Node;233;;25.;115.;0.
+Node;234;;30.;115.;0.
+Node;235;;35.;115.;0.
+Node;236;;40.;115.;0.
+Node;237;;0.;120.;0.
+Node;238;;5.;120.;0.
+Node;239;;10.;120.;0.
+Node;240;;15.;120.;0.
+Node;241;;20.;120.;0.
+Node;242;;25.;120.;0.
+Node;243;;30.;120.;0.
+Node;244;;35.;120.;0.
+Node;245;;40.;120.;0.
+ShellQuad8;201;13;201;205;241;237;203;223;239;219
+ShellTria6;202;13;205;209;245;207;227;225
+ShellTria6;203;13;205;245;241;225;243;223
+Node;301;;0.;100.;2.
+Node;302;;5.;100.;2.
+Node;303;;10.;100.;2.
+Node;304;;15.;100.;2.
+Node;305;;20.;100.;2.
+Node;306;;25.;100.;2.
+Node;307;;30.;100.;2.
+Node;308;;35.;100.;2.
+Node;309;;40.;100.;2.
+Node;310;;0.;105.;2.
+Node;311;;5.;105.;2.
+Node;312;;10.;105.;2.
+Node;313;;15.;105.;2.
+Node;314;;20.;105.;2.
+Node;315;;25.;105.;2.
+Node;316;;30.;105.;2.
+Node;317;;35.;105.;2.
+Node;318;;40.;105.;2.
+Node;319;;0.;110.;2.
+Node;320;;5.;110.;2.
+Node;321;;10.;110.;2.
+Node;322;;15.;110.;2.
+Node;323;;20.;110.;2.
+Node;324;;25.;110.;2.
+Node;325;;30.;110.;2.
+Node;326;;35.;110.;2.
+Node;327;;40.;110.;2.
+Node;328;;0.;115.;2.
+Node;329;;5.;115.;2.
+Node;330;;10.;115.;2.
+Node;331;;15.;115.;2.
+Node;332;;20.;115.;2.
+Node;333;;25.;115.;2.
+Node;334;;30.;115.;2.
+Node;335;;35.;115.;2.
+Node;336;;40.;115.;2.
+Node;337;;0.;120.;2.
+Node;338;;5.;120.;2.
+Node;339;;10.;120.;2.
+Node;340;;15.;120.;2.
+Node;341;;20.;120.;2.
+Node;342;;25.;120.;2.
+Node;343;;30.;120.;2.
+Node;344;;35.;120.;2.
+Node;345;;40.;120.;2.
+ShellQuad8;301;14;301;305;341;337;303;323;339;319
+ShellTria6;302;14;305;309;345;307;327;325
+ShellTria6;303;14;305;345;341;325;343;323
+SinglePointConstrList;1;123456;201;219;237
+PointForceLoad;1;345;;10.;1.;0.;1.
+PointForceLoad;1;309;;10.;1.;0.;1.
+# CWELD in each of its forms. GS grid points sit between the plates. PWELD 1
+# is a general connector, PWELD 2 a spot weld (TYPE SPOT: the solver sets its length
+# from the thicknesses).
+WeldProp;1;1;3.
+WeldProp;2;1;3.
+Node;901;;5.;5.;1.
+Node;902;;15.;5.;1.
+Node;903;;25.;5.;1.
+Node;904;;35.;5.;1.
+Node;905;;5.;35.;1.
+Node;906;;35.;35.;5.
+Node;907;;10.;110.;1.
+Node;908;;30.;105.;1.
+Node;909;;15.;15.;1.
+Weld;1001;2;901;PartPatch;;;;11;12
+Weld;1002;1;902;ElemIdPatch;;;;2;102
+Weld;1003;1;906;ElemIdPatch;;;;16
+Weld;1004;1;903;NodeIdPatch;;;QuadQuadPatch;;3;4;9;8;;;;;103;104;109;108
+Weld;1005;1;907;NodeIdPatch;;;QuadQuadPatch;;201;205;241;237;203;223;239;219;301;305;341;337;303;323;339;319
+Weld;1006;1;908;NodeIdPatch;;;TriaTriaPatch;;205;209;245;207;227;225;;;305;309;345;307;327;325
+Weld;1007;1;906;NodeIdPatch;;;QuadPatch;;19;20;25;24
+Weld;1008;1;;AlignedNodes;12;112
+Weld;1009;1;909;ElemPatch;;;;6;106
+Weld;1010;2;905;PartPatch;;;;11;12
+ConnectorSearchParams;1;GeneratedDataPrint;1

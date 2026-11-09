@@ -1,0 +1,133 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: radiation enclosures and boundary heat loads
+#
+# Covers:
+#   - cards: RADCAV, RADSET, VIEW, VIEW3D, RADLST, RADMTX, RADM, RADMT,
+#     RADBND, RADBC, BDYOR, QBDY2, QBDY3, QHBDY, QVECT, TEMPBC
+#   - solution: SOL 153 (steady nonlinear heat transfer with radiation)
+#   - outputs: temperatures, element heat flux and boundary heat flows
+# Run notes:
+#   - two closed boxes of six shell faces; the inner faces of box A form
+#     cavity 1 (view factors computed, Gaussian integration), the inner
+#     faces of box B form cavity 2 (view factors given by RADLST/RADMTX)
+#   - units: mm, t, s, N, mJ, mW, degrees C (PARAM TABS 273.15)
+#   - CHBDYG 141 takes its TYPE (AREA4) and its RADM from the BDYOR
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;153
+[case]
+TitleText;O_o_Reader test model: radiation enclosures (SOL 153)
+BulkEcho;None
+SinglePointConstrSelection;3
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;1
+TemperatureSelection;2;InitialTemperature
+ThermalOutput;All;PlotOnly
+HeatFluxOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;two cavities, space radiation and boundary heat loads
+[model]
+Parameter;PostprocessingFile;-1
+# Absolute temperature offset and Stefan-Boltzmann constant in mW/mm2/K4.
+Parameter;AbsoluteTemperatureOffset;273.15
+Parameter;StefanBoltzmannConstant;5.67E-11
+NonlinearStaticParams;1
+DefaultTemperatureLoad;2;20.
+# Aluminium shells, 2 mm thick (conductivity in mW/mm/K).
+HeatIsoMat;1;200.;9.E+8;2.7E-9
+ShellProp;1;1;2.
+# Defaults of every surface element: area type and the RADM of both faces.
+HeatSurfaceDefaults;AreaQuad4;;;1;1
+# Emissivity of the cavity faces of box A, scaled with temperature (RADMT).
+RadiationProp;1;0.8;0.8
+RadiationPropTemperature;1;21;21
+TableMaterial1;21;;;0.;0.9;200.;1.;EndTable
+# Emissivity of the cavity faces of box B.
+RadiationProp;2;0.6;0.6
+# Spectral surface of box A (two wavelength bands, micrometres).
+RadiationBands;3;14388.;2.;10.
+RadiationProp;3;0.3;0.2;0.85
+# Cavities: box A with view factors computed (shadowing checked, printed,
+# not punched), box B with the factors given below.
+RadiationCavitySet;1;2
+RadiationCavity;1;;Yes;;2
+RadiationCavity;2
+ViewFactorFace;1;1;Both
+ViewFactorFace;2;2;Both
+ViewFactorIntegration;1;3;3;6;0.05;1.E-10;0.01;3
+# Box A: a 100 mm cube of six CQUAD4, normals pointing inward.
+Node;101;;0.;0.;0.
+Node;102;;100.;0.;0.
+Node;103;;100.;100.;0.
+Node;104;;0.;100.;0.
+Node;105;;0.;0.;100.
+Node;106;;100.;0.;100.
+Node;107;;100.;100.;100.
+Node;108;;0.;100.;100.
+ShellQuad4;111;1;101;102;103;104
+ShellQuad4;112;1;105;108;107;106
+ShellQuad4;113;1;101;105;106;102
+ShellQuad4;114;1;104;103;107;108
+ShellQuad4;115;1;101;104;108;105
+ShellQuad4;116;1;102;106;107;103
+# Inner faces of box A in cavity 1 (front face = inward normal, RADM 1
+# from BDYOR).
+HeatSurfaceSide;131;111;1;1
+HeatSurfaceSide;132;112;1;1
+HeatSurfaceSide;133;113;1;1
+HeatSurfaceSide;134;114;1;1
+HeatSurfaceSide;135;115;1;1
+HeatSurfaceSide;136;116;1;1
+# Outer faces of box A: the top radiates to space and takes a uniform
+# flux; the side x = 100 takes a solar flux along -x (spectral RADM 3). The
+# top leaves TYPE blank: AREA4 comes from the BDYOR (format reference CHBDYG remark 2).
+HeatSurfaceNodes;141;;;;;;105;106;107;108
+HeatSurfaceNodes;142;AreaQuad4;;;3;3;103;107;106;102
+HeatFluxBoundaryLoad3;1;0.5;;141
+HeatFluxVectorLoad;1;1.361;5500.;;-1.;;0.;;0.;;;142
+# Box B: the same cube moved to x = 300.
+Node;201;;300.;0.;0.
+Node;202;;400.;0.;0.
+Node;203;;400.;100.;0.
+Node;204;;300.;100.;0.
+Node;205;;300.;0.;100.
+Node;206;;400.;0.;100.
+Node;207;;400.;100.;100.
+Node;208;;300.;100.;100.
+ShellQuad4;211;1;201;202;203;204
+ShellQuad4;212;1;205;208;207;206
+ShellQuad4;213;1;201;205;206;202
+ShellQuad4;214;1;204;203;207;208
+ShellQuad4;215;1;201;204;208;205
+ShellQuad4;216;1;202;206;207;203
+HeatSurfaceSide;231;211;1;2;;2
+HeatSurfaceSide;232;212;1;2;;2
+HeatSurfaceSide;233;213;1;2;;2
+HeatSurfaceSide;234;214;1;2;;2
+HeatSurfaceSide;235;215;1;2;;2
+HeatSurfaceSide;236;216;1;2;;2
+# Cavity 2: area times view factor of a cube (opposite faces 0.19982,
+# adjacent faces 0.20004, face area 10000 mm2), lower triangle by column
+# in the order of the RADLST.
+RadiationCavityList;2;1;231;Through;236
+RadiationExchangeMatrix;2;1;0.;1998.2;2000.4;2000.4;2000.4;2000.4
+RadiationExchangeMatrix;2;2;0.;2000.4;2000.4;2000.4;2000.4
+RadiationExchangeMatrix;2;3;0.;1998.2;2000.4;2000.4
+RadiationExchangeMatrix;2;4;0.;2000.4;2000.4
+RadiationExchangeMatrix;2;5;0.;1998.2
+RadiationExchangeMatrix;2;6;0.
+# Outer top face of box B: a flux given at its four grid points; the face
+# x = 400 takes a flux on its grid points directly (no surface element).
+HeatSurfaceNodes;241;AreaQuad4;;;;;205;206;207;208
+HeatFluxNodalLoad2;1;241;0.3;0.3;0.4;0.4
+HeatFluxNodeSetLoad;1;AreaQuad4;0.2;;203;207;206;202
+# Space: a black body at -270 C seen by the outer faces.
+Node;9001;;500.;0.;0.
+RadiationToSpace;9001;1.;;141;142;241
+# Temperature boundary conditions (SPC = 3): the bottom of each box and
+# the space point.
+TemperatureBoundary;3;Static;100.;101;Through;104
+TemperatureBoundary;3;Static;50.;201;Through;204
+TemperatureBoundary;3;Static;-270.;9001

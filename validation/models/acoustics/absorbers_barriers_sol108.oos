@@ -1,0 +1,115 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: acoustic absorbers, barriers and panels
+#
+# Covers:
+#   - cards: ACMODL, CHACAB, PACABS, CHACBR, PACBAR, CAABSF, PAABSF, MAT10F,
+#     PANEL, ERPPNL
+#   - solution: SOL 108 (direct frequency response, coupled fluid and
+#     structure)
+#   - outputs: complex displacements and fluid pressures, plate stresses
+#     and forces, fluid element pressures, equivalent radiated power
+# Run notes:
+#   - the 10 mm gap of acoustics/plate_cavity_model.inc is filled with
+#     acoustic absorber elements (y 0 to 100) and acoustic barrier elements
+#     (y 100 to 200); their top grid points coincide with the cavity floor
+#     (ACMODL IDENT); the cavity wall x = 0 is lined with impedance
+#     elements (CAABSF)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: absorbers and barriers (SOL 108)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+SetDefinition;1;101;Through;116
+DisplacementOutput;All;PlotOnly
+StressOutput;1;PlotOnly
+ElemForceOutput;All;PlotOnly
+RadiatedPowerOutput;All;PlotOnly;ERPRHO=1.2E-12;ERPC=344000.
+SubcaseStart;1
+LabelText;plate driven at (50, 50), lined cavity
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;UniformStructuralDamping;0.02
+# Unit force from 50 to 500 Hz.
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;1.E+3;1.;EndTable
+FreqLinearSteps1;41;50.;50.;9
+# Fluid and structure are coupled where their grid points coincide.
+FluidStructureInterface;IdenticalMesh
+# Air with a frequency-dependent bulk modulus and damping (tables replace
+# the BULK and GE values of MAT10 2).
+FluidMatFreq;2;34;;;35
+TableDynamic1;34;;;0.;0.142;1.E+3;0.146;EndTable
+TableDynamic1;35;;;0.;0.01;1.E+3;0.03;EndTable
+# Treatment layer: structural grid points 501 to 525 at z = 10 on the
+# cavity floor; G1-G4 of each element on the plate, G5-G8 on the fluid.
+Node;501;;0.;0.;10.
+Node;502;;50.;0.;10.
+Node;503;;100.;0.;10.
+Node;504;;150.;0.;10.
+Node;505;;200.;0.;10.
+Node;506;;0.;50.;10.
+Node;507;;50.;50.;10.
+Node;508;;100.;50.;10.
+Node;509;;150.;50.;10.
+Node;510;;200.;50.;10.
+Node;511;;0.;100.;10.
+Node;512;;50.;100.;10.
+Node;513;;100.;100.;10.
+Node;514;;150.;100.;10.
+Node;515;;200.;100.;10.
+Node;516;;0.;150.;10.
+Node;517;;50.;150.;10.
+Node;518;;100.;150.;10.
+Node;519;;150.;150.;10.
+Node;520;;200.;150.;10.
+Node;521;;0.;200.;10.
+Node;522;;50.;200.;10.
+Node;523;;100.;200.;10.
+Node;524;;150.;200.;10.
+Node;525;;200.;200.;10.
+# Absorber elements (y 0 to 100): damping, stiffness and mass per area.
+AcousticAbsorberBrickProp;21;No;;;;;;1.E-6;0.01;3.E-10
+# Barrier elements (y 100 to 200): backing and septum masses per area and
+# the resonance of the sandwich.
+AcousticBarrierProp;22;2.E-9;1.E-9;300.
+AcousticAbsorberHexa;301;21;101;102;107;106;501;502;507;506
+AcousticAbsorberHexa;302;21;102;103;108;107;502;503;508;507
+AcousticAbsorberHexa;303;21;103;104;109;108;503;504;509;508
+AcousticAbsorberHexa;304;21;104;105;110;109;504;505;510;509
+AcousticAbsorberHexa;305;21;106;107;112;111;506;507;512;511
+AcousticAbsorberHexa;306;21;107;108;113;112;507;508;513;512
+AcousticAbsorberHexa;307;21;108;109;114;113;508;509;514;513
+AcousticAbsorberHexa;308;21;109;110;115;114;509;510;515;514
+AcousticBarrierHexa;309;22;111;112;117;116;511;512;517;516
+AcousticBarrierHexa;310;22;112;113;118;117;512;513;518;517
+AcousticBarrierHexa;311;22;113;114;119;118;513;514;519;518
+AcousticBarrierHexa;312;22;114;115;120;119;514;515;520;519
+AcousticBarrierHexa;313;22;116;117;122;121;516;517;522;521
+AcousticBarrierHexa;314;22;117;118;123;122;517;518;523;522
+AcousticBarrierHexa;315;22;118;119;124;123;518;519;524;523
+AcousticBarrierHexa;316;22;119;120;125;124;519;520;525;524
+# Impedance lining of the cavity wall x = 0: resistance and reactance
+# tables (N.s/mm3), rho.c of air for the absorption coefficient.
+AcousticAbsorberProp;31;32;33;1.;;;;4.13E-7
+TableDynamic1;32;;;0.;8.E-7;1.E+3;8.E-7;EndTable
+TableDynamic1;33;;;0.;-4.E-7;1.E+3;-2.E-7;EndTable
+AcousticAbsorber;401;31;1001;1101;1106;1006
+AcousticAbsorber;402;31;1006;1106;1111;1011
+AcousticAbsorber;403;31;1011;1111;1116;1016
+AcousticAbsorber;404;31;1016;1116;1121;1021
+AcousticAbsorber;405;31;1101;1201;1206;1106
+AcousticAbsorber;406;31;1106;1206;1211;1111
+AcousticAbsorber;407;31;1111;1211;1216;1116
+AcousticAbsorber;408;31;1116;1216;1221;1121
+# The plate as a panel (grid points) and as an ERP panel (elements).
+IdListSet1;41;101;Through;125
+FluidStructurePanels;FLOOR;41
+TypedListSet3;42;Elements;101;Through;116
+RadiatedPowerPanelSet;PLATE;42
+Include;plate_cavity_model.oos

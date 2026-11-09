@@ -1,0 +1,52 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: complex modes (SOL 107)
+#
+# Validates:
+#   - complex eigenvalues (CLAMA, SUMMARY/EIGENVALUE_CPLX) and complex
+#     eigenvectors, real/imaginary and magnitude/phase, SORT1 and SORT2, with
+#     the complex element tables of a damped structure
+# Settles (library item: current status):
+#   - eigenvectors complex magnitude/phase SORT1, complex SORT2
+#     (not_validated)
+#   - HDF5 NODAL/EIGENVECTOR_CPLX, SUMMARY/EIGENVALUE_CPLX (not_validated)
+#   - the OUTPUT2 file and HDF5 files of one run of a structure that is not free (the
+#     vectors of a free structure are arbitrary)
+# Run notes:
+#   - the eigenvalue problem is solved again in each subcase: the four
+#     subcases differ only in their output form
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;107
+[case]
+TitleText;O_o_Reader validation: complex modes
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+ComplexEigenMethodSelection;81
+SubcaseStart;1
+LabelText;real and imaginary, SORT1
+DisplacementOutput;All;PlotOnly;SortByPoint;RealPart
+StressOutput;All;PlotOnly;SortByPoint;RealPart
+ElemForceOutput;All;PlotOnly;SortByPoint;RealPart
+SubcaseStart;2
+LabelText;magnitude and phase, SORT1
+DisplacementOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+StressOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+SubcaseStart;3
+LabelText;SORT2, both forms
+DisplacementOutput;All;PlotOnly;SortByTime;MagnitudePhase
+SinglePointConstrForceOutput;All;PlotOnly;SortByTime;RealPart
+SubcaseStart;4
+LabelText;SORT2 eigenvectors, real and imaginary
+DisplacementOutput;All;PlotOnly;SortByTime;RealPart
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;UniformStructuralDamping;0.02
+ComplexEigenMethod;81;HessenbergMethod;Maximum;;;;12
+Include;../common/elements_model.oos

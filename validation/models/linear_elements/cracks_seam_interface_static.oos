@@ -1,0 +1,185 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: crack tips, seam weld, line interface
+#
+# Covers:
+#   - cards: CRAC2D, PRAC2D, CRAC3D, PRAC3D, CSEAM, PSEAM, CINTC, GMBNDC (with
+#     ADUM8, ADUM9, CQUAD4, PSHELL)
+#   - solution: SOL 101 (linear static, one subcase)
+#   - outputs: displacements, SPC forces, MPC forces, element stresses and
+#     forces (OUTPUT2); the stress intensity factors of the crack tip elements
+#     (listing)
+# Run notes:
+#   - CRAC2D and CRAC3D are dummy elements: the ADUM8 and ADUM9 entries the
+#     format reference asks for are in the deck
+#   - the CINTC interface writes MPC equations (MPC forces); GMBNDC remark:
+#     PARAM,BAILOUT,-1 lets the run go on past the high factor diagonal ratios
+#     an interface element may give
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: crack tips, seam weld, line interface
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+MultiPointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;crack opening, seam and interface loads
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;SingularityBailOut;-1
+# Units: mm, N, tonne, s. Steel (MAT1 1).
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# Region 1: one CRAC2D (full crack, required points only), a 20 x 20 square in
+# the basic XY plane with the crack along -x from the tip G1 (grid 101); grids
+# 102 and 110 are the two crack lips. The bottom edge is held in y, the top
+# edge pulled in +y (mode I).
+UserDefined8Attributes;18;0;5;0;CrackTip2D
+CrackTipProp2D;11;1;1.;1
+Node;101;;0.;0.;0.;;3456
+Node;102;;-10.;0.;0.;;3456
+Node;103;;-10.;10.;0.;;3456
+Node;104;;0.;10.;0.;;3456
+Node;105;;10.;10.;0.;;3456
+Node;106;;10.;0.;0.;;3456
+Node;107;;10.;-10.;0.;;3456
+Node;108;;0.;-10.;0.;;3456
+Node;109;;-10.;-10.;0.;;3456
+Node;110;;-10.;0.;0.;;3456
+CrackTip2D;101;11;101;102;103;104;105;106;107;108;109;110
+SinglePointConstrList;1;2;107;108;109
+SinglePointConstrList;1;1;108
+PointForceLoad;1;103;;50.;0.;1.;0.
+PointForceLoad;1;104;;100.;0.;1.;0.
+PointForceLoad;1;105;;50.;0.;1.;0.
+# Region 2: one CRAC3D (brick crack, required points only): the front face z =
+# 0 repeats the CRAC2D pattern around x = 100 (G1 to G10 = grids 201 to 210),
+# the back face z = -10 holds G19 to G28 (grids 219 to 228). The bottom faces
+# are held in y, the top faces pulled in +y.
+UserDefined9Attributes;64;0;6;0;CrackTip3D
+CrackTipProp3D;21;1
+Node;201;;100.;0.;0.;;456
+Node;202;;90.;0.;0.;;456
+Node;203;;90.;10.;0.;;456
+Node;204;;100.;10.;0.;;456
+Node;205;;110.;10.;0.;;456
+Node;206;;110.;0.;0.;;456
+Node;207;;110.;-10.;0.;;456
+Node;208;;100.;-10.;0.;;456
+Node;209;;90.;-10.;0.;;456
+Node;210;;90.;0.;0.;;456
+Node;219;;100.;0.;-10.;;456
+Node;220;;90.;0.;-10.;;456
+Node;221;;90.;10.;-10.;;456
+Node;222;;100.;10.;-10.;;456
+Node;223;;110.;10.;-10.;;456
+Node;224;;110.;0.;-10.;;456
+Node;225;;110.;-10.;-10.;;456
+Node;226;;100.;-10.;-10.;;456
+Node;227;;90.;-10.;-10.;;456
+Node;228;;90.;0.;-10.;;456
+CrackTip3D;201;21;201;202;203;204;205;206;207;208;209;210;;;;;;;;;219;220;221;222;223;224;225;226;227;228
+SinglePointConstrList;1;2;207;208;209;225;226;227
+SinglePointConstrList;1;1;208;226
+SinglePointConstrList;1;3;207;208;209
+PointForceLoad;1;203;;25.;0.;1.;0.
+PointForceLoad;1;204;;50.;0.;1.;0.
+PointForceLoad;1;205;;25.;0.;1.;0.
+PointForceLoad;1;221;;25.;0.;1.;0.
+PointForceLoad;1;222;;50.;0.;1.;0.
+PointForceLoad;1;223;;25.;0.;1.;0.
+# Region 3: two 20 x 20 plates 2 mm apart (PSHELL 31 at z = 0, PSHELL 32 at z
+# = 2) joined only by a CSEAM (PSHELL search, start and end given by
+# coordinates, PSEAM 33 4 mm wide). The lower plate is clamped along x = 0;
+# the free edge of the upper plate is loaded.
+ShellProp;31;1;1.5;1
+ShellProp;32;1;1.5;1
+Node;301;;0.;100.;0.
+Node;302;;10.;100.;0.
+Node;303;;20.;100.;0.
+Node;304;;0.;110.;0.
+Node;305;;10.;110.;0.
+Node;306;;20.;110.;0.
+Node;307;;0.;120.;0.
+Node;308;;10.;120.;0.
+Node;309;;20.;120.;0.
+Node;311;;0.;100.;2.
+Node;312;;10.;100.;2.
+Node;313;;20.;100.;2.
+Node;314;;0.;110.;2.
+Node;315;;10.;110.;2.
+Node;316;;20.;110.;2.
+Node;317;;0.;120.;2.
+Node;318;;10.;120.;2.
+Node;319;;20.;120.;2.
+ShellQuad4;301;31;301;302;305;304
+ShellQuad4;302;31;302;303;306;305
+ShellQuad4;303;31;304;305;308;307
+ShellQuad4;304;31;305;306;309;308
+ShellQuad4;311;32;311;312;315;314
+ShellQuad4;312;32;312;313;316;315
+ShellQuad4;313;32;314;315;318;317
+ShellQuad4;314;32;315;316;319;318
+SeamProp;33;1;;4.
+Seam;331;33;;;31;32;;;;5.;;105.;1.;15.;105.;1.
+SinglePointConstrList;1;123456;301;304;307
+PointForceLoad;1;313;;20.;1.;0.;0.1
+PointForceLoad;1;316;;20.;1.;0.;0.1
+PointForceLoad;1;319;;20.;1.;0.;0.1
+# Region 4: two plates that meet along x = 20 without sharing grids: plate A
+# (2 x 2 CQUAD4, grids 401 to 409) has three grids on the edge, plate B (2 x 4
+# CQUAD4, grids 411 to 425) has five. GMBNDC 1 and 2 list the two edges; CINTC
+# 431 ties them (boundary 1, the first, is independent). Plate A is clamped
+# along x = 0, plate B loaded at x = 40.
+ShellProp;41;1;2.;1
+Node;401;;0.;200.;0.
+Node;402;;10.;200.;0.
+Node;403;;20.;200.;0.
+Node;404;;0.;210.;0.
+Node;405;;10.;210.;0.
+Node;406;;20.;210.;0.
+Node;407;;0.;220.;0.
+Node;408;;10.;220.;0.
+Node;409;;20.;220.;0.
+Node;411;;20.;200.;0.
+Node;412;;30.;200.;0.
+Node;413;;40.;200.;0.
+Node;414;;20.;205.;0.
+Node;415;;30.;205.;0.
+Node;416;;40.;205.;0.
+Node;417;;20.;210.;0.
+Node;418;;30.;210.;0.
+Node;419;;40.;210.;0.
+Node;420;;20.;215.;0.
+Node;421;;30.;215.;0.
+Node;422;;40.;215.;0.
+Node;423;;20.;220.;0.
+Node;424;;30.;220.;0.
+Node;425;;40.;220.;0.
+ShellQuad4;401;41;401;402;405;404
+ShellQuad4;402;41;402;403;406;405
+ShellQuad4;403;41;404;405;408;407
+ShellQuad4;404;41;405;406;409;408
+ShellQuad4;411;41;411;412;415;414
+ShellQuad4;412;41;412;413;416;415
+ShellQuad4;413;41;414;415;418;417
+ShellQuad4;414;41;415;416;419;418
+ShellQuad4;415;41;417;418;421;420
+ShellQuad4;416;41;418;419;422;421
+ShellQuad4;417;41;420;421;424;423
+ShellQuad4;418;41;421;422;425;424
+GeomBoundaryCurve;1;403;409;Node;406
+GeomBoundaryCurve;2;411;423;Node;414;417;420
+LineInterface;431;NodeList;boundaries=(1,2)
+SinglePointConstrList;1;123456;401;404;407
+PointForceLoad;1;413;;10.;1.;0.;0.2
+PointForceLoad;1;416;;10.;1.;0.;0.2
+PointForceLoad;1;419;;10.;1.;0.;0.2
+PointForceLoad;1;422;;10.;1.;0.;0.2
+PointForceLoad;1;425;;10.;1.;0.;0.2

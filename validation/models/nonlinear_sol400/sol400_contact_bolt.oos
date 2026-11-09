@@ -1,0 +1,127 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: contact tractions and bolt results (SOL 400)
+#
+# Validates:
+#   - the contact forces and tractions of a touching contact (BCONTACT,
+#     BOUTPUT) and the bolt results (BOLT with a preload on its control grid
+#     point), 32-bit OUTPUT2 and HDF5
+# Settles (library item: current status):
+#   - contact_tractions real SORT1 and bolt_results real
+#     SORT1 32-bit (not_validated: the bolt tables are validated in 64-bit
+#     files only)
+#   - the contact and bolt datasets of the HDF5 file (no
+#     decoder: never observed)
+# Run notes:
+#   - run it also with the i8 executable for the 64-bit twin of the bolt
+#     tables
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader validation: contact and bolt (SOL 400)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+ContactSelection;21
+SubcaseStart;1
+LabelText;pressure on the upper block, bolt preload
+AnalysisKind;NonlinearStatics
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;10
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+SlidelineContactOutput;All;PlotOnly
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Two blocks of 2 x 2 x 1 CHEXA in contact (the upper one pressed on the lower
+# one, separate grid points on the interface) and a bolt shank of two CHEXA
+# cut at mid height (BOLT: the grid points of the cut, top and bottom, and the
+# control grid point 999 where the preload is applied). Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+SolidProp;1;1
+SolidProp;2;1
+SolidProp;3;1
+Node;101;;0.;0.;0.;;456
+Node;102;;10.;0.;0.;;456
+Node;103;;20.;0.;0.;;456
+Node;104;;0.;10.;0.;;456
+Node;105;;10.;10.;0.;;456
+Node;106;;20.;10.;0.;;456
+Node;107;;0.;20.;0.;;456
+Node;108;;10.;20.;0.;;456
+Node;109;;20.;20.;0.;;456
+Node;110;;0.;0.;10.;;456
+Node;111;;10.;0.;10.;;456
+Node;112;;20.;0.;10.;;456
+Node;113;;0.;10.;10.;;456
+Node;114;;10.;10.;10.;;456
+Node;115;;20.;10.;10.;;456
+Node;116;;0.;20.;10.;;456
+Node;117;;10.;20.;10.;;456
+Node;118;;20.;20.;10.;;456
+SolidHexa;101;1;101;102;105;104;110;111;114;113
+SolidHexa;102;1;102;103;106;105;111;112;115;114
+SolidHexa;103;1;104;105;108;107;113;114;117;116
+SolidHexa;104;1;105;106;109;108;114;115;118;117
+Node;201;;0.;0.;10.;;456
+Node;202;;10.;0.;10.;;456
+Node;203;;20.;0.;10.;;456
+Node;204;;0.;10.;10.;;456
+Node;205;;10.;10.;10.;;456
+Node;206;;20.;10.;10.;;456
+Node;207;;0.;20.;10.;;456
+Node;208;;10.;20.;10.;;456
+Node;209;;20.;20.;10.;;456
+Node;210;;0.;0.;20.;;456
+Node;211;;10.;0.;20.;;456
+Node;212;;20.;0.;20.;;456
+Node;213;;0.;10.;20.;;456
+Node;214;;10.;10.;20.;;456
+Node;215;;20.;10.;20.;;456
+Node;216;;0.;20.;20.;;456
+Node;217;;10.;20.;20.;;456
+Node;218;;20.;20.;20.;;456
+SolidHexa;201;2;201;202;205;204;210;211;214;213
+SolidHexa;202;2;202;203;206;205;211;212;215;214
+SolidHexa;203;2;204;205;208;207;213;214;217;216
+SolidHexa;204;2;205;206;209;208;214;215;218;217
+SinglePointConstrList;1;123;101;104;107;102;105;108;103;106;109
+SinglePointConstrList;1;12;210;213;216;211;214;217;212;215;218
+FacePressureLoad;1;201;5.;;;;210;214
+FacePressureLoad;1;202;5.;;;;211;215
+FacePressureLoad;1;203;5.;;;;213;217
+FacePressureLoad;1;204;5.;;;;214;218
+Node;301;;50.;0.;0.;;456
+Node;302;;60.;0.;0.;;456
+Node;303;;50.;10.;0.;;456
+Node;304;;60.;10.;0.;;456
+Node;305;;50.;0.;10.;;456
+Node;306;;60.;0.;10.;;456
+Node;307;;50.;10.;10.;;456
+Node;308;;60.;10.;10.;;456
+SolidHexa;301;3;301;302;304;303;305;306;308;307
+Node;401;;50.;0.;10.;;456
+Node;402;;60.;0.;10.;;456
+Node;403;;50.;10.;10.;;456
+Node;404;;60.;10.;10.;;456
+Node;405;;50.;0.;20.;;456
+Node;406;;60.;0.;20.;;456
+Node;407;;50.;10.;20.;;456
+Node;408;;60.;10.;20.;;456
+SolidHexa;401;3;401;402;404;403;405;406;408;407
+SinglePointConstrList;1;123;301;303;302;304
+SinglePointConstrList;1;123;405;407;406;408
+Node;999;;55.;5.;10.
+BoltConnection;1;999;Top;4;305;307;306;308;Bottom;4;401;403;402;404
+PointForceLoad;1;999;;1.E+3;0.;0.;-1.
+ContactPropertyRegion;11;1
+ContactPropertyRegion;12;2
+ContactBody1;1;;ThreeDimensional;Deformable;11
+ContactBody1;2;;ThreeDimensional;Deformable;12
+ContactPair;21;;;2;1
+NonlinearStaticParams;10;5

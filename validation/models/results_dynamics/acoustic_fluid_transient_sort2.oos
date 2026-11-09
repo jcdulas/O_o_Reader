@@ -1,0 +1,29 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: fluid elements, direct transient response, SORT2
+#
+# Covers:
+#   - solution: SOL 109 (direct transient response) of the coupled
+#     fluid-structure model of acoustic_model.inc
+#   - outputs: the real SORT2 pressure tables of the fluid CHEXA, CPENTA,
+#     CTETRA and CPYRAM (element types 76 to 79), the SORT2 displacements
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;109
+[case]
+TitleText;O_o_Reader test model: fluid elements, transient SORT2
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;51
+TimeStepSelection;61
+DisplacementOutput;All;PlotOnly;SortByTime
+ElemForceOutput;All;PlotOnly;SortByTime
+SubcaseStart;1
+LabelText;load at the plate centre switched on at t = 0
+[model]
+Parameter;PostprocessingFile;-1
+TransientTableLoad1;51;1;;;;52
+TableDynamic1;52;;;0.;1.;1.;1.;EndTable
+TransientTimeSteps;61;50;1.E-4;5
+Include;acoustic_model.oos

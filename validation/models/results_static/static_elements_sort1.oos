@@ -1,0 +1,96 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: static element tables, SORT1
+#
+# Validates:
+#   - the real SORT1 element tables of every family of the shared model:
+#     springs, dampers (zero), rods, tubes, bars (and the BARS stations of
+#     CBARAO), beams, bends, shear panels,
+#     CQUAD4/CQUADR/CQUAD8/CTRIA3/CTRIAR/CTRIA6 homogeneous and laminated,
+#     CHEXA/CPENTA/CTETRA/CPYRAM, CBUSH, CBUSH1D, CGAP, CFAST, CWELD
+#   - stresses and strains at the corners (CORNER) and fibres, forces at the
+#     corners, strain energy (ESE), grid point forces (GPFORCE), MPC forces of
+#     an MPC equation and of an RBE2, applied loads, SPC forces
+#   - the failure indices (OEFIT) and strength ratios (PARAM,SRCOMPS,YES) of
+#     the plies, both homogeneous and ply tables of the laminates
+#     (PARAM,NOCOMPS,0)
+#   - the grid point weight (PARAM,GRDPNT,0: OGPWG and NODAL/GRID_WEIGHT of
+#     the same run)
+#   - EPSILON and the external work of each subcase (printed in the listing)
+#   - the same results in the HDF5 file of the same run (OUTPUT2 twin: proves the
+#     HDF5 datasets)
+#   - the grid point stresses and strains of a volume (PRINCIPAL and DIRECT)
+#     and of a surface, the mesh stress discontinuities (GPSDCON, ELSDCON)
+#   - the strain/curvature form of the shell strains (STRAIN(STRCUR)) in
+#     subcase 2
+# Settles (library item: current status):
+#   - the not_validated 32-bit lines of
+#     stress, strain, forces and strain_energy in real SORT1 for celas1-4,
+#     cbush, cbush1d, cfast, cweld, cpyram, cshear, cquadr, ctriar, cquad8,
+#     ctria6, the *_composite containers, cbar100, cbend, ctube, conrod
+#     (not_validated -> validated)
+#   - the HDF5 datasets of the same tables
+#     (ELAS1-3, SHEAR, QUAD8, TRIA6, QUADR, TRIAR, *_COMP, BARS, CONROD, TUBE,
+#     MPC_FORCE, APPLIED_LOAD; not_validated -> validated)
+#   - NODAL/GRID_WEIGHT (experimental ->
+#     validated against the OUTPUT2 file OGPWG)
+#   - the HDF5 datasets not proved yet (an OUTPUT2 file twin from the same run, not a
+#     mechanism, not only zeros)
+#   - grid_point_stresses.volume_principal,
+#     grid_point_strains.volume_principal and surface_discontinuity
+#     (not_validated), failure_indices.ctria3_composite (not_validated)
+#   - the OESRT strength ratio table (raw today: its layout)
+#   - the strain bit of OES1A/OEF1 with STRCUR
+# Run notes:
+#   - run it twice: once as is, once with the 64-bit (i8) executable (for
+#     example the run command of this deck with mode=i8, or the i8
+#     installation) into the subfolder i8: the 64-bit twin of a 32-bit file
+#     (every 64-bit line is experimental)
+#   - AUTOSPC (the default) holds the components that no element of a region
+#     stiffens
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+# The OUTPUT(POST) surfaces and volumes of the grid point stresses (GPSTRESS, GPSTRAIN, STRFIELD, GPSDCON, ELSDCON)
+SetDefinition;90;21;22
+TitleText;O_o_Reader validation: static element tables (SORT1)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DisplacementOutput;All;PlotOnly;SortByPoint
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint
+MultiPointConstrForceOutput;All;PlotOnly;SortByPoint
+AppliedLoadOutput;All;PlotOnly;SortByPoint
+StressOutput;All;PlotOnly;SortByPoint;VonMisesStress;CornerResults
+StrainOutput;All;PlotOnly;SortByPoint;VonMisesStress;FiberDistance;CornerResults
+ElemForceOutput;All;PlotOnly;SortByPoint;CornerResults
+ElemStrainEnergyOutput;All;PlotOnly
+NodeForceOutput;All;PlotOnly
+NodeStressOutput;90;PlotOnly
+NodeStrainOutput;90;PlotOnly
+StressFieldOutput;90;PlotOnly
+NodeStressDiscontinuityOutput;90;PlotOnly
+ElemStressDiscontinuityOutput;90;PlotOnly
+SubcaseStart;1
+LabelText;tip loads (load set 1)
+StaticLoadSelection;1
+SubcaseStart;2
+LabelText;pressures and gravity (load set 2), strain and curvature
+StaticLoadSelection;2
+StrainOutput;All;PlotOnly;SortByPoint;StrainCurvature;CornerResults
+OutputBlock;;Postprocessing
+SetDefinition;91;2201;Through;2204
+PlotVolume;21 SET 91 PRINCIPAL DIRECT SYSTEM BASIC
+SetDefinition;92;101;102
+PlotSurface;22 SET 92 FIBRE ALL SYSTEM BASIC AXIS X NORMAL Z
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;WeightReferenceNode;0
+Parameter;StrengthRatioCompositeStress;Yes
+Parameter;NoCompositeStress;0
+Include;../common/elements_model.oos

@@ -1,0 +1,100 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: SOL 700 hinged flap, discrete elements
+#
+# Covers:
+#   - cards: RBJOINT CELAS1D CELAS2D CDAMP1D CDAMP2D PSPRMAT PVISC1 PBELT
+#     PSHELL1 DYPARAM (with MATRIG, PSHELL, CQUAD4, PELAS, PDAMP, PVISC, CSPR,
+#     CVISC, CROD, TABLED1, SPC1, TSTEPNL)
+#   - solution: SOL 700,129 (explicit nonlinear transient: a rigid flap
+#     hinged on a heavy rigid base swings down from an initial rotation and
+#     is stopped by the discrete elements)
+#   - outputs: none that the library decodes (the archive and time-history
+#     files)
+# Run notes:
+#   - needs the explicit solver of SOL 700 in the installation (the solver
+#     spawns it; see the SOL 700 Executive Control statement)
+#   - SOL 700 has no OUTPUT2 output: the explicit solver writes its own archive
+#     and time-history files (ARC, THS) and its output file next to the listing;
+#     bring back the listing
+#   - the base is a rigid body of 1 tonne (it stands for the ground); the
+#     flap starts with the velocity of MATRIG 22
+#   - the nonlinear damper is a CVISC on a PVISC1 and the belt a CROD on a
+#     PBELT (format reference PVISC1, PBELT)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;700;129
+[case]
+TitleText;O_o_Reader test model: SOL 700 hinged flap and discrete elements
+BulkEcho;None
+SinglePointConstrSelection;1
+NonlinearTimeStepSelection;1
+StepEndTime;0.005
+# Time history of the two tip points of the flap
+#S700 TYPE(fliphist) = TIMEHIS
+#S700 GRIDS(fliphist) = 902
+#S700 SET 902 = 3012 3013
+#S700 GPOUT(fliphist) = XVEL,YVEL,ZVEL
+#S700 TIMES(fliphist) = 0,THRU,END,BY,5.E-5
+#S700 SAVE(fliphist) = 10000
+[model]
+# Units: mm, N, tonne, s. End time 5 ms (TSTEPNL: 100 x 5.E-5 and ENDTIME).
+NonlinearTimeSteps;1;100;5.E-5
+ExplicitParam;InitialStep;1.E-6
+ExplicitParam;RigidJointStiffness;1.
+# Two rigid bodies of one shell each: the base (MATRIG 21, mass 1 tonne) and
+# the flap (MATRIG 22, mass from its density, turning at 100 rad/s about the
+# hinge line x = 20, z = 0, so its centre of gravity starts at -1 m/s along
+# z).
+RigidMat;21;7.85E-9;2.1E+5;0.3;1.
+RigidMat;22;7.85E-9;2.1E+5;0.3;;;;;;;;;;;;0.;0.;-1.E+3;0.;100.;0.
+ShellPropNodal;21;21;BelytschkoLinTsay;;;;;;2.;2.;2.;2.
+# The flap shell is a plain PSHELL naming the rigid material (format reference MATRIG
+# remark 4: PSHELLn).
+ShellProp;22;22;2.;22
+Node;3001;;0.;0.;0.
+Node;3002;;20.;0.;0.
+Node;3003;;20.;20.;0.
+Node;3004;;0.;20.;0.
+Node;3011;;20.;0.;0.
+Node;3012;;40.;0.;0.
+Node;3013;;40.;20.;0.
+Node;3014;;20.;20.;0.
+ShellQuad4;3101;21;3001;3002;3003;3004
+ShellQuad4;3102;22;3011;3012;3013;3014
+# Revolute joint: the coincident pairs 3002/3011 and 3003/3014 stay together,
+# so the flap turns about the line through them.
+RigidBodyJoint;1;RevoluteJoint;3002;3011;3003;3014
+# Fixed anchor points of the discrete elements (SPC 1): 3023 is coincident
+# with the tip point 3013, the others are 30 mm below the tip.
+Node;3023;;40.;20.;0.
+Node;3031;;40.;0.;-30.
+Node;3032;;40.;20.;-30.
+SinglePointConstrList;1;123456;3023;3031;3032
+# Scalar springs and dampers of SOL 700 on the vertical motion of the tip:
+# grounded (CELAS2D, CDAMP2D, value on the element) and to the anchor
+# (CELAS1D, CDAMP1D, value on PELAS and PDAMP).
+SpringDofInlineExplicit;4001;50.;3012;3
+SpringDofPropertyExplicit;4002;4102;3013;3;3023;3
+SpringProp;4102;50.
+DamperDofInlineExplicit;4003;0.005;3012;3
+DamperDofPropertyExplicit;4004;4104;3013;3;3023;3
+DamperProp;4104;0.005
+# A linear spring along its line (CSPR on PSPRMAT, failing at 2 kN in tension
+# or compression) and a linear viscous damper (CVISC on PVISC).
+SpringOffsetExplicit;4005;4105;3012;3031
+SpringOffsetProp;4105;20.;2.E+3;2.E+3
+ViscousDamper2;4006;4116;3013;3032
+ViscousDamperProp;4116;0.005
+# A nonlinear damper (CVISC on PVISC1: force against velocity, TABLED1 4206)
+# beside the spring, and a belt (CROD on PBELT: tension only, loading and
+# unloading force against engineering strain, TABLED1 4207 and 4208, 1 g/m)
+# from the tip to the far anchor, slack while the tip swings down.
+ViscousDamper2;4007;4106;3012;3031
+Rod2;4008;4107;3012;3032
+ViscousDamperPropNonlinear;4106;4206
+TableDynamic1;4206;;;-1.E+4;-50.;0.;0.;1.E+4;50.;EndTable
+BeltProp;4107;4207;4208;1.E-9;0.1;0.1
+TableDynamic1;4207;;;0.;0.;0.05;100.;1.;5.E+3;EndTable
+TableDynamic1;4208;;;0.;0.;0.05;50.;1.;2500.;EndTable

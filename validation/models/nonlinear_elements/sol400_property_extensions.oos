@@ -1,0 +1,105 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: nonlinear property extensions of 1D and 2D elements
+#
+# Covers:
+#   - cards: PRODN1, PBARN1, PBEMN1, PSHEARN, PSHLN1 (each on the linear
+#     property of the same ID: PROD, PBAR, PBEAM, PSHEAR, PSHELL)
+#   - solution: SOL 400 (nonlinear static, one load step of ten increments)
+#   - outputs: displacements, SPC forces, element stresses
+# Run notes:
+#   - five separate regions, each clamped at its root; the rod yields
+#     (MATS1 on the material of its PRODN1)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: nonlinear property extensions (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+SubcaseStart;1
+LabelText;one load step, ten fixed increments
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;10
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+# One load step of total time 1.0 in ten fixed increments. Units: mm, N, t.
+NonlinearStepControl;10;1.;;FixedStepping;10
+# Steel for the linear properties; an aluminium with bilinear hardening
+# that the PRODN1 puts on the rod in place of the PROD material.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+IsoMat;2;7.E+4;;0.33;2.7E-9
+IsoMatStressDependent;2;;Plastic;1.E+3;1;1;150.
+# Region 1: a rod pulled past yield (PROD with a PRODN1 that overrides the
+# material)
+Node;101;;0.;0.;0.
+Node;102;;100.;0.;0.
+Rod2;101;101;101;102
+RodProp;101;1;20.
+RodPropNonlinear;101;2;ImplicitStructural;TwoNodeElems;Rod;Linear
+SinglePointConstrList;1;123456;101
+SinglePointConstrList;1;23456;102
+PointForceLoad;1;102;;4.E+3;1.;0.;0.
+# Region 2: a bar cantilever, 10 mm square section (PBAR with a PBARN1,
+# smeared section, linear/cubic interpolation)
+Node;201;;0.;100.;0.
+Node;202;;50.;100.;0.
+Node;203;;100.;100.;0.
+Bar2;201;201;201;202;0.;;1.;0.
+Bar2;202;201;202;203;0.;;1.;0.
+BarProp;201;1;100.;833.33;833.33;1406.
+BarPropNonlinear;201;;Smeared;TwoNodeElems;Bar;LinearCubic
+SinglePointConstrList;1;123456;201
+PointForceLoad;1;203;;100.;0.;0.;1.
+# Region 3: a beam cantilever, same section (PBEAM with a PBEMN1)
+Node;301;;0.;200.;0.
+Node;302;;50.;200.;0.
+Node;303;;100.;200.;0.
+Beam2;301;301;301;302;0.;;1.;0.
+Beam2;302;301;302;303;0.;;1.;0.
+BeamProp;301;1;100.;833.33;833.33;0.;1406.
+BeamPropNonlinear;301;;Smeared;TwoNodeElems;Beam;LinearCubic
+SinglePointConstrList;1;123456;301
+PointForceLoad;1;303;;100.;0.;0.;1.
+# Region 4: a shear panel framed by rods, clamped on one edge and sheared
+# along the opposite edge (PSHEAR with a PSHEARN)
+Node;401;;0.;300.;0.
+Node;402;;0.;350.;0.
+Node;403;;50.;350.;0.
+Node;404;;50.;300.;0.
+ShearPanel4;401;401;401;404;403;402
+ShearPanelProp;401;1;2.
+ShearPanelPropNonlinear;401;1;ImplicitStructural;FourNodeElems;Membrane;Linear
+Rod2;402;402;402;403
+Rod2;403;402;401;404
+Rod2;404;402;403;404
+RodProp;402;1;50.
+SinglePointConstrList;1;123456;401;402
+SinglePointConstrList;1;3456;403;404
+PointForceLoad;1;403;;1.E+3;0.;1.;0.
+PointForceLoad;1;404;;1.E+3;0.;1.;0.
+# Region 5: a shell strip of two quadrilaterals and two triangles, clamped
+# at x = 0 and bent by a tip load (PSHELL with a PSHLN1: thick shell for
+# the quadrilaterals, thin shell for the triangles)
+Node;501;;0.;400.;0.
+Node;502;;20.;400.;0.
+Node;503;;40.;400.;0.
+Node;504;;60.;400.;0.
+Node;505;;0.;420.;0.
+Node;506;;20.;420.;0.
+Node;507;;40.;420.;0.
+Node;508;;60.;420.;0.
+ShellQuad4;501;501;501;502;506;505
+ShellQuad4;502;501;502;503;507;506
+ShellTria3;503;501;503;504;508
+ShellTria3;504;501;503;508;507
+ShellProp;501;1;2.;1;;1
+ShellPropNonlinear;501;;;ImplicitStructural;FourNodeElems;ThickShell;Linear;;;ThreeNodeElems;ThinShell;LinearDiscreteKirchhoff
+SinglePointConstrList;1;123456;501;505
+PointForceLoad;1;504;;10.;0.;0.;1.
+PointForceLoad;1;508;;10.;0.;0.;1.

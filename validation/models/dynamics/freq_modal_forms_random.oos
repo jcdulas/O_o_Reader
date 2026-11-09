@@ -1,0 +1,61 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: modal frequency response: FREQ3/4/5, random, RCROSS
+#
+# Covers:
+#   - cards: FREQ3, FREQ4, FREQ5, RANDT1, RCROSS, RVDOF, RVDOF1
+#   - solution: SOL 111 (modal frequency response with a random analysis)
+#   - outputs: displacements and CQUAD4 stresses: random (PSD,
+#              autocorrelation, cumulative RMS, RMS, zero crossings), SORT1
+#              and SORT2
+# Run notes:
+#   - one frequency set mixes FREQ1 with the three forms placed around the
+#     modes (FREQ3 between modes, FREQ4 spread around each mode, FREQ5
+#     fractions of each mode)
+#   - RANDOM = 90 selects RANDPS 90 and the time lags of RANDT1 90
+#     (autocorrelation, ATOC); RCROSS = 95 asks the cross spectrum and
+#     cross-correlation of the corner displacements
+#   - RVDOF and RVDOF1 add residual vectors (RESVEC = YES) for the in-plane
+#     and corner DOFs
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;O_o_Reader test model: modal frequency forms and random
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ModalDampingSelection;72
+FreqSetSelection;40
+ResidualVectorOption;Yes
+RandomAnalysisSelection;90
+CrossSpectrumOutput;95;AllRandomResults
+DisplacementOutput;All;PlotOnly;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint
+StressOutput;All;PlotOnly;SpectralDensityFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint
+SubcaseStart;1
+LabelText;unit force at the free corner, white noise
+DynamicLoadSelection;21
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;71;;;8
+TableModalDamping1;72;CriticalDamping;0.;0.02;2.E+3;0.02;EndTable
+# Frequency set 40: a coarse FREQ1 grid, then FREQ3, FREQ4 and FREQ5 between
+# 10 and 1000 Hz.
+FreqLinearSteps1;40;5.;5.;10
+FreqBetweenModes3;40;10.;1.E+3;Linear;5;2.
+FreqSpreadAroundModes4;40;10.;1.E+3;0.1;3
+FreqModeFractions5;40;10.;1.E+3;0.8;0.9;1.;1.1;1.2
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+# Random analysis 90: white-noise PSD of subcase 1, ten time lags from 1 to 50
+# ms.
+RandomSpectralDensity;90;1;1;1.;0.;91
+TableRandomSpectrum1;91;;;1.;0.001;2.E+3;0.001;EndTable
+RandomTimeLags;90;10;0.001;0.05
+# Cross spectrum of the z displacements of the two free corners (curve 1).
+CrossSpectrumPair;95;Displacement;15;3;Displacement;5;3;1
+# Residual vector DOFs: z at both free corners, x and y along the free edge.
+ResidualVectorDofs;15;3;5;3
+ResidualVectorDofs1;12;5;10;15
+Include;plate_model.oos

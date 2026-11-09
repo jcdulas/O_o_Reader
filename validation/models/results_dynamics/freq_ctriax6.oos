@@ -1,0 +1,36 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric CTRIAX6, direct frequency response
+#
+# Covers:
+#   - solution: SOL 108 (direct frequency response) of the axisymmetric ring
+#     of results_static/ctriax6_model.inc
+#   - outputs: the complex SORT1 stress and strain tables of CTRIAX6 (element
+#     type 53), real/imaginary (subcase 1) and magnitude/phase (subcase 2)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: CTRIAX6 frequency response
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+SubcaseStart;1
+LabelText;real and imaginary parts
+DisplacementOutput;All;PlotOnly;RealPart
+StressOutput;All;PlotOnly;RealPart
+StrainOutput;All;PlotOnly;RealPart
+SubcaseStart;2
+LabelText;magnitude and phase
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+StressOutput;All;PlotOnly;MagnitudePhase
+StrainOutput;All;PlotOnly;MagnitudePhase
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;UniformStructuralDamping;0.02
+FreqLinearSteps1;41;100.;200.;10
+TableDynamic1;31;;;0.;1.;5.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+Include;../results_static/ctriax6_model.oos

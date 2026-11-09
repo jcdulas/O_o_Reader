@@ -1,0 +1,46 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: snap-through of a shallow two-bar truss (SOL 106)
+#
+# Covers:
+#   - cards: NLPCI
+#   - solution: SOL 106 (nonlinear static, large displacements, arc-length
+#     increments past the limit load)
+#   - outputs: displacements, SPC forces
+# Run notes:
+#   - the apex load (2000 N) is above the limit load (about 1000 N): the
+#     arc-length method follows the snap-through; the run may stop at MXINC
+#     before the full load, which is expected
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;106
+[case]
+TitleText;O_o_Reader test model: arc-length snap-through (SOL 106)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;apex load with the Crisfield arc-length method
+NonlinearStaticParamsSelection;10
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+# Two steel rods from the supports (x = 0 and x = 200) to the apex 5 mm above
+# them. Units: mm, N, t. The apex moves only along y.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+RodProp;1;1;100.
+Node;1;;0.;0.;0.
+Node;2;;100.;5.;0.
+Node;3;;200.;0.;0.
+Rod2;1;1;1;2
+Rod2;2;1;2;3
+SinglePointConstrList;1;123456;1;3
+SinglePointConstrList;1;13456;2
+PointForceLoad;1;2;;2.E+3;0.;-1.;0.
+# Twenty increments of the arc-length method (Crisfield constraint), the arc
+# length adapted between 0.25 and 4 times its previous value
+NonlinearStaticParams;10;20;;Automatic;;25;PW;Yes
+ArcLengthParams;10;Crisfield;0.25;4.;;6;40

@@ -1,0 +1,31 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: OUTPUT4 in every form, BIGMAT and not (SOL 100 user DMAP)
+#
+# Validates:
+#   - the OP4 files the solver writes with the DMAP module OUTPUT4 from four matrices
+#     it reads with INPUTT4 from a text OP4 file written by O_o_Reader
+#     (input_matrices.op4): text and binary, dense (IUNIT > 0) and sparse
+#     (IUNIT < 0), BIGMAT TRUE and FALSE, 16 digits
+#   - that the solver reads an OP4 file written by the library
+# Settles (library item: current status):
+#   - binary BIGMAT and the other OP4 forms as the solver writes them (the reader
+#     and the writer were checked on the library's own files)
+# Run notes:
+#   - input_matrices.op4 sits next to the deck (committed); run the deck from
+#     its folder
+#   - SOL 100 with a user DMAP: no Bulk Data is used; the deck has an empty
+#     Bulk Data section
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;INPUTT4='input_matrices.op4';FileUnit=11;FileForm=Formatted
+FileAssignment;OUTPUT4='matrix_dense_text.op4';FileUnit=30;FileForm=Formatted
+FileAssignment;OUTPUT4='matrix_sparse_bigmat_text.op4';FileUnit=31;FileForm=Formatted
+FileAssignment;OUTPUT4='matrix_sparse_nonbigmat_text.op4';FileUnit=32;FileForm=Formatted
+FileAssignment;OUTPUT4='matrix_dense_binary.op4';FileUnit=40;FileForm=Unformatted
+FileAssignment;OUTPUT4='matrix_sparse_bigmat_binary.op4';FileUnit=41;FileForm=Unformatted
+FileAssignment;OUTPUT4='matrix_sparse_nonbigmat_binary.op4';FileUnit=42;FileForm=Unformatted
+SolutionSequence;100
+[case]
+TitleText;O_o_Reader validation: OUTPUT4 forms

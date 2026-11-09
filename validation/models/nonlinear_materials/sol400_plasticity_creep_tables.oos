@@ -1,0 +1,169 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: plastic, creeping and orthotropic solids (SOL 400)
+#
+# Covers:
+#   - cards: MATEP MATTEP MATVP NLMOPTS MATORT MATSORT MATTORT TABLES1
+#     TABLEST TABL3D0 TABL3D1 TABL3D2 (with MAT1 MATT1 TABLEM1 TEMPD NLSTEP)
+#   - solution: SOL 400 (nonlinear static, one step of 1000 s with creep)
+#   - outputs: displacements, SPC forces, nonlinear stresses and strains
+# Run notes:
+#   - five one-element blocks, each with its own material, side by side;
+#     the temperature goes from 20 to 100 degrees during the step
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: plastic, creeping and orthotropic solids
+BulkEcho;None
+SinglePointConstrSelection;1
+TemperatureSelection;1;InitialTemperature
+SubcaseStart;1
+LabelText;tension at 100 degrees with creep over 1000 s
+AnalysisKind;NonlinearStatics
+NonlinearStepSelection;10
+StaticLoadSelection;1
+TemperatureSelection;2;TemperatureLoadPart
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+StrainOutput;All;PlotOnly
+NonlinearStressOutput;All;PlotOnly
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, MPa. Each block is a 10 mm cube (one CHEXA) held on
+# its base so that it can expand freely in its plane, pulled along Z by four
+# forces on its top face.
+#
+# Block 1: steel whose stress-plastic strain curve depends on the temperature
+# (MATTEP names a TABLEST of two TABLES1 curves, MATT1 the modulus table).
+IsoMat;1;2.1E+5;;0.3;7.85E-9;1.2E-5;20.
+IsoMatTemperature;1;14
+ElastoPlasticMat;1;Table;;11
+ElastoPlasticMatTemperature;1;;13
+TableStressTemperature;13;20.;11;200.;12;EndTable
+TableStress1;11;2;0.;250.;0.05;350.;0.5;500.;EndTable
+TableStress1;12;2;0.;200.;0.05;290.;0.5;420.;EndTable
+TableMaterial1;14;;;20.;2.1E+5;200.;1.9E+5;EndTable
+SolidProp;1;1
+Node;101;;0.;0.;0.;;456
+Node;102;;10.;0.;0.;;456
+Node;103;;10.;10.;0.;;456
+Node;104;;0.;10.;0.;;456
+Node;105;;0.;0.;10.;;456
+Node;106;;10.;0.;10.;;456
+Node;107;;10.;10.;10.;;456
+Node;108;;0.;10.;10.;;456
+SolidHexa;100;1;101;102;103;104;105;106;107;108
+SinglePointConstrList;1;123;101
+SinglePointConstrList;1;23;102
+SinglePointConstrList;1;3;103
+SinglePointConstrList;1;13;104
+PointForceLoad;1;105;;7500.;0.;0.;1.
+PointForceLoad;1;106;;7500.;0.;0.;1.
+PointForceLoad;1;107;;7500.;0.;0.;1.
+PointForceLoad;1;108;;7500.;0.;0.;1.
+# Block 2: steel with a single hardening slope and combined (isotropic and
+# kinematic) hardening.
+IsoMat;2;2.1E+5;;0.3;7.85E-9;1.2E-5;20.
+ElastoPlasticMat;2;Slope;250.;;VonMises;CombinedHardening;2.E+3
+SolidProp;2;2
+Node;201;;30.;0.;0.;;456
+Node;202;;40.;0.;0.;;456
+Node;203;;40.;10.;0.;;456
+Node;204;;30.;10.;0.;;456
+Node;205;;30.;0.;10.;;456
+Node;206;;40.;0.;10.;;456
+Node;207;;40.;10.;10.;;456
+Node;208;;30.;10.;10.;;456
+SolidHexa;200;2;201;202;203;204;205;206;207;208
+SinglePointConstrList;1;123;201
+SinglePointConstrList;1;23;202
+SinglePointConstrList;1;3;203
+SinglePointConstrList;1;13;204
+PointForceLoad;1;205;;7500.;0.;0.;1.
+PointForceLoad;1;206;;7500.;0.;0.;1.
+PointForceLoad;1;207;;7500.;0.;0.;1.
+PointForceLoad;1;208;;7500.;0.;0.;1.
+# Block 3: power law creep (MATVP): the coefficient is a TABL3D0 of the
+# temperature (type 12), the stress exponent is 3. NLMOPTS and the NLSTEP flag
+# turn creep on.
+IsoMat;3;2.1E+5;;0.3;7.85E-9;1.2E-5;20.
+ViscoPlasticMat;3;1.;31;3.
+TableMultiVariable0;31;12;;;;;20.;1.E-12;200.;2.E-12
+NonlinearMatOptions;Creep;0
+SolidProp;3;3
+Node;301;;60.;0.;0.;;456
+Node;302;;70.;0.;0.;;456
+Node;303;;70.;10.;0.;;456
+Node;304;;60.;10.;0.;;456
+Node;305;;60.;0.;10.;;456
+Node;306;;70.;0.;10.;;456
+Node;307;;70.;10.;10.;;456
+Node;308;;60.;10.;10.;;456
+SolidHexa;300;3;301;302;303;304;305;306;307;308
+SinglePointConstrList;1;123;301
+SinglePointConstrList;1;23;302
+SinglePointConstrList;1;3;303
+SinglePointConstrList;1;13;304
+PointForceLoad;1;305;;2500.;0.;0.;1.
+PointForceLoad;1;306;;2500.;0.;0.;1.
+PointForceLoad;1;307;;2500.;0.;0.;1.
+PointForceLoad;1;308;;2500.;0.;0.;1.
+# Block 4: orthotropic solid whose moduli E1 and E2 depend on the local
+# strain (type 73) and on the temperature (type 12): MATSORT names a TABL3D1
+# and a TABL3D2, each a grid of two strains by two temperatures.
+OrthoMat3DNonlinear;4;2.E+5;1.5E+5;1.5E+5;0.25;0.25;0.25;7.85E-9;6.E+4;5.5E+4;6.E+4;1.2E-5;1.2E-5;1.2E-5;20.
+OrthoMat3DNonlinearStressDependent;4;41;42
+TableMultiVariable1;41;2;73;12;;;2;2;;;;;;;;;;;;;;;;;;;0.;0.01;20.;200.;2.E+5;1.9E+5;1.8E+5;1.7E+5
+TableMultiVariable2;42;2;73;12;;;2;2;;;;;;;;;;;;;;;;;;;0.;0.01;20.;200.;1.5E+5;1.45E+5;1.4E+5;1.35E+5
+SolidProp;4;4
+Node;401;;90.;0.;0.;;456
+Node;402;;100.;0.;0.;;456
+Node;403;;100.;10.;0.;;456
+Node;404;;90.;10.;0.;;456
+Node;405;;90.;0.;10.;;456
+Node;406;;100.;0.;10.;;456
+Node;407;;100.;10.;10.;;456
+Node;408;;90.;10.;10.;;456
+SolidHexa;400;4;401;402;403;404;405;406;407;408
+SinglePointConstrList;1;123;401
+SinglePointConstrList;1;23;402
+SinglePointConstrList;1;3;403
+SinglePointConstrList;1;13;404
+PointForceLoad;1;405;;2500.;0.;0.;1.
+PointForceLoad;1;406;;2500.;0.;0.;1.
+PointForceLoad;1;407;;2500.;0.;0.;1.
+PointForceLoad;1;408;;2500.;0.;0.;1.
+# Block 5: orthotropic solid with temperature dependent moduli (MATTORT and
+# TABLEM1) and Hill's anisotropic yield (MATEP with the ANISO line).
+OrthoMat3DNonlinear;5;2.E+5;1.5E+5;1.5E+5;0.25;0.25;0.25;7.85E-9;6.E+4;5.5E+4;6.E+4;1.2E-5;1.2E-5;1.2E-5;20.
+OrthoMat3DNonlinearTemperature;5;51;52;53
+TableMaterial1;51;;;20.;2.E+5;200.;1.8E+5;EndTable
+TableMaterial1;52;;;20.;1.5E+5;200.;1.35E+5;EndTable
+TableMaterial1;53;;;20.;1.5E+5;200.;1.35E+5;EndTable
+ElastoPlasticMat;5;Slope;300.;;Hill;;1.E+3;AnisotropicYield;1.;1.;1.05;1.;1.;1.
+SolidProp;5;5
+Node;501;;120.;0.;0.;;456
+Node;502;;130.;0.;0.;;456
+Node;503;;130.;10.;0.;;456
+Node;504;;120.;10.;0.;;456
+Node;505;;120.;0.;10.;;456
+Node;506;;130.;0.;10.;;456
+Node;507;;130.;10.;10.;;456
+Node;508;;120.;10.;10.;;456
+SolidHexa;500;5;501;502;503;504;505;506;507;508
+SinglePointConstrList;1;123;501
+SinglePointConstrList;1;23;502
+SinglePointConstrList;1;3;503
+SinglePointConstrList;1;13;504
+PointForceLoad;1;505;;8750.;0.;0.;1.
+PointForceLoad;1;506;;8750.;0.;0.;1.
+PointForceLoad;1;507;;8750.;0.;0.;1.
+PointForceLoad;1;508;;8750.;0.;0.;1.
+# Temperatures: 20 degrees at the start, 100 degrees during the step.
+DefaultTemperatureLoad;1;20.
+DefaultTemperatureLoad;2;100.
+# One step of 1000 s in 20 fixed increments, creep active in the step.
+NonlinearStepControl;10;1.E+3;;General;;;;1;FixedStepping;20

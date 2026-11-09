@@ -1,0 +1,51 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: load combinations of a PAA solve step, LOADCLID
+# LOADCNAM LOADCSUB (read only)
+#
+# Covers:
+#   - cards: LOADCLID LOADCNAM LOADCSUB (combinations of the loads of two
+#     parts named wing_part and tail_part, by load ID, by load name and by
+#     subcase number)
+#   - solution: SOL 101 (the solution of a PAA SOLVE step)
+#   - outputs: none (not run)
+# Run notes:
+#   - read and written by O_o_Reader only: these entries act in the COMBINE
+#     and SOLVE steps of a Part Assembly Analysis, which read the part
+#     databases of earlier GENERATE runs; the format reference does not
+#     give the file management of those runs
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: PAA load combinations
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;combination by part load ID
+StaticLoadSelection;1001
+SubcaseStart;2
+LabelText;combination by part load name
+StaticLoadSelection;1002
+SubcaseStart;3
+LabelText;combination by part subcase number
+StaticLoadSelection;1003
+[model]
+Parameter;PostprocessingFile;-1
+# Assembly level: a plate clamped on one edge (mm, N, t, s).
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;0.;100.;0.
+Node;4;;100.;100.;0.
+ShellQuad4;1;1;1;2;4;3
+SinglePointConstrList;1;123456;1;2
+# Load ID 101 of wing_part plus half of load ID 301 of tail_part.
+LoadCaseIdLabel;1001;1.;1.;101;wing_part;0.5;301;tail_part
+# The load named gravity_z of each part, the tail load scaled by 1.5.
+LoadCaseNameLabel;1002;1.;1.;gravity_z;wing_part;1.5;gravity_z;tail_part
+# Subcase 2 of wing_part minus subcase 1 of tail_part, all doubled.
+LoadCaseSubcaseLabel;1003;2.;1.;2;wing_part;-1.;1;tail_part

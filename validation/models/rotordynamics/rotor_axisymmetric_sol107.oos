@@ -1,0 +1,57 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric harmonic rotor (ROTORAX)
+#
+# Covers:
+#   - cards: ROTORAX
+#   - solution: SOL 107 (direct complex eigenvalues with gyroscopic effects)
+#   - outputs: eigenvectors: complex real/imaginary, SORT1
+# Run notes:
+#   - rotor 30 is a 2D axisymmetric model in the basic x-y plane (x radial, y
+#     the spin axis): CQUADX on PAXSYMH with the harmonic 1, a solid shaft of
+#     radius 10 and a disk of radius 60 at mid-length; ROTORAX lists its
+#     elements and its axis grid points
+#   - grounded bearings (CBUSH) at the axis points of the shaft ends; RGYRO =
+#     600: asynchronous at 3000 rpm
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;107
+[case]
+TitleText;O_o_Reader test model: axisymmetric harmonic rotor
+BulkEcho;None
+ComplexEigenMethodSelection;40
+RotordynamicSelection;600
+DisplacementOutput;All;PlotOnly;RealPart
+SubcaseStart;1
+LabelText;whirl modes of the axisymmetric rotor
+[model]
+Parameter;PostprocessingFile;-1
+ComplexEigenMethod;40;HessenbergMethod;;;;;8
+# Axisymmetric harmonic rotor: axis points 5001 to 5004 (x = 0), shaft surface
+# 5011 to 5014 (x = 10), disk rim 5021 and 5022 (x = 60). Units: mm, N, tonne,
+# s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+AxisymHarmonicProp;7;1;0;1
+Node;5001;;0.;0.;0.
+Node;5011;;10.;0.;0.
+Node;5002;;0.;140.;0.
+Node;5012;;10.;140.;0.
+Node;5003;;0.;160.;0.
+Node;5013;;10.;160.;0.
+Node;5004;;0.;300.;0.
+Node;5014;;10.;300.;0.
+Node;5021;;60.;140.;0.
+Node;5022;;60.;160.;0.
+AxisymQuad;5101;7;5001;5011;5012;5002
+AxisymQuad;5102;7;5002;5012;5013;5003
+AxisymQuad;5103;7;5003;5013;5014;5004
+AxisymQuad;5104;7;5012;5021;5022;5013
+RotorAxisym;30;Elements;5101;Through;5104
+RotorAxisym;30;Node;5001;5002;5003;5004
+# Bearings at the axis points of the shaft ends.
+BushProp;3;Stiffness;1.E+4;1.E+3;1.E+4;;;;Damping;1.;;1.
+Bushing;5201;3;5001;;;;;;0
+Bushing;5202;3;5004;;;;;;0
+RotorRelativeSpin;30;5001;5004;RevolutionsPerMinute;;1.
+RotordynamicParams;600;AsynchronousWhirl;30;RevolutionsPerMinute;;;3.E+3

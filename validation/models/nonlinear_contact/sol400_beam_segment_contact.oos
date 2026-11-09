@@ -1,0 +1,77 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: segment-to-segment beam contact (SOL 400)
+#
+# Covers:
+#   - cards: BCPFLG, BCSCAP, NLADAPT
+#   - solution: SOL 400 (nonlinear static, NLPARM with its NLADAPT
+#     extension, segment-to-segment contact of beam sections)
+#   - outputs: displacements, SPC forces, contact forces and tractions
+# Run notes:
+#   - a round beam (PBEAML ROD, radius 2) rests across an I beam (PBEAML I,
+#     8 x 8, so its top is at 4 mm whatever the section orientation); the
+#     round beam is pushed down at the crossing
+#   - BCPFLG chooses the section segments of each property, BCSCAP closes the
+#     free ends of the round beam and sets 16 segments around it
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;400
+[case]
+TitleText;O_o_Reader test model: segment-to-segment beam contact (SOL 400)
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+SlidelineContactOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;round beam pushed onto the I beam
+AnalysisKind;NonlinearStatics
+NonlinearStaticParamsSelection;30
+StaticLoadSelection;1
+ContactSelection;10
+[model]
+Parameter;PostprocessingFile;-1
+# Steel beams of 40 mm, four CBEAM each, clamped at both ends: the round
+# beam along x at z = 6, the I beam along y at z = 0. Units: mm, N, t.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BeamShapeProp;1;1;;Rod;2.
+BeamShapeProp;2;1;;ISection;8.;8.;8.;1.;1.;1.
+Node;1;;-20.;0.;6.
+Node;2;;-10.;0.;6.
+Node;3;;0.;0.;6.
+Node;4;;10.;0.;6.
+Node;5;;20.;0.;6.
+Beam2;1;1;1;2;0.;;0.;1.
+Beam2;2;1;2;3;0.;;0.;1.
+Beam2;3;1;3;4;0.;;0.;1.
+Beam2;4;1;4;5;0.;;0.;1.
+Node;11;;0.;-20.;0.
+Node;12;;0.;-10.;0.
+Node;13;;0.;0.;0.
+Node;14;;0.;10.;0.
+Node;15;;0.;20.;0.
+Beam2;11;2;11;12;1.;;0.;0.
+Beam2;12;2;12;13;1.;;0.;0.
+Beam2;13;2;13;14;1.;;0.;0.
+Beam2;14;2;14;15;1.;;0.;0.
+SinglePointConstrList;1;123456;1;5;11;15
+PointForceLoad;1;3;;200.;0.;0.;-1.
+# Contact bodies by property and the pair (round beam secondary)
+ContactPropertyRegion;1;1
+ContactPropertyRegion;2;2
+ContactBody1;1;;ThreeDimensional;Deformable;1
+ContactBody1;2;;ThreeDimensional;Deformable;2
+ContactPair;10;;;1;2
+ContactParams;0;ContactMethod;SegmentToSegment;BeamToBeamContact;1
+# Section segments: the outer surface of the round section, both faces of
+# every branch of the I section; end caps and 16 segments on the two end
+# elements of the round beam
+ContactBeamSectionFlags;1;0;1
+ContactBeamSectionFlags;2;0;12
+ContactBeamCap;1;1;16
+ContactBeamCap;4;1;16
+# Five increments; NLADAPT adds the step size limits of the automatic
+# load stepping to NLPARM 30
+NonlinearStaticParams;30;5;;Automatic;;25;PW;No
+NonlinearAdaptiveStepping;30;Stepping;0.1;1.5;0.01;0.5;1000;10;1.2

@@ -1,0 +1,91 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: glued contact between two modules, by a contact table
+#
+# Covers:
+#   - cards: MDBCNCT, MDBCTB1 (with MDBULK, BCONPRG, BEGIN MODULE and, in
+#     the modules, BCPROP and BCBODY1)
+#   - solution: SOL 101 (statics with permanently glued contact)
+#   - outputs: displacements
+# Run notes:
+#   - module 1 (z = 0) is found on the clamped plate of module 0; module 2
+#     (z = 2, both 2 mm thick, so the faces touch at z = 1) is held by the
+#     glued contact pair of the table only
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: contact table across modules
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+ContactSelection;10
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;load on the glued module
+[model]
+Parameter;PostprocessingFile;-1
+# Module 0: a plate of 1 x 2 CQUAD4 at x 0 to 10, y 0 to 20, clamped at
+# x = 0. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;0.;10.;0.
+Node;4;;10.;10.;0.
+Node;5;;0.;20.;0.
+Node;6;;10.;20.;0.
+ShellQuad4;1;1;1;2;4;3
+ShellQuad4;2;1;3;4;6;5
+SinglePointConstrList;1;123456;1;3;5
+# A small load on module 0 as well.
+PointForceLoad;1;6;;1.;0.;0.;1.
+ModuleBulkOptions;1;;;Automatic
+ModuleBulkOptions;2;;;Automatic
+# The contact table 10: body 2 of module 2 touches body 1 of module 1, glued
+# (IGLUE in the geometric parameters 7).
+ContactPairGeomParams;7;GlueOption;1
+ModuleContactPair;1;7;;2;2;1;1
+ModuleContactTable;10;;1
+[model;ModuleSection;1]
+# Module 1: a plate of 2 x 2 CQUAD4 at x 10 to 30, y 0 to 20, z = 0, its
+# elements the contact body 1.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;11;1;2.;1;;1
+Node;101;;10.;0.;0.
+Node;102;;20.;0.;0.
+Node;103;;30.;0.;0.
+Node;104;;10.;10.;0.
+Node;105;;20.;10.;0.
+Node;106;;30.;10.;0.
+Node;107;;10.;20.;0.
+Node;108;;20.;20.;0.
+Node;109;;30.;20.;0.
+ShellQuad4;101;11;101;102;105;104
+ShellQuad4;102;11;102;103;106;105
+ShellQuad4;103;11;104;105;108;107
+ShellQuad4;104;11;105;106;109;108
+ContactPropertyRegion;1;11
+ContactBody1;1;;ThreeDimensional;Deformable;1
+[model;ModuleSection;2]
+# Module 2: a plate of 2 x 2 CQUAD4 at x 15 to 35, y 0 to 20, z = 2, its
+# elements the contact body 2, a load at its free corner.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;12;1;2.;1;;1
+Node;201;;15.;0.;2.
+Node;202;;25.;0.;2.
+Node;203;;35.;0.;2.
+Node;204;;15.;10.;2.
+Node;205;;25.;10.;2.
+Node;206;;35.;10.;2.
+Node;207;;15.;20.;2.
+Node;208;;25.;20.;2.
+Node;209;;35.;20.;2.
+ShellQuad4;201;12;201;202;205;204
+ShellQuad4;202;12;202;203;206;205
+ShellQuad4;203;12;204;205;208;207
+ShellQuad4;204;12;205;206;209;208
+ContactPropertyRegion;2;12
+ContactBody1;2;;ThreeDimensional;Deformable;2
+PointForceLoad;1;209;;10.;0.;0.;1.

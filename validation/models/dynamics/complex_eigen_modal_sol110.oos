@@ -1,0 +1,32 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: modal complex modes with EIGR real modes
+#
+# Covers:
+#   - cards: EIGR
+#   - solution: SOL 110 (modal complex eigenvalues)
+#   - outputs: eigenvectors: complex real/imaginary, SORT1
+# Run notes:
+#   - the real modes come from EIGR 71 (Lanczos, eight roots, mass
+#     normalisation), the complex roots of the modal problem from EIGC 41
+#     (HESS) with the modal damping of TABDMP1 72
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;110
+[case]
+TitleText;O_o_Reader test model: modal complex modes
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ComplexEigenMethodSelection;41
+ModalDampingSelection;72
+DisplacementOutput;All;PlotOnly;RealPart
+SubcaseStart;1
+LabelText;damped plate, modal
+[model]
+Parameter;PostprocessingFile;-1
+RealEigenMethod;71;Lanczos;;;;8;Mass
+ComplexEigenMethod;41;HessenbergMethod;;;;;6
+TableModalDamping1;72;CriticalDamping;0.;0.03;2.E+3;0.03;EndTable
+Include;plate_model.oos

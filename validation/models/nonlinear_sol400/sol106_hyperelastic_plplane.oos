@@ -1,0 +1,63 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: hyperelastic plane strain CQUAD8 and CTRIA6 (SOL 106)
+#
+# Validates:
+#   - the columns of the hyperelastic element tables (finite deformation) of
+#     CQUAD8 and CTRIA6: the listing headings name each column
+# Settles (library item: current status):
+#   - the derived stress and strain of the CQUAD8 and CTRIA6 (the last
+#     column, read with the layout of the shells: no formula fits the CTRIA6)
+#   - the hyperelastic element types are not decoded (their layout)
+# Run notes:
+#   - PRINT is asked as well so that the listing shows the column headings
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;106
+[case]
+TitleText;hyperelastic plane strain elements (SOL 106)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+NonlinearStaticParamsSelection;10
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly;PrintListing
+StrainOutput;All;PlotOnly;PrintListing
+SubcaseStart;1
+LabelText;stretch in ten increments
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;LargeDisplacements;1
+# Hyperelastic plane strain elements of the omnibus kind: CQUAD8 and CTRIA6 on
+# PLPLANE with a MATHP (Mooney-Rivlin), stretched in ten increments. Units:
+# mm, N, tonne.
+HyperelasticPolynomialMat;3;0.5;0.1;50.;1.1E-9
+PlanePropNonlinear;6;3
+Node;1;;0.;0.;0.;;3456
+Node;2;;10.;0.;0.;;3456
+Node;3;;10.;10.;0.;;3456
+Node;4;;0.;10.;0.;;3456
+Node;5;;5.;0.;0.;;3456
+Node;6;;10.;5.;0.;;3456
+Node;7;;5.;10.;0.;;3456
+Node;8;;0.;5.;0.;;3456
+ShellQuad8;1;6;1;2;3;4;5;6;7;8
+Node;11;;10.;0.;0.;;3456
+Node;12;;20.;0.;0.;;3456
+Node;13;;10.;10.;0.;;3456
+Node;14;;15.;0.;0.;;3456
+Node;15;;15.;5.;0.;;3456
+Node;16;;10.;5.;0.;;3456
+ShellTria6;2;6;11;12;13;14;15;16
+SinglePointConstrList;1;1;1;4;8
+SinglePointConstrList;1;2;1
+SinglePointConstrList;1;123456;11;13;16
+PointForceLoad;1;2;;3.;1.;0.;0.
+PointForceLoad;1;3;;3.;1.;0.;0.
+PointForceLoad;1;6;;6.;1.;0.;0.
+PointForceLoad;1;12;;3.;1.;0.;0.
+NonlinearStaticParams;10;10

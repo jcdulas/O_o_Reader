@@ -1,0 +1,115 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: Case Control set-up: SET with THRU and EXCEPT, TEMPERATURE forms, SUBCOM with SUBSEQ, SUBSEQ1 (SOL 101)
+#
+# Validates:
+#   - the members the solver takes for SET lists with THRU, EXCEPT and BY (the IDs of
+#     the result tables), the temperature sets the solver uses for the load and for
+#     the material with TEMPERATURE(BOTH), a bare TEMPERATURE,
+#     TEMPERATURE(LOAD) and TEMPERATURE(MATERIAL) in different subcases, the
+#     combinations of SUBCOM with SUBSEQ (fewer factors than subcases) and
+#     with SUBSEQ1, the plot sets
+# Settles (library item: current status):
+#   - the hand decks of the gaps (MEFFMASS,
+#     TEMPERATURE(BOTH), a bare TEMPERATURE, THRU and EXCEPT, SUBSEQ1, plot
+#     sets) are tests only: subcases_table, case_sets_table, load_case_groups
+#     against the solver
+#   - SUBSEQ aligned on the last subcases (format reference SUBSEQ remark 4)
+# Run notes:
+#   - the listing echo and the subcase headings give the solver's reading; the OUTPUT2 file tables
+#     give the members of the sets
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: Case Control set-up
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+SetDefinition;1;1;2;4;Through;6;10;Through;15
+SetDefinition;2;1;Through;4;6;Through;8
+SetDefinition;3;2;5;8;11;14
+DisplacementOutput;1;PlotOnly
+StressOutput;2;PlotOnly
+SinglePointConstrForceOutput;3;PlotOnly
+SubcaseStart;1
+LabelText;load 1, TEMPERATURE(BOTH) = 11
+StaticLoadSelection;1
+TemperatureSelection;11;BothLoadAndInitial
+SubcaseStart;2
+LabelText;load 2, bare TEMPERATURE = 12
+StaticLoadSelection;2
+TemperatureSelection;12
+SubcaseStart;3
+LabelText;load 3, TEMPERATURE(LOAD) = 12, TEMPERATURE(MATERIAL) = 11
+StaticLoadSelection;3
+TemperatureSelection;12;TemperatureLoadPart
+TemperatureSelection;11;MaterialTemperature
+SubcaseStart;4
+LabelText;load 4 at the reference temperature
+StaticLoadSelection;4
+TemperatureSelection;13;TemperatureLoadPart
+SubcaseCombination;10
+LabelText;SUBSEQ with two factors (aligned on the last two subcases)
+SubcaseCombinationFactors;2.,-1.
+SubcaseCombination;20
+LabelText;SUBSEQ1 over subcases 1 and 4
+SubcaseCombinationFactors1;1.,1.,1.,0.5,4.
+OutputBlock;;Plot
+SetDefinition;5;All;Except;4
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# A plate of 4 x 2 CQUAD4 (x 0 to 40, y 0 to 20) clamped at x = 0 with a
+# thermal expansion; load sets 1 to 4 and temperature sets 11 (uniform 120 C)
+# and 12 (a gradient). Units: mm, N, tonne, C.
+IsoMat;1;7.E+4;;0.33;2.7E-9;2.3E-5;20.
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+PointForceLoad;1;15;;10.;0.;0.;1.
+PointForceLoad;2;15;;20.;0.;0.;1.
+PointForceLoad;3;15;;30.;0.;0.;1.
+PointForceLoad;4;15;;40.;0.;0.;1.
+DefaultTemperatureLoad;11;120.
+DefaultTemperatureLoad;12;20.
+NodeTemperatureLoad;12;1;20.
+NodeTemperatureLoad;12;6;20.
+NodeTemperatureLoad;12;11;20.
+NodeTemperatureLoad;12;2;45.
+NodeTemperatureLoad;12;7;45.
+NodeTemperatureLoad;12;12;45.
+NodeTemperatureLoad;12;3;70.
+NodeTemperatureLoad;12;8;70.
+NodeTemperatureLoad;12;13;70.
+NodeTemperatureLoad;12;4;95.
+NodeTemperatureLoad;12;9;95.
+NodeTemperatureLoad;12;14;95.
+NodeTemperatureLoad;12;5;120.
+NodeTemperatureLoad;12;10;120.
+NodeTemperatureLoad;12;15;120.
+DefaultTemperatureLoad;13;20.

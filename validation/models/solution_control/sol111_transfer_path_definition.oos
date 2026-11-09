@@ -1,0 +1,96 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: single-step transfer path analysis in a frequency response (SOL 111)
+#
+# Covers:
+#   - cards: TPADEFN (with BEGIN ACTIVE, BEGIN PASSIVE and the Case Control
+#     TPASET)
+#   - solution: SOL 111 (modal frequency response of a plate driven through
+#     three bushings by a vibrating bar, with single-step TPA)
+#   - outputs: complex displacements and accelerations (real and
+#     imaginary parts)
+# Run notes:
+#   - the passive sub-model (BEGIN PASSIVE) is the receiver plate, whose
+#     grid points 7, 8 and 9 are the interface of the paths (TPADEFN GRIDSET);
+#     the active sub-model (BEGIN ACTIVE) is the source bar and the CBUSH
+#     connectors that join it to those points (format reference BEGIN BULK remark 13);
+#     TPASET = 100 asks for the analysis
+#   - the main Bulk Data holds what both sides share: the material, the
+#     constraints, the dynamic load, the modes, the damping and the TPA set-up
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;O_o_Reader test model: single-step transfer path analysis
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+FreqSetSelection;1
+DynamicLoadSelection;1
+ModalDampingSelection;1
+TransferPathSelection;100
+DisplacementOutput;All;PlotOnly;RealPart
+AccelOutput;All;PlotOnly;RealPart
+SubcaseStart;1
+LabelText;harmonic force on the source bar
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, t, s. Steel for both sub-models.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# The receiver plate is clamped along x = 0.
+SinglePointConstrList;1;123456;1;6;11
+# Modes up to 2000 Hz, 2 % critical damping, response from 20 to 1000 Hz.
+LanczosEigenMethod;1;;2.E+3
+TableModalDamping1;1;CriticalDamping;0.;0.02;5.E+3;0.02;EndTable
+FreqLinearSteps1;1;20.;10.;98
+# Unit harmonic force along z at the middle of the source bar.
+FreqResponseLoad1;1;2;;;;;3
+DynamicLoadScale;2;108;3;1.
+TableDynamic1;3;;;0.;1.;5.E+3;1.;EndTable
+# Transfer path set-up 100: the interface grid points of the passive side
+# (SET3 1001, where the paths are cut) and the target responses:
+# accelerations of the free corner of the plate (SET3 2002).
+TransferPathSetup;100;1001;;A;2002
+TypedListSet3;1001;Node;7;8;9
+TypedListSet3;2002;Node;5
+[model;PassivePart]
+# The receiver: a cantilever plate 100 x 50 mm, 2 mm thick, 4 x 2 CQUAD4.
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;25.;0.;0.
+Node;3;;50.;0.;0.
+Node;4;;75.;0.;0.
+Node;5;;100.;0.;0.
+Node;6;;0.;25.;0.
+Node;7;;25.;25.;0.
+Node;8;;50.;25.;0.
+Node;9;;75.;25.;0.
+Node;10;;100.;25.;0.
+Node;11;;0.;50.;0.
+Node;12;;25.;50.;0.
+Node;13;;50.;50.;0.
+Node;14;;75.;50.;0.
+Node;15;;100.;50.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+[model;ActivePart]
+# The source: a steel bar of 10 x 10 mm, 10 mm above the interface points,
+# on three bushings (stiff along z, softer in the plane) to points 7, 8 and
+# 9 of the plate; the axes of the bushings are those of the basic system.
+BarProp;2;1;100.;833.3;833.3;1406.
+Node;107;;25.;25.;10.
+Node;108;;50.;25.;10.
+Node;109;;75.;25.;10.
+Bar2;101;2;107;108;0.;;1.;0.
+Bar2;102;2;108;109;0.;;1.;0.
+BushProp;3;Stiffness;1.E+3;1.E+3;1.E+4;1.E+5;1.E+5;1.E+5
+Bushing;201;3;107;7;;;;;0
+Bushing;202;3;108;8;;;;;0
+Bushing;203;3;109;9;;;;;0

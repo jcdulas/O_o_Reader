@@ -1,0 +1,78 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: user-written dummy elements (SOL 101, read-only)
+#
+# Covers:
+#   - cards: ADUM1 ADUM2 ADUM3 ADUM4 ADUM5 ADUM6 ADUM7 ADUM8 ADUM9 CDUM1
+#     CDUM2 CDUM3 CDUM4 CDUM5 CDUM6 CDUM7 CDUM8 CDUM9 PDUM1 PDUM2 PDUM3
+#     PDUM4 PDUM5 PDUM6 PDUM7 PDUM8 PDUM9
+#   - solution: SOL 101 (axial static load on a chain of two-node user
+#     elements)
+#   - outputs: none (not run)
+# Run notes:
+#   - read-only: the stiffness and stress routines of the dummy elements
+#     are user code linked into a user-modifiable solver; a standard
+#     executable has none. ADUM8 and ADUM9 are reserved by the solver for CRAC2D
+#     and CRAC3D (see solution_control/sol101_crack_tip_elements.bdf); here
+#     they declare CDUM8 and CDUM9 as the other dummies do
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: dummy elements (read-only)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;axial tip load
+[model]
+Parameter;PostprocessingFile;-1
+# Each dummy element type i is a two-node axial member written by the user:
+# ADUMi declares 2 grid points, 1 extra field on CDUMi (the cross-section
+# area, mm2), 2 extra fields on PDUMi (a modulus factor and a stress
+# allowable, MPa) and no differential stiffness. ADUM1 leaves ELNM blank:
+# its cards keep their names CDUM1 and PDUM1. Units: mm, N, t, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+UserDefined1Attributes;2;1;2;0
+UserDefined2Attributes;2;1;2;0;UserDefined2
+UserDefined3Attributes;2;1;2;0;UserDefined3
+UserDefined4Attributes;2;1;2;0;UserDefined4
+UserDefined5Attributes;2;1;2;0;UserDefined5
+UserDefined6Attributes;2;1;2;0;UserDefined6
+UserDefined7Attributes;2;1;2;0;UserDefined7
+UserDefined8Attributes;2;1;2;0;UserDefined8
+UserDefined9Attributes;2;1;2;0;UserDefined9
+# A straight chain of 10 grid points along x, 100 mm apart, axial motion only.
+Node;1;;0.;0.;0.;;23456
+Node;2;;100.;0.;0.;;23456
+Node;3;;200.;0.;0.;;23456
+Node;4;;300.;0.;0.;;23456
+Node;5;;400.;0.;0.;;23456
+Node;6;;500.;0.;0.;;23456
+Node;7;;600.;0.;0.;;23456
+Node;8;;700.;0.;0.;;23456
+Node;9;;800.;0.;0.;;23456
+Node;10;;900.;0.;0.;;23456
+# Element i joins grid points i and i+1; property 10+i uses MAT1 1.
+UserDefined1;1;11;1;2;45.
+UserDefined1Prop;11;1;1.;250.
+UserDefined2;2;12;2;3;50.
+UserDefined2Prop;12;1;1.;250.
+UserDefined3;3;13;3;4;55.
+UserDefined3Prop;13;1;1.;250.
+UserDefined4;4;14;4;5;60.
+UserDefined4Prop;14;1;1.;250.
+UserDefined5;5;15;5;6;65.
+UserDefined5Prop;15;1;1.;250.
+UserDefined6;6;16;6;7;70.
+UserDefined6Prop;16;1;1.;250.
+UserDefined7;7;17;7;8;75.
+UserDefined7Prop;17;1;1.;250.
+UserDefined8;8;18;8;9;80.
+UserDefined8Prop;18;1;1.;250.
+UserDefined9;9;19;9;10;85.
+UserDefined9Prop;19;1;1.;250.
+SinglePointConstrList;1;1;1
+PointForceLoad;1;10;0;1.E+3;1.;0.;0.

@@ -1,0 +1,42 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: fluid element results, complex (frequency response) (SOL 108)
+#
+# Validates:
+#   - the element tables of the fluid elements CHEXA, CPENTA, CTETRA and
+#     CPYRAM on PFLUID (element types 76 to 79: two words of text,
+#     accelerations, velocities, pressure), the pressures at the fluid grid
+#     points, the grid point weight with fluid elements
+# Settles (library item: current status):
+#   - forces.chexa_pressure, cpenta_pressure, ctetra_pressure,
+#     cpyram_pressure (real SORT1 not_validated for three of them; complex
+#     SORT1 not_validated; types 78 and 79 never observed)
+#   - the fluid mass of CHEXA and CTETRA (left out of the grid point weight)
+# Run notes:
+#   - the element output of a fluid element is asked with FORCE (and STRESS);
+#     keep whatever the solver writes
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;fluid elements (complex (frequency response))
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DynamicLoadSelection;21
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;plate-driven cavity
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;WeightReferenceNode;0
+FreqResponseLoad1;21;1;;;;;31
+TableDynamic1;31;;;0.;1.;5.E+3;1.;EndTable
+FreqLinearSteps1;41;100.;100.;20
+Include;acoustic_model.oos

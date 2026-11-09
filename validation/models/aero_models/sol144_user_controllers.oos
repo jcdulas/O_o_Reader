@@ -1,0 +1,90 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: user controllers, schedule, divergence (SOL 144)
+#
+# Covers:
+#   - cards: AEPARM UXVEC AEPRESS AEDW AEFORCE TRIM2 AELINK CSSCHD AESURFS
+#     AECOMPL MONCNCM DIVERG AELISTC
+#   - solution: SOL 144 (restrained static aeroelastic trim with user defined
+#     pressure, downwash and force controllers; static divergence)
+#   - outputs: displacements, CQUAD4 stresses, trim variables, stability and
+#     hinge moment derivatives, control surface positions and hinge moments,
+#     aerodynamic pressures and forces (OUTPUT2)
+# Run notes:
+#   - reuses the wing of aero_sol144/aero_model.inc (CAERO1 1001, 8 x 4
+#     boxes, surface ELEV); symmetric half model, root clamped
+#   - subcase 2 is the divergence analysis (DIVERG with CMETHOD)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;O_o_Reader test model: user controllers and divergence
+BulkEcho;None
+SinglePointConstrSelection;1
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+AeroForceOutput;All;PlotOnly
+AeroPressureOutput;All;PlotOnly
+TrimLoadOutput;All;PlotOnly
+MonitorPointOutput;All
+SubcaseStart;1
+LabelText;restrained trim, scheduled elevator, linked aileron
+TrimSelection;1
+ControlScheduleSelection;1601
+SubcaseStart;2
+LabelText;static divergence at Mach 0.5
+DivergenceSelection;70
+ComplexEigenMethodSelection;10
+[model]
+Parameter;PostprocessingFile;-1
+AeroStaticParams;;;200.;2.E+3;4.E+5;1
+Include;../aero_sol144/aero_model.oos
+# Second control surface AIL on the trailing edge boxes of strips 3 and 4,
+# hinge line of the coordinate system 10 (x = 150). The structural grid points
+# aft of the hinge of ELEV give its inertia (AESURFS).
+AeroBoxList;1210;1012;1016
+AeroControlSurface;1211;AIL;10;1210
+IdListSet1;1220;9;12;15
+AeroControlSurfaceNodes;1221;ELEV;1220
+# User controllers and the control vectors that excite them one at a time
+# (perturbation loads: INTERCPT = 0).
+AeroController;1311;SPOIL;RAD
+AeroController;1312;VANE;RAD
+AeroController;1313;TIPLD;N
+AeroControlVector;1411;SPOIL;1.;Intercept;0.
+AeroControlVector;1412;VANE;1.;Intercept;0.
+AeroControlVector;1413;TIPLD;1.;Intercept;0.
+# SPOIL: a pressure coefficient on four mid-chord boxes (DMIJ, j-set,
+# component 3 of the boxes).
+AeroPressureVector;0.5;Symmetric;Asymmetric;1411;SPOILP
+DirectMatrixAeroJ;SPOILP;0;9;1;0;;1
+DirectMatrixAeroJ;SPOILP;1;1;1010;3;-0.4;;1011;3;-0.4;;1014;3;-0.4;;1015;3;-0.4
+# VANE: a downwash on the leading edge boxes of strips 1 and 2.
+AeroDownwash;0.5;Symmetric;Asymmetric;1412;VANEW
+DirectMatrixAeroJ;VANEW;0;9;1;0;;1
+DirectMatrixAeroJ;VANEW;1;1;1001;3;0.1;;1005;3;0.1
+# TIPLD: a structural force at the tip (1 N for a unit controller, not
+# scaled by the dynamic pressure).
+PointForceLoad;1501;14;0;1.;0.;0.;-1.
+AeroForceVector;0.5;Symmetric;Asymmetric;1413;Structure;1501
+# Trim: angle of attack fixed, ELEV scheduled on the angle of attack, AIL
+# linked to it, the user controllers fixed.
+AeroTrimLink;1;AIL;AngleOfAttack;-0.5
+AeroFactorList;1602;0.;0.1
+AeroFactorList;1603;0.02;0.06
+AeroControlSchedule;1601;1201;1602;;1603
+AeroTrim2;1;0.5;2.E-4;1.;AngleOfAttack;0.05;ELEV;Scheduled;AIL;Linked;SPOIL;0.2;VANE;0.1;TIPLD;0.5
+# Monitor point on the union of the two control surface components, and the
+# stripwise normal force and pitching moment coefficients of the wing.
+AeroComponent;AILA;AeroBoxList;1210
+AeroComponent;ELEVA;AeroBoxList;1200
+AeroComponentUnion;SURFA;AILA;ELEVA
+MonitorIntegratedLoad1;SURFA;control surfaces on the aero model;123456;SURFA;0;150.;500.;0.
+MonitorChordNormalCoeffs;WINGCN;strip coefficients of the wing;0.25;1001
+# Divergence: two roots at Mach 0.5, complex eigenvalue method.
+AeroDivergence;70;2;0.5
+ComplexEigenMethod;10;HessenbergMethod;Maximum;;;;4
+# A list of names for an external procedure: nothing in this deck uses it
+# (see read_only_aero/sol144_external_spline.bdf for its consumer).
+AeroLabelList;1701;WINGBOX;TIPZONE

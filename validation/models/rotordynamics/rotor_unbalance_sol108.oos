@@ -1,0 +1,44 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: synchronous unbalance response (SOL 108)
+#
+# Covers:
+#   - cards: UNBALNC, ROTHYBD (with HYBDAMP), RSPINR, RGYRO
+#   - solution: SOL 108 (direct frequency response with gyroscopic effects)
+#   - outputs: displacements: complex magnitude/phase, SORT1
+# Run notes:
+#   - RGYRO = 200: synchronous analysis, the excitation frequency is the speed
+#     of the reference rotor 10 (600 to 6000 rpm, 10 to 100 Hz); DLOAD = 300
+#     selects the unbalance UNBALNC 300 (10 g at 10 mm on the disk of rotor
+#     10)
+#   - ROTHYBD gives rotor 10 the hybrid modal damping of HYBDAMP 11 (2 percent
+#     on its first 6 modes)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: unbalance response
+BulkEcho;None
+SinglePointConstrSelection;1
+RotordynamicSelection;200
+DynamicLoadSelection;300
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly;MagnitudePhase
+SubcaseStart;1
+LabelText;run-up, disk unbalance
+[model]
+Parameter;PostprocessingFile;-1
+FreqLinearSteps1;41;10.;2.;45
+RotorRelativeSpin;10;1001;1005;RevolutionsPerMinute;;1.
+RotorRelativeSpin;20;2001;2003;RevolutionsPerMinute;;2.
+RotordynamicParams;200;SynchronousWhirl;10;RevolutionsPerMinute;600.;6.E+3
+# Unbalance: 10 g at a radius of 10 mm, angle measured from y, on grid point
+# 1003.
+RotorUnbalanceLoad;300;;1.E-5;1003;0.;1.;0.;;10.;0.;;0.
+# Hybrid damping of rotor 10.
+RotorHybridDamping;10;11
+HybridDamping;11;12;13
+LanczosEigenMethod;12;;;6
+TableModalDamping1;13;CriticalDamping;0.;0.02;1.E+3;0.02;EndTable
+Include;rotor_line_model.oos

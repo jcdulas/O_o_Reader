@@ -1,0 +1,56 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: lumped heat capacity in transient heat transfer
+#
+# Covers:
+#   - cards: CDAMP5, PDAMP5 (with MAT4, PROD, CROD, QVOL, TLOAD1, TABLED1,
+#     TEMPD, TSTEPNL)
+#   - solution: SOL 159 (transient heat transfer)
+#   - outputs: temperatures, SORT1 (OUTPUT2)
+# Run notes:
+#   - CDAMP5 is a heat transfer element: PDAMP5 multiplies the specific heat
+#     of MAT4 1 by a mass and lumps the capacity at the grid point (G2 blank:
+#     to ground)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;159
+[case]
+TitleText;lumped heat capacity, transient heat transfer
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DynamicLoadSelection;51
+NonlinearTimeStepSelection;61
+TemperatureSelection;2;InitialTemperature
+ThermalOutput;All;PlotOnly;SortByPoint
+SubcaseStart;1
+LabelText;one end held at 100 C, heat input in the last rod
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s, degrees C (power in mW). A steel bar of four CROD
+# (10 mm each, section 10 mm2), grid 1 held at 100 C, the rest starting at 20
+# C; CDAMP5 adds a lumped capacity of 1 g of steel at grids 2 to 5.
+HeatIsoMat;1;50.;4.6E+8;7.85E-9
+RodProp;1;1;10.
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Rod2;101;1;1;2
+Rod2;102;1;2;3
+Rod2;103;1;3;4
+Rod2;104;1;4;5
+HeatCapacityProp5;2;1;1.E-6
+HeatCapacity2;202;2;2
+HeatCapacity2;203;2;3
+HeatCapacity2;204;2;4
+HeatCapacity2;205;2;5
+SinglePointConstr;1;1;1;100.
+DefaultTemperatureLoad;2;20.
+# Heat input: QVOL 1 in rod 104, switched on at t = 0 by TLOAD1 51 and its
+# table.
+HeatVolumeSourceLoad;1;1.;;104
+TransientTableLoad1;51;1;;;;52
+TableDynamic1;52;;;0.;1.;1.E+3;1.;EndTable
+NonlinearTimeSteps;61;20;1.;1

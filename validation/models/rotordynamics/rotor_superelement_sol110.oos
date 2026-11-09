@@ -1,0 +1,75 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: rotor in a part superelement (SOL 110)
+#
+# Covers:
+#   - cards: ROTORSE, REFRTSE, ROTORG, RSPINR, RGYRO, EIGR
+#   - solution: SOL 110 (modal complex eigenvalues with gyroscopic effects)
+#   - outputs: eigenvectors: complex real/imaginary, SORT1
+# Run notes:
+#   - rotor 10 is the line model of part superelement 1 (ROTORSE, SEOPT 2: its
+#     whole g-set is the rotor); it joins the residual at its ends, where the
+#     residual has grounded bearings; rotor 20 stays in the residual (ROTORG)
+#   - RGYRO = 500: asynchronous, reference rotor 20 of the residual at 3000
+#     rpm; REFRTSE 500 makes it the reference of rotor 10 of superelement 1,
+#     which spins at half its speed
+#   - real modes by EIGR 71 (Lanczos), complex roots by EIGC 40 (HESS)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;110
+[case]
+TitleText;O_o_Reader test model: rotor in a part superelement
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ComplexEigenMethodSelection;40
+RotordynamicSelection;500
+DisplacementOutput;All;PlotOnly;RealPart
+SubcaseStart;1
+LabelText;whirl modes, rotor 10 in superelement 1
+[model]
+Parameter;PostprocessingFile;-1
+RealEigenMethod;71;Lanczos;;;;12;Mass
+ComplexEigenMethod;40;HessenbergMethod;;;;;10
+# Rotors: rotor 10 in superelement 1, rotor 20 in the residual.
+SuperelementBulkOptions;1;Primary;;Automatic
+RotorSuperelement;10;1;2
+RotorLineNodes;20;2001;Through;2003
+RotorRelativeSpin;10;1001;1005;RevolutionsPerMinute;;1.;1
+RotorRelativeSpin;20;2001;2003;RevolutionsPerMinute;;2.
+RotordynamicParams;500;AsynchronousWhirl;20;RevolutionsPerMinute;;;3.E+3;0
+SuperelementReferenceRotor;500;20;0;10;1
+# Residual: rotor 20, the support points 1 and 5 under the ends of rotor 10,
+# grounded bearings.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BeamProp;2;1;201.06;3216.99;3216.99;0.;6433.98
+Node;2001;;0.;200.;0.
+Node;2002;;150.;200.;0.
+Node;2003;;300.;200.;0.
+Beam2;2001;2;2001;2002;0.;;1.;0.
+Beam2;2002;2;2002;2003;0.;;1.;0.
+PointMassInertia;2010;2002;0;0.001;;;;0.8;0.;0.4;0.;0.;0.4
+Node;1;;0.;0.;0.
+Node;5;;400.;0.;0.
+BushProp;3;Stiffness;1.E+3;1.E+4;1.E+4;;;;Damping;;1.;1.
+Bushing;3001;3;1;;;;;;0
+Bushing;3002;3;5;;;;;;0
+Bushing;3003;3;2001;;;;;;0
+Bushing;3004;3;2003;;;;;;0
+SinglePointConstrList;1;4;1;2001
+[model;SuperelementPart;1]
+# Part superelement 1: the shaft of rotor 10, its end points 1001 and 1005 on
+# the residual points 1 and 5.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BeamProp;1;1;314.16;7853.98;7853.98;0.;15707.96
+Node;1001;;0.;0.;0.
+Node;1002;;100.;0.;0.
+Node;1003;;200.;0.;0.
+Node;1004;;300.;0.;0.
+Node;1005;;400.;0.;0.
+Beam2;1001;1;1001;1002;0.;;1.;0.
+Beam2;1002;1;1002;1003;0.;;1.;0.
+Beam2;1003;1;1003;1004;0.;;1.;0.
+Beam2;1004;1;1004;1005;0.;;1.;0.
+PointMassInertia;1010;1003;0;0.002;;;;2.5;0.;1.25;0.;0.;1.25

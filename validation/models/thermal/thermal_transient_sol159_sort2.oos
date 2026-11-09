@@ -1,0 +1,45 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: transient heat transfer (SOL 159), SORT2
+#
+# Validates:
+#   - the SORT2 heat flux tables of every conduction element of the model and
+#     the SORT2 heat flows of CHBDYE, CHBDYG, CHBDYP and CONV; the temperature
+#     rates (NODAL/VELOCITY of a heat transfer run)
+# Settles (library item: current status):
+#   - heat_flux real SORT2 of cbar, cbeam, cbend, chexa,
+#     conrod, cpenta, cquad4, cquad8, crod, ctetra, ctria3, ctria6, ctriax6,
+#     ctube; heat_flows real SORT2 of chbdye, chbdyg, chbdyp, conv
+#     (not_validated)
+#   - the OUTPUT2 file and HDF5 tables of one run (noise at the end of a transient
+#     thermal run)
+# Run notes:
+#   - the heat load of load set 1 is switched on by TLOAD1 51 and its table (a
+#     step at t = 0)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;159
+[case]
+TitleText;O_o_Reader validation: transient heat transfer (SORT2)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+DynamicLoadSelection;51
+NonlinearTimeStepSelection;61
+TemperatureSelection;2;InitialTemperature
+ThermalOutput;All;PlotOnly;SortByTime
+VelocityOutput;All;PlotOnly;SortByTime
+HeatFluxOutput;All;PlotOnly;SortByTime
+SinglePointConstrForceOutput;All;PlotOnly;SortByTime
+AppliedLoadOutput;All;PlotOnly;SortByTime
+SubcaseStart;1
+LabelText;heat load switched on at t = 0
+[model]
+# Output files: OUTPUT2 (PARAM,POST,-1) and the HDF5 database (double precision,
+# deflate filter).
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+TransientTableLoad1;51;1;;;;52
+TableDynamic1;52;;;0.;1.;1.E+3;1.;EndTable
+NonlinearTimeSteps;61;20;0.5;2
+Include;thermal_model.oos

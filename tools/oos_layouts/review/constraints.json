@@ -1,0 +1,142 @@
+{
+ "description": "Reviewed card layouts of the constraints family (src/model/cards/constraints).",
+ "cards": {
+  "AutoConstrExclusion": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "AutoConstrExclusionList": {"fields": [
+    {"name": "components", "slot": 1, "kind": "integer", "default": "0"}
+  ], "group": {"name": "nodes", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "CyclicAxisNodes": {"fields": [], "group": {"name": "nodes", "firstSlot": 1, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "CyclicBoundaryJoin": {"fields": [
+    {"name": "sideCode", "slot": 1, "kind": "integer"},
+    {"name": "system", "slot": 2, "kind": "text"}
+  ], "group": {"name": "nodes", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "CyclicSupport": {"fields": [
+    {"name": "nodeId", "slot": 1, "kind": "integer"},
+    {"name": "components", "slot": 2, "kind": "integer"}
+  ]},
+  "EnforcedMotionConstr": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "components1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "enforcedValue1", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "node2", "slot": 5, "kind": "integer"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "enforcedValue2", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "FreeBodySupport": {"fields": [], "group": {"name": "pairs", "firstSlot": 1, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "FreeBodySupportSet": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "components1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "node2", "slot": 4, "kind": "integer"},
+    {"name": "components2", "slot": 5, "kind": "integer", "default": "0"},
+    {"name": "node3", "slot": 6, "kind": "integer"},
+    {"name": "components3", "slot": 7, "kind": "integer", "default": "0"}
+  ], "group": {"name": "pairs", "firstSlot": 9, "period": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"}
+  ]}},
+  "GeomBoundaryCurve": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "startNode", "slot": 2, "kind": "integer"},
+    {"name": "endNode", "slot": 3, "kind": "integer"},
+    {"name": "entity", "slot": 9, "kind": "text"}
+  ], "group": {"name": "entityIds", "firstSlot": 10, "period": 1, "fields": [
+    {"name": "entityId", "offset": 0, "kind": "integer"}
+  ]}},
+  "GeomSinglePointConstr": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "components", "slot": 2, "kind": "integer"},
+    {"name": "entityType", "slot": 3, "kind": "text"},
+    {"name": "entityId", "slot": 4, "kind": "integer"}
+  ]},
+  "MultiPointConstr": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "terms", "firstSlot": 2, "period": 3, "perLine": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"},
+    {"name": "coefficient", "offset": 2, "kind": "real"}
+  ]}},
+  "MultiPointConstrAxisym": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "terms", "firstSlot": 5, "period": 4, "fields": [
+    {"name": "ringId", "offset": 0, "kind": "integer"},
+    {"name": "harmonicId", "offset": 1, "kind": "integer"},
+    {"name": "components", "offset": 2, "kind": "integer"},
+    {"name": "coefficient", "offset": 3, "kind": "real"}
+  ]}},
+  "MultiPointConstrUnion": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "memberSets", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "memberSetId", "offset": 0, "kind": "integer"}
+  ]}},
+  "MultiPointConstrValue": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "dependentNode1", "slot": 2, "kind": "integer"},
+    {"name": "dependentComponents1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "rightHandSide1", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "dependentNode2", "slot": 5, "kind": "integer"},
+    {"name": "dependentComponents2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "rightHandSide2", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "MultiPointConstrWithValue": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "dependentNode", "slot": 2, "kind": "integer"},
+    {"name": "dependentComponents", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "dependentCoefficient", "slot": 4, "kind": "real"},
+    {"name": "rightHandSide", "slot": 5, "kind": "real", "default": "0.0"}
+  ], "group": {"name": "terms", "firstSlot": 10, "period": 3, "perLine": 2, "fields": [
+    {"name": "node", "offset": 0, "kind": "integer"},
+    {"name": "components", "offset": 1, "kind": "integer"},
+    {"name": "coefficient", "offset": 2, "kind": "real"}
+  ]}},
+  "RelativeEnforcedMotionConstr": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "components1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "enforcedValue1", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "node2", "slot": 5, "kind": "integer"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "enforcedValue2", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "SinglePointConstr": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "node1", "slot": 2, "kind": "integer"},
+    {"name": "components1", "slot": 3, "kind": "integer", "default": "0"},
+    {"name": "enforcedValue1", "slot": 4, "kind": "real", "default": "0.0"},
+    {"name": "node2", "slot": 5, "kind": "integer"},
+    {"name": "components2", "slot": 6, "kind": "integer", "default": "0"},
+    {"name": "enforcedValue2", "slot": 7, "kind": "real", "default": "0.0"}
+  ]},
+  "SinglePointConstrAxisym": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "ringId", "slot": 2, "kind": "integer"},
+    {"name": "harmonicId", "slot": 3, "kind": "integer"},
+    {"name": "components", "slot": 4, "kind": "integer"},
+    {"name": "enforcedValue", "slot": 5, "kind": "real"}
+  ]},
+  "SinglePointConstrList": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"},
+    {"name": "components", "slot": 2, "kind": "integer"}
+  ], "group": {"name": "nodes", "firstSlot": 3, "period": 1, "fields": [
+    {"name": "node", "offset": 0, "kind": "any"}
+  ]}},
+  "SinglePointConstrUnion": {"fields": [
+    {"name": "id", "slot": 1, "kind": "integer"}
+  ], "group": {"name": "memberSets", "firstSlot": 2, "period": 1, "fields": [
+    {"name": "memberSetId", "offset": 0, "kind": "integer"}
+  ]}}
+ }
+}

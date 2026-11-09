@@ -1,0 +1,35 @@
+# Shared rotor model of rotordynamics/ (INCLUDEd): two steel shafts on
+# grounded bearings. Rotor 10: 4 CBEAM along x (0 to 400, radius 10) with a 2
+# kg disk (CONM2) at mid-span, grid points 1001 to 1005. Rotor 20: 2 CBEAM (x
+# 0 to 300 at y = 200, radius 8) with a 1 kg disk, grid points 2001 to 2003.
+# Bearings: grounded CBUSH at the shaft ends (axial and lateral stiffness,
+# lateral damping); SPC set 1 holds the torsion at one end of each shaft.
+# Units: mm, N, tonne, s.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+BeamProp;1;1;314.16;7853.98;7853.98;0.;15707.96
+Node;1001;;0.;0.;0.
+Node;1002;;100.;0.;0.
+Node;1003;;200.;0.;0.
+Node;1004;;300.;0.;0.
+Node;1005;;400.;0.;0.
+Beam2;1001;1;1001;1002;0.;;1.;0.
+Beam2;1002;1;1002;1003;0.;;1.;0.
+Beam2;1003;1;1003;1004;0.;;1.;0.
+Beam2;1004;1;1004;1005;0.;;1.;0.
+PointMassInertia;1010;1003;0;0.002;;;;2.5;0.;1.25;0.;0.;1.25
+BeamProp;2;1;201.06;3216.99;3216.99;0.;6433.98
+Node;2001;;0.;200.;0.
+Node;2002;;150.;200.;0.
+Node;2003;;300.;200.;0.
+Beam2;2001;2;2001;2002;0.;;1.;0.
+Beam2;2002;2;2002;2003;0.;;1.;0.
+PointMassInertia;2010;2002;0;0.001;;;;0.8;0.;0.4;0.;0.;0.4
+BushProp;3;Stiffness;1.E+3;1.E+4;1.E+4;;;;Damping;;1.;1.
+Bushing;3001;3;1001;;;;;;0
+Bushing;3002;3;1005;;;;;;0
+Bushing;3003;3;2001;;;;;;0
+Bushing;3004;3;2003;;;;;;0
+SinglePointConstrList;1;4;1001;2001
+# The rotor line models: the grid points of each shaft.
+RotorLineNodes;10;1001;Through;1005
+RotorLineNodes;20;2001;Through;2003

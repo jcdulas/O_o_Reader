@@ -1,0 +1,116 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: external aero mesh, blended splines (SOL 144)
+#
+# Covers:
+#   - cards: AEGRID AEQUAD4 AETRIA3 AESCALE SPLINE6 SPLINE7 SPLINRB SPBLND1
+#     SPBLND2 SPRELAX AEFORCE AEPARM UXVEC TRIM2
+#   - solution: SOL 144 (restrained static trim driven by user supplied force
+#     vectors on an external aerodynamic mesh: no aerodynamic theory runs on
+#     an AEGRID mesh, every load comes from AEFORCE and DMIK)
+#   - outputs: displacements, CQUAD4 stresses, trim variables (OUTPUT2)
+# Run notes:
+#   - the aerodynamic mesh is given in metres and scaled to mm by AESCALE;
+#     the wing mesh has three splines blended twice (strip based, then curve
+#     based), the flap mesh a rigid body spline relaxed near the wing
+#   - no AESTAT: the intercept load comes from the UXVEC with INTERCPT = 1
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;144
+[case]
+TitleText;O_o_Reader test model: external aero mesh, blended splines
+BulkEcho;None
+SinglePointConstrSelection;1
+TrimSelection;1
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+TrimLoadOutput;All;PlotOnly
+AeroForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;restrained trim on user force vectors
+[model]
+Parameter;PostprocessingFile;-1
+AeroStaticParams;;;200.;2.E+3;4.E+5;1
+Include;plate_wing.oos
+# External aerodynamic mesh, coordinates in metres, scale 1000 to mm.
+# Wing: component 1, 15 points and 8 quadrilaterals over the plate.
+AeroNodeScale;5000;1.E+3;1.E+3;1.E+3
+AeroNode;5001;;0.;0.;0.;;5000
+AeroNode;5002;;0.1;0.;0.;;5000
+AeroNode;5003;;0.2;0.;0.;;5000
+AeroNode;5004;;0.;0.25;0.;;5000
+AeroNode;5005;;0.1;0.25;0.;;5000
+AeroNode;5006;;0.2;0.25;0.;;5000
+AeroNode;5007;;0.;0.5;0.;;5000
+AeroNode;5008;;0.1;0.5;0.;;5000
+AeroNode;5009;;0.2;0.5;0.;;5000
+AeroNode;5010;;0.;0.75;0.;;5000
+AeroNode;5011;;0.1;0.75;0.;;5000
+AeroNode;5012;;0.2;0.75;0.;;5000
+AeroNode;5013;;0.;1.;0.;;5000
+AeroNode;5014;;0.1;1.;0.;;5000
+AeroNode;5015;;0.2;1.;0.;;5000
+AeroQuad4;6001;1;5001;5002;5005;5004
+AeroQuad4;6002;1;5002;5003;5006;5005
+AeroQuad4;6003;1;5004;5005;5008;5007
+AeroQuad4;6004;1;5005;5006;5009;5008
+AeroQuad4;6005;1;5007;5008;5011;5010
+AeroQuad4;6006;1;5008;5009;5012;5011
+AeroQuad4;6007;1;5010;5011;5014;5013
+AeroQuad4;6008;1;5011;5012;5015;5014
+# Flap: component 2 aft of the wing trailing edge, 6 points, 4 triangles.
+AeroNode;5101;;0.21;0.5;0.;;5000
+AeroNode;5102;;0.26;0.5;0.;;5000
+AeroNode;5103;;0.21;0.75;0.;;5000
+AeroNode;5104;;0.26;0.75;0.;;5000
+AeroNode;5105;;0.21;1.;0.;;5000
+AeroNode;5106;;0.26;1.;0.;;5000
+AeroTria3;6101;2;5101;5102;5104
+AeroTria3;6102;2;5101;5104;5103
+AeroTria3;6103;2;5103;5104;5106
+AeroTria3;6104;2;5103;5106;5105
+# Wing splines. Three splines on the same wing points: a finite beam spline
+# (SPLINE7, on the AEGRID list), a finite surface spline whose virtual surface
+# is the aero mesh (SPLINE6, on the AEQUAD4 list) and one whose virtual
+# surface is the structural CQUAD4 mesh (SPLINE6, translations only). 130 is
+# the weighted average of the first two, 140 blends 130 near the root curve
+# with the third one outboard.
+IdListSet1;112;1;Through;15
+AeroBoxList;111;5001;Through;5015
+AeroBoxList;126;6001;Through;6008
+AeroBoxList;127;1;Through;8
+RectFrame2;20;;100.;0.;0.;100.;0.;1.;200.;0.;0.
+AeroFiniteBeamSpline7;110;;111;112;0.;1.;20;Both;FiniteBeamSpline6
+AeroFiniteSurfaceSpline6;120;;126;112;0.;FiniteSurfaceSpline6;Both;AeroMesh;126
+AeroFiniteSurfaceSpline6;125;;126;112;0.;FiniteSurfaceSpline3;Both;Structure;127;3;3;VibrationSimple3
+AeroSplineStripBlend;130;110;120;WeightedAverage;0.5
+AeroBoxList;141;5001;5002;5003
+AeroSplineCurveBlend;140;130;125;Linear;141;400.;1.E+3
+# Flap spline: rigid body motion of the trailing edge grid point 12 (its six
+# components), relaxed over 100 mm from the wing trailing edge curve of 140.
+AeroBoxList;151;5101;Through;5106
+AeroRigidSpline;150;;151;Both;12;123456
+AeroBoxList;152;5009;5012;5015
+AeroSplineRelaxation;150;140;152;100.
+# User controllers on the external mesh. No AESTAT: the UXVEC 2001 carries
+# the intercept (base) load, the others the load of a unit controller.
+AeroController;2101;ALPHAU;RAD
+AeroController;2102;FLAPU;RAD
+AeroControlVector;2001;Intercept;1.
+AeroControlVector;2002;ALPHAU;1.;Intercept;0.
+AeroControlVector;2003;FLAPU;1.;Intercept;0.
+# Force vectors on the aerodynamic points (component 3), per unit dynamic
+# pressure (the AERO mesh option always multiplies by the dynamic pressure).
+AeroForceVector;0.5;Symmetric;Asymmetric;2001;AeroMesh;;BASEF
+AeroForceVector;0.5;Symmetric;Asymmetric;2002;AeroMesh;;ALPHF
+AeroForceVector;0.5;Symmetric;Asymmetric;2003;AeroMesh;;FLAPF
+DirectMatrixAeroK;BASEF;0;9;1;0;;1
+DirectMatrixAeroK;BASEF;1;1;5005;3;2500.;;5008;3;2500.;;5011;3;2500.;;5014;3;1250.
+DirectMatrixAeroK;ALPHF;0;9;1;0;;1
+DirectMatrixAeroK;ALPHF;1;1;5004;3;1.5E+5;;5007;3;1.5E+5;;5010;3;1.5E+5;;5013;3;7.5E+4
+DirectMatrixAeroK;ALPHF;1;1;5005;3;7.5E+4;;5008;3;7.5E+4;;5011;3;7.5E+4;;5014;3;3.8E+4
+DirectMatrixAeroK;FLAPF;0;9;1;0;;1
+DirectMatrixAeroK;FLAPF;1;1;5101;3;1.E+4;;5102;3;1.E+4;;5103;3;2.E+4;;5104;3;2.E+4;;5105;3;1.E+4;;5106;3;1.E+4
+# Trim: both controllers fixed (restrained model).
+AeroTrim2;1;0.5;2.E-4;;ALPHAU;0.02;FLAPU;0.05

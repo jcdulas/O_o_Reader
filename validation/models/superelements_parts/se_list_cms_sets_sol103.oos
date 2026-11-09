@@ -1,0 +1,119 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: list superelements with component mode synthesis sets
+#
+# Covers:
+#   - cards: SEBSET, SEBSET1, SECSET, SECSET1, SEQSET, SEQSET1, SESUP, SEUSET,
+#     SEUSET1, SEELT, SEQSEP (with SESET, CSUPER, SPOINT, EIGRL)
+#   - solution: SOL 103 (normal modes of a structure of main Bulk Data
+#     superelements, two of them reduced by component modes)
+#   - outputs: eigenvalues, eigenvectors of the residual structure
+# Run notes:
+#   - superelement 1 has a fixed and a free boundary, superelement 2 a free
+#     boundary with a determinate support (SESUP); superelement 4 is an image
+#     of 3 whose point order is given by SEQSEP
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;O_o_Reader test model: list superelements, component mode sets
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+SuperelementAllSteps;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;modes of the assembly
+[model]
+Parameter;PostprocessingFile;-1
+# Residual structure: a plate of 4 x 2 CQUAD4 at x 0 to 40, y 0 to 20,
+# clamped at x = 0. Units: mm, N, tonne, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+LanczosEigenMethod;1;;;8
+# Superelement 1: a plate of 2 x 2 CQUAD4 hanging below y = 0, exterior
+# points 2, 3 and 4. Point 4 is free during its component modes (SECSET),
+# 2 and 3 are fixed (SEBSET, SEBSET1); its generalized coordinates are the
+# scalar points 1001 to 1006 of the residual structure (SEQSET, SEQSET1).
+Node;101;;10.;-10.;0.
+Node;102;;20.;-10.;0.
+Node;103;;30.;-10.;0.
+Node;104;;10.;-20.;0.
+Node;105;;20.;-20.;0.
+Node;106;;30.;-20.;0.
+ShellQuad4;101;1;101;102;3;2
+ShellQuad4;102;1;102;103;4;3
+ShellQuad4;103;1;104;105;102;101
+ShellQuad4;104;1;105;106;103;102
+SuperelementInteriorNodes;1;101;Through;106
+SuperelementFixedDofSet;1;2;123456
+SuperelementFixedDofSet1;1;123456;3
+SuperelementFreeDofSet;1;4;123456
+ScalarPoint;1001;Through;1006
+SuperelementGeneralizedDofSet1;1;0;1001;Through;1005
+SuperelementGeneralizedDofSet;1;1006;0
+# A rod along the edge y = 0 joins exterior points of superelement 1 only:
+# it is a boundary element, given to superelement 1 by SEELT.
+RodProp;60;1;10.
+Rod2;60;60;2;4
+SuperelementElemTransfer;1;60
+# User sets of superelement 1 (no solution uses them; they are printed with
+# the sets of the superelement).
+SuperelementUserDofSet;1;U4;101;123456;102;3
+SuperelementUserDofSet1;1;U4;3;104;Through;106
+# Superelement 2: a plate of 2 x 2 CQUAD4 above y = 20, exterior points 12,
+# 13 and 14, all free during its component modes: 12 and 13 in the c-set
+# (SECSET1), 14 the determinate support of its free-body modes (SESUP).
+Node;201;;10.;30.;0.
+Node;202;;20.;30.;0.
+Node;203;;30.;30.;0.
+Node;204;;10.;40.;0.
+Node;205;;20.;40.;0.
+Node;206;;30.;40.;0.
+ShellQuad4;201;1;12;13;202;201
+ShellQuad4;202;1;13;14;203;202
+ShellQuad4;203;1;201;202;205;204
+ShellQuad4;204;1;202;203;206;205
+SuperelementInteriorNodes;2;201;Through;206
+SuperelementFreeDofSet1;2;123456;12;13
+SuperelementSupport;2;14;123456
+ScalarPoint;2001;Through;2008
+SuperelementGeneralizedDofSet1;2;0;2001;Through;2008
+# Superelement 3: a plate of 2 x 1 CQUAD4 at x 40 to 60, y 0 to 10, exterior
+# points 5 and 10 (static reduction only). Superelement 4 is an identical
+# image of 3 at y 10 to 20, joined at 10 and 15: SEQSEP says that 10 and 15
+# stand for the exterior points 5 and 10 of superelement 3.
+Node;301;;50.;0.;0.
+Node;302;;60.;0.;0.
+Node;303;;50.;10.;0.
+Node;304;;60.;10.;0.
+ShellQuad4;301;1;5;301;303;10
+ShellQuad4;302;1;301;302;304;303
+SuperelementInteriorNodes;3;301;Through;304
+SuperelementCopyPoints;4;3;10;15
+SuperelementCopySequence;4;3;5;10

@@ -1,0 +1,37 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: nonlinear transient with large displacements
+#
+# Covers:
+#   - cards: TLOAD2, TIC (in a nonlinear transient)
+#   - solution: SOL 129 (nonlinear transient response)
+#   - outputs: displacements, velocities: real, SORT1
+# Run notes:
+#   - a 20 N step load (TLOAD2 with a zero frequency) on the free corner with
+#     large displacements (PARAM,LGDISP,1) and an initial velocity (TIC); 100
+#     steps of 0.5 ms (TSTEPNL)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;129
+[case]
+TitleText;O_o_Reader test model: nonlinear transient
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;51
+NonlinearTimeStepSelection;61
+InitialConditionSelection;81
+DisplacementOutput;All;PlotOnly
+VelocityOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;step load on the free corner, large displacements
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;LargeDisplacements;1
+# TLOAD2 51: load set 2 (20 N along z at the corner) held constant from 0 to
+# 0.05 s.
+TransientFormulaLoad2;51;2;;;Load;0.;0.05;0.;0.
+PointForceLoad;2;15;0;20.;0.;0.;1.
+NonlinearTimeSteps;61;100;5.E-4;1
+TransientInitialCondition;81;15;3;0.;20.
+Include;plate_model.oos

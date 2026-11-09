@@ -1,0 +1,83 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: hydrostatic load of a fluid cavity driven through
+# LSEQ (SOL 108)
+#
+# Covers:
+#   - cards: LSEQ (LOADSET), HYDROC (fluid cavity load on the wetted plate)
+#   - solution: SOL 108 (direct frequency response of a coupled
+#     fluid-structure model)
+#   - outputs: displacements (structure) and pressures (fluid grid points),
+#     applied loads, complex real/imaginary
+# Run notes:
+#   - the static load set of HYDROC is turned into the dynamic excitation by
+#     LOADSET = 100 and LSEQ 100 (EXCITEID 200 of RLOAD1)
+#   - the fluid-structure coupling is the default one (no ACMODL entry)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader test model: LSEQ and HYDROC in frequency response
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+LoadSequenceSelection;100
+DynamicLoadSelection;21
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+AppliedLoadOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;harmonic hydrostatic pressure on the cavity floor
+[model]
+Parameter;PostprocessingFile;-1
+# Floor plate (aluminium, 2 mm), 2 x 2 CQUAD4 on z = 0, clamped edges.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Node;4;;0.;100.;0.
+Node;5;;100.;100.;0.
+Node;6;;200.;100.;0.
+Node;7;;0.;200.;0.
+Node;8;;100.;200.;0.
+Node;9;;200.;200.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+ShellQuad4;3;1;4;5;8;7
+ShellQuad4;4;1;5;6;9;8
+SinglePointConstrList;1;123456;1;2;3;4;6;7;8;9
+# Water cavity 200 x 200 x 100 above the plate: 2 x 2 fluid CHEXA (PSOLID
+# 2, the cavity of HYDROC), fluid grid points with CD = -1.
+FluidMat;2;2200.;1.E-9
+SolidProp;2;2;;;;;PressureFluid
+Node;101;;0.;0.;0.;-1
+Node;102;;100.;0.;0.;-1
+Node;103;;200.;0.;0.;-1
+Node;104;;0.;100.;0.;-1
+Node;105;;100.;100.;0.;-1
+Node;106;;200.;100.;0.;-1
+Node;107;;0.;200.;0.;-1
+Node;108;;100.;200.;0.;-1
+Node;109;;200.;200.;0.;-1
+Node;110;;0.;0.;100.;-1
+Node;111;;100.;0.;100.;-1
+Node;112;;200.;0.;100.;-1
+Node;113;;0.;100.;100.;-1
+Node;114;;100.;100.;100.;-1
+Node;115;;200.;100.;100.;-1
+Node;116;;0.;200.;100.;-1
+Node;117;;100.;200.;100.;-1
+Node;118;;200.;200.;100.;-1
+SolidHexa;101;2;101;102;105;104;110;111;114;113
+SolidHexa;102;2;102;103;106;105;111;112;115;114
+SolidHexa;103;2;104;105;108;107;113;114;117;116
+SolidHexa;104;2;105;106;109;108;114;115;118;117
+# Static load set 301: hydrostatic pressure of the full cavity (bottom at
+# z = 0, fluid height 100, gravity 9810 mm/s2 along -z of the basic system).
+HydrostaticCavityLoad;301;2;0.;9810.;;;;0;0.;100.
+# LOADSET 100: load set 301 is the static vector of EXCITEID 200.
+StaticLoadSequence;100;200;301
+FreqResponseLoad1;21;200;;;;;31
+TableDynamic1;31;;;0.;1.;1.E+3;1.;EndTable
+FreqLinearSteps1;41;20.;50.;10

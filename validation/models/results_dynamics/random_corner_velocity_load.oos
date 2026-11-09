@@ -1,0 +1,45 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: random response at the corners, velocities, loads
+#
+# Covers:
+#   - solution: SOL 111 (modal frequency response) with a random analysis
+#     (RANDPS, TABRND1) of the shared element model of
+#     common/elements_model.inc
+#   - outputs: the random tables (PSDF, ATOC, CRMS, RMS, number of zero
+#     crossings) of the velocities and the applied loads, and of the stresses,
+#     strains and forces at the corners of CQUAD4 (type 144), CQUADR (82) and
+#     CTRIAR (70), in SORT1 and SORT2 as the solver writes the random tables
+# Run notes:
+#   - the corner twin of results_dynamics/random_psd_rms.bdf
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;O_o_Reader test model: random response at the corners
+BulkEcho;None
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+EigenMethodSelection;71
+ModalDampingSelection;72
+DynamicLoadSelection;21
+FreqSetSelection;41
+RandomAnalysisSelection;91
+VelocityOutput;All;PlotOnly;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint
+AppliedLoadOutput;All;PlotOnly;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint
+StressOutput;All;PlotOnly;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint;CornerResults
+StrainOutput;All;PlotOnly;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint;FiberDistance;CornerResults
+ElemForceOutput;All;PlotOnly;SpectralDensityFunction;AutocorrelationFunction;CumulativeRootMeanSquare;AllRandomResults;RandomPrint;CornerResults
+SubcaseStart;1
+LabelText;unit load spectrum on load set 1
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;71;;;12
+FreqLinearSteps1;41;5.;5.;40
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+TableModalDamping1;72;CriticalDamping;0.;0.02;2.E+3;0.02;EndTable
+RandomSpectralDensity;91;1;1;1.;0.;92
+TableRandomSpectrum1;92;;;1.;1.;2.E+3;1.;EndTable
+Include;../common/elements_model.oos

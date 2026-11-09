@@ -1,0 +1,41 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: Campbell diagram of two rotors (SOL 107)
+#
+# Covers:
+#   - cards: ROTORG, RSPINR, RGYRO, REFROT, CAMPBLL
+#   - solution: SOL 107 (direct complex eigenvalues with gyroscopic effects)
+#   - outputs: eigenvectors: complex real/imaginary, SORT1
+# Run notes:
+#   - RGYRO = 100: asynchronous analysis, reference rotor 10 at 3000 rpm;
+#     REFROT 100 makes rotor 10 the reference of rotor 20, which spins twice
+#     as fast (RSPINR relative rates 1 and 2)
+#   - CAMPBELL = 15: the reference speed takes the values of DDVAL 16 (0 to
+#     5000 rpm), with mode tracking by both methods; the tracked frequencies
+#     can also go to OP4 files (format reference, CAMPBLL remarks)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;107
+[case]
+TitleText;O_o_Reader test model: Campbell diagram of two rotors
+BulkEcho;None
+SinglePointConstrSelection;1
+ComplexEigenMethodSelection;40
+RotordynamicSelection;100
+CampbellDiagramSelection;15
+DisplacementOutput;All;PlotOnly;RealPart
+SubcaseStart;1
+LabelText;whirl modes against the rotor speed
+[model]
+Parameter;PostprocessingFile;-1
+ComplexEigenMethod;40;HessenbergMethod;;;;;12
+# Spin: relative rates of the two rotors, positive from the first to the last
+# grid point.
+RotorRelativeSpin;10;1001;1005;RevolutionsPerMinute;;1.
+RotorRelativeSpin;20;2001;2003;RevolutionsPerMinute;;2.
+RotordynamicParams;100;AsynchronousWhirl;10;RevolutionsPerMinute;;;3.E+3
+ReferenceRotor;100;10;20
+CampbellDiagram;15;Speed;16;RevolutionsPerMinute;1;0.7;1;4;0
+DesignDiscreteValues;16;0.;1.E+3;2.E+3;3.E+3;4.E+3;5.E+3
+Include;rotor_line_model.oos

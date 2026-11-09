@@ -1,0 +1,37 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: transient heat transfer (SOL 159), SORT1
+#
+# Covers:
+#   - solution: SOL 159 (transient heat transfer) of the shared model of
+#     thermal_model.inc
+#   - outputs: the SORT1 temperatures, temperature rates (VELOCITY of a heat
+#     transfer run: OUGV1 and NODAL/VELOCITY), heat fluxes, heat flows, the
+#     heat flow at the constrained points and the thermal loads
+# Run notes:
+#   - the SORT1 twin of thermal_transient_sol159_sort2.bdf
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;159
+[case]
+TitleText;O_o_Reader test model: transient heat transfer (SORT1)
+BulkEcho;None
+SinglePointConstrSelection;1
+DynamicLoadSelection;51
+NonlinearTimeStepSelection;61
+TemperatureSelection;2;InitialTemperature
+ThermalOutput;All;PlotOnly;SortByPoint
+VelocityOutput;All;PlotOnly;SortByPoint
+HeatFluxOutput;All;PlotOnly;SortByPoint
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint
+AppliedLoadOutput;All;PlotOnly;SortByPoint
+SubcaseStart;1
+LabelText;heat load switched on at t = 0
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+TransientTableLoad1;51;1;;;;52
+TableDynamic1;52;;;0.;1.;1.E+3;1.;EndTable
+NonlinearTimeSteps;61;10;0.5;2
+Include;thermal_model.oos

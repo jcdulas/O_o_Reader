@@ -1,0 +1,78 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: Bulk Data echo control, metadata and HDF5 output settings (SOL 101)
+#
+# Covers:
+#   - cards: ECHOON ECHOOFF METADATA H5OUT HDF5DA UDNAME (with BEGIN MODULE
+#     and MDBULK)
+#   - solution: SOL 101 (static bending of a plate of two modules)
+#   - outputs: displacements, SPC forces, CQUAD4 stresses and forces (OUTPUT2
+#     and HDF5); METADATA is written to the OUTPUT2 file
+# Run notes:
+#   - the unsorted echo of the listing shows the Bulk Data between ECHOON and
+#     ECHOOFF only (ECHO = UNSORT, as the ECHOON entry recommends)
+#   - the plate is module 0 (the main Bulk Data) and module 1 (BEGIN
+#     MODULE=1, found on the edge x = 100 by MDBULK AUTO); H5OUT sets the
+#     HDF5 output of module 0 and the HDF5DA request with its HDF5DA entry
+#     sends each module to a dedicated file (module0-dedicated.h5,
+#     module1-dedicated.h5): bring back every .h5 the run writes
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: echo control, metadata, HDF5 settings
+BulkEcho;Unsorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+ResultFileModulesOutput;17
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+ElemForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;loads on a cantilever plate of two modules
+[model]
+Parameter;PostprocessingFile;-1
+# HDF5 output, and the settings of module 0 (the main Bulk Data): write
+# GEOM3 and GEOM4. HDF5DA 17 sends module 0 to its own file (UDNAME 100).
+ResultFileParams;Precision;64
+ModuleResultFileParams;0;LoadConstraintTables;1
+ResultFileModules;17;0;0;100;1;101
+UserFileName;100;module0-dedicated.h5
+UserFileName;101;module1-dedicated.h5
+# Module 1 continues the plate from x = 100 to 200; its boundary with module
+# 0 is searched by position.
+ModuleBulkOptions;1;;;Automatic
+# Free text that travels with the model to the OUTPUT2 file.
+ResultMetadata;plate_metadata;O_o_Reader test model of the solution control cards;units mm N t s and an aluminium plate 2 mm thick
+# The mesh is not echoed: echo off before it, on again after it.
+EchoOffMarker
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;0.;50.;0.
+Node;5;;50.;50.;0.
+Node;6;;100.;50.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+EchoOnMarker
+SinglePointConstrList;1;123456;1;4
+PointForceLoad;1;3;0;10.;0.;0.;1.
+PointForceLoad;1;6;0;10.;0.;0.;1.
+[model;ModuleSection;1]
+# Module 1: two CQUAD4 at x 100 to 200, loaded at their free edge.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;101;;100.;0.;0.
+Node;102;;150.;0.;0.
+Node;103;;200.;0.;0.
+Node;104;;100.;50.;0.
+Node;105;;150.;50.;0.
+Node;106;;200.;50.;0.
+ShellQuad4;101;1;101;102;105;104
+ShellQuad4;102;1;102;103;106;105
+PointForceLoad;1;103;0;10.;0.;0.;1.
+PointForceLoad;1;106;0;10.;0.;0.;1.

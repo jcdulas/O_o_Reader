@@ -1,0 +1,75 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: external design response (SOL 200, read-only)
+#
+# Covers:
+#   - cards: DRESP3
+#   - solution: SOL 200 (minimum weight of a compressed panel with a
+#     buckling margin computed by an external response routine)
+#   - outputs: none (not run)
+# Run notes:
+#   - read-only: DRESP3 is evaluated by the user-written response server
+#     EXTBUCK of group PANEL (CONNECT DRESP3), which must be built and
+#     configured with the solver installation; the project has none
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;200
+[case]
+TitleText;O_o_Reader test model: external response (read-only)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DesignObjectiveSelection;31;MinimumObjective
+AnalysisKind;Statics
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;axial compression of the panel
+SubcaseDesignConstrSelection;40
+[model]
+Parameter;PostprocessingFile;-1
+# An aluminium panel 200 x 100 mm, 4 x 2 CQUAD4, clamped at x = 0 and
+# compressed along x at x = 200. Units: mm, N, t, s.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;50.;0.;0.
+Node;3;;100.;0.;0.
+Node;4;;150.;0.;0.
+Node;5;;200.;0.;0.
+Node;6;;0.;50.;0.
+Node;7;;50.;50.;0.
+Node;8;;100.;50.;0.
+Node;9;;150.;50.;0.
+Node;10;;200.;50.;0.
+Node;11;;0.;100.;0.
+Node;12;;50.;100.;0.
+Node;13;;100.;100.;0.
+Node;14;;150.;100.;0.
+Node;15;;200.;100.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+SinglePointConstrList;1;3;5;10;15
+PointForceLoad;1;5;0;500.;-1.;0.;0.
+PointForceLoad;1;10;0;1.E+3;-1.;0.;0.
+PointForceLoad;1;15;0;500.;-1.;0.;0.
+# Design: the panel thickness.
+DesignVar;1;THICK;2.;1.;5.
+DesignPropRelation1;11;ShellProp;1;thickness;1.;5.;;1;1.
+# Responses: the weight (objective), the membrane stress of the panel and
+# a buckling margin that the external routine BUCK of group PANEL computes
+# from the thickness, the constants of DTABLE, the stresses, the axial
+# motion of the loaded edge and the thickness relation.
+DesignConstants;EMOD;7.E+4;PLEN;200.;PWID;100.
+DesignResp1;31;WEIGHT;Weight
+DesignResp1;32;SXX;Stress;ShellProp;;3;;1
+DesignResp3;33;BUCKMRG;PANEL;BUCK;;DesignVar;1;1;DesignConstants;3;EMOD;PLEN;PWID;DesignResp1;1;32;DesignNodes;1;10;1;DesignPropRelation1;1;11;UserData;1;simply supported edges along y
+DesignConstr;40;33;1.

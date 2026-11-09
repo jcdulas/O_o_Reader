@@ -1,0 +1,48 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: modal frequency response with von Mises output (SOL 111)
+#
+# Validates:
+#   - the von Mises tables of a frequency response (OESVM1, OSTRVM1, OESVM1C,
+#     OSTRVM1C) of plates, laminates and solids, real/imaginary and
+#     magnitude/phase
+#   - the complex ply tables of the laminates (OES1C/OSTR1C, complex)
+#   - modal damping (SDAMPING, TABDMP1)
+# Settles (library item: current status):
+#   - the 'modal contribution' lines of stress and strain (not_validated;
+#     the plates, laminates and solids are raw today)
+#   - the complex ply layout of the composite elements (decoded with no
+#     reference)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;modal frequency response, von Mises tables
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+EigenMethodSelection;71
+ModalDampingSelection;72
+DynamicLoadSelection;21
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;real and imaginary parts, von Mises
+StressOutput;All;PlotOnly;RealPart;VonMisesStress
+StrainOutput;All;PlotOnly;RealPart;VonMisesStress;FiberDistance
+SubcaseStart;2
+LabelText;magnitude and phase, von Mises
+StressOutput;All;PlotOnly;MagnitudePhase;VonMisesStress
+StrainOutput;All;PlotOnly;MagnitudePhase;VonMisesStress;FiberDistance
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+LanczosEigenMethod;71;;;12
+FreqLinearSteps1;41;5.;5.;40
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+TableModalDamping1;72;CriticalDamping;0.;0.02;2.E+3;0.02;EndTable
+Include;../common/elements_model.oos

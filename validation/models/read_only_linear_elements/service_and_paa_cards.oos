@@ -1,0 +1,44 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: ROMAC bearing service and PAA grid (read only)
+#
+# Covers:
+#   - cards: THPAD, GRIDA (with ELEMUDS, CBUSH2D, PBUSH2D, CELAS2)
+#   - solution: SOL 101 (written as a static deck; not run)
+#   - outputs: none: the deck is read and written by O_o_Reader only
+# Run notes:
+#   - read only: THPAD only works through ROMAC's THPAD user-defined service
+#     (CONNECT SERVICE in the FMS, a service library from the University of
+#     Virginia that the solver does not ship), and GRIDA only exists in the
+#     COMBINE step of a PAA (part assembly) run, which needs the part
+#     databases of earlier PAA runs and a workflow the format reference does not describe
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;ROMAC bearing service and PAA grid (read only)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;read only
+[model]
+Parameter;PostprocessingFile;-1
+# A tilting pad bearing (CBUSH2D 1 on PBUSH2D 21) whose properties ELEMUDS 21
+# hands to the THPAD service of group GR1; THPAD 21 holds the bearing data
+# (inch, pound, degrees F, as the service expects).
+Node;1;;0.;0.;0.
+Node;2;;0.;0.;0.
+Bushing2D;1;21;1;2;0;PlaneXy
+BushProp2D;21;1.E+5;1.E+5
+UserElemService;21;BushProp2D;GR1;THPAD;Frequency
+TiltingPadBearingProp;21;600.;BRG1;LOADPAD;2.;0.004;3.;2.5;3.1E+7;6.E-6;7.E-6;8.E-6;2;20;0;60.;0.5;0.3;90.;0.001;0.;0.;0.;60.;0.5;0.3;270.;0.001;0.;0.;0.;2.E-6;6.7E-4;120.;160.;0.;150.;5.;0.;8.E-5;180.;100.;4.1E-6;210.;6.8E-7;1.;75.;0.001;0.2;0.2;2.;100.;100.;0;2;1;0;0;0;0;1;0;2;0;0;0;0.;0.;100.;0.;1;100;100;3.E+3;0.;500.;1.;1.;0.;1.
+# An associative grid of the COMBINE step: GRIDA 101 stands for grid 1000 of
+# the part LEFT_WING_TANK and is tied to grid 2 by a scalar spring.
+AssociativeNode;101;1000;LEFT_WING_TANK
+SpringDofInline;3;1.E+3;2;1;101;1
+SinglePointConstrList;1;123456;1
+SinglePointConstrList;1;3456;2
+PointForceLoad;1;2;;10.;1.;0.;0.

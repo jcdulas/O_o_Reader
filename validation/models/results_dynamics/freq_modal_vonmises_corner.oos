@@ -1,0 +1,44 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: modal frequency response, von Mises at the corners
+#
+# Covers:
+#   - solution: SOL 111 (modal frequency response) of the shared element
+#     model of common/elements_model.inc
+#   - outputs: the complex von Mises tables (OESVM1, OSTRVM1: the library's
+#     'modal contribution' form) at the corners of CQUAD4 (type 144), CQUADR
+#     (type 82) and CTRIAR (type 70), and of the plies of the laminates, in
+#     both complex forms
+# Run notes:
+#   - the corner twin of results_dynamics/freq_modal_vonmises.bdf
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;modal frequency response, von Mises at corners
+BulkEcho;None
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+EigenMethodSelection;71
+ModalDampingSelection;72
+DynamicLoadSelection;21
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;real and imaginary parts, corners
+StressOutput;All;PlotOnly;RealPart;VonMisesStress;CornerResults
+StrainOutput;All;PlotOnly;RealPart;VonMisesStress;FiberDistance;CornerResults
+SubcaseStart;2
+LabelText;magnitude and phase, corners
+StressOutput;All;PlotOnly;MagnitudePhase;VonMisesStress;CornerResults
+StrainOutput;All;PlotOnly;MagnitudePhase;VonMisesStress;FiberDistance;CornerResults
+[model]
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+LanczosEigenMethod;71;;;12
+FreqLinearSteps1;41;5.;5.;40
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+TableModalDamping1;72;CriticalDamping;0.;0.02;2.E+3;0.02;EndTable
+Include;../common/elements_model.oos

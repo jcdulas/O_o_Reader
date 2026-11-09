@@ -1,0 +1,65 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: direct frequency response (SOL 108), SORT1
+#
+# Validates:
+#   - the complex SORT1 tables, real/imaginary (subcase 1) and magnitude/phase
+#     (subcase 2), of every family of the shared model: nodal (displacement,
+#     velocity, acceleration, SPC, MPC, applied loads) and element (stress,
+#     strain, force of springs, dampers, rods, bars, beams, bends, shells,
+#     laminates, solids, bushes, fasteners, welds)
+#   - complex grid point forces (the complex cuts of section_cut)
+#   - the HDF5 *_CPLX datasets of the same run (OUTPUT2 twin)
+# Settles (library item: current status):
+#   - the not_validated complex SORT1 lines
+#     (stress/strain/forces of cbush1d, celas*, cfast, cweld, cpyram, cquadr,
+#     ctriar, the laminates, cshear, ctriax6; nodal complex SORT2 lines)
+#   - HDF5: every *_CPLX dataset (not_validated -> validated)
+#   - complex cuts (not validated against the solver)
+# Run notes:
+#   - direct frequency response: structural damping from MAT1 GE and PARAM,G;
+#     dampers, CVISC and CBUSH B
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;108
+[case]
+TitleText;O_o_Reader validation: direct frequency response (SORT1)
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+MultiPointConstrSelection;50
+DynamicLoadSelection;21
+FreqSetSelection;41
+NodeForceOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;real and imaginary parts
+DisplacementOutput;All;PlotOnly;SortByPoint;RealPart
+VelocityOutput;All;PlotOnly;SortByPoint;RealPart
+AccelOutput;All;PlotOnly;SortByPoint;RealPart
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint;RealPart
+MultiPointConstrForceOutput;All;PlotOnly;SortByPoint;RealPart
+AppliedLoadOutput;All;PlotOnly;SortByPoint;RealPart
+StressOutput;All;PlotOnly;SortByPoint;RealPart;CornerResults
+StrainOutput;All;PlotOnly;SortByPoint;RealPart;FiberDistance;CornerResults
+ElemForceOutput;All;PlotOnly;SortByPoint;RealPart;CornerResults
+SubcaseStart;2
+LabelText;magnitude and phase
+DisplacementOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+VelocityOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+AccelOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+SinglePointConstrForceOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+MultiPointConstrForceOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+AppliedLoadOutput;All;PlotOnly;SortByPoint;MagnitudePhase
+StressOutput;All;PlotOnly;SortByPoint;MagnitudePhase;CornerResults
+StrainOutput;All;PlotOnly;SortByPoint;MagnitudePhase;FiberDistance;CornerResults
+ElemForceOutput;All;PlotOnly;SortByPoint;MagnitudePhase;CornerResults
+[model]
+# Output files: the OUTPUT2 file (PARAM,POST,-1, with the geometry) and the HDF5
+# database in double precision with the deflate (GZIP) filter.
+Parameter;PostprocessingFile;-1
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+Parameter;UniformStructuralDamping;0.02
+FreqLinearSteps1;41;5.;5.;40
+TableDynamic1;31;;;0.;1.;2.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+Include;../common/elements_model.oos

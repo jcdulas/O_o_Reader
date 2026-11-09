@@ -1,0 +1,90 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: general element, masses, non-structural mass
+#
+# Covers:
+#   - cards: GENEL, CONM1, CMASS3, NSM, NSM1, NSML, NSML1, NSMADD, PLOTEL,
+#     PLTSURF (with PMASS, CELAS3, SPOINT, CQUAD4, CBAR, EIGRL)
+#   - solution: SOL 103 (real eigenvalues, Lanczos)
+#   - outputs: eigenvalues, eigenvectors (OUTPUT2); the mass summary of ELSUM and
+#     of PARAM,GRDPNT (listing)
+# Run notes:
+#   - the Case Control NSM = 20 selects NSMADD 20, the sum of the four
+#     non-structural mass sets
+#   - PLOTEL and PLTSURF carry no stiffness and no mass: they only draw lines
+#     and a face
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;103
+[case]
+TitleText;general element, masses, non-structural mass
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+EigenMethodSelection;1
+NonStructMassSelection;20
+ElemSummaryOutput;All
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;normal modes
+[model]
+Parameter;PostprocessingFile;-1
+Parameter;WeightReferenceNode;0
+# Units: mm, N, tonne, s. Steel (MAT1 1).
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+LanczosEigenMethod;1;;;12
+# Region 1: a GENEL in the stiffness form ties the three translations of grid
+# 102 (UI list) to the six components of the clamped grid 101 (UD list, S
+# computed by the solver). A CONM1 gives grid 102 its 6 x 6 mass matrix
+# (diagonal here); its rotations are in GRID PS.
+Node;101;;0.;0.;0.
+Node;102;;100.;0.;0.;;456
+GeneralMatrix;103;3;102;1;102;2;102;3;DependentDofs;6;101;1;101;2;101;3;101;4;101;5;101;6;Stiffness;6;1.E+3;0.;0.;2.E+3;0.;3.E+3
+PointMassMatrix;104;102;;0.001;0.;0.001;0.;0.;0.001;0.;0.;0.;1.;0.;0.;0.;0.;1.;0.;0.;0.;0.;0.;1.
+# Region 2: two scalar points; CELAS3 203 grounds point 201, CELAS3 204 joins
+# points 201 and 202; CMASS3 201 grounds a mass on point 201, CMASS3 202
+# couples points 201 and 202 (PMASS 21 and 22).
+ScalarPoint;201;202
+SpringProp;23;1.E+3
+SpringScalarProperty;203;23;201
+SpringScalarProperty;204;23;201;202
+MassProp;21;0.001;22;5.E-4
+MassScalarProperty;201;21;201
+MassScalarProperty;202;22;201;202
+# Region 3: a 100 x 100 plate of four CQUAD4 (PSHELL 31, 2 mm) clamped along x
+# = 0, and a two-element CBAR (PBAR 32) clamped at x = 0. Non-structural mass:
+# NSM 10 on PSHELL 31, NSM1 11 on elements 301 and 302, NSML 12 spread over
+# the bars of PBAR 32, NSML1 13 spread over elements 303 and 304; NSMADD 20
+# sums the four sets.
+ShellProp;31;1;2.;1
+Node;301;;0.;200.;0.
+Node;302;;50.;200.;0.
+Node;303;;100.;200.;0.
+Node;304;;0.;250.;0.
+Node;305;;50.;250.;0.
+Node;306;;100.;250.;0.
+Node;307;;0.;300.;0.
+Node;308;;50.;300.;0.
+Node;309;;100.;300.;0.
+ShellQuad4;301;31;301;302;305;304
+ShellQuad4;302;31;302;303;306;305
+ShellQuad4;303;31;304;305;308;307
+ShellQuad4;304;31;305;306;309;308
+BarProp;32;1;200.;1667.;6667.;4577.
+Node;321;;0.;400.;0.
+Node;322;;100.;400.;0.
+Node;323;;200.;400.;0.
+Bar2;321;32;321;322;0.;;0.;1.
+Bar2;322;32;322;323;0.;;0.;1.
+NonStructMass;10;ShellProp;31;5.E-9
+NonStructMass1;11;Element;2.E-9;301;302
+NonStructMassLumped;12;BarProp;32;1.E-4
+NonStructMassLumped1;13;Element;1.E-4;303;304
+NonStructMassUnion;20;10;11;12;13
+# Plot-only elements: a PLOTEL from the plate corner 309 to the bar tip 323,
+# and a PLTSURF face over the plate corners.
+PlotLine2;391;309;323
+PlotSurface;392;301;303;309;307
+# Constraints: SPC set 1 clamps grid 101 (the UD side of the GENEL), the plate
+# edge x = 0 and the root of the bar.
+SinglePointConstrList;1;123456;101;301;304;307;321

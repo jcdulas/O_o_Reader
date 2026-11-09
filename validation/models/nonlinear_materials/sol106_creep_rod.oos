@@ -1,0 +1,49 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: creep of a rod from an empirical creep law (SOL 106)
+#
+# Covers:
+#   - cards: CREEP (with MAT1 CROD PROD NLPARM)
+#   - solution: SOL 106 (nonlinear static: the static solution at t = 0,
+#     then 100 hours of creep under the same load)
+#   - outputs: displacements, SPC forces, nonlinear rod stresses
+# Run notes:
+#   - the creep law is of type 112 (CRLAW); times are in hours
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;106
+[case]
+TitleText;O_o_Reader test model: creep of a rod (SOL 106)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SinglePointConstrForceOutput;All;PlotOnly
+StressOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;static solution at t = 0
+NonlinearStaticParamsSelection;1
+SubcaseStart;2
+LabelText;creep over 100 hours
+NonlinearStaticParamsSelection;2
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, hour, MPa. A steel rod of two CROD, 10 mm2, clamped at
+# one end and pulled along its axis (100 MPa).
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+# Creep law of type 112: A = a*s**b, R = c*s**d, K = e*exp(f*s).
+CreepMat;1;;;CreepLaw;;;;;112;1.E-9;2.;1.E-4;1.;1.E-9;0.01
+RodProp;1;1;10.
+Node;1;;0.;0.;0.
+Node;2;;100.;0.;0.
+Node;3;;200.;0.;0.
+Rod2;1;1;1;2
+Rod2;2;1;2;3
+SinglePointConstrList;1;123456;1
+SinglePointConstrList;1;23456;2;3
+PointForceLoad;1;3;;1.E+3;1.;0.;0.
+# Subcase 1: two increments with no time step; subcase 2: ten steps of
+# 10 hours of creep.
+NonlinearStaticParams;1;2;0.
+NonlinearStaticParams;2;10;10.;Iterative;1

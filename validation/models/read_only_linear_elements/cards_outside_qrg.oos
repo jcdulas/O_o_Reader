@@ -1,0 +1,70 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: cards the 2024.1 format reference does not describe (read only)
+#
+# Covers:
+#   - cards: PLOTEL3, PLOTEL4, CGEN, GMSPC, MAT11, MATT11 (with CQUAD4, CHEXA,
+#     PSHELL, PSOLID, MAT1, TABLEM1)
+#   - solution: SOL 101 (written as a static deck; not run)
+#   - outputs: none: the deck is read and written by O_o_Reader only
+# Run notes:
+#   - read only: no entry of the format reference describes these six
+#     cards (PLOTEL3, PLOTEL4 and CGEN are typed from other decks and the solver
+#     practice; GMSPC is only named in the degree-of-freedom set table and its
+#     FEFACE/GMCURV targets are not 2024.1 entries; MAT11 and MATT11 have no
+#     format reference page), so no runnable 2024.1 deck can be written from the format reference for
+#     them
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader test model: cards outside the 2024.1 QRG (read only)
+BulkEcho;None
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;read only
+[model]
+Parameter;PostprocessingFile;-1
+# Units: mm, N, tonne, s. A plate of two CQUAD4 (steel) clamped along x = 0.
+IsoMat;1;2.1E+5;;0.3;7.85E-9
+ShellProp;1;1;2.;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;0.;10.;0.
+Node;5;;10.;10.;0.
+Node;6;;20.;10.;0.
+ShellQuad4;1;1;1;2;5;4
+ShellQuad4;2;1;2;3;6;5
+# Plot elements with three and four points over the plate.
+PlotTria3;11;1;2;5
+PlotQuad4;12;2;3;6;5
+# A generated-element request of the old mesh generator (QUAD4 elements from
+# field 31 with PSHELL 1).
+ElemGeneration;Quad4;21;1;31
+# A geometric constraint on a face entity (component 3 of FEFACE 1001).
+GeomSinglePointConstr;2;3;ElementFace;1001
+# A solid orthotropic material MAT11 2 with its temperature tables MATT11 (E1,
+# E2, E3 from TABLEM1 41), one CHEXA on PSOLID 2 resting on the plate side x =
+# 20.
+OrthoMat3D;2;1.35E+5;9.E+3;9.E+3;0.3;0.3;0.4;5.E+3;5.E+3;3500.;1.6E-9
+OrthoMat3DTemperature;2;41;41;41
+TableMaterial1;41;;;20.;1.35E+5;220.;1.2E+5;EndTable
+SolidProp;2;2
+Node;11;;30.;0.;0.;;456
+Node;12;;40.;0.;0.;;456
+Node;13;;40.;10.;0.;;456
+Node;14;;30.;10.;0.;;456
+Node;15;;30.;0.;10.;;456
+Node;16;;40.;0.;10.;;456
+Node;17;;40.;10.;10.;;456
+Node;18;;30.;10.;10.;;456
+SolidHexa;31;2;11;12;13;14;15;16;17;18
+SinglePointConstrList;1;123456;1;4
+SinglePointConstrList;1;123;11;12;13;14
+PointForceLoad;1;3;;10.;0.;0.;-1.
+PointForceLoad;1;6;;10.;0.;0.;-1.
+PointForceLoad;1;15;;10.;1.;0.;0.

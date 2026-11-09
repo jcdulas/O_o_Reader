@@ -1,0 +1,70 @@
+[executive]
+# ============================================================================
+# O_o_Reader validation deck: external superelement from an OP4 file, AUTO boundary search (SOL 101)
+#
+# Validates:
+#   - the automatic boundary search for an external superelement (SEBULK
+#     EXTOP4 with METHOD AUTO), the boundary points it joins and their numbers
+# Settles (library item: current status):
+#   - 'Not validated against the solver': AUTO for an external superelement
+#   - the T14 query part_boundaries for an EXTOP4 part (assigned_file from the
+#     ASSIGN of the SEBULK UNITNO)
+# Run notes:
+#   - run op4_matrices/op4_extseout_sparse_binary.bdf first: this deck reads
+#     its OP4 file (../op4_matrices/op4_extseout_sparse_binary.op4)
+#   - PARAM,POST,-2 writes the GPLS tables
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+FileAssignment;INPUTT4='../op4_matrices/op4_extseout_sparse_binary.op4';FileUnit=27;FileForm=Unformatted
+SolutionSequence;101
+[case]
+TitleText;O_o_Reader validation: external superelement assembly
+BulkEcho;Sorted
+SinglePointConstrSelection;1
+StaticLoadSelection;1
+DisplacementOutput;All;PlotOnly
+SubcaseStart;1
+LabelText;load on the residual
+[model]
+# Output files: OUTPUT2 (PARAM,POST) and, unless said otherwise, the HDF5 database
+# (double precision, deflate).
+Parameter;PostprocessingFile;-2
+ResultFileParams;Precision;64;CompressionMethod;GzipCompression
+# Assembly residual: a plate of 4 x 2 CQUAD4 at x 0 to 40, y 0 to 20, clamped
+# at x = 0; its edge x = 40 (grid points 5, 10, 15) is coincident with the
+# boundary of external superelement 100. Units: mm, N, tonne.
+IsoMat;1;7.E+4;;0.33;2.7E-9
+ShellProp;1;1;2.;1;;1
+Node;1;;0.;0.;0.
+Node;2;;10.;0.;0.
+Node;3;;20.;0.;0.
+Node;4;;30.;0.;0.
+Node;5;;40.;0.;0.
+Node;6;;0.;10.;0.
+Node;7;;10.;10.;0.
+Node;8;;20.;10.;0.
+Node;9;;30.;10.;0.
+Node;10;;40.;10.;0.
+Node;11;;0.;20.;0.
+Node;12;;10.;20.;0.
+Node;13;;20.;20.;0.
+Node;14;;30.;20.;0.
+Node;15;;40.;20.;0.
+ShellQuad4;1;1;1;2;7;6
+ShellQuad4;2;1;2;3;8;7
+ShellQuad4;3;1;3;4;9;8
+ShellQuad4;4;1;4;5;10;9
+ShellQuad4;5;1;6;7;12;11
+ShellQuad4;6;1;7;8;13;12
+ShellQuad4;7;1;8;9;14;13
+ShellQuad4;8;1;9;10;15;14
+SinglePointConstrList;1;123456;1;6;11
+PointForceLoad;1;15;;10.;0.;0.;1.
+SuperelementBulkOptions;100;ExternalMatrixFile;;Automatic;;;27
+[model;SuperelementPart;100]
+# The boundary grid points of external superelement 100 (what its ASMBULK
+# punch file lists).
+Node;1001;;40.;0.;0.
+Node;1004;;40.;10.;0.
+Node;1007;;40.;20.;0.

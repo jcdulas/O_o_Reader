@@ -1,0 +1,34 @@
+[executive]
+# ============================================================================
+# O_o_Reader test model: axisymmetric CTRIAX6, modal frequency von Mises
+#
+# Covers:
+#   - solution: SOL 111 (modal frequency response) of the axisymmetric ring of
+#     results_static/ctriax6_model.inc
+#   - outputs: the complex von Mises stress and strain tables of CTRIAX6
+#     (OESVM1, OSTRVM1: the library's 'modal contribution' form)
+# Written for this project, to exercise the reader.
+# How to run it, what to bring back: validation/models/README.md.
+# ============================================================================
+SolutionSequence;111
+[case]
+TitleText;CTRIAX6 modal frequency response, von Mises
+BulkEcho;None
+SinglePointConstrSelection;1
+EigenMethodSelection;71
+ModalDampingSelection;72
+DynamicLoadSelection;21
+FreqSetSelection;41
+DisplacementOutput;All;PlotOnly
+StressOutput;All;PlotOnly;VonMisesStress
+StrainOutput;All;PlotOnly;VonMisesStress
+SubcaseStart;1
+LabelText;load set 1 over 100 to 2100 Hz
+[model]
+Parameter;PostprocessingFile;-1
+LanczosEigenMethod;71;;;6
+FreqLinearSteps1;41;100.;200.;10
+TableDynamic1;31;;;0.;1.;5.E+3;1.;EndTable
+FreqResponseLoad1;21;1;;;;;31
+TableModalDamping1;72;CriticalDamping;0.;0.02;5.E+3;0.02;EndTable
+Include;../results_static/ctriax6_model.oos
