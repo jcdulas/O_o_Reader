@@ -15,6 +15,8 @@ the reader works with model records and their neutral names. The project's rules
 
 ## Documentation
 
+[JavaScript optimization](docs/optimization.md): design interfaces, derivatives and accepted model updates.
+
 **[Read online](https://jcdulas.github.io/O_o_Reader/)** · [Architecture with diagrams](docs/architecture.md) · [Documentation index](index.md)
 
 The Documentation workflow publishes the HTML site and provides a downloadable archive.

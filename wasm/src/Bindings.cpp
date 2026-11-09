@@ -7,6 +7,7 @@
 #include "oor/api/CardEdits.hpp"
 #include "oor/api/CardTables.hpp"
 #include "oor/api/Deck.hpp"
+#include "oor/api/Design.hpp"
 #include "oor/api/Queries.hpp"
 #include "oor/api/Results.hpp"
 #include "oor/base/Version.hpp"
@@ -18,6 +19,7 @@
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 
+#include <cmath>
 #include <deque>
 #include <exception>
 #include <limits>
@@ -784,6 +786,84 @@ val modelVersions(const std::shared_ptr<api::Deck>& deck)
         });
 }
 
+val designVariables(const std::shared_ptr<api::Deck>& deck)
+{
+    return guarded(
+        [&]
+        {
+            const auto design = api::designModel(*deck);
+            val result = val::object();
+            val variables = val::array();
+            for (const auto& variable : design.variables())
+            {
+                val item = val::object();
+                item.set("id", variable.id);
+                item.set("label", variable.label);
+                item.set("initialValue", variable.initial);
+                item.set("lower", variable.lower);
+                item.set("upper", variable.upper);
+                item.set("moveLimit", variable.moveLimit);
+                item.set("dependent", variable.link != 0);
+                variables.call<void>("push", item);
+            }
+            result.set("variables", variables);
+            result.set("problems", textArray(design.problems()));
+            val unsupported = val::array();
+            for (const auto& entry : design.notApplied())
+            {
+                val item = val::object();
+                item.set("card", entry.card);
+                item.set("id", entry.id);
+                item.set("reason", entry.reason);
+                unsupported.call<void>("push", item);
+            }
+            result.set("notApplied", unsupported);
+            return result;
+        });
+}
+
+val applyDesignPoint(const std::shared_ptr<api::Deck>& deck, const val& ids, const val& values, const val& options)
+{
+    return guarded(
+        [&]
+        {
+            const auto mode = option<std::string>(options, "limits", "error");
+            const auto limits = mode == "error"  ? model::DesignLimitMode::Error
+                                : mode == "clip" ? model::DesignLimitMode::Clip
+                                                 : model::DesignLimitMode::Ignore;
+            if (mode != "error" && mode != "clip" && mode != "ignore")
+                throw std::invalid_argument("design limits must be error, clip or ignore");
+            // Check before narrowing: a fractional or overflowing ID must not reach another variable.
+            std::vector<std::int32_t> checkedIds;
+            for (const double id : vectorOf<double>(ids))
+            {
+                if (!std::isfinite(id) || std::floor(id) != id || id < 1 || id > 2147483647.0)
+                    throw std::invalid_argument("design variable IDs must be positive 32-bit integers");
+                checkedIds.push_back(static_cast<std::int32_t>(id));
+            }
+            const auto update = api::applyDesignPoint(*deck, checkedIds, vectorOf<double>(values), limits,
+                                                      option<bool>(options, "setInitialValues", true));
+            val result = val::object();
+            result.set("variables", float64Array(update.variables));
+            result.set("changedFields", double(update.changedFields));
+            val fields = val::array();
+            for (const auto& change : update.fields)
+            {
+                val item = val::object();
+                item.set("relation", double(change.relation));
+                item.set("before", change.before);
+                item.set("requested", change.requested);
+                item.set("after", change.after);
+                item.set("limit", static_cast<int>(change.limit));
+                item.set("changed", change.changed);
+                fields.call<void>("push", item);
+            }
+            result.set("fields", fields);
+            result.set("movedGrids", double(update.grids.size()));
+            return result;
+        });
+}
+
 std::string version()
 {
     return std::string(base::LIBRARY_VERSION);
@@ -847,4 +927,6 @@ EMSCRIPTEN_BINDINGS(oor_reader)
     function("cardTypesOf", &cardTypesOf);
     function("displacementRotations", &displacementRotations);
     function("modelVersions", &modelVersions);
+    function("designVariables", &designVariables);
+    function("applyDesignPoint", &applyDesignPoint);
 }

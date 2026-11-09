@@ -52,3 +52,10 @@ Results.hpp
 .. literalinclude:: ../include/oor/api/Results.hpp
    :language: cpp
    :linenos:
+
+Design.hpp
+~~~~~~~~~~
+
+.. literalinclude:: ../include/oor/api/Design.hpp
+   :language: cpp
+   :linenos:

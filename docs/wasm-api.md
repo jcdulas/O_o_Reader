@@ -203,6 +203,12 @@ const bytes = quads.toPackage();                         // Uint8Array: the tabl
 `nodesRows` indexes the rows of `cardTable(deck, "nodes")`, and `propIdRow` the rows of the property's card table.
 A table package hands a table to another WebAssembly module: [table-package.md](table-package.md).
 
+## Optimization designs
+
+`designVariables(deck)` inspects bounds and dependencies, `optimizationTables(deck)` exports owned design table
+packages, and `applyDesignPoint(deck, ids, values)` atomically writes an accepted point. The
+[optimization guide](optimization.md) describes the Solver connection, validation and shape update rules.
+
 ## Errors
 
 Every error of the library is thrown as a JavaScript `Error` whose message says what went wrong:

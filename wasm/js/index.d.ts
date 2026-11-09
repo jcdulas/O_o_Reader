@@ -203,6 +203,18 @@ export declare class OorReader {
   openResults(path: string): Results;
   createResults(tables: MemoryTable[], label?: string): Results;
   runQuery(name: string, inputs?: { deck?: Deck | null; results?: Results | null; args?: Record<string, unknown> }): QueryTable;
+  optimizationTables(deck: Deck): Record<string, Uint8Array>;
+  designVariables(deck: Deck): {
+    variables: { id: number; label: string; initialValue: number; lower: number; upper: number;
+      moveLimit: number; dependent: boolean }[];
+    problems: string[]; notApplied: { card: string; id: number; reason: string }[];
+  };
+  applyDesignPoint(deck: Deck, ids: number[] | Int32Array, values: number[] | Float64Array,
+    options?: { limits?: "error" | "clip" | "ignore"; setInitialValues?: boolean }): {
+      variables: Float64Array; changedFields: number; movedGrids: number;
+      fields: { relation: number; before: number; requested: number; after: number; limit: number; changed: boolean }[];
+    };
+
   queryCatalogue(): QueryDescription[];
   writeQueryTables(path: string, tables: { name: string; table: QueryTable }[], compressionLevel?: number): void;
   cardTable(deck: Deck, source: string, columns?: string[] | null): QueryTable;

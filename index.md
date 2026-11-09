@@ -9,6 +9,7 @@ Read and edit model records, query model data, and manage results.
 - [Getting started](docs/getting-started.md): build requirements and a first working example.
 - [Project overview](README.md): capabilities, repository layout and build commands.
 - [API reference](docs/api.rst): the current JavaScript types and C++ entry points, included directly from source.
+- [JavaScript optimization](docs/optimization.md): design points, derivatives and model updates.
 - [Architecture with diagrams](docs/architecture.md): module dependencies, data ownership and execution flow.
 - [Module guide](docs/modules.md): implementation structure and detailed technical guides.
 - [Element names](docs/element-naming.md): shared vocabulary, implementation roles and compatibility.
@@ -37,6 +38,7 @@ repository with its own access policy.
 :caption: User guide
 
 docs/getting-started
+docs/optimization
 README
 docs/model-format
 docs/model-format-cards

@@ -174,6 +174,28 @@ export class OorReader {
     return this.core.runQuery(name, deck, results, JSON.stringify(args));
   }
 
+  // Owned byte packages for the solver's design contract; no pointers cross module memories.
+  optimizationTables(deck) {
+    const names = ["designVariablesTable", "designLinksTable", "designRelationsTable", "designConstantsTable",
+      "shapeVariablesTable", "designEquationSymbols", "designEquationInstructions", "designResponsesTable",
+      "designResponseArgumentsTable", "designConstraintsTable", "designConstraintSetsTable", "designSubcasesTable",
+      "designScreeningTable"];
+    const tables = {};
+    for (const name of names) {
+      const table = this.runQuery(name, { deck });
+      try { tables[name] = table.toPackage(); }
+      finally { table.delete(); }
+    }
+    return tables;
+  }
+
+  designVariables(deck) { return this.core.designVariables(deck); }
+
+  // Explicit IDs in solver x order; writes the final point atomically and updates XINIT by default.
+  applyDesignPoint(deck, ids, values, options = {}) {
+    return this.core.applyDesignPoint(deck, ids, values, options);
+  }
+
   // Every named query, with its description and parameters.
   queryCatalogue() {
     return this.core.queryCatalogue();

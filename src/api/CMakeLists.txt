@@ -1,5 +1,6 @@
 # The simple entry points of the library (Deck, Results, queries): what the WebAssembly module exposes to JavaScript.
 add_library(oor_api STATIC
+    Design.cpp
     Deck.cpp
     Results.cpp
     Queries.cpp
