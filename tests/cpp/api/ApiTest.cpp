@@ -142,7 +142,7 @@ TEST_CASE("results are listed, read, attached to a deck and converted", "[api]")
     const auto maximum = api::runQuery("maxDisplacement", deck, results, {});
     CHECK(maximum->rowCount() >= 1);
 
-    const auto archive = files.root() / "plate.oorh5";
+    const auto archive = files.root() / "plate.ooh5";
     CHECK(results->writeArchive(archive.string()).finished);
     const auto reopened = api::Results::open(archive.string());
     CHECK(reopened->format() == "archive");
@@ -152,7 +152,7 @@ TEST_CASE("results are listed, read, attached to a deck and converted", "[api]")
     CHECK(api::Deck::readModel(archive.string())->toModelText() == deck->toModelText());
     CHECK(api::runQuery("maxDisplacement", reopened->model(), reopened, {})->rowCount() >= 1);
     // Rewriting an archive before requesting its model must preserve that model too.
-    const auto copy = files.root() / "copy.oorh5";
+    const auto copy = files.root() / "copy.ooh5";
     CHECK(api::Results::open(archive.string())->writeArchive(copy.string()).finished);
     CHECK(api::Deck::readModel(copy.string())->toModelText() == deck->toModelText());
 
@@ -166,13 +166,13 @@ TEST_CASE("a native archive holds a model alone or results alone", "[api][archiv
 {
     const testing::TestFiles files;
     const auto deck = api::Deck::readModel(files.write("plate.oos", PLATE).string());
-    const auto modelOnly = files.root() / "model.oorh5";
+    const auto modelOnly = files.root() / "model.ooh5";
     CHECK(deck->writeArchive(modelOnly.string()).finished);
     const auto archive = api::Results::open(modelOnly.string());
     CHECK(archive->tables().empty());
     CHECK(archive->hasModel());
     CHECK(archive->model()->toModelText() == deck->toModelText());
-    const auto resultsOnly = files.root() / "results.oorh5";
+    const auto resultsOnly = files.root() / "results.ooh5";
     CHECK(plateDisplacements()->writeArchive(resultsOnly.string()).finished);
     const auto results = api::Results::open(resultsOnly.string());
     CHECK_FALSE(results->hasModel());

@@ -37,7 +37,7 @@ void checkModels(std::size_t first)
         auto source = read(models[i]);
         results::ArchiveWriteOptions settings;
         settings.model = source;
-        const auto path = files.root() / "model.oorh5";
+        const auto path = files.root() / "model.ooh5";
         REQUIRE(results::writeArchive(path, {}, settings).finished);
         const auto back = results::ArchiveResultFile::open(path)->readModel();
         CHECK(testing::cardTablesText(*back) == testing::cardTablesText(*source));
@@ -63,7 +63,7 @@ TEST_CASE("native model columns preserve controls, includes, parts, keys and exa
     source->remove(*source->locate(base::IdSpace::Node, 2));
     results::ArchiveWriteOptions options;
     options.model = source;
-    const auto path = files.root() / "native.oorh5";
+    const auto path = files.root() / "native.ooh5";
     REQUIRE(results::writeArchive(path, {}, options).finished);
     // Sources are descriptors only. Reading the archive must not reopen them.
     std::filesystem::remove(files.root() / "nodes.oos");
@@ -95,7 +95,7 @@ TEST_CASE("a native archive preserves an empty model", "[results][archive-model]
     const testing::TestFiles files;
     results::ArchiveWriteOptions options;
     options.model = std::make_shared<model::Model>();
-    const auto path = files.root() / "empty.oorh5";
+    const auto path = files.root() / "empty.ooh5";
     REQUIRE(results::writeArchive(path, {}, options).finished);
     const auto back = results::ArchiveResultFile::open(path)->readModel();
     CHECK(back->cardCount() == 0);
@@ -105,7 +105,7 @@ TEST_CASE("a native archive preserves an empty model", "[results][archive-model]
 TEST_CASE("an unrepresentable model aborts the archive without replacing the target", "[results][archive-model]")
 {
     const testing::TestFiles files;
-    const auto path = files.write("existing.oorh5", "previous file");
+    const auto path = files.write("existing.ooh5", "previous file");
     auto source = std::make_shared<model::Model>();
     model::ControlStatement raw;
     raw.kind = model::ControlKind::Raw;
@@ -114,8 +114,8 @@ TEST_CASE("an unrepresentable model aborts the archive without replacing the tar
     results::ArchiveWriteOptions options;
     options.model = source;
     CHECK_THROWS_AS(results::writeArchive(path, {}, options), base::UsageError);
-    CHECK(files.read("existing.oorh5") == "previous file");
-    CHECK_FALSE(files.exists("existing.oorh5.oor_tmp"));
+    CHECK(files.read("existing.ooh5") == "previous file");
+    CHECK_FALSE(files.exists("existing.ooh5.oor_tmp"));
 }
 
 TEST_CASE("large native columns are compressed and loaded over several batches", "[results][archive-model]")
@@ -131,7 +131,7 @@ TEST_CASE("large native columns are compressed and loaded over several batches",
     }
     results::ArchiveWriteOptions options;
     options.model = model;
-    const auto path = files.root() / "large.oorh5";
+    const auto path = files.root() / "large.ooh5";
     REQUIRE(results::writeArchive(path, {}, options).finished);
     const auto tree = io::Hdf5Tree::read(path);
     const auto* reals = tree.find("/model/parts/0/cards/0/reals");

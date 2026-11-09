@@ -1,6 +1,6 @@
 # `results`
 
-Native `.oorh5` model/results archives; result tables from an archive or a program (tables made in memory);
+Native `.ooh5` model/results archives; result tables from an archive or a program (tables made in memory);
 attaching results to a model; the Excel workbook of results (an output).
 
 - Headers: `include/oor/results/`. Sources: this folder. Tests: `tests/cpp/results/`.

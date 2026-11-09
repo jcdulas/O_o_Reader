@@ -20,7 +20,7 @@ The model: cards, column storage, containers, handles, editing, control sections
   the typed `FieldReader` constructor accepts archive values without decimal conversion. The native archive uses
   the same card readers and tables as `.oos` input.
 
-The native `.oorh5` reader/writer lives in `results/archive/ArchiveModel.cpp`, above this module in the dependency
+The native `.ooh5` reader/writer lives in `results/archive/ArchiveModel.cpp`, above this module in the dependency
 order. The facade `api::Deck::readModel` detects either format by content. See
 [the archive specification](../../docs/archive-format.md#native-model) for the versioned slot contract, sparse and
 constant columns, source precision and pending defaults masks.

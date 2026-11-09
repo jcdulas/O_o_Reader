@@ -1,6 +1,6 @@
 # Names
 
-O_o_Reader, O_o_Solver, `.oos` model files and `.oorh5` model tables use the same neutral names.
+O_o_Reader, O_o_Solver, `.oos` model files and `.ooh5` model tables use the same neutral names.
 Names are exact and case-sensitive.
 
 | What | Convention | Example |

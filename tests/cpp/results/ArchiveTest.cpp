@@ -154,7 +154,7 @@ ResultTables sampleTables()
 TEST_CASE("an archive gives back every table, label and value it was given", "[results][archive]")
 {
     const testing::TestFiles files;
-    const auto path = files.root() / "run.oorh5";
+    const auto path = files.root() / "run.ooh5";
     ArchiveWriteOptions options;
     options.title = "SAMPLE";
     const ResultWriteReport report = writeArchive(path, sampleTables(), options);
@@ -226,7 +226,7 @@ TEST_CASE("an archive gives back every table, label and value it was given", "[r
 TEST_CASE("an archive reads only the steps, rows and components a filter keeps", "[results][archive]")
 {
     const testing::TestFiles files;
-    const auto path = files.root() / "run.oorh5";
+    const auto path = files.root() / "run.ooh5";
     (void)writeArchive(path, sampleTables());
     const auto archive = readResults(path);
     CHECK(archive->format() == "archive");
@@ -255,7 +255,7 @@ TEST_CASE("an archive reads only the steps, rows and components a filter keeps",
 TEST_CASE("an archive is plain HDF5: its index and datasets are readable with any HDF5 tool", "[results][archive]")
 {
     const testing::TestFiles files;
-    const auto path = files.root() / "run.oorh5";
+    const auto path = files.root() / "run.ooh5";
     ArchiveWriteOptions options;
     options.compressionLevel = 6;
     (void)writeArchive(path, sampleTables(), options);
@@ -277,7 +277,7 @@ TEST_CASE("an archive is plain HDF5: its index and datasets are readable with an
 TEST_CASE("large values are chunked by step and compressed", "[results][archive]")
 {
     const testing::TestFiles files;
-    const auto path = files.root() / "large.oorh5";
+    const auto path = files.root() / "large.ooh5";
     std::vector<double> values(4 * 500 * 6, 1.0);
     MemoryTableInput input;
     input.kind = ResultKind::Displacements;
@@ -319,7 +319,7 @@ TEST_CASE("an HDF5 file that is not an archive is refused", "[results][archive]"
 TEST_CASE("an aborted archive leaves nothing behind", "[results][archive]")
 {
     const testing::TestFiles files;
-    const auto path = files.root() / "aborted.oorh5";
+    const auto path = files.root() / "aborted.ooh5";
     {
         const auto session = beginArchive(path);
         session->push(transientDisplacements());
@@ -353,7 +353,7 @@ TEST_CASE("version 3 result archives remain readable and unknown versions are re
             root.attributes.push_back(std::move(attribute));
         }
         request.groups.push_back(std::move(root));
-        const auto path = files.root() / (version + ".oorh5");
+        const auto path = files.root() / (version + ".ooh5");
         io::writeHdf5(path, request);
         if (version == "3")
         {
@@ -391,7 +391,7 @@ TEST_CASE("result metadata opens without loading an unsupported model schema", "
         }
         request.groups.push_back(std::move(group));
     }
-    const auto path = files.root() / "future-model.oorh5";
+    const auto path = files.root() / "future-model.ooh5";
     io::writeHdf5(path, request);
     const auto archive = ArchiveResultFile::open(path);
     CHECK(archive->hasModel());

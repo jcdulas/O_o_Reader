@@ -1,9 +1,12 @@
 # The HDF5 model and results archive (format version 4)
 
-The archive is the file format this library writes for models, analysis results and custom outputs. A `.oorh5` may
+The archive is the file format this library writes for models, analysis results and custom outputs. A `.ooh5` may
 contain a model alone, results alone, or both. Model data is stored as native typed columns, not as embedded `.oos` text.
 It is an ordinary HDF5 file with a layout of our own: any HDF5 tool (h5py, h5dump, HDFView, h5wasm, ...) can open it, and
 nothing in it follows the layout of another software vendor's files.
+
+The conventional filename extension is `.ooh5`. Archives are recognized by their contents: changing the suffix does
+not alter the HDF5 layout or its versions. The archive version remains 4 and the native model schema remains 1.
 
 Root names and version constants are declared in
 [ArchiveFormat.hpp](../include/oor/results/archive/ArchiveFormat.hpp). Result tables are written by
@@ -175,11 +178,11 @@ implementation, compression and storage.
 
 ```js
 results.attach(deck, false);
-results.writeArchive("/work/complete.oorh5"); // model plus results
-const archive = oor.openResults("/work/complete.oorh5");
+results.writeArchive("/work/complete.ooh5"); // model plus results
+const archive = oor.openResults("/work/complete.ooh5");
 const model = archive.model();              // load and attach on demand
-const independent = oor.readModel("/work/complete.oorh5");
-model.writeArchive("/work/model-only.oorh5");
+const independent = oor.readModel("/work/complete.ooh5");
+model.writeArchive("/work/model-only.ooh5");
 model.writeModel("/work/export.oos");
 ```
 
@@ -200,8 +203,8 @@ int main()
     const auto deck = oor::api::Deck::readModel("plate.oos");
     oor::results::ArchiveWriteOptions options;
     options.model = deck->model();
-    const auto report = oor::results::writeArchive("model.oorh5", oor::results::ResultTables{}, options);
-    const auto model = oor::results::archive::readModel("model.oorh5");
+    const auto report = oor::results::writeArchive("model.ooh5", oor::results::ResultTables{}, options);
+    const auto model = oor::results::archive::readModel("model.ooh5");
     return report.finished && model->cardCount() == deck->cardCount() ? 0 : 1;
 }
 ```
@@ -247,7 +250,7 @@ With Python and h5py, list result tables only when the optional result index exi
 ```python
 import h5py
 
-with h5py.File("run.oorh5", "r") as archive:
+with h5py.File("run.ooh5", "r") as archive:
     if "index/tables" in archive:
         index = archive["index/tables"][...]
         for row in index:
@@ -269,7 +272,7 @@ def strings(group):
     data = bytes(group["bytes"][:])
     return [data[int(first):int(last)].decode("utf-8") for first, last in zip(offsets[:-1], offsets[1:])]
 
-with h5py.File("model.oorh5", "r") as archive:
+with h5py.File("model.ooh5", "r") as archive:
     part = archive["model/parts/0"]
     table = part[f"cards/{strings(part['card_types']).index('Node')}"]
     ids = table["ids"][:]
@@ -303,7 +306,7 @@ tables, compression level 4 and shuffle enabled. For node i (1 through 500,000),
 `[i * 0.00123456789, (i % 100) * 0.0123456789, (i % 7) * 0.125]`. Read times are medians of three full model reads after
 one warm-up per format, including model reconstruction and identifier indexes.
 
-| Measurement | `.oos` | `.oorh5` v4 |
+| Measurement | `.oos` | `.ooh5` v4 |
 | --- | --- | --- |
 | File size | 24,643,633 bytes (24.64 MB) | 338,896 bytes (0.339 MB) |
 | Native model read | 567 ms | 218 ms |

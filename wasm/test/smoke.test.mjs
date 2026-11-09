@@ -108,10 +108,10 @@ test("results made in JavaScript are attached, archived, read back and written t
   const maximum = oor.runQuery("maxDisplacement", { deck, results });
   assert.ok(maximum.rowCount() >= 1);
 
-  const report = results.writeArchive("/work/plate.oorh5", { title: "PLATE" });
+  const report = results.writeArchive("/work/plate.ooh5", { title: "PLATE" });
   assert.equal(report.finished, true);
   assert.deepEqual(report.skipped, []);
-  const archive = oor.openResults("/work/plate.oorh5");
+  const archive = oor.openResults("/work/plate.ooh5");
   assert.equal(archive.format(), "archive");
   assert.equal(archive.metadata().title, "PLATE");
   assert.equal(archive.read(0).values.length, 36);
@@ -119,10 +119,10 @@ test("results made in JavaScript are attached, archived, read back and written t
   const embedded = archive.model();
   assert.equal(embedded.toModelText(), deck.toModelText());
   assert.equal(embedded.nodes[6].xyz[0], 2);
-  assert.equal(oor.readModel("/work/plate.oorh5").toModelText(), deck.toModelText());
-  const unopenedModel = oor.openResults("/work/plate.oorh5");
-  unopenedModel.writeArchive("/work/copied.oorh5");
-  assert.equal(oor.readModel("/work/copied.oorh5").toModelText(), deck.toModelText());
+  assert.equal(oor.readModel("/work/plate.ooh5").toModelText(), deck.toModelText());
+  const unopenedModel = oor.openResults("/work/plate.ooh5");
+  unopenedModel.writeArchive("/work/copied.ooh5");
+  assert.equal(oor.readModel("/work/copied.ooh5").toModelText(), deck.toModelText());
 
   const workbook = archive.writeXlsx("/work/plate.xlsx", { title: "PLATE" });
   assert.equal(workbook.finished, true);
@@ -137,7 +137,7 @@ test("results made in JavaScript are attached, archived, read back and written t
   assert.throws(() => oor.createResults([{ kind: "displacements", ids: [1], values: [1, 2] }]), /bytes|values/);
   assert.throws(() => oor.createResults([{ kind: "nonsense", ids: [1], values: [] }]), /not a kind of result/);
 
-  assert.throws(() => oor.openResults("/work/missing.oorh5"), /no such file/);
+  assert.throws(() => oor.openResults("/work/missing.ooh5"), /no such file/);
   assert.throws(() => oor.openResults("/work/plate.oos"), /not a results archive/);
   assert.throws(() => results.read(5), /no result table 5/);
 });
@@ -145,17 +145,17 @@ test("results made in JavaScript are attached, archived, read back and written t
 test("a native archive can hold a model alone, and result-only archives remain supported", () => {
   oor.writeFile("/work/model-only.oos", PLATE);
   const deck = oor.readModel("/work/model-only.oos");
-  assert.equal(deck.writeArchive("/work/model-only.oorh5").finished, true);
-  const archive = oor.openResults("/work/model-only.oorh5");
+  assert.equal(deck.writeArchive("/work/model-only.ooh5").finished, true);
+  const archive = oor.openResults("/work/model-only.ooh5");
   assert.equal(archive.hasModel(), true);
   assert.equal(archive.tables().length, 0);
   assert.equal(archive.model().toModelText(), deck.toModelText());
   const results = oor.createResults([plateDisplacements()]);
-  results.writeArchive("/work/results-only.oorh5");
-  const back = oor.openResults("/work/results-only.oorh5");
+  results.writeArchive("/work/results-only.ooh5");
+  const back = oor.openResults("/work/results-only.ooh5");
   assert.equal(back.hasModel(), false);
   assert.equal(back.model(), null);
-  assert.throws(() => oor.readModel("/work/results-only.oorh5"), /contains no model/);
+  assert.throws(() => oor.readModel("/work/results-only.ooh5"), /contains no model/);
 });
 
 test("query tables are written to HDF5 and the catalogue is listed", () => {

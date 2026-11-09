@@ -7,7 +7,7 @@ each), that the library must read without an error:
   `Include` record of another file names), with the files it includes, and checks that no error diagnostic comes out;
 - `tests/cpp/model/ModelFileRoundTripTest.cpp` writes each model back as model files with its Include structure, reads
   them again and checks that the card tables are the same and that the files written are a fixed point;
-- `tests/cpp/results/ArchiveModelTest.cpp` writes every main model to native `.oorh5` columns, reloads it and compares
+- `tests/cpp/results/ArchiveModelTest.cpp` writes every main model to native `.ooh5` columns, reloads it and compares
   both its card tables and exported `.oos` text. Additional cases cover exact real values, comments, source metadata,
   parts, persistent keys, pending defaults, empty models and reading after source Include files have been removed.
 

@@ -35,7 +35,7 @@ struct DiagnosticText
     std::string location; // "file:line (CARD, field)"; empty when unknown
 };
 
-// A model: its control sections and cards, read from .oos text or a native .oorh5 archive.
+// A model: its control sections and cards, read from .oos text or a native .ooh5 archive.
 class Deck
 {
 public:

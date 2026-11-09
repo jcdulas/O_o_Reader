@@ -58,7 +58,7 @@ Native model records and table packages use this vocabulary directly.
 ## Compatibility
 
 Reader and Solver are version `0.2.0`. Build and update them together. Table packages use data contract **75**.
-New `.oorh5` archives use format version **4** and native model schema **1**; the reader also accepts version **3**
+New `.ooh5` archives use format version **4** and native model schema **1**; the reader also accepts version **3**
 result archives. Version 4 retains version 3 result layouts and element names while adding native model columns.
 Older version 3 readers reject version 4 files. See [archive compatibility](archive-format.md#versions).
 

@@ -24,7 +24,7 @@
 <rect x="45" y="135" width="290" height="125" rx="12" fill="#f0f3f7" stroke="#64748b" stroke-width="1.5"/>
 <rect x="46" y="149" width="4" height="97" rx="2" fill="#64748b"/>
 <text x="65" y="160" font-size="12" font-weight="700" letter-spacing="1.2" fill="#64748b">INPUT FILE</text>
-<text x="65" y="188" font-size="21" font-weight="700">.oorh5 archive</text>
+<text x="65" y="188" font-size="21" font-weight="700">.ooh5 archive</text>
 <text x="65" y="217" font-size="20" fill="#43546d">Result indexes + optional</text>
 <text x="65" y="241" font-size="20" fill="#43546d">model</text>
 <rect x="415" y="135" width="290" height="125" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>

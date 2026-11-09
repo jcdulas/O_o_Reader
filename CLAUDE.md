@@ -1,7 +1,7 @@
 # CLAUDE.md: working on O_o_Reader
 
 O_o_Reader is a C++20 library, compiled to WebAssembly, that reads and writes O_o model records (`.oos`) and native
-HDF5 model/results archives (`.oorh5`). Archives can contain a model, results or both; model columns load on demand.
+HDF5 model/results archives (`.ooh5`). Archives can contain a model, results or both; model columns load on demand.
 The library also exports query tables, writes results as Excel workbooks, and runs named queries on models and results.
 Start with [README.md](README.md) and [docs/architecture.md](docs/architecture.md).
 

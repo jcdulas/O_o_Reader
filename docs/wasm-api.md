@@ -34,10 +34,10 @@ out of it:
 ```js
 const text = await (await fetch("plate.oos")).text();
 oor.writeFile("/work/plate.oos", text);          // a model file: also write the files it includes, at their paths
-oor.writeFile("/work/run.oorh5", new Uint8Array(await file.arrayBuffer()));
+oor.writeFile("/work/run.ooh5", new Uint8Array(await file.arrayBuffer()));
 // ... work ...
-const bytes = oor.readFile("/work/run.oorh5");   // Uint8Array, to download or upload
-oor.removeFile("/work/run.oorh5");               // free the memory of a file you no longer need
+const bytes = oor.readFile("/work/run.ooh5");   // Uint8Array, to download or upload
+oor.removeFile("/work/run.ooh5");               // free the memory of a file you no longer need
 ```
 
 ## Models
@@ -48,8 +48,8 @@ deck.cardCounts();        // { IsoMat: 1, Node: 6, ShellQuad4: 2, ShellProp: 1 }
 deck.diagnostics();       // [{ severity, code, message, location }]
 deck.toModelText();
 deck.writeModel("/work/out.oos", { splitIncludes: true });
-deck.writeArchive("/work/model.oorh5"); // native typed model, without result tables
-const nativeDeck = oor.readModel("/work/model.oorh5");
+deck.writeArchive("/work/model.ooh5"); // native typed model, without result tables
+const nativeDeck = oor.readModel("/work/model.ooh5");
 nativeDeck.delete();
 deck.delete();            // free the C++ object when done
 ```
@@ -57,7 +57,7 @@ deck.delete();            // free the C++ object when done
 Model records, diagnostics and JavaScript values use the same exact neutral names
 ([naming.md](naming.md)): `ShellQuad4`, `propId`, `All` and `Yes`.
 
-`readModel` detects a native `.oorh5` archive by its content and loads its typed model. Otherwise it reads model records,
+`readModel` detects a native `.ooh5` archive by its content and loads its typed model. Otherwise it reads model records,
 regardless of the path's extension. An archive without a model raises an error. `writeModel` writes model records and
 returns any content it could not carry, one description per item. `toModelText` gives one text with Include files flattened.
 
@@ -108,7 +108,7 @@ for alternatives such as `materialAngle` and `matFrameId`.
 ## Results
 
 ```js
-const results = oor.openResults("/work/run.oorh5"); // an HDF5 results archive, recognised by its content
+const results = oor.openResults("/work/run.ooh5"); // an HDF5 results archive, recognised by its content
 results.format();          // "archive"
 const tables = results.tables();
 // [{ index, kind: "displacements", elementType: "", subcase: 1, analysis: "static", stepKind, steps, rowCount,
@@ -118,7 +118,7 @@ const data = results.read(tables[0].index, { stepIndices: [0], components: ["t3"
 // { shape: [1, 2, 1], ids: Int32Array, values: Float64Array, steps, layers, nodeIds, elementIds, texts }
 // values[(step * rows + row) * components + component]; complex values: a last dimension of 2 (real, imaginary)
 
-results.writeArchive("/work/run.oorh5", { compressionLevel: 4, title: "PLATE" });
+results.writeArchive("/work/run.ooh5", { compressionLevel: 4, title: "PLATE" });
 results.writeXlsx("/work/run.xlsx", { title: "PLATE" });  // an Excel workbook, for people
 ```
 
@@ -132,9 +132,9 @@ results remain supported. New archives use version 4; version 3 result archives 
 
 ```js
 results.attach(deck, false);
-results.writeArchive("/work/complete.oorh5", { compressionLevel: 4 });
+results.writeArchive("/work/complete.ooh5", { compressionLevel: 4 });
 
-const archive = oor.openResults("/work/complete.oorh5");
+const archive = oor.openResults("/work/complete.ooh5");
 if (archive.hasModel()) {
   const embedded = archive.model(); // load once; later calls share the same C++ deck
   try {
@@ -145,7 +145,7 @@ if (archive.hasModel()) {
       maximum.delete();
     }
     embedded.writeModel("/work/export.oos");
-    embedded.writeArchive("/work/model-only.oorh5");
+    embedded.writeArchive("/work/model-only.ooh5");
   } finally {
     embedded.delete();
   }
@@ -272,8 +272,8 @@ Every error of the library is thrown as a JavaScript `Error` whose message says 
 
 ```js
 try {
-  oor.openResults("/work/missing.oorh5");
+  oor.openResults("/work/missing.ooh5");
 } catch (error) {
-  console.error(error.message); // "cannot open /work/missing.oorh5: no such file"
+  console.error(error.message); // "cannot open /work/missing.ooh5: no such file"
 }
 ```

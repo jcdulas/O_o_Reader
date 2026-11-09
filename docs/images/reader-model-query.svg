@@ -47,7 +47,7 @@
 <rect x="45" y="330" width="290" height="125" rx="12" fill="#f0f3f7" stroke="#64748b" stroke-width="1.5"/>
 <rect x="46" y="344" width="4" height="97" rx="2" fill="#64748b"/>
 <text x="65" y="355" font-size="12" font-weight="700" letter-spacing="1.2" fill="#64748b">ARCHIVE INPUT</text>
-<text x="65" y="383" font-size="21" font-weight="700">.oorh5 native model</text>
+<text x="65" y="383" font-size="21" font-weight="700">.ooh5 native model</text>
 <text x="65" y="412" font-size="20" fill="#43546d">Model columns and</text>
 <text x="65" y="436" font-size="20" fill="#43546d">metadata</text>
 <rect x="415" y="330" width="290" height="125" rx="12" fill="#f3edfc" stroke="#7951a8" stroke-width="1.5"/>

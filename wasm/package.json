@@ -1,7 +1,7 @@
 {
   "name": "oor-reader",
   "version": "0.2.0",
-  "description": "Reads and writes native .oos models and .oorh5 model/results archives, runs queries and exports result workbooks in WebAssembly.",
+  "description": "Reads and writes native .oos models and .ooh5 model/results archives, runs queries and exports result workbooks in WebAssembly.",
   "license": "MIT",
   "type": "module",
   "main": "index.js",

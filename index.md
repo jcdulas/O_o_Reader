@@ -1,6 +1,6 @@
 # O_o_Reader documentation
 
-Read and edit `.oos` model records and native `.oorh5` model/results archives, query model data, and export results.
+Read and edit `.oos` model records and native `.ooh5` model/results archives, query model data, and export results.
 
 **[Read the public HTML site](https://jcdulas.github.io/O_o_Reader/)**
 

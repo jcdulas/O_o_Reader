@@ -1,6 +1,6 @@
 # Getting started
 
-O_o_Reader reads `.oos` model records and native `.oorh5` model/results archives, exposes typed tables and named
+O_o_Reader reads `.oos` model records and native `.ooh5` model/results archives, exposes typed tables and named
 queries, and exports result workbooks.
 
 ## Build requirements
@@ -17,11 +17,11 @@ corresponding WebAssembly file together.
 | Format | Contents | Main entry points |
 | --- | --- | --- |
 | `.oos` | Editable UTF-8 model records, with optional Include files | `oor.readModel`, `deck.writeModel` |
-| `.oorh5` | Native typed model columns, results, or both in one HDF5 archive | `deck.writeArchive`, `results.writeArchive`, `oor.openResults`, `oor.readModel` |
+| `.ooh5` | Native typed model columns, results, or both in one HDF5 archive | `deck.writeArchive`, `results.writeArchive`, `oor.openResults`, `oor.readModel` |
 | `.xlsx` | Result tables in a workbook for people | `results.writeXlsx` (output only) |
 | `.h5` query export | Named query tables in the separate `oor-query-tables` layout | `oor.writeQueryTables` |
 
-Use `.oos` for reviewing and editing records as text. Use `.oorh5` to save a model and its results together and load
+Use `.oos` for reviewing and editing records as text. Use `.ooh5` to save a model and its results together and load
 numeric fields directly. An arbitrary HDF5 file is not a native model archive: renaming its extension does not convert
 its contents. Table packages produced by `toPackage()` are a separate transport between Reader and Solver.
 
@@ -52,8 +52,8 @@ try {
 Run it with `node read-model.mjs`. It prints one node and the canonical model text.
 The paths under `/work` belong to the module's in-memory file system; they are not host file paths.
 
-To save a native binary model, call `deck.writeArchive("/work/point.oorh5")` and retrieve its bytes with
-`oor.readFile`. `oor.readModel("/work/point.oorh5")` reads that model directly from typed HDF5 columns. An archive can
+To save a native binary model, call `deck.writeArchive("/work/point.ooh5")` and retrieve its bytes with
+`oor.readFile`. `oor.readModel("/work/point.ooh5")` reads that model directly from typed HDF5 columns. An archive can
 also include results: attach the deck to a result set and call `results.writeArchive`. See the
 [archive specification](archive-format.md) for the layout and access patterns.
 
@@ -73,8 +73,8 @@ const results = oor.createResults([
 
 try {
   results.attach(deck, false);
-  results.writeArchive("/work/point.oorh5");
-  const archive = oor.openResults("/work/point.oorh5"); // result index only; model values stay unread
+  results.writeArchive("/work/point.ooh5");
+  const archive = oor.openResults("/work/point.ooh5"); // result index only; model values stay unread
   const restored = archive.model();                  // loads the model and attaches it for queries
   try {
     console.log("Nodes:", restored.cardCounts().Node);
@@ -91,8 +91,8 @@ try {
 }
 ~~~
 
-Run it with `node archive-model.mjs`. `oor.readFile("/work/point.oorh5")` returns the archive bytes for downloading or
-writing to host storage. `oor.readModel("/work/point.oorh5")` can load the model independently of its results.
+Run it with `node archive-model.mjs`. `oor.readFile("/work/point.ooh5")` returns the archive bytes for downloading or
+writing to host storage. `oor.readModel("/work/point.ooh5")` can load the model independently of its results.
 
 For a model alone, call `deck.writeArchive`. For results alone, write a result set with no attached model.
 `archive.hasModel()` checks whether a model is available; `archive.model()` returns `null` when absent, whereas

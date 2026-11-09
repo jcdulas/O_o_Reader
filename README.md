@@ -3,7 +3,7 @@
 A C++20 library, compiled to WebAssembly for the web, that:
 
 - reads and writes its own **model format** (`.oos`, [docs/model-format.md](docs/model-format.md));
-- stores models and results in its own **HDF5 archive** (`.oorh5`), together or separately: typed model columns,
+- stores models and results in its own **HDF5 archive** (`.ooh5`), together or separately: typed model columns,
   compressed buffers and model loading on demand ([docs/archive-format.md](docs/archive-format.md));
 - writes results as an **Excel workbook** (.xlsx) for people: an index sheet and one sheet per table;
 - exports custom query tables as **HDF5 datasets** (`.h5`);
@@ -36,22 +36,22 @@ const nodes = oor.runQuery("nodesTable", { deck }).columns();     // ids, x, y, 
 const results = oor.createResults([                                // results computed by a program
   { kind: "displacements", subcase: 1, ids: [1, 2], values: new Float64Array(12) },
 ]);
-results.writeArchive("/work/plate.oorh5");                         // to exchange and to view
+results.writeArchive("/work/plate.ooh5");                         // to exchange and to view
 results.writeXlsx("/work/plate.xlsx");                             // for people
-const table = oor.openResults("/work/plate.oorh5").read(0);        // { shape, ids, values, ... }
+const table = oor.openResults("/work/plate.ooh5").read(0);        // { shape, ids, values, ... }
 
 // One file for the model and its results, without converting numeric model data to text.
 results.attach(deck, false);
-results.writeArchive("/work/complete.oorh5");
-const complete = oor.openResults("/work/complete.oorh5");          // lists results without loading the model
+results.writeArchive("/work/complete.ooh5");
+const complete = oor.openResults("/work/complete.ooh5");          // lists results without loading the model
 const embedded = complete.model();                               // loads and attaches the model on demand
-const sameModel = oor.readModel("/work/complete.oorh5");           // the model can also be read independently
-deck.writeArchive("/work/model-only.oorh5");                       // a model without results
+const sameModel = oor.readModel("/work/complete.ooh5");           // the model can also be read independently
+deck.writeArchive("/work/model-only.ooh5");                       // a model without results
 ```
 
 The whole interface: [docs/wasm-api.md](docs/wasm-api.md).
 
-New `.oorh5` files use archive version **4**, with native model schema **1**. Version **3** result archives remain
+New `.ooh5` files use archive version **4**, with native model schema **1**. Version **3** result archives remain
 readable. See [choosing a format](docs/getting-started.md#choose-a-file-format) and
 [archive compatibility](docs/archive-format.md#versions) before updating an existing viewer.
 

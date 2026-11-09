@@ -54,7 +54,7 @@ const ids = Array.from(info.independentIndices, i => info.variables[i].id);
 const update = oor.applyDesignPoint(deck, ids, acceptedX);
 console.log(update.changedFields, update.movedGrids);
 const text = deck.toModelText();
-deck.writeArchive("/work/accepted-model.oorh5"); // save the accepted model as native columns
+deck.writeArchive("/work/accepted-model.ooh5"); // save the accepted model as native columns
 ```
 
 The IDs are explicit because Solver's vector contains independent variables only, whereas Reader lists all variables.

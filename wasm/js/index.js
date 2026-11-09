@@ -148,7 +148,7 @@ export class OorReader {
 
   // ---- decks
 
-  // Reads .oos records and their Include files, or the typed model of a native .oorh5 archive.
+  // Reads .oos records and their Include files, or the typed model of a native .ooh5 archive.
   readModel(path, options = {}) {
     return this.core.Deck.readModel(path, { strict: options.strict ?? false });
   }
