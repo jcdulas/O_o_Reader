@@ -2,6 +2,7 @@
 
 O_o_Reader is a C++20 library, compiled to WebAssembly, that reads and writes O_o model records (`.oos`) and native
 HDF5 model/results archives (`.ooh5`). Archives can contain a model, results or both; model columns load on demand.
+Models can also be built from structured JavaScript input and typed column batches; see [model construction](docs/model-construction.md).
 The library also exports query tables, writes results as Excel workbooks, and runs named queries on models and results.
 Start with [README.md](README.md) and [docs/architecture.md](docs/architecture.md).
 
@@ -45,7 +46,7 @@ WebAssembly (Emscripten SDK on the PATH; libhdf5 for WebAssembly built once with
 
 ```bash
 scripts/build_wasm.sh <work folder>
-node --test wasm/test/smoke.test.mjs
+node --test wasm/test/*.test.mjs
 ```
 
 ## Way of working

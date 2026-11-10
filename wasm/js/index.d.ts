@@ -17,13 +17,93 @@ export interface ArchiveWriteOptions {
   title?: string; subtitle?: string; label?: string;
 }
 
+export type CardScalar = number | string | null | { real: number };
+// Group values are arrays of objects; a one-field group also accepts an array of scalars.
+export interface CardData {
+  [name: string]: CardScalar | CardData | readonly (CardScalar | CardData)[];
+}
+export type CardContent = { comment?: string; form?: string } & (
+  { fields: ArrayLike<CardScalar>; values?: never } | { values: CardData; fields?: never }
+);
+export type CardDefinition = CardContent & { type: string };
+// A key identifies a card within its model/part, independently of its editable ID or set ID.
+export interface CardRef { readonly type: string; readonly key: number; readonly id?: number; }
+export interface AddedCard extends CardRef { readonly id: number; }
+export interface CardBatchResult { type: string; ids: Int32Array; keys: Uint32Array; }
+export type CardBatchColumn = CardScalar | ArrayLike<CardScalar>;
+
+export interface LayoutField { name: string; kind: string; slot?: number; offset?: number; default?: string; span?: number; }
+export interface LayoutGroup {
+  name: string; fields: LayoutField[]; firstSlot?: number; period?: number; fixedCount?: number; countField?: string;
+  list?: LayoutGroup;
+}
+export interface CardSchema {
+  fields: LayoutField[]; group?: LayoutGroup; nextGroups?: LayoutGroup[];
+  sections?: { name: string; kinds: { key: string; name: string; fields?: LayoutField[]; list?: LayoutGroup }[] };
+  forms?: (CardSchema & { name: string; when?: { field?: string; values?: string[]; kinds?: string[]; blankSlot?: number; filledSlot?: number } })[];
+  note?: string;
+}
+
+export type ControlValue = number | string | null | ArrayLike<number | string>;
+export interface CaseCommandDescription {
+  name: string; shape: string; variants: string[]; keywords: string[]; sectionKind: string; blockKind: string; inBlock: boolean;
+}
+export interface ControlRecord {
+  name: string;
+  // Use fields for arbitrary catalogue records (sets, parameters, section or output-block headers).
+  fields?: ArrayLike<ControlValue>;
+  value?: ControlValue;
+  options?: string[];
+  variant?: string;
+  comment?: string;
+}
+export interface CaseEntrySnapshot {
+  key: number; name: string; kind: "command" | "output" | "set" | "parameter" | "metadata";
+  value: number | string | number[] | Float64Array | null;
+  variant: string; options: string[]; number: number; members: string[]; comment: string; loadSequence: number | null;
+}
+export type CaseSectionKind = "global" | "subcase" | "subcaseCombination" | "symmetrySubcase" | "symmetryCombination" |
+  "repeatSubcase" | "step" | "substep" | "auxiliaryCase";
+export interface CaseSectionSnapshot {
+  key: number; kind: CaseSectionKind; id: number; entries: CaseEntrySnapshot[]; children: CaseSectionSnapshot[];
+}
+export interface CaseSection {
+  readonly key: number;
+  snapshot(): CaseSectionSnapshot;
+  set(name: string, value?: ControlValue, options?: { options?: string[]; variant?: string; comment?: string }): number;
+  setCommands(commands: readonly ControlRecord[]): Uint32Array;
+  setSet(id: number, members: ArrayLike<number | string>, comment?: string): number;
+  setParameter(name: string, value: ControlValue, comment?: string): number;
+  effective(name: string, variant?: string): CaseEntrySnapshot | null;
+  effectiveOutputs(name: string): CaseEntrySnapshot[];
+  removeEntry(key: number): boolean;
+  remove(name: string, variant?: string): boolean;
+  addStep(id: number, options?: { commands?: readonly ControlRecord[] }): CaseSection;
+  addSubstep(id: number, options?: { commands?: readonly ControlRecord[] }): CaseSection;
+  renumber(id: number): void;
+  removeSection(): boolean;
+}
+export interface CaseControl {
+  readonly global: CaseSection;
+  sections(): CaseSectionSnapshot[];
+  section(key: number): CaseSection;
+  addSubcase(id: number, options?: { kind?: Exclude<CaseSectionKind, "global" | "step" | "substep" | "auxiliaryCase">;
+    commands?: readonly ControlRecord[] }): CaseSection;
+  addAuxiliaryCase(): CaseSection;
+  // Replaces the complete section from structured records. All previous case handles become stale.
+  replace(records: readonly ControlRecord[]): void;
+  records(): ControlRecord[];
+}
+export interface PartDefinition { kind?: string; id?: number; massId?: number; appends?: boolean; }
+
 // A named value of a card: a number, a list (Float64Array), a text, a list of texts, or null when blank.
 export type CardValue = number | Float64Array | string | string[] | null;
 
-// A card read by ID. Each named value is also a property of its own (card.xyz), unless its name is one of the six below.
+// A card read by ID. Each named value is also a property of its own (card.xyz), unless its name is one of the seven below.
 export interface Card {
   type: string;                       // "Node"
   id: number;
+  key: number;
   values: Record<string, CardValue>;  // the stored fields of the card type, and the computed values asked for
   fields: string[];                   // the fields as written, field 1 first ("" for a blank field)
   text: string;                       // the card as one model record
@@ -40,6 +120,29 @@ export interface CardsById {
 }
 
 export interface Deck {
+  copy(): Deck; // independent copy; column buffers are shared until edited
+  // Empty-model construction uses OorReader.createModel(). Each successful insertion returns stable card keys.
+  addCard(card: CardDefinition): AddedCard;
+  addCards(cards: readonly CardDefinition[]): AddedCard[];
+  // Fixed layouts only; scalar columns broadcast. Numeric typed arrays cross the boundary once per column.
+  addCardBatch(type: string, columns: Record<string, CardBatchColumn>, options?: { count?: number }): CardBatchResult;
+  cardByKey(ref: CardRef, computed?: string[]): Card | undefined;
+  updateCard(ref: CardRef, card: CardContent): void;
+  setCardValues(ref: CardRef, values: Record<string, CardScalar>): void;
+  removeCardRef(ref: CardRef): boolean;
+  setCardComment(ref: CardRef, comment: string): void;
+  addInclude(path: string, cards: readonly CardDefinition[]): AddedCard[];
+  addPart(part: PartDefinition): Deck;
+  part(part: PartDefinition): Deck | null;
+  parts(): Required<PartDefinition>[];
+  readonly caseControl: CaseControl;
+  setSolution(solution: string | number): void;
+  setExecutive(records: readonly ControlRecord[]): void;
+  executiveRecords(): ControlRecord[];
+  caseRecords(): ControlRecord[];
+  applyDefaults(): void;
+  checkReferences(): Diagnostic[];
+  compact(): void;
   // A native archive containing the model alone.
   writeArchive(path: string, options?: ArchiveWriteOptions): WriteReport;
   // Writes an O_o model file; returns any content that could not be carried, one description per item.
@@ -67,7 +170,7 @@ export interface Deck {
   cardFieldNames(source: string, id: number): { field: number; name: string }[]; // [{ field: 3, name: "thickness" }, ...]
   setCardValue(source: string, id: number, name: string, value: string): void;   // a field by its exact neutral name
   replaceCard(source: string, id: number, text: string): void;                // one model record, same card type
-  addCards(text: string): { type: string; id: number }[];                      // one card or several, all or none
+  addCards(text: string): AddedCard[];                                       // one card or several, all or none
   removeCard(source: string, id: number): boolean;
 
   delete(): void; // frees the C++ object
@@ -209,6 +312,12 @@ export declare class OorReader {
   readFile(path: string, options?: { encoding?: "utf8" | "binary" }): Uint8Array | string;
   removeFile(path: string): void;
   readModel(path: string, options?: { strict?: boolean }): Deck;
+  createModel(): Deck;
+  cardTypes(): string[];
+  solutionCatalogue(): { name: string; number: number }[];
+  caseCommandCatalogue(): CaseCommandDescription[];
+  // A detached schema snapshot from the compiled catalogue. Field names are exact and case-sensitive.
+  cardSchema(type: string): CardSchema;
   openResults(path: string): Results;
   createResults(tables: MemoryTable[], label?: string): Results;
   runQuery(name: string, inputs?: { deck?: Deck | null; results?: Results | null; args?: Record<string, unknown> }): QueryTable;
@@ -231,7 +340,7 @@ export declare class OorReader {
   cardTypesOf(deck: Deck, category: "elements" | "properties" | "materials" | "methods" | "loads" | "constraints" |
     "coordinates" | "nodes" | "points"): string[];
   displacementRotations(deck: Deck): Float64Array;
-  modelVersions(deck: Deck): { structure: number; content: number };
+  modelVersions(deck: Deck): { structure: number; content: number; control: number };
 }
 
 export declare function loadOorReader(options?: Record<string, unknown>): Promise<OorReader>;

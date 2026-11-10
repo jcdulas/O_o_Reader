@@ -236,7 +236,7 @@ public:
             m_out.line("[case]");
             ControlRecords::writeCase(caseControl, m_out);
         }
-        if (m_model.nextKeyValue() > 0 || !m_model.markers().empty())
+        if (m_model.cardCount() > 0 || !m_model.markers().empty())
             appendModel(m_model, "[model]");
         for (const std::unique_ptr<Model>& part : m_model.parts())
             appendModel(*part, partLine(*part->partInfo()));

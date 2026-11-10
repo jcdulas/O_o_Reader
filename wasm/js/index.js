@@ -11,6 +11,7 @@
 // includes), and take the files written out of it with `readFile`.
 
 import createOorReaderCore from "./oor_reader_core.js";
+import { installModelEditing } from "./model-editing.js";
 
 // True when the JavaScript runtime runs 64-bit WebAssembly (Memory64), which the module needs: the smallest module that
 // declares a 64-bit memory (magic number, version, then a memory section with the memory64 flag) must validate.
@@ -32,8 +33,21 @@ export async function loadOorReader(options = {}) {
         "use Node.js 24 or later, or a browser that supports Memory64.");
   }
   const core = await createOorReaderCore(options);
+  // Embind checks argument counts in assertion builds. Keep optional public options optional in every build.
+  for (const name of ["writeModel", "writeArchive"]) optionalOptions(core.Deck.prototype, name, 1);
+  optionalOptions(core.Deck.prototype, "toModelText", 0);
+  for (const name of ["read", "writeArchive", "writeXlsx"]) optionalOptions(core.Results.prototype, name, 1);
   addCardAccess(core.Deck.prototype);
-  return new OorReader(core);
+  const editing = installModelEditing(core);
+  return new OorReader(core, editing);
+}
+
+function optionalOptions(prototype, name, required) {
+  const native = prototype[name];
+  prototype[name] = function(...args) {
+    if (args.length === required) args.push({});
+    return Reflect.apply(native, this, args);
+  };
 }
 
 // The categories of cards reached by ID on a deck (deck.nodes[11], deck.elements[10], ...), and the computed values a
@@ -45,7 +59,7 @@ const CARD_CATEGORIES = {
   materials: { source: "materials", computed: [] },
   coords: { source: "coordinates", computed: [] },
 };
-const CARD_KEYS = ["type", "id", "values", "fields", "text", "comment"];
+const CARD_KEYS = ["type", "id", "key", "values", "fields", "text", "comment"];
 
 // A card as JavaScript code reads it: { type, id, values, fields, text, comment }, and each named value also as a
 // property of its own (card.xyz is card.values.xyz) unless its name is one of those six.
@@ -80,9 +94,9 @@ function cardObject(deck, view, computed) {
             `or use deck.setCardField(type, id, field, text)`,
         );
       }
-      const { type, id } = target.card;
-      deck.setCardValue(type, id, property, value === null || value === undefined ? "" : String(value));
-      target.card = cardFromView(deck.card(type, id, computed));
+      const { type, key } = target.card;
+      deck._setCardValueByKey(type, key, property, value == null ? "" : String(value));
+      target.card = cardFromView(deck.cardByKey({ type, key }, computed));
       return true;
     },
   });
@@ -119,8 +133,9 @@ function addCardAccess(prototype) {
 }
 
 export class OorReader {
-  constructor(core) {
+  constructor(core, editing) {
     this.core = core;
+    this.editing = editing;
   }
 
   // The version of the library.
@@ -152,6 +167,12 @@ export class OorReader {
   readModel(path, options = {}) {
     return this.core.Deck.readModel(path, { strict: options.strict ?? false });
   }
+
+  createModel() { return this.core.Deck.createModel(); }
+  cardSchema(type) { return this.editing.cardSchema(type); }
+  cardTypes() { return this.editing.cardTypes(); }
+  solutionCatalogue() { return this.core.solutionCatalogue(); }
+  caseCommandCatalogue() { return this.core.caseCommandCatalogue(); }
 
   // ---- results
 

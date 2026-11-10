@@ -80,6 +80,24 @@ paths and writers.*
   `io/zip/Zip.cpp` (zlib); the XML of the sheets is written by hand, with no third-party library.
 - **Tables made in memory** (`results/core/MemoryResults.hpp`): how a program hands results to the library.
 
+## Model construction and editing
+
+The [construction API](model-construction.md) has three responsibilities. The JavaScript adapter in
+`wasm/js/model-editing.js` maps named objects through the cached compiled card catalogue and offers lightweight
+case-section handles. `wasm/src/ModelEditingBindings.cpp` converts objects and typed arrays, returning owned snapshots.
+`api/CardEdits` and `api/ControlEdits` validate batches and edit the existing native model structures. C++ tests exercise
+that domain logic independently of JavaScript.
+
+Fixed-layout card batches enter typed field readers without decimal conversion. Identifier indexes and column
+capacity are reserved by batch. All card rows are validated before IDs are registered; failed temporary rows remain
+invisible tombstones. A successful replacement calls the table's `store` function, retaining the original key and row,
+and tombstones its temporary input row. It does not rebuild the rest of the table. Explicit compaction reclaims dead
+rows while retaining keys. Copy-on-write buffers remain snapshots when a model or query shares them.
+
+Case edits use the same command catalogue, value checks and inheritance rules as model input. Card data and control
+data have independent revision counters. Full control replacement assigns fresh keys; small edits retain section
+identity. Part decks alias the owning root's shared pointer, keeping their models alive without raw JS pointers.
+
 ## How a query runs
 
 A named query (`src/query/named/<family>/<query>.cpp`, one class each) receives the model, the result sets and its
@@ -106,7 +124,7 @@ layout and metadata rather than exposing the reader's memory.
 ## Tests
 
 - `tests/cpp/<module>/`: one Catch2 executable per module; each test case is a ctest test. They run natively only.
-- `wasm/test/smoke.test.mjs`: the WebAssembly package end to end, in Node.js.
+- `wasm/test/*.test.mjs`: the WebAssembly package and structured model-construction API end to end, in Node.js.
 - The tests of the archive and the workbook (`tests/cpp/results/ArchiveTest.cpp`, `XlsxTest.cpp`) write tables and
   read them back (the workbook through `io::readZip`).
 - `tests/cpp/results/ArchiveModelTest.cpp` sends the main validation models through native columns and compares card

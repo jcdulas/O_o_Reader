@@ -39,6 +39,16 @@ struct DiagnosticText
 class Deck
 {
 public:
+    // An empty in-memory model; no virtual file or text parsing is needed.
+    [[nodiscard]] static std::shared_ptr<Deck> createModel();
+    // An independent model sharing column buffers until the first edit, preserving keys and source structure.
+    [[nodiscard]] std::shared_ptr<Deck> copy() const;
+    // Part handles share ownership of the root, so they remain valid after its JS handle is deleted.
+    [[nodiscard]] std::shared_ptr<Deck> addPart(const model::PartInfo& info) const;
+    [[nodiscard]] std::shared_ptr<Deck> part(const std::string& kind, std::int64_t id, std::int64_t massId = 0) const;
+    [[nodiscard]] std::vector<model::PartInfo> parts() const;
+    void applyDefaults() const;
+    [[nodiscard]] std::vector<DiagnosticText> checkReferences() const;
     // Detects a native archive by content; otherwise reads model records and their Include files.
     // Throws IoError when the file cannot be read, DeckError in strict mode.
     [[nodiscard]] static std::shared_ptr<Deck> readModel(const std::string& path,

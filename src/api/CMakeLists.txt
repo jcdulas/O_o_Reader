@@ -5,6 +5,7 @@ add_library(oor_api STATIC
     Results.cpp
     Queries.cpp
     CardEdits.cpp
+    ControlEdits.cpp
     QueryArgumentsJson.cpp
     CardTables.cpp)
 add_library(oor::api ALIAS oor_api)

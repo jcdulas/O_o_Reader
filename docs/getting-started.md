@@ -25,6 +25,8 @@ Use `.oos` for reviewing and editing records as text. Use `.ooh5` to save a mode
 numeric fields directly. An arbitrary HDF5 file is not a native model archive: renaming its extension does not convert
 its contents. Table packages produced by `toPackage()` are a separate transport between Reader and Solver.
 
+For direct object input without a file, see [constructing models from JavaScript](model-construction.md).
+
 ## Read and query a model
 
 Save this example as `read-model.mjs` in the repository root after building the WebAssembly package:

@@ -6,13 +6,84 @@
 #include "oor/model/core/CardRegistry.hpp"
 #include "oor/model/core/ModelFileReader.hpp"
 #include "oor/model/core/ModelFileWriter.hpp"
-#include "oor/results/archive/ArchiveResultFile.hpp"
+#include "oor/model/references/ReferenceChecker.hpp"
 #include "oor/results/archive/ArchiveModel.hpp"
+#include "oor/results/archive/ArchiveResultFile.hpp"
 
 #include <map>
 
 namespace oor::api
 {
+
+std::shared_ptr<Deck> Deck::createModel()
+{
+    return std::shared_ptr<Deck>(new Deck(std::make_shared<model::Model>()));
+}
+
+std::shared_ptr<Deck> Deck::copy() const
+{
+    auto owner = std::make_shared<model::Model>(m_model->root().copy());
+    if (!m_model->isPart())
+        return std::shared_ptr<Deck>(new Deck(std::move(owner)));
+    const auto& info = *m_model->partInfo();
+    auto* part = owner->findPart(info.kind, info.id, info.massId);
+    return std::shared_ptr<Deck>(new Deck(std::shared_ptr<model::Model>(owner, part)));
+}
+
+std::shared_ptr<Deck> Deck::addPart(const model::PartInfo& info) const
+{
+    if (m_model->isPart())
+        throw base::UsageError("parts belong to the root model");
+    const bool unnumbered = info.kind == "ActivePart" || info.kind == "PassivePart";
+    if (info.kind.empty() || info.kind.find_first_of(";\r\n[]") != std::string::npos ||
+        (unnumbered ? info.id != 0 : info.id <= 0) || info.massId < 0)
+        throw base::UsageError("a part needs a kind, a positive ID and a nonnegative mass ID");
+    if (m_model->findPart(info.kind, info.id, info.massId))
+        throw base::UsageError("the part already exists");
+    model::Model& added = m_model->addPart(info);
+    return std::shared_ptr<Deck>(new Deck(std::shared_ptr<model::Model>(m_model, &added)));
+}
+
+std::shared_ptr<Deck> Deck::part(const std::string& kind, std::int64_t id, std::int64_t massId) const
+{
+    model::Model* found = m_model->findPart(kind, id, massId);
+    return found ? std::shared_ptr<Deck>(new Deck(std::shared_ptr<model::Model>(m_model, found))) : nullptr;
+}
+
+std::vector<model::PartInfo> Deck::parts() const
+{
+    std::vector<model::PartInfo> result;
+    for (const auto& item : m_model->root().parts())
+        result.push_back(*item->partInfo());
+    return result;
+}
+
+void Deck::applyDefaults() const
+{
+    m_model->applyDefaults();
+}
+
+std::vector<DiagnosticText> Deck::checkReferences() const
+{
+    base::DiagnosticSink sink;
+    // Reference visitors may write unchanged IDs; scan a copy to isolate their column writes.
+    model::Model copy = m_model->root().copy();
+    if (m_model->isPart())
+    {
+        const auto& info = *m_model->partInfo();
+        model::ReferenceChecker::check(*copy.findPart(info.kind, info.id, info.massId), sink);
+    }
+    else
+    {
+        model::ReferenceChecker::check(copy, sink);
+        for (const auto& part : copy.parts())
+            model::ReferenceChecker::check(*part, sink);
+    }
+    std::vector<DiagnosticText> result;
+    for (const auto& item : sink.diagnostics())
+        result.push_back(diagnosticText(item));
+    return result;
+}
 
 DiagnosticText diagnosticText(const base::Diagnostic& diagnostic)
 {
@@ -71,7 +142,8 @@ std::string Deck::toModelText(const DeckWriteSettings& settings) const
     return model::ModelFileWriter::toString(*m_model, modelFileOptionsOf(settings));
 }
 
-results::ResultWriteReport Deck::writeArchive(const std::string& path, const results::ArchiveWriteOptions& options) const
+results::ResultWriteReport Deck::writeArchive(const std::string& path,
+                                              const results::ArchiveWriteOptions& options) const
 {
     auto settings = options;
     settings.model = m_model;

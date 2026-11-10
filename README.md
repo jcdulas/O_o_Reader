@@ -3,6 +3,8 @@
 A C++20 library, compiled to WebAssembly for the web, that:
 
 - reads and writes its own **model format** (`.oos`, [docs/model-format.md](docs/model-format.md));
+- constructs and edits models from **JavaScript objects and typed arrays**, including load cases, includes and parts
+  ([docs/model-construction.md](docs/model-construction.md));
 - stores models and results in its own **HDF5 archive** (`.ooh5`), together or separately: typed model columns,
   compressed buffers and model loading on demand ([docs/archive-format.md](docs/archive-format.md));
 - writes results as an **Excel workbook** (.xlsx) for people: an index sheet and one sheet per table;
@@ -93,7 +95,7 @@ WebAssembly, made once by `scripts/build_hdf5_wasm.sh <work folder>`.
 
 ```bash
 scripts/build_wasm.sh <work folder of build_hdf5_wasm.sh>   # build/wasm/dist: the npm package
-node --test wasm/test/smoke.test.mjs                        # the end-to-end test, in Node.js 24+
+node --test wasm/test/*.test.mjs                        # the end-to-end test, in Node.js 24+
 ```
 
 ## Licence

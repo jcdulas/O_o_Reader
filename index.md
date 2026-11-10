@@ -9,6 +9,7 @@ Read and edit `.oos` model records and native `.ooh5` model/results archives, qu
 - [Getting started](docs/getting-started.md): build requirements and a first working example.
 - [Project overview](README.md): capabilities, repository layout and build commands.
 - [API reference](docs/api.rst): the current JavaScript types and C++ entry points, included directly from source.
+- [Construct models from JavaScript](docs/model-construction.md): cards, load cases, includes, parts and batch input.
 - [JavaScript optimization](docs/optimization.md): design points, derivatives and model updates.
 - [Architecture with diagrams](docs/architecture.md): module dependencies, data ownership and execution flow.
 - [Module guide](docs/modules.md): implementation structure and detailed technical guides.
@@ -41,6 +42,7 @@ README
 docs/model-format
 docs/model-format-cards
 docs/wasm-api
+docs/model-construction
 docs/archive-format
 docs/table-package
 docs/naming

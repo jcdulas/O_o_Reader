@@ -73,47 +73,15 @@ public:
 
     void moveLastRowTo(std::uint32_t row) final
     {
-        // The rows after `row` are taken out (with what the row book knows of them) and put back after the new card:
-        // the table only offers append and keepRows, which keep the rows in order.
-        struct SavedRow
-        {
-            CardT card;
-            base::CardKey key;
-            bool alive;
-            std::vector<std::uint8_t> digits;
-        };
+        // Every typed table supplies store(). Updating one card therefore touches only its columns, rather than
+        // rebuilding every row after it. The temporary appended row is a tombstone, reclaimed by Model::compact().
         const auto last = static_cast<std::uint32_t>(m_rows.rowCount() - 1);
-        const auto save = [&](std::uint32_t from)
-        {
-            const std::span<const std::uint8_t> digits = m_rows.significantDigits(from);
-            return SavedRow{derived().card(from), m_rows.keyAt(from), m_rows.isAlive(from),
-                            std::vector<std::uint8_t>(digits.begin(), digits.end())};
-        };
+        if (row == last)
+            return;
         const CardT replacement = derived().card(last);
-        const base::CardKey key = m_rows.keyAt(row);
-        std::vector<SavedRow> after;
-        for (std::uint32_t from = row + 1; from < last; ++from)
-            after.push_back(save(from));
-        std::vector<std::uint32_t> before(row);
-        std::vector<std::uint32_t> deadBefore;
-        for (std::uint32_t kept = 0; kept < row; ++kept)
-        {
-            before[kept] = kept;
-            if (!m_rows.isAlive(kept))
-                deadBefore.push_back(kept);
-        }
-        derived().keepRows(before);
-        m_rows.applyCompaction(before); // every row kept is alive again: the dead ones are killed below
-        for (const std::uint32_t dead : deadBefore)
-            m_rows.kill(dead);
-        (void)derived().append(replacement, key);
-        for (const SavedRow& saved : after)
-        {
-            const std::uint32_t added = derived().append(saved.card, saved.key);
-            m_rows.setSource(added, saved.digits);
-            if (!saved.alive)
-                m_rows.kill(added);
-        }
+        derived().store(row, replacement);
+        m_rows.forgetSource(row);
+        m_rows.kill(last);
     }
 
     [[nodiscard]] base::EntityId idAt(std::uint32_t row) const final { return derived().idAtRow(row); }

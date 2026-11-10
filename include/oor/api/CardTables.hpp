@@ -23,9 +23,9 @@ struct CardTableColumns
     std::vector<std::string> computed;
 };
 
-// What a card table is made of. `source` names the cards: a card type ("ShellQuad4", "ShellProp", "LanczosEigenMethod"),
-// "nodes" for the grid points or "points" for the other points (SPOINT, EPOINT, ...). Throws QueryError for an unknown
-// name.
+// What a card table is made of. `source` names the cards: a card type ("ShellQuad4", "ShellProp",
+// "LanczosEigenMethod"), "nodes" for the grid points or "points" for the other points (SPOINT, EPOINT, ...). Throws
+// QueryError for an unknown name.
 [[nodiscard]] CardTableColumns cardTableColumns(const std::string& source);
 
 // The table of the live cards of `source`, sorted by ID: the columns asked for, or every stored column when `columns`
@@ -43,13 +43,13 @@ struct CardTableColumns
 // system at the grid point (the identity for CD = 0).
 [[nodiscard]] std::vector<double> displacementRotations(const Deck& deck);
 
-// The version counters of the model: the structure version changes when cards are added or removed, the content
-// version when any value changes. A program that keeps results of a model compares them to know whether they still
-// hold.
+// Independent revision counters: connectivity and identifiers, card content, and analysis controls. A client
+// compares the relevant counter before reusing derived geometry, card tables or case selections.
 struct ModelVersions
 {
     std::uint64_t structure = 0;
     std::uint64_t content = 0;
+    std::uint64_t control = 0;
 };
 [[nodiscard]] ModelVersions modelVersions(const Deck& deck);
 

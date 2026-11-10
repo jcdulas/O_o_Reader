@@ -4,6 +4,8 @@
 //
 // Errors: every C++ exception becomes a JavaScript Error with the message of the exception.
 
+#include "BindingSupport.hpp"
+#include "ModelEditingBindings.hpp"
 #include "oor/api/CardEdits.hpp"
 #include "oor/api/CardTables.hpp"
 #include "oor/api/Deck.hpp"
@@ -34,84 +36,9 @@ namespace
 
 using emscripten::val;
 using namespace oor;
+using namespace oor::wasm;
 
 // ------------------------------------------------------------------------------------------------- helpers
-
-// Runs `work`; a C++ exception is thrown again as a JavaScript Error.
-template <typename Work>
-auto guarded(Work work) -> decltype(work())
-{
-    try
-    {
-        return work();
-    }
-    catch (const std::exception& error)
-    {
-        val::global("Error").new_(std::string(error.what())).throw_();
-    }
-    catch (...)
-    {
-        val::global("Error").new_(std::string("unknown C++ error")).throw_();
-    }
-    __builtin_unreachable();
-}
-
-// A member of a JavaScript options object, or `fallback` when the object or the member is missing.
-template <typename T>
-T option(const val& options, const char* name, T fallback)
-{
-    if (options.isUndefined() || options.isNull())
-        return fallback;
-    const val member = options[name];
-    if (member.isUndefined() || member.isNull())
-        return fallback;
-    return member.as<T>();
-}
-
-// Copies of C++ vectors as JavaScript typed arrays and arrays.
-template <typename T>
-val typedArray(const char* type, const T* data, std::size_t count)
-{
-    return val::global(type).new_(emscripten::typed_memory_view(count, data));
-}
-val int32Array(const std::vector<std::int32_t>& values)
-{
-    return typedArray("Int32Array", values.data(), values.size());
-}
-val float64Array(const std::vector<double>& values)
-{
-    return typedArray("Float64Array", values.data(), values.size());
-}
-val textArray(const std::vector<std::string>& texts)
-{
-    val array = val::array();
-    for (const std::string& text : texts)
-        array.call<void>("push", text);
-    return array;
-}
-
-template <typename T>
-std::vector<T> vectorOf(const val& array)
-{
-    if (array.isUndefined() || array.isNull())
-        return {};
-    return emscripten::vecFromJSArray<T>(array);
-}
-
-val diagnosticsArray(const std::vector<api::DiagnosticText>& diagnostics)
-{
-    val array = val::array();
-    for (const api::DiagnosticText& diagnostic : diagnostics)
-    {
-        val item = val::object();
-        item.set("severity", diagnostic.severity);
-        item.set("code", diagnostic.code);
-        item.set("message", diagnostic.message);
-        item.set("location", diagnostic.location);
-        array.call<void>("push", item);
-    }
-    return array;
-}
 
 val reportObject(const results::ResultWriteReport& report)
 {
@@ -212,24 +139,6 @@ val deckDiagnostics(api::Deck& deck)
 // ------------------------------------------------------------------------------------------------- cards by ID
 
 // A named value of a card as a JavaScript value: a number, an array of numbers, a text, an array of texts or null.
-val fieldValue(const api::FieldValue& value)
-{
-    switch (value.kind)
-    {
-    case api::FieldValue::Kind::Number:
-        return val(value.number);
-    case api::FieldValue::Kind::Numbers:
-        return float64Array(value.numbers);
-    case api::FieldValue::Kind::Text:
-        return val(value.text);
-    case api::FieldValue::Kind::Texts:
-        return textArray(value.texts);
-    case api::FieldValue::Kind::Missing:
-        break;
-    }
-    return val::null();
-}
-
 // deck.card(source, id, computed): { type, id, values: { name: value }, fields: [...], text, comment }, or null.
 val deckCard(api::Deck& deck, const std::string& source, int id, const val& computed)
 {
@@ -239,17 +148,7 @@ val deckCard(api::Deck& deck, const std::string& source, int id, const val& comp
             const std::optional<api::CardView> card = api::findCard(deck, source, id, vectorOf<std::string>(computed));
             if (!card)
                 return val::null();
-            val object = val::object();
-            object.set("type", card->type);
-            object.set("id", card->id);
-            val values = val::object();
-            for (const auto& [name, value] : card->values)
-                values.set(name, fieldValue(value));
-            object.set("values", values);
-            object.set("fields", textArray(card->fields));
-            object.set("text", card->text);
-            object.set("comment", card->comment);
-            return object;
+            return cardObject(*card);
         });
 }
 
@@ -290,6 +189,7 @@ val deckAddCards(api::Deck& deck, const std::string& text)
                 val item = val::object();
                 item.set("type", card.type);
                 item.set("id", card.id);
+                item.set("key", card.key);
                 added.call<void>("push", item);
             }
             return added;
@@ -803,6 +703,7 @@ val modelVersions(const std::shared_ptr<api::Deck>& deck)
             val result = val::object();
             result.set("structure", static_cast<double>(versions.structure));
             result.set("content", static_cast<double>(versions.content));
+            result.set("control", static_cast<double>(versions.control));
             return result;
         });
 }
@@ -898,8 +799,8 @@ EMSCRIPTEN_BINDINGS(oor_reader)
 
     function("version", &version);
 
-    class_<api::Deck>("Deck")
-        .smart_ptr<std::shared_ptr<api::Deck>>("DeckPointer")
+    auto deckBinding = class_<api::Deck>("Deck");
+    deckBinding.smart_ptr<std::shared_ptr<api::Deck>>("DeckPointer")
         .class_function("readModel", &readModel)
         .function("writeModel", &writeModel)
         .function("writeArchive", &deckWriteArchive)
@@ -917,6 +818,7 @@ EMSCRIPTEN_BINDINGS(oor_reader)
         .function("removeCard", &deckRemoveCard)
         .function("cardFieldNames", &deckCardFieldNames)
         .function("setCardValue", &deckSetCardValue);
+    oor::wasm::bindModelEditing(deckBinding);
 
     class_<api::Results>("Results")
         .smart_ptr<std::shared_ptr<api::Results>>("ResultsPointer")

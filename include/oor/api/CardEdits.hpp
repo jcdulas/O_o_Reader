@@ -2,9 +2,12 @@
 
 #include "oor/api/Deck.hpp"
 #include "oor/base/ids/EntityId.hpp"
+#include "oor/model/format/FieldValue.hpp"
 
+#include <functional>
 #include <limits>
 #include <optional>
+#include <span>
 #include <string>
 #include <utility>
 #include <vector>
@@ -43,6 +46,7 @@ struct CardView
 {
     std::string type; // "Node"
     base::EntityId id = 0;
+    std::uint32_t key = 0;
     // The named values: every stored field of the card type, then the computed columns asked for ("xyzGlobal").
     std::vector<std::pair<std::string, FieldValue>> values;
     // The fields of the card as it is written, field 1 first (the card name is not a field). A blank field is "".
@@ -90,7 +94,36 @@ struct AddedCard
 {
     std::string type;
     base::EntityId id = 0;
+    std::uint32_t key = 0;
 };
+
+// Compact field values, as in the layout catalogue. Typed fixed-layout input reaches the card reader without
+// decimal formatting. Complex layouts use the same layout mapping and validation as file input.
+struct CardInput
+{
+    std::string type;
+    std::vector<model::FieldValue> fields;
+    std::optional<std::string> comment; // absent preserves the existing comment on replacement
+    std::string form{};                 // optional selected form, checked against the record discriminant
+};
+
+// Singular construction refuses records that expand to multiple entities, without changing live data.
+AddedCard insertCard(const Deck& deck, const CardInput& card);
+std::vector<AddedCard> insertCards(const Deck& deck, std::span<const CardInput> cards);
+// A homogeneous batch, visited one row at a time. The caller keeps its column buffers; records are not accumulated.
+std::vector<AddedCard> insertCardBatch(const Deck& deck, const std::string& type, std::size_t count,
+                                       const std::function<CardInput(std::size_t)>& row);
+[[nodiscard]] std::optional<CardView> findCardByKey(const Deck& deck, const std::string& type, std::uint32_t key,
+                                                    const std::vector<std::string>& computed = {});
+void updateCardByKey(const Deck& deck, const std::string& type, std::uint32_t key, const CardInput& card);
+bool removeCardByKey(const Deck& deck, const std::string& type, std::uint32_t key);
+void setCardValueByKey(const Deck& deck, const std::string& type, std::uint32_t key, const std::string& name,
+                       const std::string& value);
+void setCardValuesByKey(const Deck& deck, const std::string& type, std::uint32_t key,
+                        std::span<const std::pair<std::string, model::FieldValue>> values);
+void setCardCommentByKey(const Deck& deck, const std::string& type, std::uint32_t key, const std::string& comment);
+// Appends a separate model source and its cards, retaining Include boundaries for split model output.
+std::vector<AddedCard> appendInclude(const Deck& deck, const std::string& path, std::span<const CardInput> cards);
 // Adds the model records written in `text` (one card per line), at the end of the model,
 // all or none. Throws UsageError for a card the library does not know or cannot read, DuplicateIdError for a taken ID.
 std::vector<AddedCard> addCards(const Deck& deck, const std::string& text);

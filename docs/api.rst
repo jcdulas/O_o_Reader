@@ -39,6 +39,13 @@ CardEdits.hpp
    :language: cpp
    :linenos:
 
+ControlEdits.hpp
+~~~~~~~~~~~~~~~~
+
+.. literalinclude:: ../include/oor/api/ControlEdits.hpp
+   :language: cpp
+   :linenos:
+
 Queries.hpp
 ~~~~~~~~~~~
 

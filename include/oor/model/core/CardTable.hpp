@@ -97,10 +97,11 @@ public:
     // A copy that shares every column buffer with this table (copy on write), for Model::copy().
     [[nodiscard]] virtual std::unique_ptr<CardTable> clone() const = 0;
 
-    // Puts the card of the last row in `row`, in place of the card there, and drops the last row: how an edited card
-    // takes the place of the card it replaces (the reader appends the new card; this moves it back). The card keeps the
-    // key of `row`, so the keys stay in increasing order (RowBook::findRow), and every other row keeps its number and
-    // its source precision, so the ID indexes of the model stay valid. Edited values discard their source precision.
+    // Puts the card of the last row in `row`, in place of the card there, and tombstones the last row: how an edited
+    // card takes the place of the card it replaces (the reader appends the new card; this moves it back). The card
+    // keeps the key of `row`; the appended row must have a fresh key, so keys stay in increasing order
+    // (RowBook::findRow). Every other row keeps its number and its source precision, so the ID indexes of the model
+    // stay valid. Edited values discard their source precision.
     virtual void moveLastRowTo(std::uint32_t row) = 0;
 
 protected:

@@ -161,7 +161,7 @@ std::vector<double> displacementRotations(const Deck& deck)
 
 ModelVersions modelVersions(const Deck& deck)
 {
-    return {deck.model()->structureVersion(), deck.model()->contentVersion()};
+    return {deck.model()->structureVersion(), deck.model()->contentVersion(), deck.model()->controlVersion()};
 }
 
 } // namespace oor::api

@@ -2,7 +2,7 @@
 
 The package `oor-reader` (built in `build/wasm/dist`) runs the whole library in a browser, a web worker or Node.js.
 It is a WebAssembly module (`oor_reader_core.wasm`, made by Emscripten) and a small JavaScript wrapper
-(`index.js`, with its types in `index.d.ts`).
+(`index.js` and `model-editing.js`, with its types in `index.d.ts`).
 
 The module is **64-bit WebAssembly** (Memory64): it can use up to 16 GB of memory, where 32-bit WebAssembly stops at
 4 GB, so large decks and result sets fit in memory with what is read from them. It needs a runtime that supports
@@ -42,6 +42,9 @@ oor.removeFile("/work/run.ooh5");               // free the memory of a file you
 
 ## Models
 
+Use `oor.createModel()` to construct an empty model without a file. The [model construction guide](model-construction.md)
+covers object input, typed batches, stable keys, load cases, controls, includes and parts. These APIs also edit imported models.
+
 ```js
 const deck = oor.readModel("/work/plate.oos", { strict: false });  // a model file (model-format.md)
 deck.cardCounts();        // { IsoMat: 1, Node: 6, ShellQuad4: 2, ShellProp: 1 }: card types by their neutral names
@@ -78,7 +81,7 @@ deck.cardById("SinglePointConstrList", 7);           // any card type ("source")
 deck.nodes.ids();                   // [1, 2, 3, ...]
 ```
 
-A card is `{ type, id, values, fields, text, comment }`; each named value is also a property of the card (`node.xyz` is
+A card is `{ type, id, key, values, fields, text, comment }`; each named value is also a property of the card (`node.xyz` is
 `node.values.xyz`). `fields` are the fields as written, field 1 first: the numbering the editing functions use.
 
 ### Editing cards
@@ -253,7 +256,7 @@ const quads = oor.cardTable(deck, "ShellQuad4", ["id", "propId", "nodes", "nodes
 const nodes = oor.cardTable(deck, "nodes", ["id", "positionFrameId", "displacementFrameId", "permanentConstraints",
                                              "superelementId", "xyzGlobal"]);
 oor.displacementRotations(deck);                         // Float64Array, 9 values per grid point (row-major)
-oor.modelVersions(deck);                                 // { structure, content }
+oor.modelVersions(deck);                                 // { structure, content, control }
 const bytes = quads.toPackage();                         // Uint8Array: the table with its exact Arrow layout
 ```
 
