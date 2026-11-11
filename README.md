@@ -1,5 +1,9 @@
 # O_o_Reader
 
+**[Sphinx documentation](https://jcdulas.github.io/O_o_Reader/)** ·
+[Model construction](https://jcdulas.github.io/O_o_Reader/docs/model-construction.html) ·
+[API reference](https://jcdulas.github.io/O_o_Reader/docs/api.html)
+
 A C++20 library, compiled to WebAssembly for the web, that:
 
 - reads and writes its own **model format** (`.oos`, [docs/model-format.md](docs/model-format.md));
@@ -20,7 +24,7 @@ The project's rules on formats and third-party code are in
 
 [JavaScript optimization](docs/optimization.md): design interfaces, derivatives and accepted model updates.
 
-**[Read online](https://jcdulas.github.io/O_o_Reader/)** · [Architecture with diagrams](docs/architecture.md) · [Documentation index](index.md)
+**[Read Sphinx documentation](https://jcdulas.github.io/O_o_Reader/)** · [Architecture with diagrams](docs/architecture.md) · [Documentation index](index.md)
 
 The Documentation workflow publishes the HTML site and provides a downloadable archive.
 See [read, download and build instructions](docs/documentation.md).
