@@ -1,4 +1,5 @@
 #include "oor/api/Design.hpp"
+#include "oor/model/design/DesignableCard.hpp"
 
 #include "oor/analysis/design/DesignApplication.hpp"
 
@@ -8,6 +9,10 @@
 
 namespace oor::api
 {
+std::vector<std::string> designableCards()
+{
+    return model::designableCardNames();
+}
 model::DesignModel designModel(const Deck& deck)
 {
     return model::DesignModel::read(*deck.model());

@@ -104,6 +104,8 @@ model datasets do not use variable-length HDF5 strings.
     markers/files                uint32 [markers]: included source index for Include begin
     markers/text                 string vector [markers]
     placements/keys, files       uint32 [placements]: card key and destination source index
+    documents/names              string vector [documents]: application-owned document names (optional)
+    documents/text               string vector [documents]: UTF-8 document payloads (optional)
     control/executive/            structured control records (see below)
     control/case/                 structured control records
     cards/<t>/                   table t in card_types, decimal index starting at 0
@@ -146,6 +148,11 @@ numeric fields. It rebuilds identifier indexes and preserves card keys, source p
 placements and the part hierarchy. Source paths are descriptive: all card data is inside the archive, and no Include
 reads a file on disk. The model reader validates shapes, types, offsets, dictionary codes, row ordering and overlapping
 alternative fields before using them.
+
+The optional document vectors have matching lengths and unique names within each part. Earlier version 4 archives
+without a `documents` group remain readable. Applications can store a versioned optimization study and optimizer
+state here; the model writer carries documents through copy-on-write edits and archive rewrites. Documents are
+independent of card slots and are not part of `.oos` model text. A `.oos` write reports each omitted document.
 
 `default_masks` preserves fields still awaiting a defaults card added by a later edit. For `Node`, bits 0 to 3 mean
 position frame, displacement frame, permanent constraints and superelement. For `Bar2` and `Beam2`, bits 0 to 4 mean
@@ -242,6 +249,13 @@ and the [JavaScript guide](wasm-api.md#a-model-and-results-in-one-archive) for t
 
 `group`, `kind`, `name`, `table_name`, `subcase`, `analysis_code`, `superelement`, `design_cycle`, `status`,
 `word_size`, `title`, `subtitle`, `label`, with the same meanings.
+
+Named arrays live under the indexed group as typed datasets with their declared shapes. Text columns use the
+archive's string-vector codec. `results.named()` returns the lightweight index and `results.readNamed(index)` reads
+one named payload. `results.addNamed(input)` validates its kind, array shapes and text lengths against
+`oor.namedResultCatalogue()` before writing. Static aeroelastic trim uses named groups for pressures, forces,
+variables, stability derivatives, hinge moments and monitor loads. Structural tables remain under `/index/tables`.
+The `analysis_code` values 101, 103, 105 and 144 identify static, modes, buckling and static aeroelastic output.
 
 ## Reading an archive without this library
 

@@ -120,6 +120,11 @@ export interface CardsById {
 }
 
 export interface Deck {
+  /** Application documents are copied with the model and preserved in .ooh5 archives. */
+  documentNames(): string[];
+  document(name: string): string | null;
+  setDocument(name: string, text: string): void;
+  removeDocument(name: string): boolean;
   copy(): Deck; // independent copy; column buffers are shared until edited
   // Empty-model construction uses OorReader.createModel(). Each successful insertion returns stable card keys.
   addCard(card: CardDefinition): AddedCard;
@@ -256,6 +261,10 @@ export interface MemoryTable {
 }
 
 export interface Results {
+  named(): NamedResultMeta[];
+  readNamed(index: number): NamedResultMeta & { arrays: Record<string, { type: string; shape: number[];
+    values: Int32Array | BigInt64Array | Float32Array | Float64Array }>; texts: Record<string, string[]> };
+  addNamed(input: NamedResultInput): void;
   format(): "archive" | "memory";
   metadata(): {
     format: string; path: string; fileSize: number; producer: string; createdAt: string;
@@ -275,6 +284,17 @@ export interface Results {
     title?: string; subtitle?: string; label?: string; compressionLevel?: number;
   }): WriteReport;
   delete(): void;
+}
+
+export interface NamedResultMeta {
+  kind: string; name: string; subcase: number; analysisCode: number; designCycle: number;
+  attributes: Record<string, string>;
+}
+export interface NamedResultInput {
+  kind: string; name?: string; subcase?: number; analysisCode?: number; designCycle?: number;
+  attributes?: Record<string, string>;
+  arrays: Record<string, { type?: "int32" | "float32" | "float64"; shape: number[]; values: ArrayLike<number> }>;
+  texts?: Record<string, string[]>;
 }
 
 export interface QueryColumn {
@@ -320,6 +340,8 @@ export declare class OorReader {
   cardSchema(type: string): CardSchema;
   openResults(path: string): Results;
   createResults(tables: MemoryTable[], label?: string): Results;
+  namedResultCatalogue(): { kind: string; description: string;
+    arrays: { name: string; type: string; shape: string; text: boolean; optional: boolean }[] }[];
   runQuery(name: string, inputs?: { deck?: Deck | null; results?: Results | null; args?: Record<string, unknown> }): QueryTable;
   optimizationTables(deck: Deck): Record<string, Uint8Array>;
   designVariables(deck: Deck): {
@@ -327,6 +349,8 @@ export declare class OorReader {
       moveLimit: number; dependent: boolean }[];
     problems: string[]; notApplied: { card: string; id: number; reason: string }[];
   };
+  designCapabilities(deck: Deck): { version: number; nativeCards: string[]; problems: string[];
+    notApplied: { card: string; id: number; reason: string }[]; modelDocuments: boolean; generalCardEditing: boolean };
   applyDesignPoint(deck: Deck, ids: number[] | Int32Array, values: number[] | Float64Array,
     options?: { limits?: "error" | "clip" | "ignore"; setInitialValues?: boolean }): {
       variables: Float64Array; changedFields: number; movedGrids: number;

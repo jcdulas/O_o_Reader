@@ -4,6 +4,13 @@ Reader supplies the model and design declarations to a JavaScript-driven optimiz
 response derivatives, Jacobian products and supported Hessian products. See the
 [Solver optimization guide](https://jcdulas.github.io/O_o_Solver/docs/optimization.html) for the complete iteration API,
 matrix conventions, callbacks and derivative limits.
+For parameters and response fields outside native design declarations, see the
+[external optimization guide](https://jcdulas.github.io/O_o_Solver/docs/external-optimization.html). It covers SOL 101,
+103, 105 and 144, generic card/case updates, numerical derivatives, parallel workers and accepted-point archives.
+
+`oor.designCapabilities(deck)` lists Reader's editable card types, pending design problems, declarations it cannot
+apply, and the general card-editing and model-document facilities. Solver's `capabilities(model)` and
+`checkOptimization(model, declarations, settings)` describe its supported analyses and native design fields.
 
 ## Inspect variables and export declarations
 
@@ -22,6 +29,8 @@ cannot write, with their card type, ID and reason.
 `optimizationTables` exports the typed design variables, links, relations, constants, shape terms, compiled equations,
 responses, response arguments, constraints, constraint unions, subcase selections and screening rules. Each value is
 the corresponding query's table package. No pointer into Reader memory is given to Solver.
+The optional `IsoMat.sourceBlankFields` card column identifies which of E, G or Poisson ratio was blank in the
+source. Solver uses it to recompute that implicit elastic constant at each designed point and perturbation.
 
 The model and package formats are unchanged. Existing named queries still expose their complete design metadata;
 use `runQuery` and `queryCatalogue` when an application needs a particular table or selection.

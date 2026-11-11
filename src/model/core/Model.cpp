@@ -129,6 +129,7 @@ Model::Model(const Model& other)
       m_results(other.m_results),
       m_diagnostics(other.m_diagnostics),
       m_control(other.m_control),
+      m_documents(other.m_documents),
       m_files(other.m_files),
       m_markers(other.m_markers),
       m_comments(other.m_comments),
@@ -160,6 +161,7 @@ Model::Model(Model&& other) noexcept
       m_results(std::move(other.m_results)),
       m_diagnostics(std::move(other.m_diagnostics)),
       m_control(std::move(other.m_control)),
+      m_documents(std::move(other.m_documents)),
       m_files(std::move(other.m_files)),
       m_markers(std::move(other.m_markers)),
       m_comments(std::move(other.m_comments)),
@@ -189,6 +191,7 @@ Model& Model::operator=(Model&& other) noexcept
     m_results = std::move(other.m_results);
     m_diagnostics = std::move(other.m_diagnostics);
     m_control = std::move(other.m_control);
+    m_documents = std::move(other.m_documents);
     m_files = std::move(other.m_files);
     m_markers = std::move(other.m_markers);
     m_comments = std::move(other.m_comments);
@@ -204,6 +207,33 @@ void Model::adoptParts() noexcept
 {
     for (const std::unique_ptr<Model>& part : m_parts)
         part->m_owner = this;
+}
+
+const std::map<std::string, std::string>& Model::documents() const noexcept
+{
+    static const std::map<std::string, std::string> EMPTY;
+    return m_documents ? *m_documents : EMPTY;
+}
+
+void Model::setDocument(std::string name, std::string text)
+{
+    if (name.empty() || name.size() > 255 || name.find('\0') != std::string::npos)
+        throw base::UsageError("a document name must contain 1 to 255 bytes without a zero byte");
+    if (const auto found = documents().find(name); found != documents().end() && found->second == text)
+        return;
+    auto next = std::make_shared<std::map<std::string, std::string>>(documents());
+    next->insert_or_assign(std::move(name), std::move(text));
+    m_documents = std::move(next);
+}
+
+bool Model::removeDocument(const std::string& name)
+{
+    if (!documents().contains(name))
+        return false;
+    auto next = std::make_shared<std::map<std::string, std::string>>(documents());
+    next->erase(name);
+    m_documents = std::move(next);
+    return true;
 }
 
 Model& Model::operator=(const Model& other)

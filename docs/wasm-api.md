@@ -199,6 +199,11 @@ const results = oor.createResults([
 
 The members of a table are listed by `MemoryTable` in `index.d.ts`. Writing folders that do not exist yet are made.
 
+For typed results with multiple arrays, use `oor.namedResultCatalogue()` to inspect the permitted kinds and shapes,
+then `results.addNamed({ kind, arrays, texts, subcase, analysisCode })`. The named index is returned by
+`results.named()`; `results.readNamed(index)` loads its typed numeric arrays and text columns. This includes SOL 144
+pressure, force, trim and stability-derivative outputs. Named payloads survive `.ooh5` writes and reopenings.
+
 ### The Excel workbook
 
 `writeXlsx` writes an index sheet (every table, with a link to its sheet) and one sheet per table: what the table is,
@@ -268,6 +273,10 @@ A table package hands a table to another WebAssembly module: [table-package.md](
 `designVariables(deck)` inspects bounds and dependencies, `optimizationTables(deck)` exports owned design table
 packages, and `applyDesignPoint(deck, ids, values)` atomically writes an accepted point. The
 [optimization guide](optimization.md) describes the Solver connection, validation and shape update rules.
+`designCapabilities(deck)` reports which Reader design updates and card edits can be prepared. Model documents
+(`deck.setDocument`, `document`, `documentNames`, `removeDocument`) preserve serializable application state in `.ooh5`.
+The Solver [external optimization guide](https://jcdulas.github.io/O_o_Solver/docs/external-optimization.html)
+shows accepted-point persistence and restoration.
 
 ## Errors
 

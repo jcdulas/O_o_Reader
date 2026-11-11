@@ -10,7 +10,7 @@ Read and edit `.oos` model records and native `.ooh5` model/results archives, qu
 - [Project overview](README.md): capabilities, repository layout and build commands.
 - [API reference](docs/api.rst): the current JavaScript types and C++ entry points, included directly from source.
 - [Construct models from JavaScript](docs/model-construction.md): cards, load cases, includes, parts and batch input.
-- [JavaScript optimization](docs/optimization.md): design points, derivatives and model updates.
+- [JavaScript optimization](docs/optimization.md): design points, model updates and accepted-point archives.
 - [Architecture with diagrams](docs/architecture.md): module dependencies, data ownership and execution flow.
 - [Module guide](docs/modules.md): implementation structure and detailed technical guides.
 - [Element names](docs/element-naming.md): shared vocabulary, implementation roles and compatibility.

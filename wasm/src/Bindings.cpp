@@ -6,6 +6,7 @@
 
 #include "BindingSupport.hpp"
 #include "ModelEditingBindings.hpp"
+#include "NamedResultsBindings.hpp"
 #include "oor/api/CardEdits.hpp"
 #include "oor/api/CardTables.hpp"
 #include "oor/api/Deck.hpp"
@@ -805,6 +806,13 @@ EMSCRIPTEN_BINDINGS(oor_reader)
         .function("writeModel", &writeModel)
         .function("writeArchive", &deckWriteArchive)
         .function("toModelText", &modelText)
+        .function("documentNames", optional_override([](const api::Deck& deck)
+                  { return oor::wasm::textArray(deck.documentNames()); }))
+        .function("document", optional_override([](const api::Deck& deck, const std::string& name)
+                  { const auto text = deck.document(name); return text ? val(*text) : val::null(); }))
+        .function("setDocument", optional_override([](const api::Deck& deck, const std::string& name, const std::string& text)
+                  { guarded([&] { deck.setDocument(name, text); }); }))
+        .function("removeDocument", &api::Deck::removeDocument)
         .function("cardCounts", &deckCardCounts)
         .function("cardCount", &deckCardCount)
         .function("diagnostics", &deckDiagnostics)
@@ -820,7 +828,8 @@ EMSCRIPTEN_BINDINGS(oor_reader)
         .function("setCardValue", &deckSetCardValue);
     oor::wasm::bindModelEditing(deckBinding);
 
-    class_<api::Results>("Results")
+    auto resultsBinding = class_<api::Results>("Results");
+    resultsBinding
         .smart_ptr<std::shared_ptr<api::Results>>("ResultsPointer")
         .class_function("open", &openResults)
         .class_function("fromTables", &resultsFromTables)
@@ -834,6 +843,7 @@ EMSCRIPTEN_BINDINGS(oor_reader)
         .function("model", &resultsModel)
         .function("writeArchive", &resultsWriteArchive)
         .function("writeXlsx", &resultsWriteXlsx);
+    oor::wasm::bindNamedResults(resultsBinding);
 
     class_<QueryTable>("QueryTable")
         .smart_ptr<std::shared_ptr<QueryTable>>("QueryTablePointer")
@@ -854,5 +864,6 @@ EMSCRIPTEN_BINDINGS(oor_reader)
     function("displacementRotations", &displacementRotations);
     function("modelVersions", &modelVersions);
     function("designVariables", &designVariables);
+    function("designableCards", optional_override([] { return oor::wasm::textArray(api::designableCards()); }));
     function("applyDesignPoint", &applyDesignPoint);
 }

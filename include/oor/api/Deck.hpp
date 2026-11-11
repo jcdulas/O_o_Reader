@@ -49,6 +49,10 @@ public:
     [[nodiscard]] std::vector<model::PartInfo> parts() const;
     void applyDefaults() const;
     [[nodiscard]] std::vector<DiagnosticText> checkReferences() const;
+    [[nodiscard]] std::vector<std::string> documentNames() const;
+    [[nodiscard]] std::optional<std::string> document(const std::string& name) const;
+    void setDocument(std::string name, std::string text) const;
+    bool removeDocument(const std::string& name) const;
     // Detects a native archive by content; otherwise reads model records and their Include files.
     // Throws IoError when the file cannot be read, DeckError in strict mode.
     [[nodiscard]] static std::shared_ptr<Deck> readModel(const std::string& path,

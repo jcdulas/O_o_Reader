@@ -15,6 +15,33 @@
 namespace oor::api
 {
 
+std::vector<std::string> Deck::documentNames() const
+{
+    std::vector<std::string> names;
+    for (const auto& [name, text] : m_model->documents())
+    {
+        (void)text;
+        names.push_back(name);
+    }
+    return names;
+}
+
+std::optional<std::string> Deck::document(const std::string& name) const
+{
+    const auto found = m_model->documents().find(name);
+    return found == m_model->documents().end() ? std::nullopt : std::optional(found->second);
+}
+
+void Deck::setDocument(std::string name, std::string text) const
+{
+    m_model->setDocument(std::move(name), std::move(text));
+}
+
+bool Deck::removeDocument(const std::string& name) const
+{
+    return m_model->removeDocument(name);
+}
+
 std::shared_ptr<Deck> Deck::createModel()
 {
     return std::shared_ptr<Deck>(new Deck(std::make_shared<model::Model>()));
@@ -134,6 +161,16 @@ std::vector<std::string> Deck::writeModel(const std::string& path, const DeckWri
 {
     model::ModelFileWriteReport report;
     model::ModelFileWriter::write(*m_model, base::pathFromUtf8(path), modelFileOptionsOf(settings), &report);
+    std::vector<const model::Model*> models{m_model.get()};
+    for (std::size_t i = 0; i < models.size(); ++i)
+    {
+        for (const auto& [name, text] : models[i]->documents())
+        {
+            (void)text;
+            report.dropped.push_back("application document '" + name + "' is preserved only by native archives");
+        }
+        for (const auto& part : models[i]->parts()) models.push_back(part.get());
+    }
     return report.dropped;
 }
 

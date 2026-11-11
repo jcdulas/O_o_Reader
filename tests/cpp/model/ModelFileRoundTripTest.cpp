@@ -19,6 +19,8 @@
 
 namespace
 {
+constexpr std::size_t MODEL_ROUND_TRIP_PARTS = 24;
+constexpr std::size_t MAX_VALIDATION_MODELS = 256;
 
 // The files under a folder, by their path relative to it.
 std::map<std::string, std::string> filesUnder(const std::filesystem::path& folder)
@@ -40,6 +42,7 @@ void checkModels(std::size_t first, std::size_t stride)
     using namespace oor;
     const std::vector<std::filesystem::path> models = testing::validationModels(OOR_VALIDATION_DIR);
     REQUIRE(models.size() > 200);
+    REQUIRE(models.size() <= MAX_VALIDATION_MODELS);
     for (std::size_t index = first; index < models.size(); index += stride)
     {
         INFO(models[index].string());
@@ -69,32 +72,35 @@ void checkModels(std::size_t first, std::size_t stride)
 
 } // namespace
 
-TEST_CASE("the validation models go through model files and back, part 1 of 6", "[model][validation][model-file]")
-{
-    checkModels(0, 6);
-}
+#define OOR_MODEL_ROUND_TRIP_PART(index) \
+    TEST_CASE("validation model file round trip part " #index, "[model][validation][model-file]") \
+    { \
+        checkModels(index, MODEL_ROUND_TRIP_PARTS); \
+    }
 
-TEST_CASE("the validation models go through model files and back, part 2 of 6", "[model][validation][model-file]")
-{
-    checkModels(1, 6);
-}
+OOR_MODEL_ROUND_TRIP_PART(0)
+OOR_MODEL_ROUND_TRIP_PART(1)
+OOR_MODEL_ROUND_TRIP_PART(2)
+OOR_MODEL_ROUND_TRIP_PART(3)
+OOR_MODEL_ROUND_TRIP_PART(4)
+OOR_MODEL_ROUND_TRIP_PART(5)
+OOR_MODEL_ROUND_TRIP_PART(6)
+OOR_MODEL_ROUND_TRIP_PART(7)
+OOR_MODEL_ROUND_TRIP_PART(8)
+OOR_MODEL_ROUND_TRIP_PART(9)
+OOR_MODEL_ROUND_TRIP_PART(10)
+OOR_MODEL_ROUND_TRIP_PART(11)
+OOR_MODEL_ROUND_TRIP_PART(12)
+OOR_MODEL_ROUND_TRIP_PART(13)
+OOR_MODEL_ROUND_TRIP_PART(14)
+OOR_MODEL_ROUND_TRIP_PART(15)
+OOR_MODEL_ROUND_TRIP_PART(16)
+OOR_MODEL_ROUND_TRIP_PART(17)
+OOR_MODEL_ROUND_TRIP_PART(18)
+OOR_MODEL_ROUND_TRIP_PART(19)
+OOR_MODEL_ROUND_TRIP_PART(20)
+OOR_MODEL_ROUND_TRIP_PART(21)
+OOR_MODEL_ROUND_TRIP_PART(22)
+OOR_MODEL_ROUND_TRIP_PART(23)
 
-TEST_CASE("the validation models go through model files and back, part 3 of 6", "[model][validation][model-file]")
-{
-    checkModels(2, 6);
-}
-
-TEST_CASE("the validation models go through model files and back, part 4 of 6", "[model][validation][model-file]")
-{
-    checkModels(3, 6);
-}
-
-TEST_CASE("the validation models go through model files and back, part 5 of 6", "[model][validation][model-file]")
-{
-    checkModels(4, 6);
-}
-
-TEST_CASE("the validation models go through model files and back, part 6 of 6", "[model][validation][model-file]")
-{
-    checkModels(5, 6);
-}
+#undef OOR_MODEL_ROUND_TRIP_PART

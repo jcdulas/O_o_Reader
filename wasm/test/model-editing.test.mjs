@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import path from "node:path";
-import { test } from "node:test";
+import { test } from "./helpers/fast-test.mjs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));

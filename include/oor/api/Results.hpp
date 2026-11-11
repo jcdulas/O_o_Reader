@@ -4,6 +4,7 @@
 #include "oor/query/results/ResultSets.hpp"
 #include "oor/results/archive/ArchiveWriter.hpp"
 #include "oor/results/core/MemoryResults.hpp"
+#include "oor/results/core/NamedResultBuilder.hpp"
 #include "oor/results/core/ResultFile.hpp"
 #include "oor/results/core/ResultTables.hpp"
 #include "oor/results/xlsx/XlsxWriter.hpp"
@@ -81,6 +82,12 @@ public:
     [[nodiscard]] std::vector<DiagnosticText> diagnostics() const;
 
     [[nodiscard]] std::vector<TableDescription> tables() const;
+    [[nodiscard]] std::vector<results::NamedResultMeta> named() const;
+    [[nodiscard]] std::shared_ptr<const results::NamedResultData> readNamed(std::size_t index) const;
+    // Validates and copies a complete named result before adding it. Existing results are unchanged on failure.
+    void addNamed(const std::string& kind, const results::NamedResultOrigin& origin,
+                  const std::vector<results::NamedArrayInput>& arrays,
+                  const std::vector<results::NamedTextInput>& texts);
     // Reads a table (by its index in `tables()`). Throws UsageError for an index out of range, EmptySelectionError when
     // the selection keeps nothing.
     [[nodiscard]] TableValues read(std::size_t index, const TableSelection& selection = {}) const;
@@ -108,6 +115,7 @@ private:
     std::vector<std::shared_ptr<results::ResultTable>> m_list; // the tables in a stable order: the handles
     std::shared_ptr<results::ResultAttachment> m_attachment;
     std::shared_ptr<Deck> m_deck;
+    results::ResultFileMetadata m_metadata;
 };
 
 } // namespace oor::api

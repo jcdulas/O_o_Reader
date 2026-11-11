@@ -4,7 +4,7 @@
 #   oor_reader_core.js / .wasm   the module made by Emscripten
 #   index.js, model-editing.js, index.d.ts   the wrapper a web application imports
 #   package.json
-add_executable(oor_reader_core src/Bindings.cpp src/ModelEditingBindings.cpp)
+add_executable(oor_reader_core src/Bindings.cpp src/ModelEditingBindings.cpp src/NamedResultsBindings.cpp)
 target_link_libraries(oor_reader_core PRIVATE oor_api)
 set_target_properties(oor_reader_core PROPERTIES
     SUFFIX ".js"

@@ -4,9 +4,8 @@ include(Catch)
 
 set(OOR_TEST_MODULES base io deck model results analysis query api)
 
-# The time limit of each test, in seconds. Each test case runs in a process of its own, and starting a process can take
-# more than a second on a busy Windows machine: the limit catches a test that hangs, not a slow start.
-set(OOR_TEST_TIMEOUT 10 CACHE STRING "Time limit of each C++ test, in seconds")
+# Each discovered test runs in its own process and has a one-second wall-clock limit.
+set(OOR_TEST_TIMEOUT 1 CACHE STRING "Time limit of each C++ test, in seconds")
 
 foreach(module IN LISTS OOR_TEST_MODULES)
     file(GLOB_RECURSE test_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${module}/*Test.cpp")

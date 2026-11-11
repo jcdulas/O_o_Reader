@@ -3,6 +3,7 @@ add_library(oor_api STATIC
     Design.cpp
     Deck.cpp
     Results.cpp
+    NamedResults.cpp
     Queries.cpp
     CardEdits.cpp
     ControlEdits.cpp

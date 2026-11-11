@@ -550,6 +550,14 @@ void writePart(const std::filesystem::path& file, const std::string& path, const
     }
     out.numbers(path + "/comments/keys", std::move(commentKeys));
     out.strings(path + "/comments/text", comments);
+    std::vector<std::string> documentNames, documentTexts;
+    for (const auto& [name, text] : part.documents())
+    {
+        documentNames.push_back(name);
+        documentTexts.push_back(text);
+    }
+    out.strings(path + "/documents/names", documentNames);
+    out.strings(path + "/documents/text", documentTexts);
     out.numbers(path + "/markers/keys", std::move(markerKeys));
     out.numbers(path + "/markers/files", std::move(markerFiles));
     out.numbers(path + "/markers/kinds", std::move(markerKinds));
@@ -802,6 +810,21 @@ void readPart(const std::filesystem::path& file, const std::string& path, model:
     for (const auto& source : part.root().files())
         fileNames.push_back(base::pathToUtf8(source.path));
     auto& control = part.control();
+    // Optional extension: archives written before application documents have no such group.
+    {
+        const auto handle = io::Hdf5File::openReadOnly(file);
+        if (handle.hasChild(path.substr(1) + "/documents"))
+        {
+            const auto names = strings(file, path + "/documents/names");
+            const auto texts = strings(file, path + "/documents/text");
+            require(names.size() == texts.size(), path + " has invalid documents");
+            for (std::size_t i = 0; i < names.size(); ++i)
+            {
+                require(!part.documents().contains(names[i]), path + " has duplicate document names");
+                part.setDocument(names[i], texts[i]);
+            }
+        }
+    }
     const auto executive = readControl(file, path + "/control/executive", fileNames.size());
     const auto caseControl = readControl(file, path + "/control/case", fileNames.size());
     control.executive =

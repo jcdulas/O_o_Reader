@@ -186,6 +186,7 @@ export class OorReader {
   createResults(tables, label = "memory") {
     return this.core.Results.fromTables(label, tables);
   }
+  namedResultCatalogue() { return this.core.namedResultCatalogue(); }
 
   // ---- queries
 
@@ -211,6 +212,11 @@ export class OorReader {
   }
 
   designVariables(deck) { return this.core.designVariables(deck); }
+  designCapabilities(deck) {
+    const design = this.designVariables(deck);
+    return { version: 1, nativeCards: this.core.designableCards(), problems: design.problems,
+      notApplied: design.notApplied, modelDocuments: true, generalCardEditing: true };
+  }
 
   // Explicit IDs in solver x order; writes the final point atomically and updates XINIT by default.
   applyDesignPoint(deck, ids, values, options = {}) {

@@ -17,6 +17,7 @@
 #include <cstdint>
 #include <filesystem>
 #include <memory>
+#include <map>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -255,6 +256,12 @@ public:
     // links in the state of the original.
     [[nodiscard]] AttachmentSlot& resultsSlot() const noexcept { return m_results; }
 
+    // Application documents travel with native archives and independent model copies. They do not affect analysis
+    // versions: changing a checkpoint or a problem declaration does not invalidate geometric query caches.
+    [[nodiscard]] const std::map<std::string, std::string>& documents() const noexcept;
+    void setDocument(std::string name, std::string text);
+    bool removeDocument(const std::string& name);
+
     // --- structure ----------------------------------------------------------------------------------------------
 
     [[nodiscard]] base::DiagnosticSink& diagnostics() noexcept { return m_diagnostics; }
@@ -369,6 +376,7 @@ private:
     base::DiagnosticSink m_diagnostics;
 
     std::shared_ptr<ControlSections> m_control = std::make_shared<ControlSections>();
+    std::shared_ptr<const std::map<std::string, std::string>> m_documents;
     std::vector<SourceFileInfo> m_files;
     std::vector<SourceMarker> m_markers;
     std::vector<CommentRecord> m_comments;

@@ -1,5 +1,9 @@
 # Constructing models from JavaScript
 
+An application can attach versioned text documents to a model with `deck.setDocument(name, text)`, list them with
+`documentNames()`, read with `document(name)` and remove with `removeDocument(name)`. A copied deck owns its document
+edits; `.ooh5` stores documents in each model part. The `.oos` writer reports documents it cannot represent.
+
 `oor.createModel()` creates an empty C++ model directly in WebAssembly memory. Cards, analysis controls and load cases
 can be supplied as JavaScript objects, without a virtual input file. These methods also work on imported models.
 See [the API reference](api.rst) for the declarations.

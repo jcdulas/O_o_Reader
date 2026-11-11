@@ -5,6 +5,9 @@
 
 namespace oor::api
 {
+// Card types supported by native design relations and applyDesignPoint. General card edits remain available for
+// every card in the construction catalogue; a consumer must distinguish editability from differentiability.
+[[nodiscard]] std::vector<std::string> designableCards();
 // Read on each operation: card edits cannot leave a cached design model behind.
 [[nodiscard]] model::DesignModel designModel(const Deck& deck);
 // IDs are explicit, so the solver's independent-variable order never gets confused with the reader's full order.

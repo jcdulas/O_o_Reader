@@ -123,9 +123,15 @@ std::string_view analysisTypeName(int analysisCode) noexcept
     case 0:
         return "none";
     case 1:
+    case 101:
         return "static";
     case 2:
+    case 103:
         return "modes";
+    case 105:
+        return "buckling";
+    case 144:
+        return "aeroelastic";
     case 3:
         return "differentialStiffness0";
     case 4:
@@ -156,6 +162,8 @@ StepKind stepKindOf(int analysisCode) noexcept
     switch (analysisCode)
     {
     case 1:
+    case 101:
+    case 144:
     case 3:
     case 4:
     case 7:
@@ -163,6 +171,8 @@ StepKind stepKindOf(int analysisCode) noexcept
     case 11:
         return StepKind::LoadCombinationSet;
     case 2:
+    case 103:
+    case 105:
     case 9:
         return StepKind::Mode;
     case 5:

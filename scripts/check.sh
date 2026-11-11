@@ -7,12 +7,13 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 JOBS="$(nproc 2>/dev/null || echo 4)"
+TEST_JOBS=1
 
-cmake -S "$ROOT" -B "$ROOT/build/release" -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake -S "$ROOT" -B "$ROOT/build/release" -G Ninja -DCMAKE_BUILD_TYPE=Release -DOOR_TEST_TIMEOUT=1
 cmake --build "$ROOT/build/release" -j "$JOBS"
 if [ $# -gt 0 ]; then
-    ctest --test-dir "$ROOT/build/release" -j "$JOBS" --output-on-failure --no-tests=error -R "$1"
+    ctest --test-dir "$ROOT/build/release" -j "$TEST_JOBS" --timeout 1 --output-on-failure --no-tests=error -R "$1"
 else
-    ctest --test-dir "$ROOT/build/release" -j "$JOBS" --output-on-failure --no-tests=error
+    ctest --test-dir "$ROOT/build/release" -j "$TEST_JOBS" --timeout 1 --output-on-failure --no-tests=error
 fi
 python "$ROOT/tools/check_layering.py"

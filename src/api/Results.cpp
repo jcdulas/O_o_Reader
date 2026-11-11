@@ -17,6 +17,9 @@ std::shared_ptr<Results> Results::open(const std::string& path)
     opened->m_file = results::readResults(path);
     opened->m_tables = std::make_shared<results::ResultTables>(results::ResultTables::build(opened->m_file, {}));
     opened->m_list = opened->m_tables->all();
+    opened->m_metadata = opened->m_file->metadata();
+    opened->m_metadata.tableCount = static_cast<std::uint32_t>(opened->m_list.size());
+    opened->m_metadata.namedCount = static_cast<std::uint32_t>(opened->m_tables->namedCount());
     return opened;
 }
 
@@ -31,6 +34,8 @@ std::shared_ptr<Results> Results::fromTables(const std::string& label, std::vect
     results::MemoryTableIndex index;
     results::addMemoryTables(*made->m_tables, index, tables); // refuses two tables with the same key
     made->m_list = made->m_tables->all();
+    made->m_metadata = made->m_file->metadata();
+    made->m_metadata.tableCount = static_cast<std::uint32_t>(made->m_list.size());
     return made;
 }
 
@@ -41,7 +46,7 @@ std::string Results::format() const
 
 const results::ResultFileMetadata& Results::metadata() const
 {
-    return m_file->metadata();
+    return m_metadata;
 }
 
 std::vector<DiagnosticText> Results::diagnostics() const

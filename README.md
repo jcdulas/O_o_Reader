@@ -52,6 +52,9 @@ deck.writeArchive("/work/model-only.ooh5");                       // a model wit
 ```
 
 The whole interface: [docs/wasm-api.md](docs/wasm-api.md).
+For externally controlled SOL 101, 103, 105 and 144 optimization, Reader provides copy-on-write model edits,
+capability inspection, versioned application documents and typed results in `.ooh5`; see the
+[optimization guide](docs/optimization.md).
 
 New `.ooh5` files use archive version **4**, with native model schema **1**. Version **3** result archives remain
 readable. See [choosing a format](docs/getting-started.md#choose-a-file-format) and
@@ -82,10 +85,11 @@ Needs a C++20 compiler (GCC 12+ or Clang 16+), CMake 3.25+, Ninja and libhdf5 (o
 ```bash
 cmake --preset release            # build/release
 cmake --build --preset release
-ctest --test-dir build/release -j 8 --output-on-failure
+ctest --test-dir build/release -j 1 --timeout 1 --output-on-failure
 ```
 
 or `scripts/check.sh` (build, tests, layering check).
+Each native test has a one-second timeout; validation corpora run in small independent cases.
 
 ### WebAssembly
 
@@ -97,6 +101,8 @@ WebAssembly, made once by `scripts/build_hdf5_wasm.sh <work folder>`.
 scripts/build_wasm.sh <work folder of build_hdf5_wasm.sh>   # build/wasm/dist: the npm package
 node --test wasm/test/*.test.mjs                        # the end-to-end test, in Node.js 24+
 ```
+
+Each WebAssembly test checks its own duration against the same one-second limit.
 
 ## Licence
 

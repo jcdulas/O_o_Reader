@@ -100,6 +100,11 @@ void registerMaterialsColumns(StoredColumnCatalogue& catalogue)
     {
         using model::IsoMatTable;
         const std::uint16_t type = model::typeIndexOf<IsoMatTable>();
+        registerColumn(catalogue, type, "sourceBlankFields", [](const auto& model)
+        {
+            return exportCardValues(model->template table<IsoMatTable>(),
+                                    [](const model::IsoMatCard& card) { return card.blankFields; });
+        });
         registerColumn(catalogue, type, "id",
                        [](const auto& model) { return exportColumn(model->template table<IsoMatTable>().idColumn()); });
         registerColumn(catalogue, type, "youngsModulus", [](const auto& model)

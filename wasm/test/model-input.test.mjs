@@ -1,7 +1,7 @@
 // Input adaptation is tested without a WASM runtime; model-editing.test.mjs covers native storage and validation.
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { test } from "node:test";
+import { test } from "./helpers/fast-test.mjs";
 import { installModelEditing } from "../js/model-editing.js";
 
 class Deck {
